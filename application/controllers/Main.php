@@ -109,12 +109,12 @@ class Main extends CI_Controller {
 		$jumlah_unit_trouble = $row->unit;
 
 		//nilai data mill avaibility
-		$query = $this->db->query("SELECT ROUND(floatval(sum(acm)/count(acm)*100,2) as jumlah FROM `m_acm` where tanggal = '$tgl' and id_pabrik = '$nama_pabrik';");
+		$query = $this->db->query("SELECT ROUND(sum(acm)/count(acm)*100,2) as jumlah FROM `m_acm` where tanggal = '$tgl' and id_pabrik = '$nama_pabrik';");
 		$row = $query->row();
 		$mill_avaibility = $row->jumlah;
 
-		// data array list pekerjaan maintenance hari ini
-		$query = $this->db->query("SELECT m_wo.id_pabrik,m_wo.station,m_wo.unit,m_wo.problem,m_wo.tanggal,nama_teknisi,t_mulai,t_selesai FROM `m_activity_detail`,m_wo where m_wo.no_wo = m_activity_detail.no_wo and m_activity_detail.tanggal = '$tanggal' and m_activity_detail.id_pabrik = '$nama_pabrik';");
+		// data array list plan pekerjaan maintenance hari ini
+		$query = $this->db->query("SELECT station,unit,problem,mpp FROM m_planing WHERE tanggal = '$tanggal' and id_pabrik = '$nama_pabrik';");
 		$i = 0;
 		$job_list = [];
 		foreach ($query->result() as $row)
@@ -122,7 +122,7 @@ class Main extends CI_Controller {
 			$job_list[$i][0] = $row->station;
 			$job_list[$i][1] = $row->unit;
 			$job_list[$i][2] = $row->problem;
-			$job_list[$i++][3] = $row->nama_teknisi;
+			$job_list[$i++][3] = $row->mpp;
 		}
 
 		// $query = $this->db->query("SELECT jenis_breakdown,count(id) as jumlah FROM `m_activity` where tanggal LIKE '%$t[1]%' and id_pabrik = '$nama_pabrik' group by jenis_breakdown");

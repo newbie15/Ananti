@@ -20,8 +20,6 @@
 
       <div class="row">
         <div class="col-xs-12">
-          <?php //echo $content; ?>
-          <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
           Station :
@@ -103,7 +101,6 @@
                 <a href="#" class="btn btn-primary">Save changes</a> -->
               </div>
             </div>
-          </div>
           </div>
         </div>
       </div>

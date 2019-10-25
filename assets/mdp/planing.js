@@ -96,7 +96,7 @@ $(document).ready(function () {
         console.log(data_j);
         $.ajax({
             method: "POST",
-            url: BASE_URL+"acm/simpan",
+            url: BASE_URL+"planing/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),

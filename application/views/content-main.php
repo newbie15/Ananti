@@ -67,7 +67,6 @@
           <div class="small-box bg-green">
             <div class="inner">
               <h3><span id="mill_avaibility"></span><sup style="font-size: 20px">%</sup></h3>
-
               <p>Mill Avaibility</p>
             </div>
             <div class="icon">
@@ -80,125 +79,77 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-2 col-xs-4">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h4>Downtime</h4>
-              <p id="downtime">... HI<br>... SHI<br>&nbsp;</p>
-            </div>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-2 col-xs-4">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h4>Breakdown</h4>
-              <p id="breakdown">... HI<br>... SHI<br>&nbsp;</p>
-            </div>
-          </div>
-        </div>
-        <!-- ./col -->
-      
-        <div class="col-lg-2 col-xs-4">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h4>Oil greasing</h4>
-              <p id="ol">Plan<br>Finish<br>(%)</p>
-            </div>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-2 col-xs-4">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h4>Cost PK R/M</h4>
-              <p id="cpkrm">HI<br>SHI<br>%</p>
-            </div>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-2 col-xs-4">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h4>Cost PO R/M</h4>
-              <p id="cporm">HI<br>SHI<br>%</p>
-            </div>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-2 col-xs-4">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h4>Stok Gudang</h4>
-              <p id="sg">Min<br>Max<br>Real</p>
-            </div>
-          </div>
-        </div>
-        <!-- ./col -->
-
-
-      </div>
-
-      <div class="row">
         <div class="col-md-6">
-          <!-- Donut chart -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <i class="fa fa-bar-chart-o"></i>
-              <h3 class="box-title">Breakdown & Downtime Chart</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+              <h3 class="box-title">Plan Job Hari</h3> &nbsp;&nbsp;
+              <input type="date" id="tgl_job"/>
             </div>
+            <!-- /.box-header -->
             <div class="box-body">
-              <div id="donut-chart" style="height: 300px;"></div>
+              <div id="j_today"></div>
             </div>
-            <!-- /.box-body-->
           </div>
-          <!-- /.box -->
         </div>
         <div class="col-md-6">
-            <div class="box box-primary">
-              <div class="box-header with-border">
-                <h3 class="box-title">Job Hari</h3> &nbsp;&nbsp;
-                <input type="date" id="tgl_job"/>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-                <div id="j_today"></div>
-              </div>
-            </div>
-            <!-- Bar chart -->
-            <div class="box box-primary">
-              <div class="box-header with-border">
-                <i class="fa fa-bar-chart-o"></i>
-
-                <h3 class="box-title">Highlight Problem</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          <div class="col-xs-6">
+            <div class="info-box bg-aqua">
+              <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Bookmarks</span>
+                <span class="info-box-number">41,410</span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 70%"></div>
                 </div>
+                    <span class="progress-description">
+                      70% Increase in 30 Days
+                    </span>
               </div>
-              <div class="box-body">
-                <div id="highlight"></div>
-              </div>
-              <!-- /.box-body-->
+              <!-- /.info-box-content -->
             </div>
-            <!-- /.box -->
+            <!-- /.info-box -->
           </div>
-          <?php  ?>
-
+          <div class="col-xs-6">
+            <div class="info-box bg-aqua">
+              <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Bookmarks</span>
+                <span class="info-box-number">41,410</span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 70%"></div>
+                </div>
+                    <span class="progress-description">
+                      70% Increase in 30 Days
+                    </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <div class="col-xs-6">
+            <div class="info-box bg-aqua">
+              <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Bookmarks</span>
+                <span class="info-box-number">41,410</span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 70%"></div>
+                </div>
+                    <span class="progress-description">
+                      70% Increase in 30 Days
+                    </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
         </div>
-      </div>
+
+
+
+
+
+      </div> -->
 
       <!-- /.row -->
     </section>

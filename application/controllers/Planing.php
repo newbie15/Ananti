@@ -120,4 +120,36 @@ class Planing extends CI_Controller {
 		}
 		echo json_encode($d);
 	}
+
+	public function simpan()
+	{
+		$pabrik = $_REQUEST['pabrik'];
+		// $station = $_REQUEST['station'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$this->db->query("DELETE FROM `m_planing` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'tanggal' => $tanggal,
+				'id_pabrik' => $pabrik,
+				'station' => $value[0],
+				'unit' => $value[1],
+				'problem' => $value[2],
+				'plan' => $value[3],
+				'mpp' => $value[4],
+				'nama_mpp' => $value[5],
+				'mek_el' => $value[6],
+				'start' => $value[7],
+				'stop' => $value[8],
+				'time' => $value[9],
+				'ket' => $value[10]
+			);
+			// print_r($data);
+			if($value[0]!=""){
+				$this->db->insert('m_planing', $data);
+			}
+		}
+	}	
 }
