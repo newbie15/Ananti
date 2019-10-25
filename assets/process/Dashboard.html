@@ -1,0 +1,1717 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--<meta http-equiv="refresh" content="3">-->
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Dashboard</title>
+
+<link rel="stylesheet" href="http://10.23.0.92/milli2//assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="http://10.23.0.92/milli2//assets/css/dark-unica.css" />
+
+<script src="http://10.23.0.92/milli2//assets/js/jqueri-3.1.1.js"></script>
+<script src="http://10.23.0.92/milli2//assets/js/highcharts/highcharts.js"></script>
+<script src="http://10.23.0.92/milli2//assets/js/highcharts/highcharts-more.js"></script>
+<script src="http://10.23.0.92/milli2//assets/js/bootstrap.min.js"></script>
+<script src="http://10.23.0.92/milli2//assets/js/highcharts/modules/solid-gauge.js"></script>
+
+</head>
+<body>
+<table style="height: 100%; width: 100%;" border = "5.5px" bordercolor="#000000" bgcolor="#000000"> 
+	<tbody>
+		<tr>
+			<td style="height: 25%; width: 27.5%;"><div id="tekananBoiler" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"><div id="boiler" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"><div id="dilution" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"><div id="press" style="height: 170px; margin: 0 auto"></div></td>
+			<td colspan="2" style="width: 27.5%;"><div id="skalaVnotch" style="height: 170px; margin: 0 auto"></td>
+		</tr>		
+		<tr>
+			<td style="height: 25%;  width: 27.5%;"><div id="tekananBPV" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"><div id="bpv" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"><div id="peak1"  style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"><div id="stz2peak1" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 13.75%;"><div id="stz3peak1" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 13.75%;"><div id="stz4peak1" style="height: 170px; margin: 0 auto"></div></td>
+		</tr>
+		<tr>
+			<td style="height: 25%;  width: 27%;"><div id="tempCOT" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"><div id="cot" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"><div id="peak2" style="height: 170px; margin: 0 auto"></td>
+			<td style="height: 25%;  width: 15%;"><div id="stz2peak2" style="height: 170px; margin: 0 auto"></td>
+			<td style="height: 25%;  width: 13.75%;"><div id="stz3peak2" style="height: 170px; margin: 0 auto"></td>
+			<td style="height: 25%;  width: 13.75%;"><div id="stz4peak2" style="height: 170px; margin: 0 auto"></td>
+		</tr>
+		<tr>
+			<td style="height: 25%;  width: 27%;"><div id="tempCCT" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"><div id="cct" style="height: 170px; margin: 0 auto"></div></td>
+			<td style="height: 25%;  width: 15%;"> <div id="peak3" style="height: 170px; margin: 0 auto; "></td>
+			<td style="height: 25%;  width: 15%;"> <div id="stz2peak3" style="height: 170px; margin: 0 auto; "></td>
+			<td style="height: 25%;  width: 13.75%;"> <div id="stz3peak3" style="height: 170px; margin: 0 auto; "></td>
+			<td style="height: 25%;  width: 13.75%;"> <div id="stz4peak3" style="height: 170px; margin: 0 auto; "></td>
+		</tr>
+	</tbody>
+</table>
+<table style="height: 100%; width: 100%;" bordercolor="#000000" bgcolor="#000000" border = "5.5px">
+	<tbody>
+		<tr>
+
+			<td width="110"><p id="time" style="color:white; font-size: 1.64rem">09:01</p></td>
+			<td width="250" ><p style="color:white; font-size: 1.64rem">&nbsp;&nbsp;DASHBOARD PABRIK PT SPP1</p></td>
+			<td width="150"><p style="color:white; font-size: 1.64rem" align="right">&nbsp;&nbsp;Last Update : <span id="hour_last_update"/> </p></td>
+			<!-- <td><img src="php echo base_url(); ?>/assets/images/logo-AAL.png" height="55" width="80" align="right" /></td> -->
+		</tr>
+	</tbody>
+</table>
+<script type="text/javascript">
+
+function getDateTooltip(date){
+	//var dt = new Date(date*1000);
+	var dt = new Date(date);
+
+	const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+	  "Jul", "Ags", "Sep", "Oct", "Nov", "Des"];
+
+	const dayNames = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu",
+	  "Minggu"];
+
+	  return dayNames[dt.getDay()]+", "+dt.getDate()+"-"+monthNames[dt.getMonth()]+"-"+dt.getFullYear()+" "+dt.getHours()+":00 <br/>";
+}
+
+function chartTekananBoiler(data_tick, data_series, data_maximum) {
+	Highcharts.chart('tekananBoiler', {
+	    chart:{
+            backgroundColor: '#2a2a2b',
+	        type: 'line'
+	    },	
+        title: {
+            text: 'TEKANAN BOILER',
+            align: 'left',
+	        style: {
+				color: '#E8E6E0'
+			}
+		},
+        xAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            },
+                //format: '{value:%H}',
+                formatter: function () {
+	                //var dt = new Date(this.value*1000);
+	                var dt = new Date(this.value);
+					var hr = dt.getHours();
+					return hr;  
+	            }
+    	    },
+	        lineColor: '#707073',
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+            type: 'datetime',
+            tickInterval: 1,
+	        title: {
+	            style: {
+	                color: '#A0A0A3'
+
+	            }
+	        }
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        },
+	        formatter: function () {
+				return getDateTooltip(this.x)+this.series.name+" : "+this.y+" Bar";  
+            }
+	    },
+		yAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            }
+	        },
+	        startOnTick: false,
+	        endOnTick: false,    
+	        tickPositions: data_tick,
+	        lineColor: '#707073',
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+	        tickWidth: 1,
+			visible: true,
+	        title: {
+                text: 'Tekanan (Bar)',
+	            style: {
+	                color: '#A0A0A3'
+	            }
+	        },
+	        max: data_maximum
+	    },  
+	    legend: {
+	    	align: 'right',
+        	verticalAlign: 'top',
+        	layout: 'vertical',
+	        x: 70,
+	        y: -120,
+        	floating: true,
+            itemStyle: {
+            	fontSize:'10px',
+	            color: '#E0E0E3'
+	        },
+	    },
+	    series: data_series,
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    },
+		credits:{
+			enabled: false
+		}
+	});
+}
+
+function chartPeak(container, title, data_minimum, data_maximum, data_peak, data_last_update) {
+	Highcharts.chart(container, {
+	    chart:{
+	        backgroundColor:getColor(data_minimum,data_maximum,data_peak),
+	        type: 'line'
+	    },	        
+	    title: {
+	            text: title,
+	            align: 'center',
+	      style: {
+	         color: '#E8E6E0'
+	      }
+	   },
+	    subtitle: {
+            y: 30,
+	        text: '<span style="font-size: 0.75rem;color:#ffffff;text-transform: none;">last: '+data_last_update+'</span><br/><span style="font-size: 3.9375rem;color:#ffffff">'+data_peak+'</span><span style="font-size: 2rem; text-transform:lowercase;color:#ffffff"> bar</span>'
+	    },   
+        background: {
+            fill: '#000000'
+        },  
+	    credits:{
+	        enabled: false
+	     }
+	        
+	});
+}
+
+function chartDilutionPress(container, title, data_actual, data_last_update) {
+	Highcharts.chart(container, {
+	    chart:{
+            backgroundColor: '#2A2A2B',
+	        type: 'bar'
+	    },
+	    title: {
+			text: title,
+			align: 'center',
+	      	style: {
+				color: '#E8E6E0'
+			}
+	   },
+	    subtitle: {
+            y: 30,
+            text: '<span style="font-size: 0.75rem;color:#ffffff;text-transform: none;">last: '+data_last_update+'</span><br/><span style="font-size: 3.9375rem;color:#ffffff">'+data_actual+'</span>'
+        },
+	    credits:{
+	        enabled: false
+	     }
+    });
+}
+
+function chartDilutionPress_ver2(container, title, data_series, data_last_update, satuan) {
+	Highcharts.chart(container, {
+	    chart: {
+	        backgroundColor: '#2A2A2b',
+	        type: 'bar'
+	    },
+	    title: {
+	        text: title,
+            style: {
+	            color: '#E0E0E3',
+	            textTransform: 'uppercase',
+	        }
+	    },
+	    subtitle: {
+	        y: 30,
+	        text: '<span style="font-size: 0.75rem;color:#ffffff;text-transform: none;">last: '+data_last_update+'</span>'
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        }
+	    },
+	    yAxis: {
+	        startOnTick: false,
+	        endOnTick: false,
+	        title: {
+	            text: 'Bar',
+            },
+	        tickPositions: [100],
+	        visible:false
+	    },
+	    xAxis: {
+	        visible:false
+	    },
+	    series:data_series,
+	    plotOptions: {
+	        bar: {
+	            X: -10,
+	            Y:-10,
+	            dataLabels: {
+	                useHTML: true,
+	                align: 'left',
+	                enabled: true,
+	                style: {
+	                    textOutline: 0,
+	                    "fontSize": "10px"
+	                },
+	                formatter: function() {
+	                    return ("<span class='datalabel' style='color: white;'>" + this.series.name + "</span><span style='margin-left: 80px;color: white;'>"+this.y+" "+satuan+"</span>")
+	                }
+	            },
+	        },
+	        series: {
+	            borderWidth: 0,
+	            pointPadding: 0.4,
+	            dataLabels: {
+	                useHTML: true,
+	                y:-10,
+	                enabled: true,
+	                inside: true,
+	            }
+	            
+	        }
+	    },
+	     credits:{enabled: false}
+	});
+}
+
+
+function chartBPV(data_series, data_label, data_minimum, data_maximum, data_last_update) {
+	Highcharts.chart('bpv', {
+	    chart: {
+	        type: 'gauge',
+            backgroundColor: '#2a2a2b',
+            plotBackgroundColor: null,
+	        plotBorderWidth: 0,
+	        plotShadow: false,
+	    },
+	    title: {
+            text : 'BPV',
+	        style: {
+				color: '#E0E0E3',
+				textTransform: 'uppercase',
+	        }
+	    },
+	    subtitle: {
+	        y: 30,
+	        text: '<span style="font-size: 0.75rem;color:#ffffff;text-transform: none;">last: '+data_last_update+'</span>'
+	    },
+	    pane: {
+	        startAngle: -150,
+	        endAngle: 150,
+	        background: [{
+	            backgroundColor: '#000',
+	            borderWidth: 0,
+	            outerRadius: '119%'
+	        }, {
+	            backgroundColor: '#000',
+	            borderWidth: 0,
+	            outerRadius: '117%'
+	        }, {
+	            // default background
+                backgroundColor: '#DDD',
+	            borderWidth: 0,
+	            outerRadius: '117%'
+	        }, {
+	            backgroundColor: '#DDD',
+	            borderWidth: 0,
+	            outerRadius: '105%',
+	            innerRadius: '110%'
+	        }]
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        }
+	    },
+	    yAxis: {
+	        min: data_minimum-0.1,
+	        max: data_maximum+0.1,
+	        minorTickInterval: 'auto',
+	        minorTickWidth: 1,
+	        minorTickLength: 10,
+	        minorTickPosition: 'inside',
+	        minorTickColor: '#666',
+	        tickWidth: 10,
+	        tickPosition: 'inside',
+	        tickLength: 10,
+	        tickColor: '#000',
+	        labels: {
+	            step: 2,
+	            rotation: 'auto'
+	        },
+	        title: {
+	            text: 'Bar'
+	        },
+	        plotBands: [{
+	            from: data_minimum-0.1,
+	            to: data_minimum-0.001,
+	            color: '#DF5353'
+	        }, {
+	            from: data_minimum,
+	            to: data_maximum,
+	            color: '#55BF3B'
+	        }, {
+	            from: data_maximum+0.001,
+	            to: data_maximum+0.1,
+	            color: '#DF5353'
+	        }]
+	    },
+         plotOptions: {
+            gauge: {
+                dataLabels: {
+                    borderColor: 'transparent',
+                },
+                dial: {
+                    radius: '75%',
+                    backgroundColor: '#000',
+                    borderWidth: 0,
+                    baseWidth: 5,
+                    topWidth: 1,
+                    baseLength: '40%', // of radius
+                    rearLength: '0%'
+                },
+                pivot: {
+                    backgroundColor: '#000',
+                    radius: 7
+                }
+            }
+        },
+	    series: [{
+	        name: 'BPV',
+	        data: [data_series],
+            dataLabels: {
+                y:60,
+	            format: '<div style="text-align:center"><span style="font-size:20px;color:' +
+	                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">'+data_label+'</span>',
+	        },
+	        tooltip: {
+	            valueSuffix: ' Bar'
+	        }
+	    }],
+	     credits:{
+	        enabled: false
+	     }
+
+	});
+}
+
+
+function chartCOT(data_series, data_label, data_minimum, data_maximum, data_last_update) {
+	Highcharts.chart('cot', {
+	    chart: {
+	        type: 'gauge',
+            backgroundColor: '#2a2a2b',
+            plotBackgroundColor: null,
+	        plotBorderWidth: 0,
+	        plotShadow: false,
+	    },
+	    title: {
+            text : 'COT',
+	        style: {
+	            color: '#E0E0E3',
+	            textTransform: 'uppercase',
+	        }
+	    },
+	    subtitle: {
+	        y: 30,
+	        text: '<span style="font-size: 0.75rem;color:#ffffff;text-transform: none;">last: '+data_last_update+'</span>'
+	    },
+	    pane: {
+	        startAngle: -150,
+	        endAngle: 150,
+	        background: [{
+	            backgroundColor: '#000',
+	            borderWidth: 0,
+	            outerRadius: '119%'
+	        }, {
+	            backgroundColor: '#000',
+	            borderWidth: 0,
+	            outerRadius: '117%'
+	        }, {
+	            // default background
+                backgroundColor: '#DDD',
+	            borderWidth: 0,
+	            outerRadius: '117%'
+	        }, {
+	            backgroundColor: '#DDD',
+	            borderWidth: 0,
+	            outerRadius: '105%',
+	            innerRadius: '110%'
+	        }]
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        }
+	    },
+	    // the value axis
+	    yAxis: {
+	        min: data_minimum-2,
+	        max: data_maximum+2,
+	        minorTickInterval: 'auto',
+	        minorTickWidth: 1,
+	        minorTickLength: 10,
+	        minorTickPosition: 'inside',
+	        minorTickColor: '#666',
+	        tickWidth: 10,
+	        tickPosition: 'inside',
+	        tickLength: 10,
+	        tickColor: '#000',
+	        labels: {
+	            step: 2,
+	            rotation: 'auto'
+	        },
+	        title: {
+	            text: 'ᰱC'
+	        },
+	        plotBands: [{
+	            from: data_minimum-2,
+	            to: data_minimum-0.001,
+	            color: '#DF5353'
+	        }, {
+	            from: data_minimum,
+	            to: data_maximum,
+	            color: '#55BF3B'
+	        }, {
+	            from: data_maximum+0.001,
+	            to: data_maximum+2,
+	            color: '#DF5353'
+	        }]
+	    },
+         plotOptions: {
+            gauge: {
+                dataLabels: {
+                    borderColor: 'transparent',
+                },
+                dial: {
+                    radius: '75%',
+                    backgroundColor: '#000',
+                    borderWidth: 0,
+                    baseWidth: 5,
+                    topWidth: 1,
+                    baseLength: '40%', // of radius
+                    rearLength: '0%'
+                },
+                pivot: {
+                    backgroundColor: '#000',
+                    radius: 7
+                }
+            }
+        },
+	    series: [{
+	        name: 'COT',
+	        data: [data_series],
+	                dataLabels: {
+	                    y:60,
+	            format: '<div style="text-align:center"><span style="font-size:20px;color:' +
+	                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">'+data_label+'</span>',
+	        },
+	        tooltip: {
+	            valueSuffix: ' ᰱC'
+	        }
+	    }],
+		credits:{
+			enabled: false
+		}
+
+	});
+}
+
+
+function chartBoiler(data_series, data_last_update) {
+	Highcharts.chart('boiler', {
+	    chart: {
+	        backgroundColor: '#2A2A2b',
+	        type: 'bar'
+	    },
+	    title: {
+	        text: 'BOILER',
+            style: {
+	            color: '#E0E0E3',
+	            textTransform: 'uppercase',
+	        }
+	    },
+	    subtitle: {
+	        y: 30,
+	        text: '<span style="font-size: 0.75rem;color:#ffffff;text-transform: none;">last: '+data_last_update+'</span>'
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        }
+	    },
+	    yAxis: {
+	        startOnTick: false,
+	        endOnTick: false,
+	        title: {
+	            text: 'Bar',
+            },
+	        tickPositions: [100],
+	        visible:false
+	    },
+	    xAxis: {
+	        visible:false
+	    },
+	    series:data_series,
+	    plotOptions: {
+	        bar: {
+	            X: -10,
+	            Y:-10,
+	            dataLabels: {
+	                useHTML: true,
+	                align: 'left',
+	                enabled: true,
+	                style: {
+	                    textOutline: 0,
+	                    "fontSize": "10px"
+	                },
+	                formatter: function() {
+	                    return ("<span class='datalabel' style='color: white;'>" + this.series.name + "</span><span style='margin-left: 80px;color: white;'>"+this.y+" Bar</span>")
+	                }
+	            },
+	        },
+	        series: {
+	            borderWidth: 0,
+	            pointPadding: 0.4,
+	            dataLabels: {
+	                useHTML: true,
+	                y:-10,
+	                enabled: true,
+	                inside: true,
+	            }
+	            
+	        }
+	    },
+	     credits:{enabled: false}
+	});
+}
+
+function chartCCT(data_series, data_last_update) {
+	Highcharts.chart('cct', {
+	    chart: {
+	        backgroundColor: '#2A2A2b',
+	        type: 'bar'
+	    },
+	    title: {
+	        text: 'CCT',
+            style: {
+	            color: '#E0E0E3',
+	            textTransform: 'uppercase',
+	        }
+	    },
+	    subtitle: {
+	        y: 30,
+	        text: '<span style="font-size: 0.75rem;color:#ffffff;text-transform: none;">last: '+data_last_update+'</span>'
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        }
+	    },
+	    yAxis: {
+	        startOnTick: false,
+	        endOnTick: false,
+	        title: {
+                text: 'Temperatur (C)',
+            },
+	        tickPositions: [100],
+	        visible:false
+	    },
+	    xAxis: {
+	        visible:false
+	    },
+	    series:data_series,
+	    plotOptions: {
+	        bar: {
+	            X: -10,
+	            Y:-10,
+	            dataLabels: {
+	                useHTML: true,
+	                align: 'left',
+	                enabled: true,
+	                style: {
+	                    textOutline: 0,
+	                    "fontSize": "10px"
+	                },
+	                formatter: function() {
+	                    return ("<span class='datalabel' style='color: white;'>" + this.series.name + "</span><span style='margin-left: 100px;color: white;'>"+this.y+" ºC</span>")
+	                }
+	            },
+	        },
+	        series: {
+	            borderWidth: 0,
+	            pointPadding: 0.4,
+	            dataLabels: {
+	                useHTML: true,
+	                y:-10,
+	                enabled: true,
+	                inside: true,
+	            }
+	            
+	        }
+	    },
+	     credits:{enabled: false}
+	});
+}
+
+function chartTekananBPV(data_tick, data_series, data_maximum) {
+	Highcharts.chart('tekananBPV', {
+	    chart:{
+            backgroundColor: '#2A2A2b',
+	        type: 'line'
+	    },
+        title: {
+            text: 'TEKANAN BPV',
+            align: 'left',
+			style: {
+				color: '#E8E6E0'
+			}
+	   },
+	    subtitle: {
+	        text: ''
+	    },  
+	    xAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            },
+                //format: '{value:%H}',
+                formatter: function () {
+	                //var dt = new Date(this.value*1000);
+	                var dt = new Date(this.value);
+					var hr = dt.getHours();
+					return hr;  
+	            }
+	        },
+	        lineColor: '#707073',
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+	          type: 'datetime',
+	          tickInterval: 1,
+	        title: {
+	            style: {
+	                color: '#A0A0A3'
+
+	            }
+	        },
+	    },  
+	    yAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            }
+	        },
+	        startOnTick: false,
+	        endOnTick: false,
+	        tickPositions: data_tick,
+	        lineColor: '#707073',
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+	        tickWidth: 1,
+	        visible: true,
+	        title: {
+                text: 'Tekanan (Bar)',
+	            style: {
+	                color: '#A0A0A3'
+	            }
+	        },
+	        max: data_maximum
+	    },	    
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle',
+	                itemStyle: {
+	            color: '#E0E0E3'
+	        },
+	    },
+	    plotOptions: {
+	        series: {
+	            label: {
+	                connectorAllowed: false
+	            },
+	        }
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        },
+	        formatter: function () {
+				return getDateTooltip(this.x)+this.series.name+" : "+this.y+" Bar";  
+            }
+	    },
+	    series: data_series,
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    },
+	    credits:{
+	       enabled: false
+	    }
+	});
+}
+
+function chartTemperaturCOT(data_tick, data_series, data_maximum){
+
+	Highcharts.chart('tempCOT', {
+	    chart:{
+            backgroundColor: '#2A2A2b',
+	        type: 'line'
+	    },      
+        title: {
+            text: 'TEMPERATUR COT',
+            align: 'left',
+			style: {
+				color: '#E8E6E0'
+			}
+	   },
+	    subtitle: {
+	        text: ''
+	    },   
+	    xAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            },
+                //format: '{value:%H}',
+                formatter: function () {
+	                //var dt = new Date(this.value*1000);
+	                var dt = new Date(this.value);
+					var hr = dt.getHours();
+					return hr;  
+	            }
+	        },
+	        lineColor: '#707073',
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+	          type: 'datetime',
+	            tickInterval: 1,
+	        title: {
+	            style: {
+	                color: '#A0A0A3'
+
+	            }
+	        }
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        },
+	        formatter: function () {
+				return getDateTooltip(this.x)+this.series.name+" : "+this.y+" ºC";  
+            }
+	    }, 
+		yAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            }
+	        },
+	        startOnTick: false,
+	        endOnTick: false,    
+	        lineColor: '#707073',
+	        lineWidth: 1,
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+	        tickWidth: 1,
+	        visible:true,
+	        tickPositions: data_tick,
+	        title: {
+                text: 'Temperatur (C)',
+	            style: {
+	                color: '#A0A0A3'
+	            }
+	        },
+	        max: data_maximum
+	    },
+	    
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle',
+	                itemStyle: {
+	            color: '#E0E0E3'
+	        },
+	    },
+
+	    plotOptions: {
+	        series: {
+	            label: {
+	                connectorAllowed: false
+	            },
+	        }
+	    },
+	    series: data_series,
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    },
+	     credits:{
+	        enabled: false
+	     }
+
+	});
+}
+
+function chartTemperaturCCT(data_tick, data_series, data_maximum){
+	Highcharts.chart('tempCCT', {
+	    chart:{
+            backgroundColor: '#2A2A2b',
+	        type: 'line'
+	    },    
+        title: {
+            text: 'TEMPERATUR CCT',
+            align: 'left',
+			style: {
+				color: '#E8E6E0'
+	      }
+	   },
+	    subtitle: {
+	        text: ''
+	    },    
+        xAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            },
+	                //format: '{value:%H}',
+                formatter: function () {
+	                //var dt = new Date(this.value*1000);
+	                var dt = new Date(this.value);
+					var hr = dt.getHours();
+					return hr;  
+	            }
+	        },
+	        lineColor: '#707073',
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+            type: 'datetime',
+            tickInterval: 1,
+	        title: {
+	            style: {
+	                color: '#A0A0A3'
+	            }
+	        }
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        },
+	        formatter: function () {
+				return getDateTooltip(this.x)+this.series.name+" : "+this.y+" ºC";  
+            }
+	    },
+	    yAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            }
+	        },
+	        startOnTick: false,
+	        endOnTick: false,    
+	        tickPositions: data_tick,
+	        lineColor: '#707073',
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+	        tickWidth: 1,
+          	visible: true,
+	        title: {
+                text: 'Temperatur (C)',
+	            style: {
+	                color: '#A0A0A3'
+	            }
+	        },
+	        max: data_maximum
+	    },
+	    legend: {
+	    	align: 'right',
+        	verticalAlign: 'top',
+        	layout: 'vertical',
+	        x: 70,
+	        y: -110,
+        	floating: true,
+            itemStyle: {
+            	fontSize:'10px',
+	            color: '#E0E0E3'
+	        },
+	    },
+	    plotOptions: {
+	        series: {
+	            label: {
+	                connectorAllowed: false
+	            },
+	        }
+	    },
+	    series: data_series,
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    },
+	     credits:{
+	        enabled: false
+	     }
+
+	});
+}
+
+function chartSkalaVnotch(data_series){
+	 Highcharts.chart('skalaVnotch', {
+	    chart:{
+            backgroundColor: '#2A2A2b',
+	        type: 'line'
+	    },
+	        
+        title: {
+            text: 'SKALA V-NOTCH',
+            align: 'left',
+			style: {
+				color: '#E8E6E0'
+	      }
+	   },
+	    subtitle: {
+	        text: ''
+	    },
+	    tooltip: {
+	        style: {
+	            color: 'white',
+	            fontWeight: 'bold'
+	        },
+	        formatter: function () {
+				return getDateTooltip(this.x)+this.series.name+" : "+this.y;  
+            }
+	    },    
+        xAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            },
+                //format: '{value:%H}',
+                formatter: function () {
+	                //var dt = new Date(this.value*1000);
+	                var dt = new Date(this.value);
+					var hr = dt.getHours();
+					return hr;  
+	            }
+	        },
+	        lineColor: '#707073',
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+	            type: 'datetime',
+	            tickInterval: 2,
+	        title: {
+	            style: {
+	                color: '#A0A0A3'
+
+	            }
+	        }
+	    },  
+	     yAxis: {
+	        gridLineColor: '#707073',
+	        labels: {
+	            style: {
+	                color: '#E0E0E3'
+	            }
+	        },
+	        lineColor: '#707073',
+	        minorGridLineColor: '#505053',
+	        tickColor: '#707073',
+	        tickWidth: 1,
+	          visible: false,
+	        title: {
+	                        text: '',
+	            style: {
+	                color: '#A0A0A3'
+	            }
+	        },
+	        
+	    },
+	    legend: {
+	    	align: 'right',
+        	verticalAlign: 'top',
+        	layout: 'vertical',
+	        x: 70,
+	        y: -100,
+        	floating: true,
+            itemStyle: {
+            	fontSize:'10px',
+	            color: '#E0E0E3'
+	        },
+	    },
+	    plotOptions: {
+	        series: {
+	            label: {
+	                connectorAllowed: false
+	            },
+	        }
+	    },
+	    series: data_series,
+	        
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    },
+	     credits:{
+	        enabled: false
+	     }
+	});
+}
+
+
+
+
+function getColor(minimum,maximum,value) {
+    var color = "#4CAF50";
+    //if(value != 0 && (value < minimum || value > maximum)){
+    if(value < minimum || value > maximum){
+        color = {linearGradient: [0, 0, 500, 500],stops: [[0, 'rgb(222, 78, 84)'], [1, 'rgb(222, 78, 115)']]};
+    }
+    return color;
+}
+
+	function intervalChart(){
+
+		$.ajax({
+				url: 'http://10.23.0.92/milli2/Devcontroller2/getLastUpdate/SPP1',
+        		type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					$('#hour_last_update').html(data.lastupdate);
+					//$('#hour_last_update').html(data.lastupdate);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		
+		// $.ajax({
+		// 		url: 'php echo base_url(); ?>Devcontroller2/chart_jsLaras/SPP1',
+		// 		success: function(data){
+		// 			eval(data);
+		// 		},
+		// 		error: function(data){
+		// 			console.log(data);
+		// 		},
+		// 		complete: function(data){
+		// 			console.log(data);
+		// 		}
+		// 	});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller1TekananBoiler/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart1TekananBoiler/SPP1',
+        		type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					// console.log('array: ');
+					// console.log(data.tekanan_boiler_array);
+					// console.log(data.tekanan_boiler_tick_array);
+					console.log(data.tekanan_boiler_maximum);
+					chartTekananBoiler(data.tekanan_boiler_tick_array, data.tekanan_boiler_array, data.tekanan_boiler_tick_maximum);
+
+					//console.log(data);
+					//console.log(JSON.stringify(data));
+					
+					//console.log(JSON.stringify(data.tekanan_boiler_tick));
+					//console.log(JSON.stringify(data.tekanan_boiler));
+
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		// $.ajax({
+	 //        url: 'http://10.23.0.92/milli2/Devcontroller2/Chart1TekananBoiler/SPP1',
+	 //        type: 'GET',
+	 //        async: true,
+	 //        dataType: "json",
+	 //        success: function( data ) {
+	 //            chartTekananBoiler(data.tekanan_boiler_tick, data.tekanan_boiler);
+	 //        }
+	 //    });
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2/Devcontroller2Boiler/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart2Boiler/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					// var processed_json = new Array();
+					// for (i = 0; i < data.boiler_array.length; i++){
+     //                    console.log(data.boiler_array[i].value);
+     //                    processed_json.push([data.boiler_array[i].key, data.boiler_array[i].value]);
+     //                }
+     //                console.log('processed_json: ');
+     //                console.log(processed_json);
+                 
+
+					chartBoiler(data.boiler_array, data.boiler_last_update);
+
+					// console.log('Boiler : ');
+					// console.log(data);
+					// console.log(data.boiler_array);
+					//eval(data);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		// $.ajax({
+		// 		url: 'http://10.23.0.92/milli2/Devcontroller2Boiler1/chart_js/SPP1',
+		// 		success: function(data){
+		// 			eval(data);
+		// 		},
+		// 		error: function(data){
+		// 			console.log(data);
+		// 		},
+		// 		complete: function(data){
+		// 			console.log(data);
+		// 		}
+		// 	});
+
+		// $.ajax({
+		// 		url: 'http://10.23.0.92/milli2//Devcontroller3Boiler2/chart_js/SPP1',
+		// 		success: function(data){
+		// 			eval(data);
+		// 		},
+		// 		error: function(data){
+		// 			console.log(data);
+		// 		},
+		// 		complete: function(data){
+		// 			console.log(data);
+		// 		}
+		// 	});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller4Dilution/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart4Dilution/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					//chartDilutionPress('dilution', 'DILUTION', data.dilution, data.dilution_last_update);
+					if(data.dilution_tipe == 1){
+						chartDilutionPress('dilution', 'DILUTION', data.dilution, data.dilution_last_update);
+					}else{
+						chartDilutionPress_ver2('dilution', 'DILUTION', data.dilution, data.dilution_last_update, 'cm');
+					}
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller5SkalaVnotch/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart5SkalaVnotch/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					// console.log(data.vnotch1_array);
+					// console.log(data.vnotch1_dilution_array);
+					chartSkalaVnotch(data.vnotch1_array);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller6TekananBPV/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart6TekananBPV/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartTekananBPV(data.tekanan_bpv_tick_array, data.tekanan_bpv_array, data.tekanan_bpv_tick_max);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller7BPV/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart7BPV/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartBPV(parseFloat(data.bpv), data.bpv_label, parseFloat(data.bpv_minimum), parseFloat(data.bpv_maximum), data.bpv_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller8Peak1/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart8Stz1Peak1/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('peak1', 'STZ1-PEAK1', data.peak1_minimum, data.peak1_maximum, data.peak1, data.peak1_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller8Stz2Peak1/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart8Stz2Peak1/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('stz2peak1', 'STZ2-PEAK1', data.peak1_minimum, data.peak1_maximum, data.peak1, data.peak1_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller8Stz3Peak1/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart8Stz3Peak1/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('stz3peak1', 'STZ3-PEAK1', data.peak1_minimum, data.peak1_maximum, data.peak1, data.peak1_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller8Stz4Peak1/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart8Stz4Peak1/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('stz4peak1','STZ4-PEAK1', data.peak1_minimum, data.peak1_maximum, data.peak1, data.peak1_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller9Press/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart9Press/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					if(data.press_tipe == 1){
+						chartDilutionPress('press', 'PRESS', data.press, data.press_last_update);
+					}else{
+						chartDilutionPress_ver2('press', 'PRESS', data.press, data.press_last_update, 'unit');
+					}
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller10TemperaturCOT/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart10TemperaturCOT/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartTemperaturCOT(data.temperatur_cot_tick_array, data.temperatur_cot_array, data.temperatur_cot_tick_maximum);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller11COT/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart11COT/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartCOT(parseFloat(data.cot), data.cot_label, parseFloat(data.cot_minimum), parseFloat(data.cot_maximum), data.cot_last_update)
+
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller12Peak2/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart12Stz1Peak2/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('peak2', 'STZ1-PEAK2', data.peak2_minimum, data.peak2_maximum, data.peak2, data.peak2_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller12Stz2Peak2/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart12Stz2Peak2/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('stz2peak2', 'STZ2-PEAK2', data.peak2_minimum, data.peak2_maximum, data.peak2, data.peak2_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller12Stz3Peak2/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart12Stz3Peak2/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('stz3peak2','STZ3-PEAK2', data.peak2_minimum, data.peak2_maximum, data.peak2, data.peak2_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller12Stz4Peak2/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart12Stz4Peak2/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('stz4peak2', 'STZ4-PEAK2', data.peak2_minimum, data.peak2_maximum, data.peak2, data.peak2_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		// $.ajax({
+		// 		url: 'http://10.23.0.92/milli2//Devcontroller13Sterilizer/chart_js/SPP1',
+		// 		success: function(data){
+		// 			eval(data);
+		// 		},
+		// 		error: function(data){
+		// 			console.log(data);
+		// 		},
+		// 		complete: function(data){
+		// 			console.log(data);
+		// 		}
+		// 	});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller14TemperaturCCT/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart14TemperaturCCT/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartTemperaturCCT(data.temperatur_cct_tick_array, data.temperatur_cct_array, data.temperatur_cct_tick_maximum);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller15CCT/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart15CCT/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartCCT(data.cct_array, data.cct_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller16Peak3/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart16Stz1Peak3/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('peak3', 'STZ1-PEAK3', data.peak3_minimum, data.peak3_maximum, data.peak3, data.peak3_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller16Stz2Peak3/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart16Stz2Peak3/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('stz2peak3', 'STZ2-PEAK3', data.peak3_minimum, data.peak3_maximum, data.peak3, data.peak3_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller16Stz3Peak3/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart16Stz3Peak3/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					chartPeak('stz3peak3', 'STZ3-PEAK3', data.peak3_minimum, data.peak3_maximum, data.peak3, data.peak3_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+
+		$.ajax({
+				//url: 'http://10.23.0.92/milli2//Devcontroller16Stz4Peak3/chart_js/SPP1',
+				url: 'http://10.23.0.92/milli2/Devcontroller2/Chart16Stz4Peak3/SPP1',
+				type: 'GET',
+        		async: true,
+        		dataType: "json",
+				success: function(data){
+					// console.log(data.peak3_minimum);
+					// console.log(data.peak3_maximum);
+					// console.log(data.peak3);
+					// console.log(data.peak3_last_update);
+					chartPeak('stz4peak3', 'STZ4-PEAK3', data.peak3_minimum, data.peak3_maximum, data.peak3, data.peak3_last_update);
+				},
+				error: function(data){
+					console.log(data);
+				},
+				// complete: function(data){
+				// 	console.log(data);
+				// }
+			});
+	}
+	
+	function updateTime(){
+		const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+		  "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+		];
+		var d = new Date();
+		$('#time').html(addZero(d.getDate())+"-"+monthNames[d.getMonth()]+"-"+d.getFullYear()+" "+addZero(d.getHours())+":"+addZero(d.getMinutes())+":"+addZero(d.getSeconds()));
+		//$('#time').html(addZero(d.getDate())+"-"+monthNames[d.getMonth()]+"-"+d.getFullYear()+" "+addZero(d.getHours())+":"+addZero(d.getMinutes()));
+	}
+
+	function addZero(i) {
+	    if (i < 10) {
+	        i = "0" + i;
+	    }
+	    return i;
+	}
+	
+	$(document).ready(function(){
+		setRefresh();
+		setInterval(setRefresh, 1000);
+
+		intervalChart();
+		updateTime();
+		setInterval(updateTime, 1000);
+		setInterval(intervalChart, 900000);
+	});
+
+	function setRefresh(){
+		var date = new Date();
+		var hour = date.getHours();
+    	var minutes = date.getMinutes();
+    	var second = date.getSeconds();
+    	// if ( !minutes%15 ) location.reload(); // if minutes is a multiple of 15
+    	if(parseInt(hour) == 0 && parseInt(minutes) == 0 && parseInt(second) == 0){
+    		location.reload();	
+    	} 
+    	else if(parseInt(hour) == 7 && parseInt(minutes) == 0 && parseInt(second) == 0){
+    		location.reload();
+    	}
+    	else if(parseInt(hour) == 12 && parseInt(minutes) == 30 && parseInt(second) == 0){
+    		location.reload();
+    	}
+    	else if(parseInt(hour) == 16 && parseInt(minutes) == 30 && parseInt(second) == 0){
+    		location.reload();
+    	}
+
+	}
+	
+</script>
+ 
+</body>
+</html>

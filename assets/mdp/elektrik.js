@@ -1,0 +1,15 @@
+// ALTER TABLE`master_unit`
+// DROP`kw`,
+//     DROP`class`,
+//     DROP`type_starter`,
+//     DROP`mccb`,
+//     DROP`contactor_line`,
+//     DROP`contactor_delta`,
+//     DROP`contactor_star`,
+//     DROP`kabel`,
+//     DROP`drive`,
+//     DROP`tipe_drive`,
+//     DROP`kapasitas`,
+//     DROP`rasio_in`,
+//     DROP`rasio_out`,
+//     DROP`spesifikasi`;
