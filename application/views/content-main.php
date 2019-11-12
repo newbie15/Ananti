@@ -76,6 +76,7 @@
           </div>
         </div>
         <!-- ./col -->
+
       </div>
 
       <div class="row">
@@ -91,65 +92,74 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="col-xs-6">
-            <div class="info-box bg-aqua">
-              <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Bookmarks</span>
-                <span class="info-box-number">41,410</span>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
-                </div>
-                    <span class="progress-description">
-                      70% Increase in 30 Days
-                    </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <div class="col-xs-6">
-            <div class="info-box bg-aqua">
-              <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Bookmarks</span>
-                <span class="info-box-number">41,410</span>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
-                </div>
-                    <span class="progress-description">
-                      70% Increase in 30 Days
-                    </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <div class="col-xs-6">
-            <div class="info-box bg-aqua">
-              <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Bookmarks</span>
-                <span class="info-box-number">41,410</span>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
-                </div>
-                    <span class="progress-description">
-                      70% Increase in 30 Days
-                    </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
+        <div class="col-md-3">
+
         </div>
 
+        <div class="col-md-3">
+        <div class="box box-default">
+          <div class="box-header with-border">
+            <h3 class="box-title">Mill Problem</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="row">
+              <div id="donut-chart" style="height: 250px; padding: 0px; position: relative;"><canvas class="flot-base" width="509" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 509.5px; height: 300px;"></canvas><canvas class="flot-overlay" width="509" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 509.5px; height: 300px;"></canvas><span class="pieLabel" id="pieLabel0" style="position: absolute; top: 71px; left: 313.352px;"><div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">Series2<br>30%</div></span><span class="pieLabel" id="pieLabel1" style="position: absolute; top: 211px; left: 291.352px;"><div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">Series3<br>20%</div></span><span class="pieLabel" id="pieLabel2" style="position: absolute; top: 130px; left: 132.352px;"><div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">Series4<br>50%</div></span></div>
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">High Maintenance Unit</h3>
 
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <ul class="products-list product-list-in-box">
+                <li class="item">
+                  <div>
+                    <a href="javascript:void(0)" class="product-title">
+                    <span id="n1">Samsung TV</span> <span class="label label-danger pull-right" id="v1">$1800</span></a>
+                  </div>
+                </li>
+                <!-- /.item -->
+                <li class="item">
+                  <div>
+                    <a href="javascript:void(0)" class="product-title">
+                    <span id="n2">Bicycle</span> <span class="label label-warning pull-right" id="v2">$700</span></a>
+                  </div>
+                </li>
+                <!-- /.item -->
+                <li class="item">
+                  <div>
+                    <a href="javascript:void(0)" class="product-title">
+                    <span id="n3">Xbox One</span> <span class="label label-info pull-right" id="v3">$350</span></a>
+                  </div>
+                </li>
+                <!-- /.item -->
+              </ul>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer text-center">
+              <a href="<?php echo base_url("high_maintenance"); ?>" class="uppercase">View All Rank</a>
+            </div>
+            <!-- /.box-footer -->
+          </div>
 
+        </div>
 
-
-      </div> -->
+      </div>
 
       <!-- /.row -->
     </section>

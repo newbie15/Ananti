@@ -1,5 +1,5 @@
 $(function () {
-    var breakdown_chart = $("#donut-chart");
+    var problem_chart = $("#donut-chart");
 
     var unit_problem = $("#unit_problem");
     var wo_unfinished = $("#wo_unfinished");
@@ -29,6 +29,59 @@ $(function () {
                 { type: 'text' },
             ],
         });
+
+        d['problem_chart'] = [];
+        var dt = [];
+
+        console.log(d['station_list']);
+        var i = 0;
+
+        d['station_list'].forEach(element => {
+            dt[i] = {
+                label: element[0],
+                data: parseInt(element[1])
+            }
+            i++;
+        });
+
+        $.plot('#donut-chart', dt, {
+            series: {
+                pie: {
+                    show: true,
+                    radius: 1,
+                    label: {
+                        show: true,
+                        radius: 3 / 4,
+                        // formatter: labelFormatter,
+                        background: {
+                            opacity: 0.5,
+                            color: '#000'
+                        }
+                    }
+                }
+            },
+            legend: {
+                show: false
+            }
+        });
+
+
+        // d['high_maintenance_unit'].forEach(element =>{
+            
+        // });
+        try {
+            $("#n1").html(d['high_maintenance_unit'][0][0]);
+            $("#v1").html(d['high_maintenance_unit'][0][1]);
+            $("#n2").html(d['high_maintenance_unit'][1][0]);
+            $("#v2").html(d['high_maintenance_unit'][1][1]);
+            $("#n3").html(d['high_maintenance_unit'][2][0]);
+            $("#v3").html(d['high_maintenance_unit'][2][1]);
+        }
+        catch (err) {
+            console.log(err.message);
+        }
+
+
     }
 
     function pabrik_refresh(){

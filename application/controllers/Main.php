@@ -26,7 +26,7 @@ class Main extends CI_Controller {
 		$this->load->database();
 		$this->load->helper('url');
 
-		$this->load->library('grocery_CRUD');
+		// $this->load->library('grocery_CRUD');
 	}
 
 	public function _example_output($output = null)
@@ -125,13 +125,39 @@ class Main extends CI_Controller {
 			$job_list[$i++][3] = $row->mpp;
 		}
 
+		// SELECT id_pabrik, station, COUNT(station) as jumlah FROM `m_wo` GROUP by station
+		$bulan = date('m');
+		$i = 0;
+		$station_list = [];
+		// $query = $this->db->query("SELECT station, COUNT(station) as jumlah FROM `m_wo` WHERE `tanggal`  LIKE '%-".$bulan."-%' and id_pabrik = '$nama_pabrik' GROUP by station");
+		$query = $this->db->query("SELECT station, COUNT(station) as jumlah FROM `m_wo` WHERE `status`  = 'open' and id_pabrik = '$nama_pabrik' GROUP by station");
+		foreach ($query->result() as $row)
+		{
+			$station_list[$i][0] = $row->station;
+			$station_list[$i++][1] = $row->jumlah;
+		}
+
+		$bulan = date('m');
+		$i = 0;
+		$high_maintenance_list = [];
+		// $query = $this->db->query("SELECT station, COUNT(station) as jumlah FROM `m_wo` WHERE `tanggal`  LIKE '%-".$bulan."-%' and id_pabrik = '$nama_pabrik' GROUP by station");
+		$query = $this->db->query("SELECT unit, COUNT(unit) as jumlah FROM `m_wo` WHERE `status`  = 'open' and id_pabrik = '$nama_pabrik' GROUP by unit order by jumlah desc limit 0,3");
+		foreach ($query->result() as $row)
+		{
+			$high_maintenance_list[$i][0] = $row->unit;
+			$high_maintenance_list[$i++][1] = $row->jumlah;
+		}
+
+
 		// $query = $this->db->query("SELECT jenis_breakdown,count(id) as jumlah FROM `m_activity` where tanggal LIKE '%$t[1]%' and id_pabrik = '$nama_pabrik' group by jenis_breakdown");
 
 		$out['wo_unfinished'] = $jumlah_no_wo;
 		$out['unit_problem'] = $jumlah_unit_trouble;
 		$out['wo_baru'] = $jumlah_wo_baru;
 		$out['mill_avaibility'] = $mill_avaibility;
-		$out['job_today'] = $job_list; 
+		$out['job_today'] = $job_list;
+		$out['station_list'] = $station_list; 
+		$out['high_maintenance_unit'] = $high_maintenance_list;
 
 		// print_r($out);
 		// echo $m;

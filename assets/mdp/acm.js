@@ -9,8 +9,10 @@ $(document).ready(function () {
     data_detailnya = "";
 
     function refresh(data) {
+        console.log("refresh data");
+        console.log(data);
         if (data.length<1) {
-            console.log("yes");
+            console.log("yes kurang dari 1");
             $.ajax({
                 method: "POST",
                 url: BASE_URL + "unit/ajax_default_list",
@@ -19,6 +21,8 @@ $(document).ready(function () {
                     id_station: $("#station").val(),
                 }
             }).done(function (msg) {
+                console.log("ini refresh");
+
                 console.log(msg);
                 data = JSON.parse(msg);
                 console.log(data);
@@ -121,6 +125,7 @@ $(document).ready(function () {
                 y: $("#tahun").val(),
             }
         }).done(function (msg) {
+            console.log("ini ajax refresh");
             console.log(msg);
             data = JSON.parse(msg);
             console.log(data);
@@ -172,5 +177,6 @@ $(document).ready(function () {
 
     station_refresh();
     ajax_refresh();
+    // ajax_refresh();
 
 });
