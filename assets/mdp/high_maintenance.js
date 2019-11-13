@@ -19,7 +19,7 @@ $(document).ready(function(){
 
     function unit_refresh(){
         // console.log(BASE_URL + "unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()));
-        $("#unit").load(BASE_URL + "unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
+        $("#unit").load(BASE_URL + "unit/ajax_dropdown_all/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -41,18 +41,21 @@ $(document).ready(function(){
         var id_pabrik = $("#pabrik").val();
         var id_station = $("#station").val();
         var id_unit = $("#unit").val();
-        console.log(BASE_URL + 'index.php/historical/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit));
+        var tahun = $("#tahun").val();
+        var bulan = $("#bulan").val();
+
+        console.log(BASE_URL + 'index.php/high_maintenance/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit) + "/" + tahun + "/" + bulan);
 
         // jexcel(document.getElementById('#my-spreadsheet'), {
         $("#my-spreadsheet").html("");
         jexcel(document.getElementById('my-spreadsheet'), {
-            csv: BASE_URL + 'index.php/historical/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit),
+            csv: BASE_URL + 'index.php/high_maintenance/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit) + "/" + tahun + "/" + bulan,
             csvHeaders: true,
             search: true,
             pagination: 10,
             columns: [
                 { type: 'text', width: 150 },
-                { type: 'text', width: 200 },
+                { type: 'text', width: 150 },
                 { type: 'text', width: 250 },
                 { type: 'text', width: 100 },
                 { type: 'text', width: 100 },
@@ -100,26 +103,31 @@ $(document).ready(function(){
             i++;
         });
 
-        $.plot('#donut-chart', dt, {
-            series: {
-                pie: {
-                    show: true,
-                    radius: 1,
-                    label: {
+        try {
+            $.plot('#donut-chart', dt, {
+                series: {
+                    pie: {
                         show: true,
-                        radius: 3 / 4,
-                        // formatter: labelFormatter,
-                        background: {
-                            opacity: 0.5,
-                            color: '#000'
+                        radius: 1,
+                        label: {
+                            show: true,
+                            radius: 3 / 4,
+                            // formatter: labelFormatter,
+                            background: {
+                                opacity: 0.5,
+                                color: '#000'
+                            }
                         }
                     }
+                },
+                legend: {
+                    show: false
                 }
-            },
-            legend: {
-                show: false
-            }
-        });
+            });
+        } catch (error) {
+            console.log(error.toString());
+        }
+
     }
 
     $("#simpan").click(function () {
@@ -164,11 +172,13 @@ $(document).ready(function(){
         $("#tahun").html(shtml);
         $("#tahun").val(syear.toString());
 
-        graph_refresh();
+        // graph_refresh();
+        refresh();
     });
 
     $("#bulan").change(function(){
-        graph_refresh();
+        // graph_refresh();
+        refresh();
     });
 
     var tgl = new Date();

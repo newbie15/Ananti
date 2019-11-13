@@ -65,10 +65,6 @@ $(function () {
             }
         });
 
-
-        // d['high_maintenance_unit'].forEach(element =>{
-            
-        // });
         try {
             $("#n1").html(d['high_maintenance_unit'][0][0]);
             $("#v1").html(d['high_maintenance_unit'][0][1]);

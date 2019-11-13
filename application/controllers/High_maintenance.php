@@ -117,18 +117,33 @@ class High_maintenance extends CI_Controller {
 		$id_pabrik = $this->uri->segment(3);//['id_pabrik'];
 		$id_station = urldecode($this->uri->segment(4));//['id_station'];
 		$id_unit = urldecode($this->uri->segment(5));//['id_unit'];
+		$tahun = urldecode($this->uri->segment(6));
+		$bulan = urldecode($this->uri->segment(7));
 		// echo("SELECT no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND unit = '$id_unit';");
 
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$query = $this->db->query("SELECT no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND unit = '$id_unit';");
+		if($bulan=="00"){
+			if($id_unit=="-- ALL --"){
+				$query = $this->db->query("SELECT unit,no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND tanggal LIKE '%$tahun-%';");
+			}else{
+				$query = $this->db->query("SELECT unit,no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND tanggal LIKE '%$tahun-%' AND unit = '$id_unit';");
+			}
+		}else{
+			if($id_unit=="-- ALL --"){
+				$query = $this->db->query("SELECT unit,no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND tanggal LIKE '%$tahun-$bulan%';");			
+			}else{
+				$query = $this->db->query("SELECT unit,no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND tanggal LIKE '%$tahun-$bulan%' AND unit = '$id_unit';");
+			}
+		}
 
 		$i = 0;
 		$d = [];
 			
-		echo "No WO,problem,desc_masalah,hm,kategori,status\n";
+		echo "Unit,No WO,problem,desc_masalah,hm,kategori,status\n";
 
 		foreach ($query->result() as $row)
 		{
+			echo $row->unit; echo ",";
 			echo $row->no_wo; echo ",";
 			echo $row->problem; echo ",";
 			echo $row->desc_masalah; echo ",";
