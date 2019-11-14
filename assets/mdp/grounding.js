@@ -36,6 +36,29 @@ $(document).ready(function () {
             // onchange: handler,
             allowInsertColumn: false,	
         });
+        $('#my-G').jexcel('updateSettings', {
+            table: function (instance, cell, col, row, val, id) {
+                if (col > 1 && col < 14) {
+                    var nilai = parseFloat(val);
+                    // console.log(nilai);
+                    if (!isNaN(nilai)) {
+                        // console.log(val);
+                        if (nilai <= 1.0) {
+                            $(cell).css('background-color', '#1aab68');
+                            $(cell).css('color', '#fff');
+                        } else if (nilai <= 3.0) {
+                            $(cell).css('background-color', '#ffff00');
+                            $(cell).css('color', '#000');
+                        } else {
+                            $(cell).css('background-color', '#ff0000');
+                            $(cell).css('color', '#fff');
+                        }
+                    } else {
+                        $(cell).css('background-color', '#ffffff');
+                    }
+                }
+            }
+        });
     }
 
     $("#pabrik").change(function () {

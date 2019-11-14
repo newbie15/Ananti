@@ -36,6 +36,42 @@ $(document).ready(function () {
             // onchange: handler,
             allowInsertColumn: false,	
         });
+
+        $('#my-G').jexcel('updateSettings', {
+            table: function (instance, cell, col, row, val, id) {
+                if (col > 1 && col < 14) {
+                    if (val != "0") {
+                        var a = 0;
+                        var b = 0;
+                        if (data == [] || data == null) {
+                            a = 0;
+                            b = 0;
+                        } else {
+                            try {
+                                a = data[row];
+                                b = parseInt(a[1]);
+                                console.log(b);
+                            } catch (error) {
+
+                            }
+                        }
+                        if (val < ((b * 1000 / (1.73 * 380)) * 0.5)) {
+                            $(cell).css('background-color', '#ff0000');
+                            $(cell).css('color', '#fff');
+                        } else if (val <= ((b * 1000 / (1.73 * 380)) * 0.75)) {
+                            $(cell).css('background-color', '#ffff00');
+                            $(cell).css('color', '#000');
+                        } else {
+                            $(cell).css('background-color', '#1aab68');
+                            $(cell).css('color', '#fff');
+                        }
+                    } else {
+                        $(cell).css('background-color', '#ffffff');
+                    }
+                }
+            }
+        });
+
     }
 
     $("#pabrik").change(function () {
