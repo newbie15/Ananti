@@ -80,7 +80,10 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6">
+          <div id="calendar" style="background-color:#fff"></div>
+        </div>
+        <div class="col-lg-6">
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Plan Job Hari</h3> &nbsp;&nbsp;
@@ -92,39 +95,38 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
 
+        <div class="col-md-3">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Mill Problem</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div id="donut-chart" style="height: 250px; padding: 0px; position: relative;"><canvas class="flot-base" width="509" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 509.5px; height: 300px;"></canvas><canvas class="flot-overlay" width="509" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 509.5px; height: 300px;"></canvas><span class="pieLabel" id="pieLabel0" style="position: absolute; top: 71px; left: 313.352px;"><div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">Series2<br>30%</div></span><span class="pieLabel" id="pieLabel1" style="position: absolute; top: 211px; left: 291.352px;"><div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">Series3<br>20%</div></span><span class="pieLabel" id="pieLabel2" style="position: absolute; top: 130px; left: 132.352px;"><div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">Series4<br>50%</div></span></div>
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+          </div>
         </div>
 
         <div class="col-md-3">
-        <div class="box box-default">
-          <div class="box-header with-border">
-            <h3 class="box-title">Mill Problem</h3>
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <div class="row">
-              <div id="donut-chart" style="height: 250px; padding: 0px; position: relative;"><canvas class="flot-base" width="509" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 509.5px; height: 300px;"></canvas><canvas class="flot-overlay" width="509" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 509.5px; height: 300px;"></canvas><span class="pieLabel" id="pieLabel0" style="position: absolute; top: 71px; left: 313.352px;"><div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">Series2<br>30%</div></span><span class="pieLabel" id="pieLabel1" style="position: absolute; top: 211px; left: 291.352px;"><div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">Series3<br>20%</div></span><span class="pieLabel" id="pieLabel2" style="position: absolute; top: 130px; left: 132.352px;"><div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">Series4<br>50%</div></span></div>
-            </div>
-            <!-- /.row -->
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <div class="box box-primary">
+          <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">High Maintenance Unit</h3>
-
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
             </div>
-            <!-- /.box-header -->
+              <!-- /.box-header -->
             <div class="box-body">
               <ul class="products-list product-list-in-box">
                 <li class="item">
@@ -150,14 +152,19 @@
                 <!-- /.item -->
               </ul>
             </div>
-            <!-- /.box-body -->
+              <!-- /.box-body -->
             <div class="box-footer text-center">
               <a href="<?php echo base_url("high_maintenance"); ?>" class="uppercase">View All Rank</a>
             </div>
-            <!-- /.box-footer -->
+              <!-- /.box-footer -->
           </div>
-
         </div>
+
+
+
+
+
+      </div>
 
       </div>
 

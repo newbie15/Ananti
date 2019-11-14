@@ -38,6 +38,7 @@ class Main extends CI_Controller {
 	{
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
+			base_url("assets/fullcalendar-3.9.0/fullcalendar.min.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
 		];
 
@@ -47,10 +48,17 @@ class Main extends CI_Controller {
 			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/adminlte/bower_components/Flot/jquery.flot.js"),
 			base_url("assets/adminlte/bower_components/Flot/jquery.flot.pie.js"),
+
+			base_url("assets/fullcalendar-3.9.0/lib/moment.min.js"),
+			base_url("assets/fullcalendar-3.9.0/fullcalendar.min.js"),
+			base_url("assets/fullcalendar-3.9.0/locale-all.js"),
+
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 
 			base_url("assets/mdp/main.js"),
+			base_url("assets/mdp/main-fullcalendar.js"),
+
 		];
 
 		$output['content'] = '';
