@@ -1,4 +1,106 @@
 $(document).ready(function(){
+
+    var starter = [];
+    starter['kw0.25'] = ['DOL', '-', '-', '-', '-'];
+    starter['kw0.37'] = ['DOL', '-', '-', '-', '-'];
+    starter['kw0.56'] = ['DOL', '-', '-', '-', '-'];
+    starter['kw0.75'] = ['DOL', '-', '-', '-', '-'];
+    starter['kw1.1']  = ['DOL', '-', '-', '-', 'INV'];
+    starter['kw1.5']  = ['DOL', '-', '-', '-', 'INV'];
+    starter['kw1.85'] = ['DOL', '-', '-', '-', 'INV'];
+    starter['kw2.2']  = ['DOL', '-', '-', '-', 'INV'];
+    starter['kw3.0']  = ['DOL', '-', '-', '-', 'INV'];
+    starter['kw3.7']  = ['DOL', '-', '-', '-', 'INV'];
+    starter['kw4.0']  = ['DOL', '-', '-', '-', 'INV'];
+    starter['kw5.5']  = ['DOL','SD', '-', '-', 'INV'];
+    starter['kw7.5']  = ['-' , 'SD', '-', '-', 'INV'];
+    starter['kw9.3']  = ['-' , 'SD', '-', '-', 'INV'];
+    starter['kw10']   = ['-' , 'SD', '-', '-', 'INV'];
+    starter['kw11']   = ['-' , 'SD', '-', '-', 'INV'];
+    starter['kw15']   = ['-' , 'SD', '-', '-', 'INV'];
+    starter['kw18.5'] = ['-' , 'SD', '-', 'SS', 'INV'];
+    starter['kw22']   = ['-' , 'SD', '-', 'SS', 'INV'];
+    starter['kw30']   = ['-' , 'SD', 'AT', 'SS', 'INV'];
+    starter['kw37']   = ['-' , 'SD', 'AT', 'SS', 'INV'];
+    starter['kw45']   = ['-' , 'SD', 'AT', 'SS', 'INV'];
+    starter['kw55']   = ['-' , '-' , 'AT', 'SS', 'INV'];
+    starter['kw75']   = ['-' , '-' , 'AT', 'SS', 'INV'];
+    starter['kw90']   = ['-' , '-' , 'AT', 'SS', 'INV'];
+    starter['kw110']  = ['-' , '-' , 'AT', 'SS', 'INV'];
+    starter['kw132']  = ['-' , '-' , 'AT', 'SS', 'INV'];
+    starter['kw160']  = ['-' , '-' , '-', 'SS', 'INV'];
+    starter['kw200']  = ['-' , '-' , '-', 'SS', 'INV'];
+    starter['kw250']  = ['-' , '-' , '-', 'SS', 'INV'];
+    starter['kw315']  = ['-' , '-' , '-', '-' , 'INV'];
+
+    var mccb = [];
+    // mccb['0.25']        = ['3', '-', '-', '-', '-'];
+    // mccb['0.37']        = ['4', '-', '-', '-', '-'];
+    // mccb['0.56']        = ['4', '-', '-', '-', '-'];
+    // mccb['0.75']        = ['6', '-', '-', '-', '-'];
+    // mccb['1.1']         = ['6', '-', '-', '-', '6'];
+    // mccb['1.5']         = ['9', '-', '-', '-', '9'];
+    // mccb['1.85']        = ['9', '-', '-', '-', '9'];
+    // mccb['2.2']         = ['10', '-', '-', '-', '10'];
+    // mccb['3.0']         = ['14', '-', '-', '-', '14'];
+    // mccb['3.7']         = ['14', '-', '-', '-', '14'];
+    // mccb['4.0']         = ['14', '-', '-', '-', '14'];
+    // mccb['5.5']         = ['16', '16', '-', '-', '16'];
+    // mccb['7.5']         = ['-', '20', '-', '-', '20'];
+    // mccb['9.3']         = ['-', '20', '-', '-', '20'];
+    // mccb['10']          = ['-', '22', '-', '-', '22'];
+    // mccb['11']          = ['-', '22', '-', '-', '22'];
+    // mccb['15']          = ['-', '32', '-', '-', '32'];
+    // mccb['18.5']        = ['-', '40', '-', '40', '40'];
+    // mccb['22']          = ['-', '50', '-', '50', '50'];
+    // mccb['30']          = ['-', '65', '65', '65', '65'];
+    // mccb['37']          = ['-', '65', '65', '65', '65'];
+    // mccb['45']          = ['-', '100', '100', '100', '100'];
+    // mccb['55']          = ['-', '-', '100', '100', '100'];
+    // mccb['75']          = ['-', '-', '150', '150', '150'];
+    // mccb['90']          = ['-', '-', '220', '220', '250'];
+    // mccb['110']         = ['-', '-', '250', '250', '250'];
+    // mccb['132']         = ['-', '-', '250', '250', '250'];
+    // mccb['160']         = ['-', '-', '-', '400', '400'];
+    // mccb['200']         = ['-', '-', '-', '630', '630'];
+    // mccb['250']         = ['-', '-', '-', '630', '630'];
+    // mccb['315']         = ['-', '-', '-', '-', '630'];
+
+    mccb['kw0.25']        = 3;
+    mccb['kw0.37']        = 4;
+    mccb['kw0.56']        = 4;
+    mccb['kw0.75']        = 6;
+    mccb['kw1.1']         = 6;
+    mccb['kw1.5']         = 9;
+    mccb['kw1.85']        = 9;
+    mccb['kw2.2']         = 10;
+    mccb['kw3.0']         = 14;
+    mccb['kw3.7']         = 14;
+    mccb['kw4.0']         = 14;
+    mccb['kw5.5']         = 16;
+    mccb['kw7.5']         = 20;
+    mccb['kw9.3']         = 20;
+    mccb['kw10']          = 22;
+    mccb['kw11']          = 22;
+    mccb['kw15']          = 32;
+    mccb['kw18.5']        = 40;
+    mccb['kw22']          = 50;
+    mccb['kw30']          = 65;
+    mccb['kw37']          = 65;
+    mccb['kw45']          = 100;
+    mccb['kw55']          = 100;
+    mccb['kw75']          = 150;
+    mccb['kw90']          = 250;
+    mccb['kw110']         = 250;
+    mccb['kw132']         = 250;
+    mccb['kw160']         = 400;
+    mccb['kw200']         = 630;
+    mccb['kw250']         = 630;
+    mccb['kw315']         = 630;
+
+    var kw      = null;
+    
+    
     var sukses = function () {
         $(".n_success").show();
         $(".n_success").fadeOut(3000);
@@ -56,7 +158,46 @@ $(document).ready(function(){
                     ]
                 });
 
+                $('#my-spreadsheet').jexcel('updateSettings', {
+                    table: function (instance, cell, col, row, val, id) {
+                        console.log(cell);
+                        console.log(col);
+                        console.log(row);
+                        console.log(val);
+                        console.log(id);
 
+                        if (col > 2 && col < 12) {
+                            // if (val != "0") {
+                            //     var a = 0;
+                            //     var b = 0;
+                            //     if (data == [] || data == null) {
+                            //         a = 0;
+                            //         b = 0;
+                            //     } else {
+                            //         try {
+                            //             a = data[row];
+                            //             b = parseInt(a[1]);
+                            //             console.log(b);
+                            //         } catch (error) {
+
+                            //         }
+                            //     }
+                            //     if (val < ((b * 1000 / (1.73 * 380)) * 0.5)) {
+                            //         $(cell).css('background-color', '#ff0000');
+                            //         $(cell).css('color', '#fff');
+                            //     } else if (val <= ((b * 1000 / (1.73 * 380)) * 0.75)) {
+                            //         $(cell).css('background-color', '#ffff00');
+                            //         $(cell).css('color', '#000');
+                            //     } else {
+                            //         $(cell).css('background-color', '#1aab68');
+                            //         $(cell).css('color', '#fff');
+                            //     }
+                            // } else {
+                            //     $(cell).css('background-color', '#ffffff');
+                            // }
+                        }
+                    }
+                });
             });
 
         }else{
@@ -110,6 +251,106 @@ $(document).ready(function(){
                         // { type: 'text' },
                     ]
                 });
+
+                $('#my-spreadsheet').jexcel('updateSettings', {
+                    table: function (instance, cell, col, row, val, id) {
+                        // console.log(cell);
+                        // console.log(col);
+                        // console.log(row);
+                        // console.log(val);
+                        // console.log(id);
+                        // var kw = null;
+                        // console.log("col :"+ col +" row :"+ row);
+                        if (col > 1 && col < 11) {
+                            if(col==2){
+                                kw = val;
+                            }
+                            if(col==4){
+                                console.log(starter["kw"+kw]);
+                                if(val == "DOL"){
+                                    if (starter["kw" + kw][0] == "DOL") {
+                                        $(cell).css('background-color', '#1aab68');
+                                    }else{
+                                        $(cell).css('background-color', '#ff0000');
+                                    }
+                                }else if (val == "Star-Delta") {
+                                    if (starter["kw" + kw][1] == "SD") {
+                                        $(cell).css('background-color', '#1aab68');
+                                    }else{
+                                        $(cell).css('background-color', '#ff0000');
+                                    }
+                                }else if (val == "Autotrafo") {
+                                    if (starter["kw" + kw][2] == "AT") {
+                                        $(cell).css('background-color', '#1aab68');
+                                    }else{
+                                        $(cell).css('background-color', '#ff0000');
+                                    }
+                                }else if (val == "Softstarter") {
+                                    if (starter["kw" + kw][3] == "SS") {
+                                        $(cell).css('background-color', '#1aab68');
+                                    }else{
+                                        $(cell).css('background-color', '#ff0000');
+                                    }
+                                }else if (val == "Inverter") {
+                                    if (starter["kw" + kw][4] == "INV") {
+                                        $(cell).css('background-color', '#1aab68');
+                                    }else{
+                                        $(cell).css('background-color', '#ff0000');
+                                    }
+                                }
+                            }
+                            if(col==5){
+                                if (kw != undefined) {
+                                    if (val >= mccb["kw" + kw]) {
+                                        console.log(mccb["kw" + kw]);
+                                        if (val >= 1.5 * (mccb["kw" + kw])){
+                                            $(cell).css('background-color', '#ff0');
+                                        }else{
+                                            $(cell).css('background-color', '#1aab68');
+                                        }
+                                    } else {
+                                        if(val>0){
+                                            $(cell).css('background-color', '#ff0000');
+                                        }
+                                    }
+                                }else{
+
+                                }
+                            }
+
+                            // if (val != "0") {
+                            //     var a = 0;
+                            //     var b = 0;
+                            //     if (data == [] || data == null) {
+                            //         a = 0;
+                            //         b = 0;
+                            //     } else {
+                            //         try {
+                            //             a = data[row];
+                            //             b = parseInt(a[1]);
+                            //             console.log(b);
+                            //         } catch (error) {
+
+                            //         }
+                            //     }
+                            //     if (val < ((b * 1000 / (1.73 * 380)) * 0.5)) {
+                            //         $(cell).css('background-color', '#ff0000');
+                            //         $(cell).css('color', '#fff');
+                            //     } else if (val <= ((b * 1000 / (1.73 * 380)) * 0.75)) {
+                            //         $(cell).css('background-color', '#1aab68');
+                            //         $(cell).css('color', '#000');
+                            //     } else {
+                            //         $(cell).css('background-color', '#1aab68');
+                            //         $(cell).css('color', '#fff');
+                            //     }
+                            // } else {
+                            //     $(cell).css('background-color', '#ffffff');
+                            // }
+                        }
+                    }
+                });
+
+
             });
 
         }

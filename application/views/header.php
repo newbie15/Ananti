@@ -153,7 +153,7 @@
             <i class="fa fa-gear"></i> <span>Maintenance</span>
           </a>
           <ul class="treeview-menu" style="display: none;">
-            <!-- <li><a href="<?php echo base_url("feedback_maintenance"); ?>"><i class="fa fa-file"></i>Feedback Maintenance<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
+            <li><a href="<?php echo base_url("pm"); ?>"><i class="fa fa-calendar"></i>Preventive Maintenance<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
             <li><a href="<?php echo base_url("wo"); ?>"><i class="fa fa-industry"></i>Work Order <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
             <li><a href="<?php echo base_url("planing"); ?>"><i class="fa fa-calendar-plus-o"></i>Planning MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
             <li><a href="<?php echo base_url("activity"); ?>"><i class="fa fa-calendar-check-o"></i>Activity MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
