@@ -80,9 +80,9 @@ $(document).ready(function(){
     $("#pabrik").change(function () {
         ajax_refresh();
     });
-    $("#tahun").change(function () {
-        ajax_refresh();
-    });
+    // $("#tahun").change(function () {
+    //     ajax_refresh();
+    // });
     $("#bulan").change(function () {
         ajax_refresh();
     });
@@ -117,8 +117,39 @@ $(document).ready(function(){
     }else{
         $("#bulan").val(m.toString());
     }
+
+    $("#tahun").change(function () {
+        var syear = parseInt($("#tahun").val());
+    	var shtml = null; //"<option>"++"</option>"
+        var start_year = syear - 2;
+        var stop_year = syear + 2;
+        for (var i = start_year; i <= stop_year; i++) {
+            shtml += "<option>" + i + "</option>";
+        }
+        $("#tahun").html(shtml);
+        $("#tahun").val(syear.toString());
+
+        ajax_refresh();
+    });
+
+    var tgl = new Date();
     var y = tgl.getFullYear();
+
+    var shtml = null; //"<option>"++"</option>"
+    var start_year = y - 2;
+    var stop_year = y + 2;
+    for (var i = start_year; i <= stop_year; i++) {
+    	shtml += "<option>" + i + "</option>";
+    }
+    $("#tahun").html(shtml);
+
     $("#tahun").val(y.toString());
+
+
+
+    // var y = tgl.getFullYear();
+    // $("#tahun").val(y.toString());
+
     var d = tgl.getDate();
     if (d < 10) {
         $("#tanggal").val("0" + d.toString());
