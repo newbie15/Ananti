@@ -12,7 +12,7 @@ var DEBUG = 1;
 var BASE_URL = "";
 
 if (DEBUG == 2) {
-    var BASE_URL = "http://192.168.0.6/MDP/";
+    var BASE_URL = "http://167.99.64.44/Ananti/";
 }else if(DEBUG==1){
     var BASE_URL = "http://localhost/ananti/";
 }else{
