@@ -47,10 +47,10 @@
           </select>
           Minggu :
           <select id="minggu">
-            <option>Minggu 1</option>
-            <option>Minggu 2</option>
-            <option>Minggu 3</option>
-            <option>Minggu 4</option>
+            <option value="1">Minggu 1</option>
+            <option value="2">Minggu 2</option>
+            <option value="3">Minggu 3</option>
+            <option value="4">Minggu 4</option>
           </select>
           <!-- Tanggal : 
           <select id="tanggal">
