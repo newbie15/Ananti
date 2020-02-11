@@ -185,11 +185,11 @@
             <i class="fa fa-wrench"></i> <span>Monitoring Mekanik</span>
           </a>
           <ul class="treeview-menu" style="display: none;">
-            <li><a href="<?php echo base_url("oli"); ?>"><i class="fa fa-file"></i>Monitoring Oli<span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-            <li><a href="<?php echo base_url("screwpress"); ?>"><i class="fa fa-file"></i>Screw Press <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-            <li><a href="<?php echo base_url("bunchpress"); ?>"><i class="fa fa-file"></i>Bunch Press <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-            <li><a href="<?php echo base_url("hydrocyclone"); ?>"><i class="fa fa-file"></i>Hydrocyclone <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-            <li><a href="<?php echo base_url("kcp"); ?>"><i class="fa fa-file"></i>KCP <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("vibration"); ?>"><i class="fa fa-file"></i>Vibration<span class="pull-right-container"><small class="label pull-right label-primary">Mingguan</small></span> </a></li>
+            <li><a href="<?php echo base_url("temperature"); ?>"><i class="fa fa-file"></i>Temperature<span class="pull-right-container"><small class="label pull-right label-primary">Mingguan</small></span> </a></li>
+            <li><a href="<?php echo base_url("oiling"); ?>"><i class="fa fa-file"></i>Oiling<span class="pull-right-container"><small class="label pull-right label-primary">Mingguan</small></span> </a></li>
+            <!-- <li><a href="<?php echo base_url("hydrocyclone"); ?>"><i class="fa fa-file"></i>Hydrocyclone<span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("kcp"); ?>"><i class="fa fa-file"></i>KCP <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li> -->
           </ul>
         </li>
         <li class="treeview">

@@ -23,7 +23,7 @@ class Uelektrik extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Asset Mesin";
+		$output['main_title'] = "Data Asset Electromotor & Panel Starter";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),

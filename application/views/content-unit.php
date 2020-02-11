@@ -26,11 +26,11 @@
           <?php echo $dropdown_station; ?>
 
           <br><br>
-          <div style="
+          <!-- <div style="
 						height: 500px;
 						width: 100%;
 						overflow: auto;
-					">
+					"> -->
             <div id='my-spreadsheet'></div>              
         </div>
       </div>
