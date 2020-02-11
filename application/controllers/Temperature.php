@@ -73,7 +73,7 @@ class Temperature extends CI_Controller {
 		$output['dropdown_station'] = "<select id=\"station\"></select>";
 
 		$this->load->view('header',$header);
-		$this->load->view('content-vibration',$output);
+		$this->load->view('content-temperature',$output);
 		$this->load->view('footer',$footer);
 
 	}
@@ -82,45 +82,55 @@ class Temperature extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT unit,hm FROM m_recordhm where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tanggal='$tanggal';");
+		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
+		
+		$tahun = $_REQUEST['y'];
+		$bulan = $_REQUEST['m'];
+		$minggu = $_REQUEST['w'];
+		
+		$query = $this->db->query("SELECT id_unit,gearbox,bearing FROM m_temperature where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tahun='$tahun' AND bulan='$bulan' AND minggu='$minggu';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 			// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->unit; // or methods defined on the 'User' class
-			$d[$i++][1] = $row->hm; // or methods defined on the 'User' class
-			// $d[$i][2] = $row->jenis_breakdown; // or methods defined on the 'User' class
-			// $d[$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
+			$d[$i][0] = $row->id_unit; // or methods defined on the 'User' class
+			$d[$i][1] = $row->gearbox; // or methods defined on the 'User' class
+			$d[$i++][2] = $row->bearing; // or methods defined on the 'User' class			
 		}
 		echo json_encode($d);
 	}
 
 	public function simpan()
 	{
-		$pabrik = $_REQUEST['pabrik'];
-		$station = $_REQUEST['station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_recordhm` where id_pabrik = '$pabrik' AND id_station = '$station' AND tanggal = '$tanggal' ");
+		$id_pabrik = $_REQUEST['pabrik'];
+		$id_station = $_REQUEST['station'];
+		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		
+		$tahun = $_REQUEST['y'];
+		$bulan = $_REQUEST['m'];
+		$minggu = $_REQUEST['w'];
+		
+
+		$this->db->query("DELETE FROM `m_temperature` where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tahun='$tahun' AND bulan='$bulan' AND minggu='$minggu';");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
-				'tanggal' => $tanggal,
-				'id_pabrik' => $pabrik,
-				'id_station' => $station,
-				'unit' => $value[0],
-				'hm' => $value[1],
-				// 'jenis_problem' => $value[2],
-				// 'jenis_breakdown' => $value[3],
-				// 'date' => 'My date'
+				'tahun' => $tahun,
+				'bulan' => $bulan,
+				'minggu' => $minggu,
+				'id_pabrik' => $id_pabrik,
+				'id_station' => $id_station,
+				'id_unit' => $value[0],
+				'gearbox' => $value[1],
+				'bearing' => $value[2],
 			);
 			// print_r($data);
 			if($value[0]!=""){
-				$this->db->insert('m_recordhm', $data);
+				$this->db->insert('m_temperature', $data);
 			}
 		}
 	}
