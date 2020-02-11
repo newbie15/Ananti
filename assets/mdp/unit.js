@@ -53,12 +53,12 @@ $(document).ready(function(){
                     // 'Station',
                     'Kode Asset',
                     'Unit',
-                    'HM<br>Installed',
-                    'Oil<br>Monitoring',
-                    'Screw Press<br>Monitoring',
-                    'Bunch Press<br>Monitoring',
-                    'Hydrocyclone<br>Monitoring',
-                    'KCP<br>Monitoring'
+                    'Critical<br>Unit',
+                    'Hourmeter<br>Monitoring',
+                    'Vibration<br>Monitoring',
+                    'Temperature<br>Monitoring',
+                    'Oiling<br>Monitoring',
+                    'Electromotor<br>Monitoring'
                 ],
 
                 colWidths: [150, 350, 100, 100, 100, 100, 100, 100],
