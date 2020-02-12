@@ -30,7 +30,7 @@ class Oiling extends CI_Controller {
 	{
 		// $this->load->view('welcome_message');
 		$output['content'] = "test";
-		$output['main_title'] = "Data Penggunaan Oli";
+		$output['main_title'] = "Data Level Oli";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -82,16 +82,23 @@ class Oiling extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT unit,hm FROM m_recordhm where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tanggal='$tanggal';");
+		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		
+		$tahun = $_REQUEST['y'];
+		$bulan = $_REQUEST['m'];
+		$minggu = $_REQUEST['w'];
+
+		$query = $this->db->query("SELECT id_unit,gearbox,powerpack,keterangan FROM m_oiling where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tahun='$tahun' AND bulan='$bulan' AND minggu='$minggu';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 			// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->unit; // or methods defined on the 'User' class
-			$d[$i++][1] = $row->hm; // or methods defined on the 'User' class
+			$d[$i][0] = $row->id_unit; // or methods defined on the 'User' class
+			$d[$i][1] = $row->gearbox; // or methods defined on the 'User' class
+			$d[$i][2] = $row->powerpack; // or methods defined on the 'User' class
+			$d[$i++][3] = $row->keterangan; // or methods defined on the 'User' class
 			// $d[$i][2] = $row->jenis_breakdown; // or methods defined on the 'User' class
 			// $d[$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
 		}
@@ -102,25 +109,33 @@ class Oiling extends CI_Controller {
 	{
 		$pabrik = $_REQUEST['pabrik'];
 		$station = $_REQUEST['station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_recordhm` where id_pabrik = '$pabrik' AND id_station = '$station' AND tanggal = '$tanggal' ");
+		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$tahun = $_REQUEST['y'];
+		$bulan = $_REQUEST['m'];
+		$minggu = $_REQUEST['w'];
+		
+		$this->db->query("DELETE FROM `m_oiling` where id_pabrik = '$pabrik' AND id_station = '$station' AND tahun='$tahun' AND bulan='$bulan' AND minggu='$minggu';");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
-				'tanggal' => $tanggal,
+				'tahun' => $tahun,
+				'bulan' => $bulan,
+				'minggu' => $minggu,
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
-				'unit' => $value[0],
-				'hm' => $value[1],
+				'id_unit' => $value[0],
+				'gearbox' => $value[1],
+				'powerpack' => $value[2],
+				'keterangan' => $value[3],
 				// 'jenis_problem' => $value[2],
 				// 'jenis_breakdown' => $value[3],
 				// 'date' => 'My date'
 			);
 			// print_r($data);
 			if($value[0]!=""){
-				$this->db->insert('m_recordhm', $data);
+				$this->db->insert('m_oiling', $data);
 			}
 		}
 	}
