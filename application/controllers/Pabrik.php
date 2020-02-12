@@ -59,14 +59,15 @@ class Pabrik extends CI_Controller {
 
 	public function load()
 	{
-		$query = $this->db->query("SELECT nama,tipe FROM master_pabrik;");
+		$query = $this->db->query("SELECT nama,kapasitas,area FROM master_pabrik;");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->nama; // access attributes
-			$d[$i++][1] = $row->tipe; // or methods defined on the 'User' class
+			$d[$i][1] = $row->kapasitas; // or methods defined on the 'User' class
+			$d[$i++][2] = $row->area; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 
@@ -82,7 +83,8 @@ class Pabrik extends CI_Controller {
 			// $this->db->insert
 			$data = array(
 				'nama' => $value[0],
-				'tipe' => $value[1],
+				'kapasitas' => $value[1],
+				'area' => $value[2],
 				// 'date' => 'My date'
 			);
 			// print_r($data);
