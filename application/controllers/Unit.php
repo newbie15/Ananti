@@ -147,6 +147,24 @@ class Unit extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function ajax_dropdown_sub(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$id_station = urldecode( $this->uri->segment(4, 0) );
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		// $i = 0;
+		// $d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				// $a['name'] = $row->nama;
+				// $a['id'] = $row->nama;
+				// $d[$i++] = $a;
+				echo "<option>".$row->nama."</option>";
+		}
+		// echo json_encode($d);
+		echo "SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';";
+	}	
+
 	public function ajax_default_list()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
@@ -182,9 +200,9 @@ class Unit extends CI_Controller {
 	public function temperature_default_list()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
+		$id_station = $_REQUEST['id_station'];
 		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND temperature_mod=1;");
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND temperature_mod=1;");
 
 		$i = 0;
 		$d = [];
@@ -198,9 +216,9 @@ class Unit extends CI_Controller {
 	public function vibration_default_list()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
+		$id_station = $_REQUEST['id_station'];
 		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND vibration_mod=1;");
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND vibration_mod=1;");
 
 		$i = 0;
 		$d = [];
