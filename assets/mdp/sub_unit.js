@@ -101,5 +101,9 @@ $(document).ready(function(){
     	unit_refresh();
     });
 
+    $("#unit").change(function () {
+        ajax_refresh();
+    });
+
     station_refresh();
 });

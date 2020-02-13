@@ -128,7 +128,9 @@ class Sub_unit extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 				// $d[$i][0] = $row->nama; // access attributes
-				$d[$i++][0] = $row->nama; // or methods defined on the 'User' class
+				$d[$i][0] = $row->nama; // or methods defined on the 'User' class
+				$d[$i++][1] = $row->klasifikasi; // or methods defined on the 'User' class
+
 		}
 		echo json_encode($d);
 	}
