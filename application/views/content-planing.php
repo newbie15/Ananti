@@ -14,7 +14,15 @@
         <!-- <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal"> -->
           <!-- <i class="fa fa-search-plus"></i> Cari WO -->
         <!-- </a> -->
-
+        <a class="btn btn-app btn-success" id="sharewa">
+          <i class="fa fa-whatsapp"></i> Share
+        </a>
+        <a class="btn btn-app btn-info" id="tambahwo" href="#modal-wo" role="button" data-toggle="modal">
+          <i class="fa fa-industry"></i> WO
+        </a>
+        <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
+          <i class="fa fa-plus"></i> Tambah
+        </a>
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -23,6 +31,27 @@
 
     <!-- Main content -->
     <section class="content">
+      <div class="modal fade in" id="modal-default" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Tambah Plan Harian</h4>
+            </div>
+            <div class="modal-body">
+              <h3 id="dpabrik"></h3>
+              Station : <select id="station"><option></option></select>
+              Unit : <select id="unit"><option></option></select>
+              <br>
+              <hr>
+              <button id="tplus">Tambah</button>
+              <table id="dt-table" class="display" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Small boxes (Stat box) -->
       <!-- <div class="modal fade in" id="modal-default" style="display: none;">
         <div class="modal-dialog">
