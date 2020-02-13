@@ -162,7 +162,7 @@ class Unit extends CI_Controller {
 				echo "<option>".$row->nama."</option>";
 		}
 		// echo json_encode($d);
-		echo "SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';";
+		// echo "SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';";
 	}	
 
 	public function ajax_default_list()
