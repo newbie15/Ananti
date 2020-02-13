@@ -96,9 +96,9 @@ class Breakdown extends CI_Controller {
 			$d[$i][4] = $row->tipe;
 			$d[$i][5] = $row->tindakan;
 			$d[$i][6] = $mulai[0];
-			$d[$i][7] = $mulai[1];
+			$d[$i][7] = substr($mulai[1], 0, -3);
 			$d[$i][8] = $selesai[0];
-			$d[$i][9] = $selesai[1];
+			$d[$i][9] = substr($selesai[1], 0, -3);
 			$d[$i++][10] = $row->keterangan;
 		}
 		echo json_encode($d);
@@ -112,7 +112,17 @@ class Breakdown extends CI_Controller {
 		$this->db->query("DELETE FROM `m_breakdown_pabrik` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
+
+
+
 		foreach ($data as $key => $value) {
+			$tanggal_mulai = str_replace(" 00:00:00","",$value[6]);
+			$tanggal_stop = str_replace(" 00:00:00","",$value[8]);
+
+			$jam_mulai = $value[7].":00";
+			$jam_stop = $value[9].":00";
+
+
 			// $this->db->insert
 			$data = array(
 				'tanggal' => $tanggal,
@@ -123,8 +133,8 @@ class Breakdown extends CI_Controller {
 				'jenis' => $value[3],
 				'tipe' => $value[4],
 				'tindakan' => $value[5],
-				'mulai' => $value[6]." ".$value[7],
-				'selesai' => $value[8]." ".$value[9],
+				'mulai' => $tanggal_mulai." ".$jam_mulai,
+				'selesai' => $tanggal_stop." ".$jam_stop,
 				'keterangan' => $value[10],
 			);
 			// print_r($data);
@@ -132,6 +142,10 @@ class Breakdown extends CI_Controller {
 				$this->db->insert('m_breakdown_pabrik', $data);
 			}
 		}
+		echo $value[6]." ".$value[7];
+		echo "\n";
+		echo $value[8]." ".$value[9];
+
 	}
 
 
