@@ -31,6 +31,19 @@ $(document).ready(function () {
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
+                    sub_unit_refresh();
+                } else {
+                    // alert("gaagal");
+                }
+            }
+        );
+    }
+
+    function sub_unit_refresh() {
+        $("#sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()) + "/" + encodeURI($("#unit").val()),
+            function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    // alert("success");
                     // ajax_refresh();
                 } else {
                     // alert("gaagal");
@@ -69,9 +82,10 @@ $(document).ready(function () {
             tableHeight: '450px',
             tableWidth: '500px',
             colHeaders: [
-                'Station', 'Unit', 'Problem', 'Jenis<br>Problem', 'Tipe', 'Perbaikan', 'Tanggal<br>Mulai', 'Jam<br>Mulai', 'Tanggal<br>Selesai', 'Jam<br>Selesai', 'Keterangan'],
-            colWidths: [100, 100, 250, 70, 60, 150, 100, 63, 100, 63, 100],
+                'Station', 'Unit', 'Sub Unit','Problem', 'Jenis<br>Problem', 'Tipe', 'Perbaikan', 'Tanggal<br>Mulai', 'Jam<br>Mulai', 'Tanggal<br>Selesai', 'Jam<br>Selesai', 'Keterangan'],
+            colWidths: [100, 100, 100, 250, 70, 60, 150, 100, 63, 100, 63, 100],
             columns: [
+                { type: 'text', readOnly:true },
                 { type: 'text', readOnly:true },
                 { type: 'text', readOnly:true },
                 { type: 'text', wordWrap: true },
@@ -163,7 +177,11 @@ $(document).ready(function () {
         unit_refresh();
     });
 
-    function add(sx,ux) {
+    $("#unit").change(function () {
+        sub_unit_refresh();
+    });
+
+    function add(sx,ux,su) {
         var sama = 0;
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
@@ -180,8 +198,9 @@ $(document).ready(function () {
                 if (dx[0][0] == "") { // kosong
                     dx[0][0] = sx;
                     dx[0][1] = ux;
+                    dx[0][2] = su;
                 } else { // isi satu
-                    dx.push([sx, ux, "", "", "", "", "", "", "", "", ""]);
+                    dx.push([sx, ux, su, "", "", "", "", "", "", "", "", ""]);
                 }
         //     } else { // isi lebih dari 1
         //         dx.push([sx, ux, "", "", "", "", "", "", "", "", ""]);
@@ -192,7 +211,7 @@ $(document).ready(function () {
         // dx.push([sx, ux, "", "", "", "", "", "", "", "", ""]);
         refresh(dx);
 
-        $("#wo").val("");
+        // $("#wo").val("");
         $("#modal-default").modal("hide");
     }
 
@@ -223,7 +242,7 @@ $(document).ready(function () {
     });
 
     $("#tplus").click(function () {
-        add($("#station").val(), $("#unit").val());
+        add($("#station").val(), $("#unit").val(), $("#sub_unit").val());
     });
 
 

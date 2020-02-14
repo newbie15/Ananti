@@ -155,7 +155,10 @@ class Sub_unit extends CI_Controller {
 
 	public function ajax_dropdown(){
 		$id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
+		$id_station = urldecode($this->uri->segment(4, 0));
+		$id_unit = urldecode($this->uri->segment(5, 0));
+
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
 		// $i = 0;
 		// $d = [];
 		foreach ($query->result() as $row)
