@@ -30,10 +30,17 @@
             <div class="modal-body">
               <h3 id="dpabrik"></h3>
               Station : <select id="station"><option></option></select>
+              <br>
+              <br>
               Unit : <select id="unit"><option></option></select>
               <br>
+              <br>
+              Sub Unit : <select id="sub_unit"><option></option></select>
+              <br>
               <hr>
-              <button id="tplus">Tambah</button>
+              <span style="float:right;">
+                <button id="tplus">Tambah</button>              
+              </span>
               <table id="dt-table" class="display" width="100%"></table>
             </div>
           </div>
