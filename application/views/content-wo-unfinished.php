@@ -3,8 +3,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Work Order
-        <small>Unfinished</small>
+        <ul class="nav nav-tabs">
+          <li class=""><a href="<?php echo base_url("wo")?>" aria-expanded="true">Create Work Order</a></li>
+          <li class="active"><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
+          <li class=""><a href="#tab_3" aria-expanded="false">Search WO</a></li>
+        </ul>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
