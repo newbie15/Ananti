@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Planing extends CI_Controller {
+class Vibration extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -18,10 +18,19 @@ class Planing extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->load->database();
+		$this->load->helper('url');
+	}
+	
 	public function index()
 	{
+		// $this->load->view('welcome_message');
 		$output['content'] = "test";
-		$output['main_title'] = "Planing Harian Maintenance";
+		$output['main_title'] = "Data Vibration";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -29,11 +38,12 @@ class Planing extends CI_Controller {
 		];
 
 		$footer['js_files'] = [
+			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/planing.js"),
+			base_url("assets/mdp/vibration.js"),
 		];
 		
 		$output['content'] = '';
@@ -58,65 +68,41 @@ class Planing extends CI_Controller {
 				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
 			}
 		}
-		$output['dropdown_pabrik'] .= "/<select>";
+		$output['dropdown_pabrik'] .= "/<select>";		
+
 		$output['dropdown_station'] = "<select id=\"station\"></select>";
 
 		$this->load->view('header',$header);
-		$this->load->view('content-planing',$output);
+		$this->load->view('content-vibration',$output);
 		$this->load->view('footer',$footer);
+
 	}
 
-	public function load(){
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-
-		$query = $this->db->query(
-			"SELECT `station`,`unit`,`problem`,`plan`,`mpp`,`nama_mpp`,`mek_el`,`start`,`stop`,`tipe`,`ket`
-			FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
-		");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i][0] = $row->station;
-			$d[$i][1] = $row->unit;
-			$d[$i][2] = $row->problem;
-			$d[$i][3] = $row->plan;
-			$d[$i][4] = $row->mpp;
-			$d[$i][5] = $row->nama_mpp;
-			$d[$i][6] = $row->mek_el;
-			$d[$i][7] = $row->start;
-			$d[$i][8] = $row->stop;
-			$d[$i][9] = $row->tipe;
-			$d[$i++][10] = $row->ket;
-		}
-		echo json_encode($d);
-	}
-
-	public function load_default(){
+	public function load()
+	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
+		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$tahun = $_REQUEST['y'];
+		$bulan = $_REQUEST['m'];
+		$minggu = $_REQUEST['w'];
 
-		$query = $this->db->query(
-			"SELECT m_wo.station,m_wo.unit,m_wo.problem,m_activity.jenis_breakdown,m_activity.tipe,tindakan,mulai,selesai,keterangan
-			FROM m_breakdown_pabrik where id_pabrik = '$id_pabrik' AND tanggal = '$tanggal';
-		");
+		$query = $this->db->query("SELECT id_unit,h_mm,h_env,v_mm,v_env,a_mm,a_env FROM m_vibration where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tahun='$tahun' AND bulan='$bulan' AND minggu='$minggu';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i][0] = $row->station;
-			$d[$i][1] = $row->unit;
-			$d[$i][2] = $row->problem;
-			$d[$i][3] = $row->jenis;
-			$d[$i][4] = $row->tipe;
-			$d[$i][5] = $row->tindakan;
-			$d[$i][6] = $row->mulai;
-			$d[$i][7] = $row->selesai;
-			$d[$i++][8] = $row->keterangan;
+			// $d[$i][0] = $row->nama; // access attributes
+			$d[$i][0] = $row->id_unit; // or methods defined on the 'User' class
+			$d[$i][1] = $row->h_mm; // or methods defined on the 'User' class
+			$d[$i][2] = $row->h_env; // or methods defined on the 'User' class
+			$d[$i][3] = $row->v_mm; // or methods defined on the 'User' class
+			$d[$i][4] = $row->v_env; // or methods defined on the 'User' class
+			$d[$i][5] = $row->a_mm; // or methods defined on the 'User' class
+			$d[$i++][6] = $row->a_env; // or methods defined on the 'User' class
+			// $d[$i][2] = $row->jenis_breakdown; // or methods defined on the 'User' class
+			// $d[$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 	}
@@ -124,32 +110,36 @@ class Planing extends CI_Controller {
 	public function simpan()
 	{
 		$pabrik = $_REQUEST['pabrik'];
-		// $station = $_REQUEST['station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_planing` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$station = $_REQUEST['station'];
+		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$tahun = $_REQUEST['y'];
+		$bulan = $_REQUEST['m'];
+		$minggu = $_REQUEST['w'];
+
+		$this->db->query("DELETE FROM `m_vibration` where id_pabrik = '$pabrik' AND id_station = '$station' AND tahun='$tahun' AND bulan='$bulan' AND minggu='$minggu';");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
-				'tanggal' => $tanggal,
+				'tahun' => $tahun,
+				'bulan' => $bulan,
+				'minggu' => $minggu,
 				'id_pabrik' => $pabrik,
-				'station' => $value[0],
-				'unit' => $value[1],
-				'problem' => $value[2],
-				'plan' => $value[3],
-				'mpp' => $value[4],
-				'nama_mpp' => $value[5],
-				'mek_el' => $value[6],
-				'start' => $value[7],
-				'stop' => $value[8],
-				'tipe' => $value[9],
-				'ket' => $value[10]
+				'id_station' => $station,
+				'id_unit' => $value[0],
+				'h_mm' => $value[1],
+				'h_env' => $value[2],
+				'v_mm' => $value[3],
+				'v_env' => $value[4],
+				'a_mm' => $value[5],
+				'a_env' => $value[6],
 			);
 			// print_r($data);
 			if($value[0]!=""){
-				$this->db->insert('m_planing', $data);
+				$this->db->insert('m_vibration', $data);
 			}
 		}
-	}	
+	}
+
 }

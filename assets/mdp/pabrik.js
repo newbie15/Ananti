@@ -25,16 +25,19 @@ $(document).ready(function(){
         $('#my-spreadsheet').jexcel({
             data: data,
             colHeaders: [
-                'Nama',
+                'Site',
                 // 'Jenis',
-                'Tipe',
+                'Kapasitas',
+                'Area',
             ],
 
             colWidths: [150, 150, 150, 100, 250, 250, 75, 75],
             columns: [
                 { type: 'text' },
-                { type: 'dropdown', source: ['Mill 45 Tph', 'Mill 50 Tph', 'Mill 60 Tph', 'Mill 70 Tph', 'Mill 80 Tph', 'Refinery', 'NPK'] },
-                // { type: 'dropdown', source: ['Mill', 'Refinery', 'NPK'] },
+                { type: 'text' },
+                // { type: 'dropdown', source: ['Mill 45 Tph', 'Mill 50 Tph', 'Mill 60 Tph', 'Mill 70 Tph', 'Mill 80 Tph', 'Refinery', 'NPK'] },
+                { type: 'dropdown', source: ['Aceh', 'Riau', 'Jambi', 'Kalteng', 'Kaltim', 'Kalsel', 'Sulawesi']
+                },
                 // { type: 'dropdown', source: ['Crane', 'Tipper', 'CS','Horizontal','Vertical','Oblique'] },
                 // { type: 'text' },
             ],
@@ -51,15 +54,18 @@ $(document).ready(function(){
     $('#my-spreadsheet').jexcel({
         // url: "http://localhost/MDP/pabrik/load",
         colHeaders: [
-            'Nama',
+            'Site',
             // 'Jenis',
-            'Tipe',
+            'Kapasitas',
+            'Area',
         ],
 
         colWidths: [150,150,150,100,250,250,75,75],
         columns: [
             { type: 'text' },
-            { type: 'dropdown', source: ['Mill 45Tph', 'Mill 50Tph', 'Mill 60Tph', 'Mill 70Tph', 'Mill 80Tph', 'Refinery', 'NPK'] },
+            { type: 'text' },
+            // { type: 'dropdown', source: ['Mill 45Tph', 'Mill 50Tph', 'Mill 60Tph', 'Mill 70Tph', 'Mill 80Tph', 'Refinery', 'NPK'] },
+            { type: 'dropdown', source: ['Aceh', 'Riau', 'Jambi', 'Kalteng', 'Kaltim', 'Kalsel', 'Sulawesi'] }
             // { type: 'dropdown', source: ['Crane', 'Tipper', 'CS','Horizontal','Vertical','Oblique'] },
             // { type: 'text' },
         ],

@@ -8,9 +8,6 @@
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
-        <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
-          <i class="fa fa-plus"></i> Tambah
-        </a>
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -19,39 +16,14 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="modal fade in" id="modal-default" style="display: none;">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Tambah Breakdown / Problem</h4>
-            </div>
-            <div class="modal-body">
-              <h3 id="dpabrik"></h3>
-              Station : <select id="station"><option></option></select>
-              <br>
-              <br>
-              Unit : <select id="unit"><option></option></select>
-              <br>
-              <br>
-              Sub Unit : <select id="sub_unit"><option></option></select>
-              <br>
-              <hr>
-              <span style="float:right;">
-                <button id="tplus">Tambah</button>              
-              </span>
-              <table id="dt-table" class="display" width="100%"></table>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-xs-12">
+          <?php //echo $content; ?>
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
+          Station :
+          <?php echo $dropdown_station; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>
@@ -73,7 +45,14 @@
             <option value="11">november</option>
             <option value="12">desember</option>
           </select>
-          Tanggal : 
+          Minggu :
+          <select id="minggu">
+            <option value="1">Minggu 1</option>
+            <option value="2">Minggu 2</option>
+            <option value="3">Minggu 3</option>
+            <option value="4">Minggu 4</option>
+          </select>
+          <!-- Tanggal : 
           <select id="tanggal">
             <option>01</option>
             <option>02</option>
@@ -106,9 +85,20 @@
             <option>29</option>
             <option>30</option>
             <option>31</option>
-          </select>
+          </select> -->
           <br><br>
-          <div id='my-spreadsheet'></div>      
+          <div class="row">
+            <div class="col-xs-12">
+              <div style="height: 500px; width: 100%; overflow: auto;">
+                <div id='my-spreadsheet'></div>              
+              </div>
+            </div>
+            <!-- <div class="col-xs-12">
+              <div style="height: 500px; width: 100%; overflow: auto;">
+                <div id='my-spreadsheet2'></div>              
+              </div>
+            </div> -->
+          </div>
         </div>
       </div>
       <!-- /.row -->

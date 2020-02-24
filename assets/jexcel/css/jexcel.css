@@ -197,7 +197,7 @@
 
 .jexcel > tbody > tr > td.readonly
 {
-    color:rgba(0,0,0,0.3)
+    color:rgba(0,0,0,0.5)
 }
 .jexcel > tbody > tr.selected > td:first-child
 {

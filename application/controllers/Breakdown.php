@@ -78,7 +78,7 @@ class Breakdown extends CI_Controller {
 		$tanggal = $_REQUEST['tahun'].'-'.$_REQUEST['bulan'].'-'.$_REQUEST['tanggal'];
 
 		$query = $this->db->query(
-			"SELECT station,unit,problem,jenis,tipe,tindakan,mulai,selesai,keterangan
+			"SELECT station,unit,sub_unit,problem,jenis,tipe,tindakan,mulai,selesai,keterangan
 			FROM m_breakdown_pabrik where id_pabrik = '$id_pabrik' AND tanggal = '$tanggal';
 		");
 
@@ -91,15 +91,16 @@ class Breakdown extends CI_Controller {
 
 			$d[$i][0] = $row->station;
 			$d[$i][1] = $row->unit;
-			$d[$i][2] = $row->problem;
-			$d[$i][3] = $row->jenis;
-			$d[$i][4] = $row->tipe;
-			$d[$i][5] = $row->tindakan;
-			$d[$i][6] = $mulai[0];
-			$d[$i][7] = $mulai[1];
-			$d[$i][8] = $selesai[0];
-			$d[$i][9] = $selesai[1];
-			$d[$i++][10] = $row->keterangan;
+			$d[$i][2] = $row->sub_unit;
+			$d[$i][3] = $row->problem;
+			$d[$i][4] = $row->jenis;
+			$d[$i][5] = $row->tipe;
+			$d[$i][6] = $row->tindakan;
+			$d[$i][7] = $mulai[0];
+			$d[$i][8] = substr($mulai[1], 0, -3);
+			$d[$i][9] = $selesai[0];
+			$d[$i][10] = substr($selesai[1], 0, -3);
+			$d[$i++][11] = $row->keterangan;
 		}
 		echo json_encode($d);
 	}
@@ -112,26 +113,41 @@ class Breakdown extends CI_Controller {
 		$this->db->query("DELETE FROM `m_breakdown_pabrik` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
+
+
+
 		foreach ($data as $key => $value) {
+			$tanggal_mulai = str_replace(" 00:00:00","",$value[7]);
+			$tanggal_stop = str_replace(" 00:00:00","",$value[9]);
+
+			$jam_mulai = $value[8].":00";
+			$jam_stop = $value[10].":00";
+
+
 			// $this->db->insert
 			$data = array(
 				'tanggal' => $tanggal,
 				'id_pabrik' => $pabrik,
 				'station' => $value[0],
 				'unit' => $value[1],
-				'problem' => $value[2],
-				'jenis' => $value[3],
-				'tipe' => $value[4],
-				'tindakan' => $value[5],
-				'mulai' => $value[6]." ".$value[7],
-				'selesai' => $value[8]." ".$value[9],
-				'keterangan' => $value[10],
+				'sub_unit' => $value[2],
+				'problem' => $value[3],
+				'jenis' => $value[4],
+				'tipe' => $value[5],
+				'tindakan' => $value[6],
+				'mulai' => $tanggal_mulai." ".$jam_mulai,
+				'selesai' => $tanggal_stop." ".$jam_stop,
+				'keterangan' => $value[11],
 			);
 			// print_r($data);
 			if($value[0]!=""){
 				$this->db->insert('m_breakdown_pabrik', $data);
 			}
 		}
+		// echo $value[6]." ".$value[7];
+		// echo "\n";
+		// echo $value[8]." ".$value[9];
+
 	}
 
 

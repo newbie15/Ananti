@@ -22,6 +22,10 @@
           <?php //echo $content; ?>
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
+          Station :
+          <?php echo $dropdown_station; ?>
+          Unit :
+          <?php echo $dropdown_unit; ?>
           <br><br>
           <!-- <button id="simpan">Simpan</button> -->
           <div id='my-spreadsheet'></div>      
