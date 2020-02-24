@@ -299,18 +299,20 @@ $(document).ready(function () {
         
         dx.forEach(element => {
             console.log(element);
-            text_wa += "\n" + "Station : " + (element[0]);
-            text_wa += "\n" + "Unit : " + (element[1]);
-            text_wa += "\n" + "Problem\n - " + (element[2]);
-            text_wa += "\n" + "Plan\n - " + (element[3]);
-            text_wa += "\n" + "MPP : " + (element[5]);
-            text_wa += "\n" + "Waktu : " + (element[7] + "-" + element[8]);
-            text_wa += "\n" + "Tipe : " + (element[9]);
+            text_wa += "\n" + "Station : " + (element[1]);
+            text_wa += "\n" + "Unit : " + (element[2]);
+            text_wa += "\n" + "Sub Unit : " + (element[3]);
+            text_wa += "\n" + "Problem\n - " + (element[4]);
+            text_wa += "\n" + "Plan\n - " + (element[5]);
+            text_wa += "\n" + "MPP : " + (element[6]);
+            text_wa += "\n" + "Waktu : " + (element[9] + "-" + element[10]);
+            text_wa += "\n" + "Tipe : " + (element[11]);
             text_wa += "\n";
         });        
         console.log(text_wa);
         // https://api.whatsapp.com/send?phone=91XXXXXXXXXX&text=urlencodedtext
-        var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+        // var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+        var href = "whatsapp://send?text=" + encodeURI(text_wa);
     	$("#sharewa").attr("target", "_blank");
         $("#sharewa").attr("href", href);
     }
