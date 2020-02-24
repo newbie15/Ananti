@@ -51,6 +51,21 @@
           </div>
         </div>
       </div>
+      <div class="modal fade in" id="modal-wo" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Daftar WO belum selesai</h4>
+            </div>
+            <div class="modal-body">
+              <table id="dt-table-wo" class="display" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
       <!-- Small boxes (Stat box) -->
       <!-- <div class="modal fade in" id="modal-default" style="display: none;">

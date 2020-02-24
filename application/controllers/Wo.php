@@ -175,7 +175,7 @@ class Wo extends CI_Controller {
 
 	public function list_open(){
 		$pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,'-',unit,'-',problem) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
+		$query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,' - ',unit,' - ',sub_unit,' - ',problem) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
         echo(json_encode($query->result()));
 	}
 
