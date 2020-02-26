@@ -128,7 +128,7 @@ class Sub_unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 		$id_unit = $_REQUEST['id_unit'];
-		$query = $this->db->query("SELECT nama,klasifikasi FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
+		$query = $this->db->query("SELECT nama,klasifikasi,critical_unit,hourmeter_mod,vibration_mod,temperature_mod,oiling_mod,electromotor_mod FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
 
 		$i = 0;
 		$d = [];

@@ -5,7 +5,7 @@
       <h1>
         <!-- Create Work Order | Unfinished WO | Search WO -->
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#" aria-expanded="true">Create Work Order</a></li>
+          <li class="active"><a href="#" aria-expanded="true">Work Order</a></li>
           <li class=""><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
           <li class=""><a href="#tab_3" aria-expanded="false">Search WO</a></li>
         </ul>
