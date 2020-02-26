@@ -7,7 +7,7 @@
 
 */
 
-var DEBUG = 2;
+var DEBUG = 1;
 
 var BASE_URL = "";
 
