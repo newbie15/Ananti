@@ -45,7 +45,7 @@ class Sub_unit extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Asset Mesin";
+		$output['main_title'] = "Data Sub Unit";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -107,8 +107,15 @@ class Sub_unit extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
 				'id_unit' => $unit,
-				'nama' => $value[0],
+				'nama' => ucwords($value[0]),
 				'klasifikasi' => $value[1],
+				'critical_unit' => $value[2],
+				'hourmeter_mod' => $value[3],
+				'vibration_mod' => $value[4],
+				'temperature_mod' => $value[5],
+				'oiling_mod' => $value[6],
+				'electromotor_mod' => $value[7],
+
 				// 'date' => 'My date'
 			);
 			// print_r($data);
@@ -121,15 +128,21 @@ class Sub_unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 		$id_unit = $_REQUEST['id_unit'];
-		$query = $this->db->query("SELECT nama,klasifikasi FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
+		$query = $this->db->query("SELECT nama,klasifikasi,critical_unit,hourmeter_mod,vibration_mod,temperature_mod,oiling_mod,electromotor_mod FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 				// $d[$i][0] = $row->nama; // access attributes
-				$d[$i][0] = $row->nama; // or methods defined on the 'User' class
-				$d[$i++][1] = $row->klasifikasi; // or methods defined on the 'User' class
+			$d[$i][0] = $row->nama; // or methods defined on the 'User' class
+			$d[$i][1] = $row->klasifikasi; // or methods defined on the 'User' class
+			$d[$i][2] = $row->critical_unit;
+			$d[$i][3] = $row->hourmeter_mod;
+			$d[$i][4] = $row->vibration_mod;
+			$d[$i][5] = $row->temperature_mod;
+			$d[$i][6] = $row->oiling_mod;
+			$d[$i++][7] = $row->electromotor_mod;
 
 		}
 		echo json_encode($d);

@@ -26,11 +26,13 @@ class Planing extends CI_Controller {
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 		];
 
 		$footer['js_files'] = [
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/planing.js"),
@@ -72,7 +74,7 @@ class Planing extends CI_Controller {
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 
 		$query = $this->db->query(
-			"SELECT `station`,`unit`,`problem`,`plan`,`mpp`,`nama_mpp`,`mek_el`,`start`,`stop`,`tipe`,`ket`
+			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`plan`,`mpp`,`nama_mpp`,`mek_el`,`start`,`stop`,`tipe`,`ket`
 			FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
 		");
 
@@ -80,17 +82,19 @@ class Planing extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i][0] = $row->station;
-			$d[$i][1] = $row->unit;
-			$d[$i][2] = $row->problem;
-			$d[$i][3] = $row->plan;
-			$d[$i][4] = $row->mpp;
-			$d[$i][5] = $row->nama_mpp;
-			$d[$i][6] = $row->mek_el;
-			$d[$i][7] = $row->start;
-			$d[$i][8] = $row->stop;
-			$d[$i][9] = $row->tipe;
-			$d[$i++][10] = $row->ket;
+			$d[$i][0] = $row->no_wo;
+			$d[$i][1] = $row->station;
+			$d[$i][2] = $row->unit;
+			$d[$i][3] = $row->sub_unit;
+			$d[$i][4] = $row->problem;
+			$d[$i][5] = $row->plan;
+			$d[$i][6] = $row->mpp;
+			$d[$i][7] = $row->nama_mpp;
+			$d[$i][8] = $row->mek_el;
+			$d[$i][9] = $row->start;
+			$d[$i][10] = $row->stop;
+			$d[$i][11] = $row->tipe;
+			$d[$i++][12] = $row->ket;
 		}
 		echo json_encode($d);
 	}
@@ -134,17 +138,19 @@ class Planing extends CI_Controller {
 			$data = array(
 				'tanggal' => $tanggal,
 				'id_pabrik' => $pabrik,
-				'station' => $value[0],
-				'unit' => $value[1],
-				'problem' => $value[2],
-				'plan' => $value[3],
-				'mpp' => $value[4],
-				'nama_mpp' => $value[5],
-				'mek_el' => $value[6],
-				'start' => $value[7],
-				'stop' => $value[8],
-				'tipe' => $value[9],
-				'ket' => $value[10]
+				'no_wo' => $value[0],
+				'station' => $value[1],
+				'unit' => $value[2],
+				'sub_unit' => $value[3],
+				'problem' => $value[4],
+				'plan' => $value[5],
+				'mpp' => $value[6],
+				'nama_mpp' => $value[7],
+				'mek_el' => $value[8],
+				'start' => $value[9],
+				'stop' => $value[10],
+				'tipe' => $value[11],
+				'ket' => $value[12]
 			);
 			// print_r($data);
 			if($value[0]!=""){

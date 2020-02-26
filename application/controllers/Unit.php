@@ -30,7 +30,7 @@ class Unit extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Asset Mesin";
+		$output['main_title'] = "Data Unit";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -89,13 +89,13 @@ class Unit extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->kode_asset;
-			$d[$i][1] = $row->nama;
-			$d[$i][2] = $row->critical_unit;
-			$d[$i][3] = $row->hourmeter_mod;
-			$d[$i][4] = $row->vibration_mod;
-			$d[$i][5] = $row->temperature_mod;
-			$d[$i][6] = $row->oiling_mod;
-			$d[$i++][7] = $row->electromotor_mod;
+			$d[$i++][1] = $row->nama;
+			// $d[$i][2] = $row->critical_unit;
+			// $d[$i][3] = $row->hourmeter_mod;
+			// $d[$i][4] = $row->vibration_mod;
+			// $d[$i][5] = $row->temperature_mod;
+			// $d[$i][6] = $row->oiling_mod;
+			// $d[$i++][7] = $row->electromotor_mod;
 
 		}
 		echo json_encode($d);
@@ -115,13 +115,13 @@ class Unit extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
 				'kode_asset' => $value[0],
-				'nama' => $value[1],
-				'critical_unit' => $value[2],
-				'hourmeter_mod' => $value[3],
-				'vibration_mod' => $value[4],
-				'temperature_mod' => $value[5],
-				'oiling_mod' => $value[6],
-				'electromotor_mod' => $value[7],
+				'nama' => ucwords($value[1]),
+				// 'critical_unit' => $value[2],
+				// 'hourmeter_mod' => $value[3],
+				// 'vibration_mod' => $value[4],
+				// 'temperature_mod' => $value[5],
+				// 'oiling_mod' => $value[6],
+				// 'electromotor_mod' => $value[7],
 
 				// 'date' => 'My date'
 			);
@@ -186,7 +186,7 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND hourmeter_mod=1;");
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND hourmeter_mod=1;");
 
 		$i = 0;
 		$d = [];
@@ -202,7 +202,7 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND temperature_mod=1;");
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND temperature_mod=1;");
 
 		$i = 0;
 		$d = [];
@@ -218,7 +218,7 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND vibration_mod=1;");
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND vibration_mod=1;");
 
 		$i = 0;
 		$d = [];
@@ -234,7 +234,7 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		// $id_station = $_REQUEST['id_station'];
 		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND oiling_mod=1;");
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND oiling_mod=1;");
 
 		$i = 0;
 		$d = [];
@@ -250,7 +250,7 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		// $id_station = $_REQUEST['id_station'];
 		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND electromotor_mod=1;");
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND electromotor_mod=1;");
 
 		$i = 0;
 		$d = [];

@@ -40,8 +40,10 @@ $(document).ready(function () {
                 data: data,
                 allowInsertColumn: false,
                 colHeaders: [
+                    'No WO',
                     'Station',
                     'Unit',
+                    'Sub Unit',
                     'Problem',
                     'Plan',
                     'MPP',
@@ -52,10 +54,12 @@ $(document).ready(function () {
                     'PM',
                     'Ket',
                 ],
-                colWidths: [150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
+                colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
                 columns: [
-                    { type: 'text', readOnly:true },
-                    { type: 'text', readOnly:true },
+                    { type: 'text', readOnly: true },
+                    { type: 'text', readOnly: true },
+                    { type: 'text', readOnly: true },
+                    { type: 'text', readOnly: true },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
@@ -72,8 +76,10 @@ $(document).ready(function () {
                 data: data,
                 allowInsertColumn: false,
                 colHeaders: [
+                    'No WO',
                     'Station',
                     'Unit',
+                    'Sub Unit',
                     'Problem',
                     'Plan',
                     'MPP',
@@ -84,10 +90,12 @@ $(document).ready(function () {
                     'PM',
                     'Ket',
                 ],
-                colWidths: [150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
+                colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
                 columns: [
-                    { type: 'text', readOnly:true },
-                    { type: 'text', readOnly:true },
+                    { type: 'text', readOnly: true },
+                    { type: 'text', readOnly: true },
+                    { type: 'text', readOnly: true },
+                    { type: 'text', readOnly: true },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
@@ -104,6 +112,8 @@ $(document).ready(function () {
 
     $("#pabrik").change(function () {
         // station_refresh();
+        refresh_modal();
+
         ajax_refresh();
     });
     $("#bulan").change(function () {
@@ -114,19 +124,23 @@ $(document).ready(function () {
     });
 
     $("#station").change(function () {
-    	unit_refresh();
+        unit_refresh();
     });
 
-    function add(sx, ux) {
+    function add(nw, sx, ux, su, pb) {
         var sama = 0;
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
         console.log(dx);
         if (dx[0][0] == "") { // kosong
-            dx[0][0] = sx;
-            dx[0][1] = ux;
+            dx[0][0] = nw;
+            dx[0][1] = sx;
+            dx[0][2] = ux;
+            dx[0][3] = su;
+            dx[0][4] = pb;
+
         } else { // isi satu
-            dx.push([sx, ux, "", "", "", "", "", "", "", "", ""]);
+            dx.push([nw, sx, ux, su, pb, "", "", "", "", "", "", "", ""]);
         }
 
         refresh(dx);
@@ -220,6 +234,10 @@ $(document).ready(function () {
         station_refresh();
     });
 
+    $("#tambahwo").click(function () {
+    	refresh_modal();
+    });
+
     $("#tplus").click(function () {
         add($("#station").val(), $("#unit").val());
     });
@@ -227,6 +245,45 @@ $(document).ready(function () {
     $("#sharewa").click(function(){
         share_wa();
     });
+
+    function refresh_modal() {
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "wo/list_open/" + $("#pabrik").val(),
+            data: {
+                id_pabrik: $("#pabrik").val(),
+            }
+        }).done(function (msg) {
+            x = [];
+            y = [];
+            data = JSON.parse(msg);
+
+            for (i in data) {
+                console.log(data[i].daftar);
+                x.push(data[i].daftar);
+                y[i] = x;
+                x = [];
+            }
+            // console.log(y);
+            var table = $('#dt-table-wo').DataTable({
+                destroy: true,
+                data: y,
+                columns: [{
+                    title: "Daftar"
+                }, ]
+            });
+
+            $('.dataTable tbody').on('click', 'tr', function () {
+                if (table.row(this).data() != undefined) {
+                    console.log('API row values : ', table.row(this).data());
+                    var sp = table.row(this).data();
+                    sp = sp[0].split(" - ");
+                    add(sp[0],sp[1],sp[2],sp[3],sp[4]);
+                    $('#modal-wo').modal('toggle');
+                }
+            });
+        });
+    }
 
     function share_wa() {
 
@@ -242,18 +299,20 @@ $(document).ready(function () {
         
         dx.forEach(element => {
             console.log(element);
-            text_wa += "\n" + "Station : " + (element[0]);
-            text_wa += "\n" + "Unit : " + (element[1]);
-            text_wa += "\n" + "Problem\n - " + (element[2]);
-            text_wa += "\n" + "Plan\n - " + (element[3]);
-            text_wa += "\n" + "MPP : " + (element[5]);
-            text_wa += "\n" + "Waktu : " + (element[7] + "-" + element[8]);
-            text_wa += "\n" + "Tipe : " + (element[9]);
+            text_wa += "\n" + "Station : " + (element[1]);
+            text_wa += "\n" + "Unit : " + (element[2]);
+            text_wa += "\n" + "Sub Unit : " + (element[3]);
+            text_wa += "\n" + "Problem\n - " + (element[4]);
+            text_wa += "\n" + "Plan\n - " + (element[5]);
+            text_wa += "\n" + "MPP : " + (element[6]);
+            text_wa += "\n" + "Waktu : " + (element[9] + "-" + element[10]);
+            text_wa += "\n" + "Tipe : " + (element[11]);
             text_wa += "\n";
         });        
         console.log(text_wa);
         // https://api.whatsapp.com/send?phone=91XXXXXXXXXX&text=urlencodedtext
-        var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+        // var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+        var href = "whatsapp://send?text=" + encodeURI(text_wa);
     	$("#sharewa").attr("target", "_blank");
         $("#sharewa").attr("href", href);
     }

@@ -53,12 +53,12 @@ $(document).ready(function(){
                     // 'Station',
                     'Kode Asset',
                     'Unit',
-                    'Critical<br>Unit',
-                    'Hourmeter<br>Monitoring',
-                    'Vibration<br>Monitoring',
-                    'Temperature<br>Monitoring',
-                    'Oiling<br>Monitoring',
-                    'Electromotor<br>Monitoring'
+                    // 'Critical<br>Unit',
+                    // 'Hourmeter<br>Monitoring',
+                    // 'Vibration<br>Monitoring',
+                    // 'Temperature<br>Monitoring',
+                    // 'Oiling<br>Monitoring',
+                    // 'Electromotor<br>Monitoring'
                 ],
 
                 colWidths: [150, 350, 100, 100, 100, 100, 100, 100],
@@ -66,12 +66,12 @@ $(document).ready(function(){
                     // { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
                     { type: 'text' },
                     { type: 'text' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
                 ]
             });
         });

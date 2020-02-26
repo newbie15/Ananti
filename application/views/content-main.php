@@ -159,25 +159,22 @@
               <ul class="products-list product-list-in-box">
                 <li class="item">
                   <div>
-                    <a href="javascript:void(0)" class="product-title">
-                    <span id="n1">Samsung TV</span> <span class="label label-danger pull-right" id="v1">$1800</span></a>
+                    <a href="" class="product-title">
+                    <span id="n1"></span> <span class="label label-danger pull-right" id="v1"></span></a>
                   </div>
                 </li>
-                <!-- /.item -->
                 <li class="item">
                   <div>
-                    <a href="javascript:void(0)" class="product-title">
-                    <span id="n2">Bicycle</span> <span class="label label-warning pull-right" id="v2">$700</span></a>
+                    <a href="" class="product-title">
+                    <span id="n2"> </span> <span class="label label-warning pull-right" id="v2"></span></a>
                   </div>
                 </li>
-                <!-- /.item -->
                 <li class="item">
                   <div>
-                    <a href="javascript:void(0)" class="product-title">
-                    <span id="n3">Xbox One</span> <span class="label label-info pull-right" id="v3">$350</span></a>
+                    <a href="" class="product-title">
+                    <span id="n3"></span> <span class="label label-info pull-right" id="v3"></span></a>
                   </div>
                 </li>
-                <!-- /.item -->
               </ul>
             </div>
               <!-- /.box-body -->
