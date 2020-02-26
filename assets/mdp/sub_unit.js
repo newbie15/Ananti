@@ -48,13 +48,27 @@ $(document).ready(function(){
                 colHeaders: [
                     'Sub Unit',
                     'Klasifikasi',
+                    'Critical<br>Unit',
+                    'Hourmeter<br>Monitoring',
+                    'Vibration<br>Monitoring',
+                    'Temperature<br>Monitoring',
+                    'Oiling<br>Monitoring',
+                    'Electromotor<br>Monitoring'
+
                 ],
                 allowInsertColumn: false,
 
-                colWidths: [250, 250, 150, 100, 250, 250, 75, 75],
+                colWidths: [250, 250, 100, 100, 100, 100, 100, 100],
                 columns: [
                     { type: 'text' },
                     { type: 'text' },
+                    { type: 'checkbox' },
+                    { type: 'checkbox' },
+                    { type: 'checkbox' },
+                    { type: 'checkbox' },
+                    { type: 'checkbox' },
+                    { type: 'checkbox' },
+
                 ]
             });
         });

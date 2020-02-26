@@ -45,7 +45,7 @@ class Sub_unit extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Asset Mesin";
+		$output['main_title'] = "Data Sub Unit";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -109,6 +109,13 @@ class Sub_unit extends CI_Controller {
 				'id_unit' => $unit,
 				'nama' => $value[0],
 				'klasifikasi' => $value[1],
+				'critical_unit' => $value[2],
+				'hourmeter_mod' => $value[3],
+				'vibration_mod' => $value[4],
+				'temperature_mod' => $value[5],
+				'oiling_mod' => $value[6],
+				'electromotor_mod' => $value[7],
+
 				// 'date' => 'My date'
 			);
 			// print_r($data);
@@ -128,8 +135,14 @@ class Sub_unit extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 				// $d[$i][0] = $row->nama; // access attributes
-				$d[$i][0] = $row->nama; // or methods defined on the 'User' class
-				$d[$i++][1] = $row->klasifikasi; // or methods defined on the 'User' class
+			$d[$i][0] = $row->nama; // or methods defined on the 'User' class
+			$d[$i][1] = $row->klasifikasi; // or methods defined on the 'User' class
+			$d[$i][2] = $row->critical_unit;
+			$d[$i][3] = $row->hourmeter_mod;
+			$d[$i][4] = $row->vibration_mod;
+			$d[$i][5] = $row->temperature_mod;
+			$d[$i][6] = $row->oiling_mod;
+			$d[$i++][7] = $row->electromotor_mod;
 
 		}
 		echo json_encode($d);
