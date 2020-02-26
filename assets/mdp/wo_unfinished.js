@@ -20,7 +20,7 @@ $(document).ready(function(){
             allowInsertColumn: false,
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-            colHeaders: ['No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
+            colHeaders: ['No WO', 'Station', 'Equipment', 'Problem', 'Keterangan', 'HM', 'Kategori', 'status'],
             colWidths: [170, 140, 140, 250, 250, 100, 75, 80, 80],
             columns: [
                 { type: 'text' },                

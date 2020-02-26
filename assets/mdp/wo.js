@@ -125,7 +125,7 @@ $(document).ready(function(){
             allowInsertColumn: false,
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-            colHeaders: ['No WO', 'Station', 'Unit', 'Sub Unit', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'Status','Tanggal<br>Closing'],
+            colHeaders: ['No WO', 'Station', 'Unit', 'Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori', 'Status','Tanggal<br>Closing'],
             colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
             columns: [
                 { type: 'text', readOnly: true },
