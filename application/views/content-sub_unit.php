@@ -3,8 +3,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <?=$main_title?>
-        <small>Control panel</small>
+        <ul class="nav nav-tabs">
+          <li class=""><a href="<?php echo base_url("station")?>" aria-expanded="true">Station</a></li>
+          <li class=""><a href="<?php echo base_url("unit")?>" aria-expanded="false">Unit</a></li>
+          <li class="active"><a href="" aria-expanded="false">Sub Unit</a></li>
+        </ul>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->

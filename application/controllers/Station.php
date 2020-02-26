@@ -100,7 +100,7 @@ class Station extends CI_Controller {
 			// $this->db->insert
 			$data = array(
 				'id_pabrik' => $pabrik,
-				'nama' => $value[0],
+				'nama' => ucwords($value[0]),
 				// 'tipe' => $value[1],
 				// 'date' => 'My date'
 			);

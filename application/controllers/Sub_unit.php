@@ -107,7 +107,7 @@ class Sub_unit extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
 				'id_unit' => $unit,
-				'nama' => $value[0],
+				'nama' => ucwords($value[0]),
 				'klasifikasi' => $value[1],
 				'critical_unit' => $value[2],
 				'hourmeter_mod' => $value[3],

@@ -115,7 +115,7 @@ class Unit extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
 				'kode_asset' => $value[0],
-				'nama' => $value[1],
+				'nama' => ucwords($value[1]),
 				// 'critical_unit' => $value[2],
 				// 'hourmeter_mod' => $value[3],
 				// 'vibration_mod' => $value[4],
