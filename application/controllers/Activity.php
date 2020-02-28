@@ -81,16 +81,25 @@ class Activity extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,perbaikan,jenis_breakdown,jenis_problem FROM m_activity where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$query = $this->db->query("
+			SELECT m_activity.no_wo,
+				CONCAT(station,'\n',unit,'\n',sub_unit,'\n',problem) as daftar,
+				m_activity.perbaikan,
+				m_activity.status_perbaikan
+			FROM m_activity,m_wo
+			WHERE m_activity.id_pabrik = '$id_pabrik' AND m_activity.tanggal='$tanggal' 
+			AND m_activity.no_wo = m_wo.no_wo ;
+			");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->no_wo;
-			$d[$i][1] = $row->perbaikan;
-			$d[$i][2] = $row->jenis_breakdown;
-			$d[$i++][3] = $row->jenis_problem;
+			$d[$i][1] = $row->daftar;
+			$d[$i][2] = $row->perbaikan;
+			$d[$i++][3] = $row->status_perbaikan;
+			// $d[$i++][3] = $row->jenis_problem;
 		}
 		echo json_encode($d);
 	}
@@ -112,11 +121,11 @@ class Activity extends CI_Controller {
 				$no_wo = $row->no_wo;
 			}
 			$d[$row->no_wo][$i][0] = $row->nama_teknisi;
-			$d[$row->no_wo][$i][1] = $row->t_mulai;
-			$d[$row->no_wo][$i][2] = $row->t_selesai;
-			$d[$row->no_wo][$i][3] = $row->r_mulai;
-			$d[$row->no_wo][$i][4] = $row->r_selesai;
-			$d[$row->no_wo][$i++][5] = $row->realisasi;
+			// $d[$row->no_wo][$i][1] = $row->t_mulai;
+			// $d[$row->no_wo][$i][2] = $row->t_selesai;
+			$d[$row->no_wo][$i][1] = $row->r_mulai;
+			$d[$row->no_wo][$i][2] = $row->r_selesai;
+			$d[$row->no_wo][$i++][3] = $row->realisasi;
 		}
 		echo json_encode($d);
 	}
@@ -158,9 +167,9 @@ class Activity extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
 				'no_wo' => $value[0],
-				'perbaikan' => $value[1],
-				'jenis_breakdown' => $value[2],
-				'jenis_problem' => $value[3],
+				'perbaikan' => $value[2],
+				'status_perbaikan' => $value[3],
+				// 'jenis_problem' => $value[3],
 			);
 			if($value[0]!=""){
 				$this->db->insert('m_activity', $data);
@@ -178,9 +187,9 @@ class Activity extends CI_Controller {
 						'nama_teknisi' =>$val[0],
 						't_mulai' => $val[1],
 						't_selesai' => $val[2],
-						'r_mulai' => $val[3],
-						'r_selesai' => $val[4],
-						'realisasi' => $val[5],
+						// 'r_mulai' => $val[3],
+						// 'r_selesai' => $val[4],
+						'realisasi' => $val[3],
 					);
 					$this->db->insert('m_activity_detail', $data);
 				}
