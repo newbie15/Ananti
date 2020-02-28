@@ -3,8 +3,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Activity Maintenance
-        <small>Input Harian</small>
+        <ul class="nav nav-tabs">
+          <li class=""><a href="<?php echo base_url("planing")?>">Plan</a></li>
+          <li class="active"><a href="">Realisasi</a></li>
+          <li class=""><a href="#tab_3">Plan VS Real</a></li>
+        </ul>
+        <!-- Activity Maintenance
+        <small>Input Harian</small> -->
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
@@ -97,7 +102,7 @@
           </select>
           <br><br>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-8">
           <div style="
 						height: 410px;
 						width: 100%;
@@ -106,7 +111,7 @@
             <div id='my-spreadsheet'></div>      
           </div>
         </div>
-        <div class="col-xs-6" id="side-note">
+        <div class="col-xs-4" id="side-note">
           <div style="
 						height: 410px;
 						width: 100%;
