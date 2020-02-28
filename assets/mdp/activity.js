@@ -13,6 +13,124 @@ $(document).ready(function () {
     data_sparepart = {};
     data_sparepartnya = "";
 
+    handlers = function (obj, cell, val) {
+        data_sparepart[no_wo_aktif] = $('#my-spare').jexcel('getData');
+    };
+
+    handler = function (obj, cell, val) {
+        data_detail[no_wo_aktif] = $('#my-spreadsheet2').jexcel('getData');
+
+        pos = $(cell).prop('id').split("-");
+
+        console.log(pos);
+
+        dt_start = data_detail[no_wo_aktif][pos[1]][3];
+        dt_stop = data_detail[no_wo_aktif][pos[1]][4];
+
+        if (dt_start != "" && dt_stop != "" && (pos[0] == 3 || pos[0] == 4)) {
+            var date1 = new Date("08/05/2015 " + dt_start + ":00");
+            var date2 = new Date("08/05/2015 " + dt_stop + ":00");
+
+            var diff = date2.getTime() - date1.getTime();
+            if (diff < 0) {
+                date2 = new Date("08/06/2015 " + dt_stop + ":00");
+                diff = date2.getTime() - date1.getTime();
+            }
+
+            console.log("diff =" + diff);
+            var msec = diff;
+            var hh = Math.floor(msec / 1000 / 60 / 60);
+            console.log(hh);
+            msec -= hh * 1000 * 60 * 60;
+            var mm = Math.floor(msec / 1000 / 60);
+            console.log(mm);
+            msec -= mm * 1000 * 60;
+            var ss = Math.floor(msec / 1000);
+            msec -= ss * 1000;
+            hour = "";
+            min = "";
+
+            if (hh < 10) {
+                hour = "0" + hh.toString();
+            } else {
+                hour = hh.toString();
+            }
+            if (mm < 10) {
+                min = "0" + mm.toString();
+            } else {
+                min = mm.toString();
+            }
+
+            console.log(hour + ':' + min);
+            console.log(hh + ':' + mm);
+
+            $("#my-spreadsheet2").jexcel('setValue', 'D' + (parseInt(pos[1]) + 1).toString(), hour + ':' + min);
+        }
+
+    };
+
+
+    selection = function (obj, cell, val) {
+        var pos = $(cell).prop('id').split("-");
+
+        console.log('Cell select: ' + $(cell).prop('id'));
+        var value = pos[1];
+        var data = $("#my-spreadsheet").jexcel('getRowData', value)
+        console.log(data);
+        if (data[0] != "") {
+            $("#side-note").show();
+            no_wo_aktif = data[0];
+            detail_refresh(no_wo_aktif);
+        } else {
+            console.log("kosong");
+            $("#side-note").hide();
+        }
+    }
+
+
+    function ambil_dari_plan(){
+        // getplan
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "planing/get_plan",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                d: $("#tanggal").val(),
+                m: $("#bulan").val(),
+                y: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            var data = JSON.parse(msg);
+            console.log(data);
+            if(data.length==0){
+                alert("anda tidak punya plan untuk hari ini\ntolong buat plan dahulu");
+            }else{
+                $('#my-spreadsheet').jexcel({
+                    data: data,
+                    allowInsertColumn: false,
+                    colHeaders: [
+                        'No WO',
+                        'Area',
+                        'Perbaikan',
+                        'Status<br>Perbaikan',
+                        // 'Jenis<br>Problem'
+                    ],
+                    colWidths: [160, 230, 235, 160, 80, 100, 60, 100, 100],
+                    columns: [
+                        { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                        { type: 'text', wordWrap: true },
+                        { type: 'text', wordWrap: true },
+                        { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
+                        // { type: 'dropdown', source: ['alat', 'proses'] },
+                    ],
+                    // onfocus: selection,
+                    onselection:selection,
+                });
+            }        
+        });
+    }
+
     function add(no) {
         var sama = 0;
         var index = 0;
@@ -91,9 +209,10 @@ $(document).ready(function () {
                 // refresh(data);
                 var t = "";
                 t += "<strong>Station :</strong> " + data['station'] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                t += "<strong>Unit :</strong> " + data['unit'] + "<br>";
+                t += "<strong>Unit    :</strong> " + data['unit'] + "<br>";
+                t += "<strong>Sub Unit:</strong> " + data['sub_unit'] + "<br>";
                 t += "Problem : " + data['problem'] + "<br>";
-                t += "Desc Problem : " + data['desc_masalah'] + "<br>";
+                // t += "Desc Problem : " + data['desc_masalah'] + "<br>";
                 $("#keterangan").html(t);
                 keterangan_detail[no] = t;
             });
@@ -124,19 +243,19 @@ $(document).ready(function () {
             onchange: handler,
             colHeaders: [
                 'Nama Teknisi',
-                'Target<br>Jam<br>Mulai',
-                'Target<br>Jam<br>Selesai',
+                // 'Target<br>Jam<br>Mulai',
+                // 'Target<br>Jam<br>Selesai',
                 'Real<br>Jam<br>Mulai',
                 'Real<br>Jam<br>Selesai',
                 'Durasi',
             ],
-            colWidths: [150, 50, 53, 50, 53, 100, 75, 80, 80],
+            colWidths: [149, 58, 58, 95, 53, 100, 75, 80, 80],
             columns: [
                 { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val() },
                 { type: 'text', mask: '##:##' },
                 { type: 'text', mask: '##:##' },
-                { type: 'text', mask: '##:##' },
-                { type: 'text', mask: '##:##' },
+                // { type: 'text', mask: '##:##' },
+                // { type: 'text', mask: '##:##' },
                 { type: 'text' },
             ]
         });
@@ -150,7 +269,7 @@ $(document).ready(function () {
                 'Nama Sparepart / Material',
                 'Qty',
             ],
-            colWidths: [400, 50, 53, 50, 53, 100, 75, 80, 80],
+            colWidths: [265, 95, 53, 50, 53, 100, 75, 80, 80],
             columns: [
                 { type: 'text' },
                 { type: 'text' },
@@ -160,70 +279,70 @@ $(document).ready(function () {
     }
 
     function refresh(data) {
-        handlers = function (obj, cell, val) {
-            data_sparepart[no_wo_aktif] = $('#my-spare').jexcel('getData');
-        };
+        // handlers = function (obj, cell, val) {
+        //     data_sparepart[no_wo_aktif] = $('#my-spare').jexcel('getData');
+        // };
 
-        handler = function (obj, cell, val) {
-            data_detail[no_wo_aktif] = $('#my-spreadsheet2').jexcel('getData');
+        // handler = function (obj, cell, val) {
+        //     data_detail[no_wo_aktif] = $('#my-spreadsheet2').jexcel('getData');
 
-            pos = $(cell).prop('id').split("-");
+        //     pos = $(cell).prop('id').split("-");
 
-            console.log(pos);
+        //     console.log(pos);
 
-            dt_start = data_detail[no_wo_aktif][pos[1]][3];
-            dt_stop = data_detail[no_wo_aktif][pos[1]][4];
+        //     dt_start = data_detail[no_wo_aktif][pos[1]][3];
+        //     dt_stop = data_detail[no_wo_aktif][pos[1]][4];
 
-            if(dt_start!="" && dt_stop!="" && (pos[0]==3 || pos[0]==4)){
-                var date1 = new Date("08/05/2015 "+ dt_start+":00");
-                var date2 = new Date("08/05/2015 "+ dt_stop +":00");
+        //     if(dt_start!="" && dt_stop!="" && (pos[0]==3 || pos[0]==4)){
+        //         var date1 = new Date("08/05/2015 "+ dt_start+":00");
+        //         var date2 = new Date("08/05/2015 "+ dt_stop +":00");
 
-                var diff = date2.getTime() - date1.getTime();
-                if(diff<0){
-                    date2 = new Date("08/06/2015 " + dt_stop + ":00");
-                    diff = date2.getTime() - date1.getTime();
-                }
+        //         var diff = date2.getTime() - date1.getTime();
+        //         if(diff<0){
+        //             date2 = new Date("08/06/2015 " + dt_stop + ":00");
+        //             diff = date2.getTime() - date1.getTime();
+        //         }
 
-                console.log("diff ="+diff);
-                var msec = diff;
-                var hh = Math.floor(msec / 1000 / 60 / 60);
-                console.log(hh);
-                msec -= hh * 1000 * 60 * 60;
-                var mm = Math.floor(msec / 1000 / 60);
-                console.log(mm);
-                msec -= mm * 1000 * 60;
-                var ss = Math.floor(msec / 1000);
-                msec -= ss * 1000;
-                hour = "";
-                min = "";
+        //         console.log("diff ="+diff);
+        //         var msec = diff;
+        //         var hh = Math.floor(msec / 1000 / 60 / 60);
+        //         console.log(hh);
+        //         msec -= hh * 1000 * 60 * 60;
+        //         var mm = Math.floor(msec / 1000 / 60);
+        //         console.log(mm);
+        //         msec -= mm * 1000 * 60;
+        //         var ss = Math.floor(msec / 1000);
+        //         msec -= ss * 1000;
+        //         hour = "";
+        //         min = "";
 
-                if (hh < 10) { hour = "0" + hh.toString(); } else { hour = hh.toString(); }
-                if (mm < 10) { min = "0" + mm.toString(); } else { min = mm.toString(); }
+        //         if (hh < 10) { hour = "0" + hh.toString(); } else { hour = hh.toString(); }
+        //         if (mm < 10) { min = "0" + mm.toString(); } else { min = mm.toString(); }
 
-                console.log(hour + ':' + min);
-                console.log(hh + ':' + mm);
+        //         console.log(hour + ':' + min);
+        //         console.log(hh + ':' + mm);
 
-                $("#my-spreadsheet2").jexcel('setValue', 'F' + (parseInt(pos[1])+1).toString() ,hour+':'+min);
-            }
+        //         $("#my-spreadsheet2").jexcel('setValue', 'D' + (parseInt(pos[1])+1).toString() ,hour+':'+min);
+        //     }
 
-        };
+        // };
 
-        selection = function (obj, cell, val) {
-            var pos = $(cell).prop('id').split("-");
+        // selection = function (obj, cell, val) {
+        //     var pos = $(cell).prop('id').split("-");
 
-            console.log('Cell select: ' + $(cell).prop('id'));
-            var value = pos[1];
-            var data = $("#my-spreadsheet").jexcel('getRowData', value)
-            console.log(data);
-            if(data[0]!=""){
-                $("#side-note").show();
-                no_wo_aktif = data[0];
-                detail_refresh(no_wo_aktif);
-            }else{
-                console.log("kosong");
-                $("#side-note").hide();
-            }
-        }
+        //     console.log('Cell select: ' + $(cell).prop('id'));
+        //     var value = pos[1];
+        //     var data = $("#my-spreadsheet").jexcel('getRowData', value)
+        //     console.log(data);
+        //     if(data[0]!=""){
+        //         $("#side-note").show();
+        //         no_wo_aktif = data[0];
+        //         detail_refresh(no_wo_aktif);
+        //     }else{
+        //         console.log("kosong");
+        //         $("#side-note").hide();
+        //     }
+        // }
 
         if (data == undefined) {
             data = [];
@@ -234,16 +353,18 @@ $(document).ready(function () {
             allowInsertColumn: false,
             colHeaders: [
                 'No WO',
+                'Area',
                 'Perbaikan',
-                'Jenis<br>Kerusakan',
-                'Jenis<br>Problem'
+                'Status<br>Perbaikan',
+                // 'Jenis<br>Problem'
             ],
-            colWidths: [160, 230, 110, 65, 50, 100, 60, 100, 100],
+            colWidths: [160, 230, 235, 160, 80, 100, 60, 100, 100],
             columns: [
                 { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
                 { type: 'text', wordWrap: true },
-                { type: 'dropdown', source: ['PCM','UPCM','breakdown unit', 'breakdown line', 'breakdown pabrik'] },
-                { type: 'dropdown', source: ['alat', 'proses'] },
+                { type: 'text', wordWrap: true },
+                { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
+                // { type: 'dropdown', source: ['alat', 'proses'] },
             ],
             // onfocus: selection,
             onselection:selection,
@@ -351,42 +472,53 @@ $(document).ready(function () {
             console.log(msg);
             data = JSON.parse(msg);
             console.log(data);
-            refresh(data);
-        });
+            if(data.length==0){
+                alert("anda belum punya data");
+                if(confirm("ambil data dari plan ?")){
+                    ambil_dari_plan();
+                }else{
 
-        $.ajax({
-            method: "POST",
-            url: BASE_URL + "activity/load_detail",
-            data: {
-                id_pabrik: $("#pabrik").val(),
-                d: $("#tanggal").val(),
-                m: $("#bulan").val(),
-                y: $("#tahun").val(),
+                }
+            }else{
+                refresh(data);
+
+                $.ajax({
+                    method: "POST",
+                    url: BASE_URL + "activity/load_detail",
+                    data: {
+                        id_pabrik: $("#pabrik").val(),
+                        d: $("#tanggal").val(),
+                        m: $("#bulan").val(),
+                        y: $("#tahun").val(),
+                    }
+                }).done(function (msg) {
+                    console.log("detail");
+                    data = JSON.parse(msg);
+                    console.log(data_detail);
+                    data_detail = data;
+                    console.log(data_detail);
+
+                });
+
+                $.ajax({
+                    method: "POST",
+                    url: BASE_URL + "activity/load_sparepart",
+                    data: {
+                        id_pabrik: $("#pabrik").val(),
+                        d: $("#tanggal").val(),
+                        m: $("#bulan").val(),
+                        y: $("#tahun").val(),
+                    }
+                }).done(function (msg) {
+                    data = JSON.parse(msg);
+                    console.log(data_sparepart);
+                    data_sparepart = data;
+                    console.log(data_sparepart);
+                });
+
             }
-        }).done(function (msg) {
-            console.log("detail");
-            data = JSON.parse(msg);
-            console.log(data_detail);
-            data_detail = data;
-            console.log(data_detail);
-
         });
 
-        $.ajax({
-            method: "POST",
-            url: BASE_URL + "activity/load_sparepart",
-            data: {
-                id_pabrik: $("#pabrik").val(),
-                d: $("#tanggal").val(),
-                m: $("#bulan").val(),
-                y: $("#tahun").val(),
-            }
-        }).done(function (msg) {
-            data = JSON.parse(msg);
-            console.log(data_sparepart);
-            data_sparepart = data;
-            console.log(data_sparepart);
-        });
     }
 
     var tgl = new Date();

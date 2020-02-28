@@ -3,7 +3,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Planing Harian Maintenance
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#" aria-expanded="true">Plan</a></li>
+          <li class=""><a href="<?php echo base_url("activity")?>" aria-expanded="false">Realisasi</a></li>
+          <li class=""><a href="#tab_3" aria-expanded="false">Plan VS Real</a></li>
+        </ul>
+
+
+        <!-- Planing Harian Maintenance -->
         <!-- - Pabrik : 
         <?php echo $dropdown_pabrik ?> -->
 

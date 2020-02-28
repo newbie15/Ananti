@@ -157,5 +157,25 @@ class Planing extends CI_Controller {
 				$this->db->insert('m_planing', $data);
 			}
 		}
-	}	
+	}
+	
+	public function get_plan(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+
+		$query = $this->db->query(
+			"SELECT `no_wo`,concat(`station`,'-',`unit`,'\n',`sub_unit`,'\n',`problem`) as area
+			FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
+		");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->no_wo;
+			$d[$i++][1] = $row->area;
+		}
+		echo json_encode($d);
+	}
 }
