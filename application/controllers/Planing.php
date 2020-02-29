@@ -24,14 +24,17 @@ class Planing extends CI_Controller {
 		$output['main_title'] = "Planing Harian Maintenance";
 		
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
 			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 		];
 
 		$footer['js_files'] = [
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
