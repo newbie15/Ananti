@@ -75,6 +75,7 @@ $(document).ready(function () {
             data = []; //JSON.parse(msg);
             console.log(data);
             x = data;
+            $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
@@ -103,7 +104,8 @@ $(document).ready(function () {
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
-                    { type: 'text' },
+                    // { type: 'text' },
+                    { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
@@ -112,6 +114,7 @@ $(document).ready(function () {
                 ],
             });
         }else{
+            $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
@@ -140,7 +143,8 @@ $(document).ready(function () {
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
-                    { type: 'text' },
+                    // { type: 'text' },
+                    { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
