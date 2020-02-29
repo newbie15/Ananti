@@ -7,6 +7,45 @@ $(document).ready(function () {
     data_detail = [];
     keterangan_detail = [];
     data_detailnya = "";
+
+    handler = function (obj, cell, val) {
+        // console.log('My table id: ' + $(obj).prop('id'));
+        // console.log('Cell changed: ' + $(cell).prop('id'));
+        // console.log('Value: ' + val);
+
+        // console.log(cell);
+        // console.log(col);
+        // console.log(row);
+        cll = $(cell).prop('id');
+        dd = cll.split("-");
+
+        console.log(cll);
+        console.log(dd);
+
+        if (dd[0] == "9" || dd[0] == "10"){
+            var roww = parseInt(dd[1]) + 1;
+
+            var jstartx = "J"+roww;
+            var jstopx  = "K"+roww;
+
+            console.log(jstartx);
+            console.log(jstopx);
+
+            jstart = $("#my-spreadsheet").jexcel('getValue', jstartx);
+            jstop = $("#my-spreadsheet").jexcel('getValue', jstopx);
+
+            console.log(jstart);
+            console.log(jstop);
+
+            var t1 = jstart.split(":");
+            var t2 = jstop.split(":");
+
+            var min_1 = parseInt(t1[0]) * 60 + parseInt(t1[1]);
+            var min_2 = parseInt(t2[0]) * 60 + parseInt(t2[1]);
+
+            console.log((min_2-min_1));
+        } 
+    };
     
     function station_refresh() {
         $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
@@ -39,6 +78,7 @@ $(document).ready(function () {
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
+                onchange: handler,
                 colHeaders: [
                     'No WO',
                     'Station',
@@ -65,8 +105,8 @@ $(document).ready(function () {
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'dropdown', source: ['M', 'E'] },
-                    { type: 'text' },
-                    { type: 'text' },
+                    { type: 'text', mask: '##:##' },
+                    { type: 'text', mask: '##:##' },
                     { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective'] },
                     { type: 'text' },
                 ],
@@ -75,6 +115,7 @@ $(document).ready(function () {
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
+                onchange: handler,
                 colHeaders: [
                     'No WO',
                     'Station',
@@ -101,12 +142,26 @@ $(document).ready(function () {
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'dropdown', source: ['M', 'E'] },
-                    { type: 'text' },
-                    { type: 'text' },
+                    { type: 'text', mask: '##:##' },
+                    { type: 'text', mask: '##:##' },
                     { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective'] },
                     { type: 'text' },
                 ],
             });
+
+            // $('#my-spreadsheet').jexcel('updateSettings', {
+            //     cells: function (cell, col, row) {
+            //         // updatettl();
+            //         // checklimit();
+            //         if (col < 1) {
+            //             // value = $('#my').jexcel('getValue', $(cell));
+            //             // console.log(value);
+            //             // val = numeral($(cell).text()).format('0,0.00');
+            //             // $(cell).html('<input type="hidden" value="' + value + '">' + val);
+            //         }
+            //         console.log(col);
+            //     }
+            // });
         }
     }
 
@@ -285,6 +340,24 @@ $(document).ready(function () {
         });
     }
 
+    function get_category(startj,stopj) {
+        var t1 = jstart.split(":");
+        var t2 = jstop.split(":");
+
+        var min_1 = parseInt(t1[0]) * 60 + parseInt(t1[1]);
+        var min_2 = parseInt(t2[0]) * 60 + parseInt(t2[1]);
+        
+        var min = min_2 - min_1;
+
+        if(min<=60){
+            return "*A*";
+        }else if(min<=120){
+            return "*B*";
+        }else if(min>120){
+            return "*C*";
+        }
+    }
+
     function share_wa() {
 
         dx = $('#my-spreadsheet').jexcel('getData');
@@ -305,7 +378,7 @@ $(document).ready(function () {
             text_wa += "\n" + "Problem\n - " + (element[4]);
             text_wa += "\n" + "Plan\n - " + (element[5]);
             text_wa += "\n" + "MPP : " + (element[6]);
-            text_wa += "\n" + "Waktu : " + (element[9] + "-" + element[10]);
+            text_wa += "\n" + "Waktu : " + get_category(element[9], element[10]) +" ("+ (element[9] + "-" + element[10]) + ")";
             text_wa += "\n" + "Tipe : " + (element[11]);
             text_wa += "\n";
         });        

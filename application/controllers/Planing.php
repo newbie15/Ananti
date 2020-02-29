@@ -31,6 +31,7 @@ class Planing extends CI_Controller {
 
 		$footer['js_files'] = [
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
