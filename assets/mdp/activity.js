@@ -24,10 +24,10 @@ $(document).ready(function () {
 
         console.log(pos);
 
-        dt_start = data_detail[no_wo_aktif][pos[1]][3];
-        dt_stop = data_detail[no_wo_aktif][pos[1]][4];
+        dt_start = data_detail[no_wo_aktif][pos[1]][1];
+        dt_stop = data_detail[no_wo_aktif][pos[1]][2];
 
-        if (dt_start != "" && dt_stop != "" && (pos[0] == 3 || pos[0] == 4)) {
+        if (dt_start != "" && dt_stop != "" && (pos[0] == 1 || pos[0] == 2)) {
             var date1 = new Date("08/05/2015 " + dt_start + ":00");
             var date2 = new Date("08/05/2015 " + dt_stop + ":00");
 
@@ -208,10 +208,10 @@ $(document).ready(function () {
                 console.log(data);
                 // refresh(data);
                 var t = "";
-                t += "<strong>Station :</strong> " + data['station'] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                t += "<strong>Station :</strong> " + data['station'] + "<br>";
                 t += "<strong>Unit    :</strong> " + data['unit'] + "<br>";
                 t += "<strong>Sub Unit:</strong> " + data['sub_unit'] + "<br>";
-                t += "Problem : " + data['problem'] + "<br>";
+                t += "<strong>Problem :</strong> " + data['problem'] + "<br>";
                 // t += "Desc Problem : " + data['desc_masalah'] + "<br>";
                 $("#keterangan").html(t);
                 keterangan_detail[no] = t;

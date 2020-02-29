@@ -167,8 +167,9 @@ class Wo extends CI_Controller {
 		{
 				$a['station'] = $row->station;
 				$a['unit'] = $row->unit;
+				$a['sub_unit'] = $row->sub_unit;
 				$a['problem'] = $row->problem;
-				$a['desc_masalah'] = $row->desc_masalah;
+				// $a['desc_masalah'] = $row->desc_masalah;
 		}
 		echo json_encode($a);
 	}
