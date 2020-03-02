@@ -84,7 +84,7 @@ $(document).ready(function(){
             cll = $(cell).prop('id');
             dd = cll.split("-");
 
-            if(dd[0]=="8" && val == "close"){
+            if(dd[0]=="6" && val == "close"){
                 var roww = parseInt(dd[1])+1;
                 var y = tgl.getFullYear();
                 var m = tgl.getMonth() + 1;
@@ -97,7 +97,7 @@ $(document).ready(function(){
                     d = ("0" + d.toString());
                 }
 
-                roww = "J"+roww;
+                roww = "H"+roww;
                 console.log(d + "-" + m + "-" + y);
                 // console.log(id);
                 var vv = $("#my-spreadsheet").jexcel('getValue', roww);
@@ -125,13 +125,14 @@ $(document).ready(function(){
             allowInsertColumn: false,
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-            colHeaders: ['No WO', 'Station', 'Unit', 'Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori', 'Status','Tanggal<br>Closing'],
-            colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
+            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori', 'Status','Tanggal<br>Closing'],
+            // colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
+            colWidths: [140, 220, 250, 250, 100, 75, 80, 80],
             columns: [
                 { type: 'text', readOnly: true },
-                { type: 'text', readOnly: true },
-                { type: 'text', readOnly: true },
-                { type: 'text', readOnly: true },
+                { type: 'text', readOnly: true, wordWrap: true },
+                // { type: 'text', readOnly: true },
+                // { type: 'text', readOnly: true },
                 // { type: 'calendar', option: { format: 'DD/MM/YYYY' } },                { type: 'text', readOnly: true },
 
                 // { type: 'autocomplete', source: arr_no_wo },
@@ -150,10 +151,12 @@ $(document).ready(function(){
 
         $('#my-spreadsheet').jexcel('updateSettings', {
             table: function (instance, cell, col, row, val, id) {
-                if (col == 8) {
+                if (col == 6) {
                     if (val == "open") {
+                        $(cell).css('color', '#000000');
                         $(cell).css('background-color', '#ff0000');
                     } else if (val == "close") {
+                        $(cell).css('color', '#ffffff');
                         $(cell).css('background-color', '#00ff00');
                     }
                 }
@@ -190,11 +193,11 @@ $(document).ready(function(){
         console.log(dx);
         if (dx[0][0] == "") { // kosong
             dx[0][0] = no;
-            dx[0][1] = sx;
-            dx[0][2] = ux;
-            dx[0][3] = su;
+            dx[0][1] = sx+"\n"+ux+"\n"+su;
+            // dx[0][2] = ux;
+            // dx[0][3] = su;
         } else { // isi satu
-            dx.push([no, sx, ux, su, "", "", "", "", "", "", "", "", ""]);
+            dx.push([no, sx+"\n"+ux+"\n"+su, "", "", "", "", "", "", "", "", ""]);
         }
 
         refresh(dx);

@@ -90,15 +90,16 @@ class Wo extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->no_wo;
-			$d[$i][1] = $row->station;
-			$d[$i][2] = $row->unit;
-			$d[$i][3] = $row->sub_unit;
-			$d[$i][4] = $row->problem;
-			$d[$i][5] = $row->desc_masalah;
-			$d[$i][6] = $row->hm;
-			$d[$i][7] = $row->kategori;
-			$d[$i][8] = $row->status;
-			$d[$i++][9] = $row->tanggal_closing;
+			// $d[$i][1] = $row->station;
+			$d[$i][1] = $row->station ."\n". $row->unit . "\n" . $row->sub_unit;
+			// $d[$i][2] = $row->unit;
+			// $d[$i][3] = $row->sub_unit;
+			$d[$i][2] = $row->problem;
+			$d[$i][3] = $row->desc_masalah;
+			$d[$i][4] = $row->hm;
+			$d[$i][5] = $row->kategori;
+			$d[$i][6] = $row->status;
+			$d[$i++][7] = $row->tanggal_closing;
 		}
 		echo json_encode($d);
 	}
@@ -112,19 +113,20 @@ class Wo extends CI_Controller {
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
+			$eq = explode("\n",$value[1]); 
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
 				'no_wo' => $value[0],
-				'station' => $value[1],
-				'unit' => $value[2],
-				'sub_unit' => $value[3],
-				'problem' => $value[4],
-				'desc_masalah' => $value[5],
-				'hm' => $value[6],
-				'kategori' => $value[7],
-				'status' => $value[8],
-				'tanggal_closing' => $value[9],
+				'station' => $eq[0],
+				'unit' => $eq[1],
+				'sub_unit' => $eq[2],
+				'problem' => $value[2],
+				'desc_masalah' => $value[3],
+				'hm' => $value[4],
+				'kategori' => $value[5],
+				'status' => $value[6],
+				'tanggal_closing' => $value[7],
 				// 'date' => 'My date'
 			);
 			// print_r($data);
