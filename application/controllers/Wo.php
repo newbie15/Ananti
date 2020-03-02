@@ -236,20 +236,20 @@ class Wo extends CI_Controller {
 	public function load_unfinished(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$query = $this->db->query("SELECT no_wo,station,unit,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open';");
+		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->no_wo;
-			$d[$i][1] = $row->station;
-			$d[$i][2] = $row->unit;
-			$d[$i][3] = $row->problem;
-			$d[$i][4] = $row->desc_masalah;
-			$d[$i][5] = $row->hm;
-			$d[$i][6] = $row->kategori;
-			$d[$i++][7] = $row->status;
+			$d[$i][1] = $row->station."\n".$row->unit."\n".$row->sub_unit;
+			// $d[$i][2] = ;
+			$d[$i][2] = $row->problem;
+			$d[$i][3] = $row->desc_masalah;
+			$d[$i][4] = $row->hm;
+			$d[$i][5] = $row->kategori;
+			$d[$i++][6] = $row->status;
 		}
 		echo json_encode($d);
 
