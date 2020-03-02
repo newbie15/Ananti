@@ -153,10 +153,10 @@ $(document).ready(function(){
             table: function (instance, cell, col, row, val, id) {
                 if (col == 6) {
                     if (val == "open") {
-                        $(cell).css('color', '#000000');
+                        $(cell).css('color', '#ffffff');
                         $(cell).css('background-color', '#ff0000');
                     } else if (val == "close") {
-                        $(cell).css('color', '#ffffff');
+                        $(cell).css('color', '#000000');
                         $(cell).css('background-color', '#00ff00');
                     }
                 }
