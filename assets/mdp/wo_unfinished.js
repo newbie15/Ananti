@@ -20,12 +20,12 @@ $(document).ready(function(){
             allowInsertColumn: false,
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-            colHeaders: ['No WO', 'Station', 'Equipment', 'Problem', 'Keterangan', 'HM', 'Kategori', 'status'],
-            colWidths: [170, 140, 140, 250, 250, 100, 75, 80, 80],
+            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori', 'status'],
+            colWidths: [140, 250, 140, 250, 250, 100, 75, 80, 80],
             columns: [
                 { type: 'text' },                
-                { type: 'text' },
-                { type: 'text' },                
+                { type: 'text' , wordWrap: true },
+                // { type: 'text' },                
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text' },
@@ -36,11 +36,13 @@ $(document).ready(function(){
 
         $('#my-spreadsheet').jexcel('updateSettings', {
             table: function (instance, cell, col, row, val, id) {
-                if (col == 7) {
+                if (col == 6) {
                     if (val == "open") {
                         $(cell).css('background-color', '#ff0000');
+                        $(cell).css('color', '#ffffff');
                     } else if (val == "close") {
                         $(cell).css('background-color', '#00ff00');
+                        $(cell).css('color', '#000000');
                     }
                 }
             }
