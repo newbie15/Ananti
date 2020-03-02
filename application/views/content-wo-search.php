@@ -3,16 +3,16 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+        <!-- Create Work Order | Unfinished WO | Search WO -->
         <ul class="nav nav-tabs">
           <li class=""><a href="<?php echo base_url("wo")?>" aria-expanded="true">Work Order</a></li>
-          <li class="active"><a href="#" aria-expanded="false">Unfinished WO</a></li>
-          <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li>
+          <li class=""><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
+          <li class="active"><a href="#" aria-expanded="false">Search WO</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
-        <!-- <button id="simpan">Simpan</button> -->
-        <a class="btn btn-app btn-primary" id="simpan">
-          <i class="fa fa-download"></i> Download
+        <a class="btn btn-app btn-success" id="downloadcsv">
+          <i class="fa fa-file-excel-o"></i> Download
         </a>
       </ol>
     </section>
@@ -25,7 +25,13 @@
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          <br><br>
+          Tahun : 
+          <select id="tahun">
+            <option>2017</option>
+            <option>2018</option>
+            <option>2019</option>
+          </select>
+          
           <div style="
 						height: 470px;
 						width: 100%;

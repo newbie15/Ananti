@@ -82,9 +82,9 @@ $(document).ready(function () {
                 onchange: handler,
                 colHeaders: [
                     'No WO',
-                    'Station',
-                    'Unit',
-                    'Sub Unit',
+                    'Station<br>Unit<br>Sub Unit',
+                    // 'Unit',
+                    // 'Sub Unit',
                     'Problem',
                     'Plan',
                     'MPP',
@@ -95,12 +95,13 @@ $(document).ready(function () {
                     'PM',
                     'Ket',
                 ],
-                colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
+                // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
+                colWidths: [140, 160, 200, 200, 40, 100, 60, 75, 75, 75, 100],
                 columns: [
                     { type: 'text', readOnly: true },
-                    { type: 'text', readOnly: true },
-                    { type: 'text', readOnly: true },
-                    { type: 'text', readOnly: true },
+                    { type: 'text', readOnly: true, wordWrap: true },
+                    // { type: 'text', readOnly: true },
+                    // { type: 'text', readOnly: true },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
@@ -121,9 +122,10 @@ $(document).ready(function () {
                 onchange: handler,
                 colHeaders: [
                     'No WO',
-                    'Station',
-                    'Unit',
-                    'Sub Unit',
+                    // 'Station',
+                    'Station<br>Unit<br>Sub Unit',
+                    // 'Unit',
+                    // 'Sub Unit',
                     'Problem',
                     'Plan',
                     'MPP',
@@ -134,12 +136,13 @@ $(document).ready(function () {
                     'PM',
                     'Ket',
                 ],
-                colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
+                // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
+                colWidths: [140, 160, 200, 200, 40, 100, 60, 75, 75, 75, 100],
                 columns: [
                     { type: 'text', readOnly: true },
-                    { type: 'text', readOnly: true },
-                    { type: 'text', readOnly: true },
-                    { type: 'text', readOnly: true },
+                    { type: 'text', readOnly: true ,wordWrap: true},
+                    // { type: 'text', readOnly: true },
+                    // { type: 'text', readOnly: true },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
@@ -193,13 +196,13 @@ $(document).ready(function () {
         console.log(dx);
         if (dx[0][0] == "") { // kosong
             dx[0][0] = nw;
-            dx[0][1] = sx;
-            dx[0][2] = ux;
-            dx[0][3] = su;
-            dx[0][4] = pb;
+            dx[0][1] = sx + "\n" + ux + "\n" + su;
+            // dx[0][2] = ux;
+            // dx[0][3] = su;
+            dx[0][2] = pb;
 
         } else { // isi satu
-            dx.push([nw, sx, ux, su, pb, "", "", "", "", "", "", "", ""]);
+            dx.push([nw, sx+"\n"+ux+"\n"+su, pb, "", "", "", "", "", "", "", ""]);
         }
 
         refresh(dx);
@@ -294,7 +297,7 @@ $(document).ready(function () {
     });
 
     $("#tambahwo").click(function () {
-    	refresh_modal();
+        refresh_modal();
     });
 
     $("#tplus").click(function () {
@@ -372,7 +375,7 @@ $(document).ready(function () {
         var text_wa = "Plan Harian "+$("#pabrik").val()+"\n\n";
         text_wa += "Tanggal : " + tanggal;
         
-    	text_wa += "\n" + "Planned Maintenance (PM) : Preventive (P) – Corrective (C) – Predictive (Pd)" + "\n";
+        text_wa += "\n" + "Planned Maintenance (PM) : Preventive (P) – Corrective (C) – Predictive (Pd)" + "\n";
         
         dx.forEach(element => {
             console.log(element);
@@ -390,7 +393,7 @@ $(document).ready(function () {
         // https://api.whatsapp.com/send?phone=91XXXXXXXXXX&text=urlencodedtext
         // var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
         var href = "whatsapp://send?text=" + encodeURI(text_wa);
-    	$("#sharewa").attr("target", "_blank");
+        $("#sharewa").attr("target", "_blank");
         $("#sharewa").attr("href", href);
     }
 });

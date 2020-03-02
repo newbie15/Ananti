@@ -86,18 +86,16 @@ class Planing extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->no_wo;
-			$d[$i][1] = $row->station;
-			$d[$i][2] = $row->unit;
-			$d[$i][3] = $row->sub_unit;
-			$d[$i][4] = $row->problem;
-			$d[$i][5] = $row->plan;
-			$d[$i][6] = $row->mpp;
-			$d[$i][7] = $row->nama_mpp;
-			$d[$i][8] = $row->mek_el;
-			$d[$i][9] = $row->start;
-			$d[$i][10] = $row->stop;
-			$d[$i][11] = $row->tipe;
-			$d[$i++][12] = $row->ket;
+			$d[$i][1] = $row->station ."\n". $row->unit . "\n" . $row->sub_unit;
+			$d[$i][2] = $row->problem;
+			$d[$i][3] = $row->plan;
+			$d[$i][4] = $row->mpp;
+			$d[$i][5] = $row->nama_mpp;
+			$d[$i][6] = $row->mek_el;
+			$d[$i][7] = $row->start;
+			$d[$i][8] = $row->stop;
+			$d[$i][9] = $row->tipe;
+			$d[$i++][10] = $row->ket;
 		}
 		echo json_encode($d);
 	}
@@ -138,22 +136,23 @@ class Planing extends CI_Controller {
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
+			$eq = explode("\n",$value[1]); 
 			$data = array(
 				'tanggal' => $tanggal,
 				'id_pabrik' => $pabrik,
 				'no_wo' => $value[0],
-				'station' => $value[1],
-				'unit' => $value[2],
-				'sub_unit' => $value[3],
-				'problem' => $value[4],
-				'plan' => $value[5],
-				'mpp' => $value[6],
-				'nama_mpp' => $value[7],
-				'mek_el' => $value[8],
-				'start' => $value[9],
-				'stop' => $value[10],
-				'tipe' => $value[11],
-				'ket' => $value[12]
+				'station' => $eq[0],
+				'unit' => $eq[1],
+				'sub_unit' => $eq[2],
+				'problem' => $value[2],
+				'plan' => $value[3],
+				'mpp' => $value[4],
+				'nama_mpp' => $value[5],
+				'mek_el' => $value[6],
+				'start' => $value[7],
+				'stop' => $value[8],
+				'tipe' => $value[9],
+				'ket' => $value[10]
 			);
 			// print_r($data);
 			if($value[0]!=""){
