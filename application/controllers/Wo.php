@@ -90,15 +90,16 @@ class Wo extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->no_wo;
-			$d[$i][1] = $row->station;
-			$d[$i][2] = $row->unit;
-			$d[$i][3] = $row->sub_unit;
-			$d[$i][4] = $row->problem;
-			$d[$i][5] = $row->desc_masalah;
-			$d[$i][6] = $row->hm;
-			$d[$i][7] = $row->kategori;
-			$d[$i][8] = $row->status;
-			$d[$i++][9] = $row->tanggal_closing;
+			// $d[$i][1] = $row->station;
+			$d[$i][1] = $row->station ."\n". $row->unit . "\n" . $row->sub_unit;
+			// $d[$i][2] = $row->unit;
+			// $d[$i][3] = $row->sub_unit;
+			$d[$i][2] = $row->problem;
+			$d[$i][3] = $row->desc_masalah;
+			$d[$i][4] = $row->hm;
+			$d[$i][5] = $row->kategori;
+			$d[$i][6] = $row->status;
+			$d[$i++][7] = $row->tanggal_closing;
 		}
 		echo json_encode($d);
 	}
@@ -112,19 +113,20 @@ class Wo extends CI_Controller {
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
+			$eq = explode("\n",$value[1]); 
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
 				'no_wo' => $value[0],
-				'station' => $value[1],
-				'unit' => $value[2],
-				'sub_unit' => $value[3],
-				'problem' => $value[4],
-				'desc_masalah' => $value[5],
-				'hm' => $value[6],
-				'kategori' => $value[7],
-				'status' => $value[8],
-				'tanggal_closing' => $value[9],
+				'station' => $eq[0],
+				'unit' => $eq[1],
+				'sub_unit' => $eq[2],
+				'problem' => $value[2],
+				'desc_masalah' => $value[3],
+				'hm' => $value[4],
+				'kategori' => $value[5],
+				'status' => $value[6],
+				'tanggal_closing' => $value[7],
 				// 'date' => 'My date'
 			);
 			// print_r($data);
@@ -234,22 +236,145 @@ class Wo extends CI_Controller {
 	public function load_unfinished(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$query = $this->db->query("SELECT no_wo,station,unit,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open';");
+		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->no_wo;
-			$d[$i][1] = $row->station;
-			$d[$i][2] = $row->unit;
-			$d[$i][3] = $row->problem;
-			$d[$i][4] = $row->desc_masalah;
-			$d[$i][5] = $row->hm;
-			$d[$i][6] = $row->kategori;
-			$d[$i++][7] = $row->status;
+			$d[$i][1] = $row->station."\n".$row->unit."\n".$row->sub_unit;
+			// $d[$i][2] = ;
+			$d[$i][2] = $row->problem;
+			$d[$i][3] = $row->desc_masalah;
+			$d[$i][4] = $row->hm;
+			$d[$i][5] = $row->kategori;
+			$d[$i++][6] = $row->status;
 		}
 		echo json_encode($d);
 
+	}
+
+	public function search(){
+		$output['content'] = "test";
+		$output['main_title'] = "Work Order";
+		
+		$header['css_files'] = [
+			// base_url("assets/jexcel/css/jquery.jexcel.css"),
+			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+
+			base_url("assets/jexcel/css/jexcel.css"),
+			base_url("assets/jexcel/css/jsuites.css"),
+		];
+
+		$footer['js_files'] = [
+			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
+			// base_url("assets/jexcel/js/jquery.jexcel.js"),
+			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/js/jexcel.js"),
+			base_url("assets/jexcel/js/jsuites.js"),
+			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
+			base_url("assets/mdp/wo_search.js"),
+		];
+			
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
+
+		$this->load->view('header',$header);
+		$this->load->view('content-wo-search',$output);
+		$this->load->view('footer',$footer);
+
+	}
+
+	public function loadcsv()
+	{
+		$id_pabrik = $this->uri->segment(3);
+		$tahun = urldecode($this->uri->segment(4));
+
+		// $id_unit = urldecode($this->uri->segment(5));//['id_unit'];
+		// echo("SELECT no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND unit = '$id_unit';");
+
+		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$like = $id_pabrik."-".$tahun;
+		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,hm,kategori,status FROM m_wo where no_wo LIKE '%$like%';");
+
+		$i = 0;
+		$d = [];
+			
+		echo "No WO,Station,Unit,Sub Unit,problem,hm,kategori,status\n";
+
+		foreach ($query->result() as $row)
+		{
+			echo $row->no_wo; echo ",";
+			echo $row->station; echo ",";
+			echo $row->unit; echo ",";
+			echo $row->sub_unit; echo ",";
+			echo $row->problem; echo ",";
+			// echo $row->desc_masalah; echo ",";
+			echo $row->hm; echo ",";
+			echo $row->kategori; echo ",";
+			echo $row->status; echo "\n";
+			// echo $row->harga; echo ",";
+			// echo $row->qty; echo ",";
+			// echo $row->jumlah; echo "\n";
+		}
+	}
+
+	public function download(){
+		$id_pabrik = $this->uri->segment(3);
+		$tahun = urldecode($this->uri->segment(4));
+
+		$like = $id_pabrik."-".$tahun;
+		$query = $this->db->query("
+			SELECT id_pabrik,tanggal,no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,status,tanggal_closing FROM m_wo where no_wo LIKE '%$like%';
+		");
+
+		header('Content-Type: aplication/vnd-ms-excel; charset=utf-8');
+		header('Content-Disposition: attachment; filename=WO_'.$id_pabrik.'_'.$tahun.'.xls');
+		echo "SITE\tTANGGAL\tNO WO\tSTATION\tUNIT\tSUB UNIT\tPROBLEM\tKETERANGAN\tHM\tKATEGORI\tSTATUS\tTANGGAL CLOSING\n";
+
+		foreach ($query->result() as $row)
+		{
+			echo $row->id_pabrik; echo "\t";
+			echo $row->tanggal; echo "\t";
+			echo $row->no_wo; echo "\t";
+			echo $row->station; echo "\t";
+			echo $row->unit; echo "\t";
+			echo $row->sub_unit; echo "\t";
+			echo $row->problem; echo "\t";
+			echo $row->desc_masalah; echo "\t";
+			echo $row->hm; echo "\t";
+			echo $row->kategori; echo "\t";
+			echo $row->status; echo "\t";
+			if($row->tanggal_closing == "00-00-0000" || $row->tanggal_closing == "0000-00-00"){
+				echo ""; echo "\n";
+			}else{
+				echo $row->tanggal_closing; echo "\n";
+			}
+		}
 	}
 }

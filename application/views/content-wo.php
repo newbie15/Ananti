@@ -7,7 +7,7 @@
         <ul class="nav nav-tabs">
           <li class="active"><a href="#" aria-expanded="true">Work Order</a></li>
           <li class=""><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
-          <li class=""><a href="#tab_3" aria-expanded="false">Search WO</a></li>
+          <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
