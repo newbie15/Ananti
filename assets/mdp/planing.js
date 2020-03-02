@@ -344,7 +344,7 @@ $(document).ready(function () {
         });
     }
 
-    function get_category(startj,stopj) {
+    function get_category(jstart,jstop) {
         var t1 = jstart.split(":");
         var t2 = jstop.split(":");
 
