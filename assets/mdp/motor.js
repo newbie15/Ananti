@@ -20,7 +20,8 @@ $(document).ready(function(){
                 $('#my-spreadsheet').jexcel({
                     data: data,
                     allowInsertColumn: false,
-
+                    tableOverflow: true,
+                    tableHeight: '400px',
                     colHeaders: [
                         '<br>Unit',
                         'Suhu Coupling<br>(pulley / gearbox)',

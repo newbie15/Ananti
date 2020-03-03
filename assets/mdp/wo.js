@@ -123,6 +123,8 @@ $(document).ready(function(){
         $('#my-spreadsheet').jexcel({
             data: data,
             allowInsertColumn: false,
+            tableOverflow: true,
+            tableHeight: '400px',
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
             colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori', 'Status','Tanggal<br>Closing'],

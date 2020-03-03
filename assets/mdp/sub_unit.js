@@ -57,7 +57,8 @@ $(document).ready(function(){
 
                 ],
                 allowInsertColumn: false,
-
+                tableOverflow: true,
+                tableHeight: '400px',
                 colWidths: [250, 250, 100, 100, 100, 100, 100, 100],
                 columns: [
                     { type: 'text' },
@@ -91,7 +92,8 @@ $(document).ready(function(){
 
         ],
         allowInsertColumn: false,
-
+        tableOverflow: true,
+        tableHeight: '400px',
         colWidths: [250, 250, 100, 100, 100, 100, 100, 100],
         columns: [
             { type: 'text' },
