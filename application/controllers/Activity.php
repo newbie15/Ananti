@@ -127,7 +127,33 @@ class Activity extends CI_Controller {
 			$d[$row->no_wo][$i][2] = $row->r_selesai;
 			$d[$row->no_wo][$i++][3] = $row->realisasi;
 		}
-		echo json_encode($d);
+		if($i>0){
+			echo json_encode($d);
+		}else{
+			$query = $this->db->query("SELECT no_wo,nama_mpp FROM m_planing where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+
+			$no_wo = "";
+			foreach ($query->result() as $row)
+			{
+				// $d[$i][0] = $row->nama; // access attributes
+				if($no_wo!=$row->no_wo){
+					$i = 0;
+					$no_wo = $row->no_wo;
+				}
+
+				$nama = explode(";",$row->nama_mpp);
+				$i = 0;
+				foreach ($nama as $key => $value) {
+					$d[$row->no_wo][$i][0] = $value;
+					// $d[$row->no_wo][$i][1] = $row->t_mulai;
+					// $d[$row->no_wo][$i][2] = $row->t_selesai;
+					$d[$row->no_wo][$i][1] = "";
+					$d[$row->no_wo][$i][2] = "";
+					$d[$row->no_wo][$i++][3] = "";
+				}
+			}
+			echo json_encode($d);
+		}
 	}
 
 	public function load_sparepart()

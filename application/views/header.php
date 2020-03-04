@@ -131,6 +131,7 @@
             <li><a href="<?php echo base_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
             <li><a href="<?php echo base_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
             <li><a href="<?php echo base_url("sub_unit"); ?>"><i class="fa fa-calendar-check-o"></i>Sub Unit</a></li>
+            <li><a href="<?php echo base_url("attachment"); ?>"><i class="fa fa-calendar-check-o"></i>Attachment</a></li>
             <li><a href="<?php echo base_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
             <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-gears"></i>Unit Mekanik</a></li>
             <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>Schedule</a></li>

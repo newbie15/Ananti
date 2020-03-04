@@ -292,8 +292,9 @@ $(document).ready(function () {
 
     ajax_refresh();
 
-    $("#tambah").click(function () {
-        station_refresh();
+    $("#download_plan").click(function () {
+        // station_refresh();
+        window.open(BASE_URL + "index.php/planing/download_plan_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
     $("#tambahwo").click(function () {

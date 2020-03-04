@@ -105,6 +105,7 @@ $(document).ready(function () {
             console.log(data);
             if(data.length==0){
                 alert("anda tidak punya plan untuk hari ini\ntolong buat plan dahulu");
+                $('#my-spreadsheet').html("");
             }else{
                 $('#my-spreadsheet').jexcel({
                     data: data,

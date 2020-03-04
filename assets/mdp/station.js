@@ -20,7 +20,8 @@ $(document).ready(function(){
                     'Station',
                 ],
                 allowInsertColumn: false,
-
+                tableOverflow: true,
+                tableHeight: '400px',
                 colWidths: [300, 150, 150, 100, 250, 250, 75, 75],
                 columns: [
                     { type: 'text' },
@@ -36,7 +37,8 @@ $(document).ready(function(){
             'Station',
         ],
         allowInsertColumn: false,
-
+        tableOverflow: true,
+        tableHeight: '400px',
         colWidths: [150,150,150,100,250,250,75,75],
         columns: [
             { type: 'text' },

@@ -112,9 +112,9 @@ class Main extends CI_Controller {
 		$jumlah_wo_baru = $row->jumlah;
 
 		//nilai data jumlah unit yang bermasalah
-		$query = $this->db->query("SELECT DISTINCT count(unit) as unit FROM `m_wo` WHERE `status` = 'open' and id_pabrik = '$nama_pabrik'");
-		$row = $query->row();
-		$jumlah_unit_trouble = $row->unit;
+		$query = $this->db->query("SELECT DISTINCT sub_unit FROM `m_wo` WHERE `status` = 'open' and id_pabrik = '$nama_pabrik'");
+		$row = $query->num_rows();
+		$jumlah_unit_trouble = $row;
 
 		//nilai data mill avaibility
 		$query = $this->db->query("SELECT ROUND(sum(acm)/count(acm)*100,2) as jumlah FROM `m_acm` where tanggal = '$tgl' and id_pabrik = '$nama_pabrik';");

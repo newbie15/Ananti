@@ -48,7 +48,8 @@ $(document).ready(function(){
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
-
+                tableOverflow: true,
+                tableHeight: '400px',
                 colHeaders: [
                     // 'Station',
                     'Kode Asset',
