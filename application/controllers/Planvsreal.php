@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Planing extends CI_Controller {
+class Planvsreal extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -38,7 +38,7 @@ class Planing extends CI_Controller {
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/planing.js"),
+			base_url("assets/mdp/planvsreal.js"),
 		];
 		
 		$output['content'] = '';
@@ -67,7 +67,7 @@ class Planing extends CI_Controller {
 		$output['dropdown_station'] = "<select id=\"station\"></select>";
 
 		$this->load->view('header',$header);
-		$this->load->view('content-planing',$output);
+		$this->load->view('content-planvsreal',$output);
 		$this->load->view('footer',$footer);
 	}
 

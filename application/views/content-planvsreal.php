@@ -4,9 +4,9 @@
     <section class="content-header">
       <h1>
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#" aria-expanded="true">Plan</a></li>
+          <li class=""><a href="<?php echo base_url("planing")?>" aria-expanded="true">Plan</a></li>
           <li class=""><a href="<?php echo base_url("activity")?>" aria-expanded="false">Realisasi</a></li>
-          <li class=""><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li>
+          <li class="active"><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li>
         </ul>
 
 
@@ -30,9 +30,9 @@
         <a class="btn btn-app btn-success" id="download_plan" href="#" role="button" data-toggle="modal">
           <i class="fa fa-file-excel-o"></i> Download
         </a>
-        <a class="btn btn-app btn-primary" id="simpan">
+        <!-- <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
-        </a>
+        </a> -->
       </ol>
     </section>
 

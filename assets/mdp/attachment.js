@@ -22,6 +22,20 @@ $(document).ready(function(){
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
+                    // ajax_refresh();
+                    sub_unit_refresh();
+                } else {
+                    // alert("gaagal");
+                }
+            }
+        );
+    }
+
+    function sub_unit_refresh() {
+        $("#sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()),
+            function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    // alert("success");
                     ajax_refresh();
                 } else {
                     // alert("gaagal");
@@ -33,11 +47,12 @@ $(document).ready(function(){
     function ajax_refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL+"sub_unit/load",
+            url: BASE_URL+"attachment/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
                 id_unit: $("#unit").val(),
+                id_sub_unit: $("#sub_unit").val(),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -46,14 +61,14 @@ $(document).ready(function(){
             $('#my-spreadsheet').jexcel({
                 data: data,
                 colHeaders: [
-                    'Sub Unit',
-                    'Klasifikasi',
-                    'Critical<br>Unit',
-                    'Hourmeter<br>Monitoring',
-                    'Vibration<br>Monitoring',
-                    'Temperature<br>Monitoring',
-                    'Oiling<br>Monitoring',
-                    'Electromotor<br>Monitoring'
+                    'Attachment',
+                    'Kategori',
+                    // 'Critical<br>Unit',
+                    // 'Hourmeter<br>Monitoring',
+                    // 'Vibration<br>Monitoring',
+                    // 'Temperature<br>Monitoring',
+                    // 'Oiling<br>Monitoring',
+                    // 'Electromotor<br>Monitoring'
 
                 ],
                 allowInsertColumn: false,
@@ -63,13 +78,12 @@ $(document).ready(function(){
                 columns: [
                     { type: 'text' },
                     { type: 'text' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
-                    { type: 'checkbox' },
-
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
+                    // { type: 'checkbox' },
                 ]
             });
         });
@@ -81,14 +95,14 @@ $(document).ready(function(){
     $('#my-spreadsheet').jexcel({
         data: data,
         colHeaders: [
-            'Sub Unit',
-            'Klasifikasi',
-            'Critical<br>Unit',
-            'Hourmeter<br>Monitoring',
-            'Vibration<br>Monitoring',
-            'Temperature<br>Monitoring',
-            'Oiling<br>Monitoring',
-            'Electromotor<br>Monitoring'
+            'Attachment',
+            'Kategori',
+            // 'Critical<br>Unit',
+            // 'Hourmeter<br>Monitoring',
+            // 'Vibration<br>Monitoring',
+            // 'Temperature<br>Monitoring',
+            // 'Oiling<br>Monitoring',
+            // 'Electromotor<br>Monitoring'
 
         ],
         allowInsertColumn: false,
@@ -98,12 +112,12 @@ $(document).ready(function(){
         columns: [
             { type: 'text' },
             { type: 'text' },
-            { type: 'checkbox' },
-            { type: 'checkbox' },
-            { type: 'checkbox' },
-            { type: 'checkbox' },
-            { type: 'checkbox' },
-            { type: 'checkbox' },
+            // { type: 'checkbox' },
+            // { type: 'checkbox' },
+            // { type: 'checkbox' },
+            // { type: 'checkbox' },
+            // { type: 'checkbox' },
+            // { type: 'checkbox' },
 
         ]
     });
@@ -115,12 +129,13 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"sub_unit/simpan",
+            url: BASE_URL+"attachment/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
                 station: $("#station").val(),
                 unit: $("#unit").val(),
+                sub_unit: $("#sub_unit").val(),
                 data_json: JSON.stringify(data_j),
             }
         }).done(function (msg) {
@@ -133,10 +148,14 @@ $(document).ready(function(){
     });
 
     $("#station").change(function () {
-    	unit_refresh();
+        unit_refresh();
     });
 
     $("#unit").change(function () {
+        sub_unit_refresh();
+    });
+
+    $("#sub_unit").change(function () {
         ajax_refresh();
     });
 

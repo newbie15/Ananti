@@ -7,6 +7,7 @@
           <li class=""><a href="<?php echo base_url("station")?>" aria-expanded="true">Station</a></li>
           <li class=""><a href="<?php echo base_url("unit")?>" aria-expanded="false">Unit</a></li>
           <li class="active"><a href="" aria-expanded="false">Sub Unit</a></li>
+          <li class=""><a href="<?php echo base_url("attachment")?>" aria-expanded="false">Attachment</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">

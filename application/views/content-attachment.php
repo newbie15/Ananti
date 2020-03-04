@@ -5,9 +5,9 @@
       <h1>
         <ul class="nav nav-tabs">
           <li class=""><a href="<?php echo base_url("station")?>" aria-expanded="true">Station</a></li>
-          <li class="active"><a href="" aria-expanded="false">Unit</a></li>
+          <li class=""><a href="<?php echo base_url("unit")?>" aria-expanded="false">Unit</a></li>
           <li class=""><a href="<?php echo base_url("sub_unit")?>" aria-expanded="false">Sub Unit</a></li>
-          <li class=""><a href="<?php echo base_url("attachment")?>" aria-expanded="false">Attachment</a></li>
+          <li class="active"><a href="" aria-expanded="false">Attachment</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
@@ -22,20 +22,19 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-          <?php //echo $content; ?>
         <div class="col-xs-12">
+          <?php //echo $content; ?>
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
           Station :
           <?php echo $dropdown_station; ?>
-
+          Unit :
+          <?php echo $dropdown_unit; ?>
+          Sub Unit :
+          <?php echo $dropdown_sub_unit; ?>
           <br><br>
-          <!-- <div style="
-						height: 500px;
-						width: 100%;
-						overflow: auto;
-					"> -->
-            <div id='my-spreadsheet'></div>              
+          <!-- <button id="simpan">Simpan</button> -->
+          <div id='my-spreadsheet'></div>      
         </div>
       </div>
       <!-- /.row -->
