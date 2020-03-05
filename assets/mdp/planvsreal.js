@@ -73,7 +73,7 @@ $(document).ready(function () {
 
                 ],
                 // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
-                colWidths: [140, 160, 250, 250, 100, 60, 60, 75, 75, 75, 100],
+                colWidths: [140, 200, 250, 100, 100, 60, 60, 75, 75, 75, 100],
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true, wordWrap: true },
