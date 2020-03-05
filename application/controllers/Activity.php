@@ -108,7 +108,7 @@ class Activity extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,nama_teknisi,t_mulai,t_selesai,r_mulai,r_selesai,realisasi FROM m_activity_detail where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$query = $this->db->query("SELECT no_wo,nama_teknisi,r_mulai,r_selesai,realisasi FROM m_activity_detail where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
 
 		$i = 0;
 		$d = [];
@@ -120,12 +120,27 @@ class Activity extends CI_Controller {
 				$i = 0;
 				$no_wo = $row->no_wo;
 			}
+
+			$jam = intval($row->realisasi / 60);
+			$menit = ($row->realisasi % 60);
+
+			if($jam<10){
+				$jam = "0".$jam;
+			}
+
+			if($menit<10){
+				$menit = "0".$menit;
+			}
+
+			$realisasi = $jam.":".$menit;
+
 			$d[$row->no_wo][$i][0] = $row->nama_teknisi;
 			// $d[$row->no_wo][$i][1] = $row->t_mulai;
 			// $d[$row->no_wo][$i][2] = $row->t_selesai;
 			$d[$row->no_wo][$i][1] = $row->r_mulai;
 			$d[$row->no_wo][$i][2] = $row->r_selesai;
-			$d[$row->no_wo][$i++][3] = $row->realisasi;
+			$d[$row->no_wo][$i++][3] = $realisasi;
+
 		}
 		if($i>0){
 			echo json_encode($d);
@@ -206,16 +221,20 @@ class Activity extends CI_Controller {
 		foreach ($detail as $key => $value) {
 			if($key!="_empty_" && $key!="undefined"){
 				foreach ($value as $ky => $val) {
+
+					$tm = explode(":",$val[3]);
+					$realisasi = ($tm[0] * 60) + $tm[1]; // jam dalam bentuk menit
+
 					$data = array(
 						'id_pabrik' => $pabrik,
 						'tanggal' => $tanggal,
 						'no_wo' => $key,
 						'nama_teknisi' =>$val[0],
-						't_mulai' => $val[1],
-						't_selesai' => $val[2],
-						// 'r_mulai' => $val[3],
-						// 'r_selesai' => $val[4],
-						'realisasi' => $val[3],
+						// 't_mulai' => $val[1],
+						// 't_selesai' => $val[2],
+						'r_mulai' => $val[1],
+						'r_selesai' => $val[2],
+						'realisasi' => $realisasi,
 					);
 					$this->db->insert('m_activity_detail', $data);
 				}

@@ -137,6 +137,39 @@ class Planing extends CI_Controller {
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$eq = explode("\n",$value[1]); 
+
+			$awal = explode(":",$value[7]);
+			$akhir = explode(":",$value[8]);
+
+			$jam_aw = intval($awal[0]);
+			$jam_ak = intval($akhir[0]);
+
+			$datetime1 = null;
+			$datetime2 = null;
+
+			if ($jam_aw > $jam_ak){ // lewat hari misal start 21:00 selesai 01:00
+				$datetime1 = new DateTime('2014-02-11 '.$value[7].':00'); // awal 
+				$datetime2 = new DateTime('2014-02-12 '.$value[8].':00'); // akhir
+			}else{
+				$datetime1 = new DateTime('2014-02-11 '.$value[7].':00'); // awal 
+				$datetime2 = new DateTime('2014-02-11 '.$value[8].':00'); // akhir
+			}
+
+			$interval = $datetime1->diff($datetime2);
+
+			$jm = $interval->format('%h');
+			$mn = $interval->format('%i'); 
+
+			// if($jm<10){
+			// 	$jm = "0".$jm;
+			// }
+			
+			// if($mn<10){
+			// 	$mn = "0".$mn;
+			// }
+
+			$time = ($jm*60) + $mn;
+
 			$data = array(
 				'tanggal' => $tanggal,
 				'id_pabrik' => $pabrik,
@@ -151,6 +184,7 @@ class Planing extends CI_Controller {
 				'mek_el' => $value[6],
 				'start' => $value[7],
 				'stop' => $value[8],
+				'time' => $time,
 				'tipe' => $value[9],
 				'ket' => $value[10]
 			);
