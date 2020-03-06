@@ -101,8 +101,9 @@ class Wo extends CI_Controller {
 			$d[$i][3] = $row->desc_masalah;
 			$d[$i][4] = $row->hm;
 			$d[$i][5] = $row->kategori;
-			$d[$i][6] = $row->status;
-			$d[$i++][7] = $row->tanggal_closing;
+			$d[$i][6] = $row->kategori;
+			$d[$i][7] = $row->status;
+			$d[$i++][8] = $row->tanggal_closing;
 		}
 		echo json_encode($d);
 	}
@@ -128,8 +129,9 @@ class Wo extends CI_Controller {
 				'desc_masalah' => $value[3],
 				'hm' => $value[4],
 				'kategori' => $value[5],
-				'status' => $value[6],
-				'tanggal_closing' => $value[7],
+				'tipe' => $value[6],
+				'status' => $value[7],
+				'tanggal_closing' => $value[8],
 				// 'date' => 'My date'
 			);
 			// print_r($data);
@@ -323,12 +325,12 @@ class Wo extends CI_Controller {
 
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 		$like = $id_pabrik."-".$tahun;
-		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,hm,kategori,status FROM m_wo where no_wo LIKE '%$like%';");
+		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,hm,kategori,tipe,status FROM m_wo where no_wo LIKE '%$like%';");
 
 		$i = 0;
 		$d = [];
 			
-		echo "No WO,Station,Unit,Sub Unit,problem,hm,kategori,status\n";
+		echo "No WO,Station,Unit,Sub Unit,problem,hm,kategori,tipe,status\n";
 
 		foreach ($query->result() as $row)
 		{
@@ -340,6 +342,7 @@ class Wo extends CI_Controller {
 			// echo $row->desc_masalah; echo ",";
 			echo $row->hm; echo ",";
 			echo $row->kategori; echo ",";
+			echo $row->tipe; echo ",";
 			echo $row->status; echo "\n";
 			// echo $row->harga; echo ",";
 			// echo $row->qty; echo ",";
@@ -353,12 +356,12 @@ class Wo extends CI_Controller {
 
 		$like = $id_pabrik."-".$tahun;
 		$query = $this->db->query("
-			SELECT id_pabrik,tanggal,no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,status,tanggal_closing FROM m_wo where no_wo LIKE '%$like%';
+			SELECT id_pabrik,tanggal,no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,tipe,status,tanggal_closing FROM m_wo where no_wo LIKE '%$like%';
 		");
 
 		header('Content-Type: aplication/vnd-ms-excel; charset=utf-8');
 		header('Content-Disposition: attachment; filename=WO_'.$id_pabrik.'_'.$tahun.'.xls');
-		echo "SITE\tTANGGAL\tNO WO\tSTATION\tUNIT\tSUB UNIT\tPROBLEM\tKETERANGAN\tHM\tKATEGORI\tSTATUS\tTANGGAL CLOSING\n";
+		echo "SITE\tTANGGAL\tNO WO\tSTATION\tUNIT\tSUB UNIT\tPROBLEM\tKETERANGAN\tHM\tKATEGORI\tTIPE\tSTATUS\tTANGGAL CLOSING\n";
 
 		foreach ($query->result() as $row)
 		{
@@ -372,6 +375,7 @@ class Wo extends CI_Controller {
 			echo $row->desc_masalah; echo "\t";
 			echo $row->hm; echo "\t";
 			echo $row->kategori; echo "\t";
+			echo $row->tipe; echo "\t";
 			echo $row->status; echo "\t";
 			if($row->tanggal_closing == "00-00-0000" || $row->tanggal_closing == "0000-00-00"){
 				echo ""; echo "\n";

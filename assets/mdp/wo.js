@@ -66,11 +66,6 @@ $(document).ready(function(){
             } else if (i < 100){
                 arr_no_wo[j++] = no_wo + "-" + i.toString();
             }
-            // } else if (i < 1000){
-            //     arr_no_wo[j++] = no_wo + "-0" + i.toString();
-            // }else{
-            //     arr_no_wo[j++] = no_wo + "-" +i.toString();
-            // }
         }
 
         handler = function (obj, cell, val) {
@@ -84,7 +79,7 @@ $(document).ready(function(){
             cll = $(cell).prop('id');
             dd = cll.split("-");
 
-            if(dd[0]=="6" && val == "close"){
+            if(dd[0]=="7" && val == "close"){
                 var roww = parseInt(dd[1])+1;
                 var y = tgl.getFullYear();
                 var m = tgl.getMonth() + 1;
@@ -97,7 +92,7 @@ $(document).ready(function(){
                     d = ("0" + d.toString());
                 }
 
-                roww = "H"+roww;
+                roww = "I"+roww;
                 console.log(d + "-" + m + "-" + y);
                 // console.log(id);
                 var vv = $("#my-spreadsheet").jexcel('getValue', roww);
@@ -127,9 +122,9 @@ $(document).ready(function(){
             // tableHeight: '400px',
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori', 'Status','Tanggal<br>Closing'],
+            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori','Tipe','Status','Tanggal<br>Closing'],
             // colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
-            colWidths: [140, 220, 250, 250, 100, 75, 80, 80],
+            colWidths: [140, 220, 250, 250, 100, 65, 40, 80, 80],
             columns: [
                 { type: 'text', readOnly: true },
                 { type: 'text', readOnly: true, wordWrap: true },
@@ -145,6 +140,7 @@ $(document).ready(function(){
                 { type: 'text', wordWrap: true },
                 { type: 'text' },
                 { type: 'dropdown', source: ['plan', 'unplan'] },
+                { type: 'dropdown', source: ['M', 'E'] },
                 { type: 'dropdown', source: ['open', 'close'] },
                 // { type: 'text' },
                 { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
@@ -153,9 +149,9 @@ $(document).ready(function(){
 
         $('#my-spreadsheet').jexcel('updateSettings', {
             table: function (instance, cell, col, row, val, id) {
-                if (col == 6) {
+                if (col == 7) {
                     if (val == "open") {
-                        $(cell).css('color', '#ffffff');
+                        $(cell).css('color', '#000000');
                         $(cell).css('background-color', '#ff0000');
                     } else if (val == "close") {
                         $(cell).css('color', '#000000');
