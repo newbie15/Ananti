@@ -4,17 +4,11 @@
     <section class="content-header">
       <h1>
         <ul class="nav nav-tabs">
+          <li class=""><a href="<?php echo base_url("schedule_maintenance")?>" aria-expanded="false">Schedule</a></li>
           <li class=""><a href="<?php echo base_url("planing")?>" aria-expanded="true">Plan</a></li>
           <li class=""><a href="<?php echo base_url("activity")?>" aria-expanded="false">Realisasi</a></li>
           <li class="active"><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li>
         </ul>
-
-
-        <!-- Planing Harian Maintenance -->
-        <!-- - Pabrik : 
-        <?php echo $dropdown_pabrik ?> -->
-
-        <!-- <small>Input Harian</small> -->
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->

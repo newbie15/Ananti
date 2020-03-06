@@ -33,9 +33,15 @@
               <h4 class="modal-title">Tambah Work Order</h4>
             </div>
             <div class="modal-body">
+              <!-- <input type="text" id="search" class=""> -->
+
               <h3 id="dpabrik"></h3>
               No WO  &nbsp;&nbsp; : <input type="text" id="no_wo_auto"/>
-              <br><br>
+              <hr/>
+              <div style="width:100%;">
+                <input class="form-control w-100" id="search" autocomplete="off" placeholder="cari item disini"/>            
+              </div>
+              <hr/>
               Station &nbsp;&nbsp;&nbsp;&nbsp;: <select id="station"><option></option></select>
               <br>
               <br>
@@ -116,13 +122,13 @@
             <option>31</option>
           </select>
           <br><br>
-          <div style="
-						height: 470px;
+          <div id="scrll" style="
+						height: 450px;
 						width: 100%;
 						overflow: auto;
 					">
-          <div id='my-spreadsheet'></div>
-          </div>
+            <div id='my-spreadsheet'></div>
+            </div>
           <!-- <button id="simpan" class="btn btn-small btn-danger">Simpan</button> -->
         </div>
       </div>

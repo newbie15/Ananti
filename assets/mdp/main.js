@@ -48,16 +48,16 @@ $(function () {
             series: {
                 pie: {
                     show: true,
-                    radius: 1,
-                    label: {
-                        show: true,
-                        radius: 3 / 4,
-                        // formatter: labelFormatter,
-                        background: {
-                            opacity: 0.5,
-                            color: '#000'
-                        }
-                    }
+                    // radius: 1,
+                    // label: {
+                    //     show: true,
+                    //     radius: 3 / 4,
+                    //     // formatter: labelFormatter,
+                    //     background: {
+                    //         opacity: 0.5,
+                    //         color: '#000'
+                    //     }
+                    // }
                 }
             },
             legend: {
