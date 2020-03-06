@@ -251,6 +251,16 @@ class Planing extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$nama = explode(";",$row->nama_mpp);
+
+			$jam = intval($row->time / 60);
+			$menit = $row->time % 60;
+
+			if($jam<10){
+				$jam = "0".$jam;
+			}
+
+			$time = $jam.":".$menit;
+
 			foreach ($nama as $key => $value) {
 				echo $row->id_pabrik; echo "\t";
 				echo $row->tanggal; echo "\t";
@@ -262,7 +272,7 @@ class Planing extends CI_Controller {
 				echo $row->tipe; echo "\t";
 				echo $row->start; echo "\t";
 				echo $row->stop; echo "\t";
-				echo $row->time; echo "\t";
+				echo $time; echo "\t";
 				echo $row->plan; echo "\n";
 			}
 		}

@@ -36,12 +36,15 @@ class Wo extends CI_Controller {
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/easyautocomplete/easy-autocomplete.min.css"),			
+
 		];
 
 		$footer['js_files'] = [
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/easyautocomplete/jquery.easy-autocomplete.min.js"),			
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/wo.js"),
