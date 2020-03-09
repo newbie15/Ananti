@@ -153,10 +153,10 @@
             <option>31</option>
           </select>
           <br><br>
-          <div style="
-						height: 500px;
+          <div id="scrll" style="
+						height: 450px;
 						width: 100%;
-						overflow: auto;
+            overflow: auto;
 					">
             <div id='my-spreadsheet'></div> 
             <!-- <div class="loader"></div>              -->

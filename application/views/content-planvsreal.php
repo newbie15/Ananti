@@ -15,12 +15,12 @@
         <!-- <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal"> -->
           <!-- <i class="fa fa-search-plus"></i> Cari WO -->
         <!-- </a> -->
-        <a class="btn btn-app btn-success" id="sharewa">
+        <!-- <a class="btn btn-app btn-success" id="sharewa">
           <i class="fa fa-whatsapp"></i> Share
         </a>
         <a class="btn btn-app btn-info" id="tambahwo" href="#modal-wo" role="button" data-toggle="modal">
           <i class="fa fa-industry"></i> WO
-        </a>
+        </a> -->
         <a class="btn btn-app btn-success" id="download_plan" href="#" role="button" data-toggle="modal">
           <i class="fa fa-file-excel-o"></i> Download
         </a>
@@ -80,8 +80,9 @@
             <option value="11">november</option>
             <option value="12">desember</option>
           </select>
-          <!-- Tanggal : 
+          Tanggal : 
           <select id="tanggal">
+            <option>--ALL--</option>
             <option>01</option>
             <option>02</option>
             <option>03</option>
@@ -113,10 +114,10 @@
             <option>29</option>
             <option>30</option>
             <option>31</option>
-          </select> -->
+          </select>
           <br><br>
           <div style="
-						height: 500px;
+						height: 450px;
 						width: 100%;
 						overflow: auto;
 					">
