@@ -148,6 +148,17 @@ class Sub_unit extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function listing(){
+		$id_pabrik = $this->uri->segment(3, 0);
+
+        $this->db->select('concat(id_station,"-",id_unit,"-",nama) as list');
+		$this->db->from('master_sub_unit');
+		$this->db->where("id_pabrik",$id_pabrik);
+        $query = $this->db->get();
+        echo(json_encode($query->result()));
+    
+	}
+
 	public function ajax()
 	{
 		// $id_pabrik = $_REQUEST['id_pabrik'];

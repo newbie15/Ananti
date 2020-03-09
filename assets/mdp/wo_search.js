@@ -27,6 +27,7 @@ $(document).ready(function(){
                 { type: 'text', width: 200 },
                 { type: 'text', width: 75 },
                 { type: 'text', width: 75 },
+                { type: 'text', width: 40 },
                 { type: 'text', width: 75 },
                 // { type: 'text', width: 50 },
                 // { type: 'text', width: 25 },
