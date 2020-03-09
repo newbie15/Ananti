@@ -15,12 +15,12 @@
         <!-- <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal"> -->
           <!-- <i class="fa fa-search-plus"></i> Cari WO -->
         <!-- </a> -->
-        <a class="btn btn-app btn-success" id="sharewa">
+        <!-- <a class="btn btn-app btn-success" id="sharewa">
           <i class="fa fa-whatsapp"></i> Share
         </a>
         <a class="btn btn-app btn-info" id="tambahwo" href="#modal-wo" role="button" data-toggle="modal">
           <i class="fa fa-industry"></i> WO
-        </a>
+        </a> -->
         <a class="btn btn-app btn-success" id="download_plan" href="#" role="button" data-toggle="modal">
           <i class="fa fa-file-excel-o"></i> Download
         </a>
@@ -52,40 +52,9 @@
           </div>
         </div>
       </div>
-      <div class="modal fade in" id="modal-wo" style="display: none;">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Daftar WO belum selesai</h4>
-            </div>
-            <div class="modal-body">
-              <table id="dt-table-wo" class="display" width="100%"></table>
-            </div>
-          </div>
-        </div>
-      </div>
 
-
-      <!-- Small boxes (Stat box) -->
-      <!-- <div class="modal fade in" id="modal-default" style="display: none;">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Daftar WO belum selesai</h4>
-            </div>
-            <div class="modal-body">
-              <table id="dt-table" class="display" width="100%"></table>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="row">
         <div class="col-xs-12">
-          <?php //echo $content; ?>
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
           <!-- Station : -->
@@ -113,6 +82,7 @@
           </select>
           Tanggal : 
           <select id="tanggal">
+            <option>--ALL--</option>
             <option>01</option>
             <option>02</option>
             <option>03</option>
@@ -147,7 +117,7 @@
           </select>
           <br><br>
           <div style="
-						height: 500px;
+						height: 450px;
 						width: 100%;
 						overflow: auto;
 					">

@@ -122,10 +122,7 @@ $(document).ready(function () {
                 onchange: handler,
                 colHeaders: [
                     'No WO',
-                    // 'Station',
                     'Station<br>Unit<br>Sub Unit',
-                    // 'Unit',
-                    // 'Sub Unit',
                     'Problem',
                     'Plan',
                     'MPP',
@@ -141,12 +138,9 @@ $(document).ready(function () {
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true ,wordWrap: true},
-                    // { type: 'text', readOnly: true },
-                    // { type: 'text', readOnly: true },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
-                    // { type: 'text' },
                     { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
@@ -209,6 +203,13 @@ $(document).ready(function () {
 
         $("#wo").val("");
         $("#modal-default").modal("hide");
+
+        updatescroll();
+    }
+
+    function updatescroll() {
+        var el = document.getElementById("scrll");
+        el.scrollTop = el.scrollHeight;
     }
 
     $("#simpan").click(function () {
@@ -380,14 +381,21 @@ $(document).ready(function () {
         
         dx.forEach(element => {
             console.log(element);
-            text_wa += "\n" + "Station : " + (element[1]);
-            text_wa += "\n" + "Unit : " + (element[2]);
-            text_wa += "\n" + "Sub Unit : " + (element[3]);
-            text_wa += "\n" + "Problem\n - " + (element[4]);
-            text_wa += "\n" + "Plan\n - " + (element[5]);
-            text_wa += "\n" + "MPP : " + (element[6]);
-            text_wa += "\n" + "Waktu : " + get_category(element[9], element[10]) +" ("+ (element[9] + "-" + element[10]) + ")";
-            text_wa += "\n" + "Tipe : " + (element[11]);
+
+            dt = element[1].split("\n");
+
+            text_wa += "\n" + "Area : " + (dt[0]);
+            if(dt[1]==dt[2]){
+                text_wa += " - " + (dt[1]);
+            }else{
+                text_wa += " - " + (dt[1]);
+                text_wa += " - " + (dt[2]);
+            }
+            text_wa += "\n" + "Problem\n - " + (element[2]);
+            text_wa += "\n" + "Plan\n - " + (element[3]);
+            text_wa += "\n" + "MPP : " + (element[4]) + " *" + (element[5]) + "*";
+            text_wa += "\n" + "Waktu : " + get_category(element[7], element[8]) +" ("+ (element[7] + "-" + element[8]) + ")";
+            text_wa += "\n" + "Tipe : " + (element[9]);
             text_wa += "\n";
         });        
         console.log(text_wa);
