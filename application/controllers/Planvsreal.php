@@ -74,28 +74,91 @@ class Planvsreal extends CI_Controller {
 	public function load(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		// $id_station = $_REQUEST['id_station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m'];
+
+		$query_plan = $this->db->query(
+			"SELECT `no_wo`,sum(m_planing.mpp * m_planing.time) as waktu_plan
+			FROM `m_planing` WHERE 
+			no_wo LIKE '%$id_pabrik-$tanggal%'
+		");
+
+		$query_real = $this->db->query(
+			"SELECT `no_wo`,sum(m_activity_detail.realisasi) as waktu_real
+			FROM `m_activity_detail` WHERE 
+			no_wo LIKE '%$id_pabrik-$tanggal%'
+		");
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`plan`,`mpp`,`nama_mpp`,`mek_el`,`start`,`stop`,`tipe`,`ket`
-			FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
+			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`
+			FROM `m_wo` WHERE 
+			no_wo LIKE '%$id_pabrik-$tanggal%'
 		");
+
+		// echo "SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`
+		// 	FROM `m_wo` WHERE 
+		// 	no_wo LIKE '%$id_pabrik-$tanggal%'
+		// ";
 
 		$i = 0;
 		$d = [];
+		$p = [];
+		$r = [];
+
+		foreach ($query_plan->result() as $plan) {
+			$jam = intval($plan->waktu_plan/60);
+			$menit = $plan->waktu_plan % 60;
+
+			if($jam<10){
+				$jam = "0".$jam;
+			}
+			if($menit<10){
+				$menit = "0".$menit;
+			}
+
+
+
+			$p[$plan->no_wo] = $jam.":".$menit;
+		}
+
+		foreach ($query_real->result() as $real) {
+			$jam = intval($real->waktu_real/60);
+			$menit = $real->waktu_real % 60;
+
+			if($jam<10){
+				$jam = "0".$jam;
+			}
+			if($menit<10){
+				$menit = "0".$menit;
+			}
+
+
+			$r[$real->no_wo] = $jam.":".$menit;
+		}
+
 		foreach ($query->result() as $row)
 		{
+		
 			$d[$i][0] = $row->no_wo;
 			$d[$i][1] = $row->station ."\n". $row->unit . "\n" . $row->sub_unit;
 			$d[$i][2] = $row->problem;
-			$d[$i][3] = $row->plan;
-			$d[$i][4] = $row->mpp;
-			$d[$i][5] = $row->nama_mpp;
-			$d[$i][6] = $row->mek_el;
-			$d[$i][7] = $row->start;
-			$d[$i][8] = $row->stop;
-			$d[$i][9] = $row->tipe;
-			$d[$i++][10] = $row->ket;
+			$d[$i][3] = $row->status;
+			if($row->tanggal_closing != "0000-00-00"){
+				$d[$i][4] = $row->tanggal_closing;
+			}else{
+				$d[$i][4] = "";
+			}
+			
+			if(isset($p[$row->no_wo])){
+				$d[$i][5] = $p[$row->no_wo];
+			}else{
+				$d[$i][5] = "";
+			}
+			if(isset($r[$row->no_wo])){
+				$d[$i][6] = $r[$row->no_wo];
+			}else{
+				$d[$i][6] = "";
+			}
+			$i++;
 		}
 		echo json_encode($d);
 	}

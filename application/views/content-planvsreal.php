@@ -52,40 +52,9 @@
           </div>
         </div>
       </div>
-      <div class="modal fade in" id="modal-wo" style="display: none;">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Daftar WO belum selesai</h4>
-            </div>
-            <div class="modal-body">
-              <table id="dt-table-wo" class="display" width="100%"></table>
-            </div>
-          </div>
-        </div>
-      </div>
 
-
-      <!-- Small boxes (Stat box) -->
-      <!-- <div class="modal fade in" id="modal-default" style="display: none;">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Daftar WO belum selesai</h4>
-            </div>
-            <div class="modal-body">
-              <table id="dt-table" class="display" width="100%"></table>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="row">
         <div class="col-xs-12">
-          <?php //echo $content; ?>
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
           <!-- Station : -->
@@ -111,7 +80,7 @@
             <option value="11">november</option>
             <option value="12">desember</option>
           </select>
-          Tanggal : 
+          <!-- Tanggal : 
           <select id="tanggal">
             <option>01</option>
             <option>02</option>
@@ -144,7 +113,7 @@
             <option>29</option>
             <option>30</option>
             <option>31</option>
-          </select>
+          </select> -->
           <br><br>
           <div style="
 						height: 500px;

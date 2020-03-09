@@ -9,13 +9,6 @@ $(document).ready(function () {
     data_detailnya = "";
 
     handler = function (obj, cell, val) {
-        // console.log('My table id: ' + $(obj).prop('id'));
-        // console.log('Cell changed: ' + $(cell).prop('id'));
-        // console.log('Value: ' + val);
-
-        // console.log(cell);
-        // console.log(col);
-        // console.log(row);
         cll = $(cell).prop('id');
         dd = cll.split("-");
 
@@ -63,8 +56,6 @@ $(document).ready(function () {
                 colHeaders: [
                     'No WO',
                     'Station<br>Unit<br>Sub Unit',
-                    // 'Unit',
-                    // 'Sub Unit',
                     'Problem',
                     'Status',
                     'Tanggal<br>Closing',
@@ -73,12 +64,10 @@ $(document).ready(function () {
 
                 ],
                 // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
-                colWidths: [140, 200, 250, 100, 100, 60, 60, 75, 75, 75, 100],
+                colWidths: [140, 250, 250, 100, 100, 60, 60, 75, 75, 75, 100],
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true, wordWrap: true },
-                    // { type: 'text', readOnly: true },
-                    // { type: 'text', readOnly: true },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
@@ -96,7 +85,6 @@ $(document).ready(function () {
                 colHeaders: [
                     'No WO',
                     'Station<br>Unit<br>Sub Unit',
-                    
                     'Problem',
                     'Status',
                     'Tanggal<br>Closing',
@@ -105,12 +93,10 @@ $(document).ready(function () {
                     
                 ],
                 // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
-                colWidths: [140, 200, 200, 200, 40, 100, 60, 75, 75, 75, 100],
+                colWidths: [140, 250, 250, 100, 100, 60, 60, 75, 75, 75, 100],
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true ,wordWrap: true},
-                    // { type: 'text', readOnly: true },
-                    // { type: 'text', readOnly: true },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
@@ -138,10 +124,9 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "planing/load",
+            url: BASE_URL + "planvsreal/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                // id_station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
