@@ -86,7 +86,7 @@ class Wo extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,status,tanggal_closing FROM m_wo where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,tipe,status,tanggal_closing FROM m_wo where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
 
 		$i = 0;
 		$d = [];
@@ -101,7 +101,7 @@ class Wo extends CI_Controller {
 			$d[$i][3] = $row->desc_masalah;
 			$d[$i][4] = $row->hm;
 			$d[$i][5] = $row->kategori;
-			$d[$i][6] = $row->kategori;
+			$d[$i][6] = $row->tipe;
 			$d[$i][7] = $row->status;
 			$d[$i++][8] = $row->tanggal_closing;
 		}
