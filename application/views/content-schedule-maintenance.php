@@ -21,43 +21,49 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <div class="col-xs-12">
-          <?php //echo $content; ?>
-          Tahun : <select id="tahun"></select>
-          Pabrik : 
-          <?php echo $dropdown_pabrik ?>
-          Station :
-          <?php echo $dropdown_station; ?>
-          Unit :
-          <?php echo $dropdown_unit; ?>
-        </div>
-        <div class="col-xs-3">
-          <div class="box box-solid">
+        <!-- <div class="col-xs-12">
+
+        </div> -->
+        <div class="col-lg-3">
+          <div style="height: 49px;">
+            <div style="width:25%;float: left;margin-bottom: 3px;">Tahun : </div>
+            <div style="width:25%;float: left;margin-bottom: 3px;"><select id="tahun"></select></div>
+            <div style="width:25%;float: left;margin-bottom: 3px;">Pabrik : </div>
+            <div style="width:25%;float:right;margin-bottom: 3px;"><?php echo $dropdown_pabrik ?></div>                      
+            <div style="width:25%;margin-bottom: 3px;float: left;">Station :</div>
+            <div style="width:75%;margin-bottom: 3px;float:right;"><?php echo $dropdown_station; ?></div>
+          </div>
+          <div id="list_wo" class="box box-solid">
             <div class="box-header with-border">
               <i class="fa fa-check"></i>
               <h3 class="box-title">Daftar WO Unfinished</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div id="external-events">
+              <div id="external-events" >
                 <div class="external-event bg-green">Lunch</div>
-                <div class="external-event bg-yellow">Go home</div>
-                <div class="external-event bg-aqua">Do homework</div>
-                <div class="external-event bg-light-blue">Work on UI design</div>
-                <div class="external-event bg-red">Sleep tight</div>
               </div>
             </div>
             <!-- /.box-body -->
           </div>
+          <div id="delete_area" class="box box-solid" style="display: none;">
+            <div class="box-header with-border">
+              <i class="fa fa-trash"></i>
+              <h3 class="box-title">Delete Event</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <h2 style="text-align: center;color: lightgray;">
+                <div class="fa fa-trash">
+                </div>
+                <br>
+                Drag & Drop Here To Delete Event
+              </h2>
+            </div>
+            <!-- /.box-body -->
+          </div>
         </div>
-        <div class="col-xs-9">
-          <!-- <div style="
-						height: 500px;
-						width: 100%;
-						overflow: auto;
-					">
-            <div id='my-spreadsheet'></div>              
-          </div> -->
+        <div class="col-lg-9">
           <div id='calendar' style="background-color:white;"></div>              
         </div>
       </div>

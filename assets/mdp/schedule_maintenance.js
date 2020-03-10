@@ -40,10 +40,10 @@ $(document).ready(function(){
 
     var isEventOverDiv = function (x, y) {
 
-        var external_events = $('#external-events');
-        var offset = external_events.offset();
-        offset.right = external_events.width() + offset.left;
-        offset.bottom = external_events.height() + offset.top;
+        var delete_area = $('#delete_area');
+        var offset = delete_area.offset();
+        offset.right = delete_area.width() + offset.left;
+        offset.bottom = delete_area.height() + offset.top;
 
         // Compare
         if (x >= offset.left
@@ -115,7 +115,9 @@ $(document).ready(function(){
                 $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
 
                 // is the "remove after drop" checkbox checked?
-                if ($('#drop-remove').is(':checked')) {
+                // if ($('#drop-remove').is(':checked')) {
+
+                if(true){
                     // if so, remove the element from the "Draggable Events" list
                     $(this).remove()
                 }
@@ -148,6 +150,8 @@ $(document).ready(function(){
             },
             eventDragStart: function (){
                 console.log("tampilkan tempat pembuangan");
+                $("#list_wo").hide();
+                $("#delete_area").show();
             },
             eventDragStop: function (event, jsEvent, ui, view) {
 
@@ -161,6 +165,8 @@ $(document).ready(function(){
                     });
                     el.data('event', { title: event.title, id: event.id, stick: true });
                 }
+                $("#list_wo").show();
+                $("#delete_area").hide();
             },
             eventResizeStop: function(){
                 console.log("stop");
@@ -168,11 +174,14 @@ $(document).ready(function(){
 
             eventLimit: true, // allow "more" link when too many events
             events: {
-                url: BASE_URL + 'pm/event/' + $("#pabrik").val() + "/" + $("#tahun").val(),
-                type: 'POST', // Send post data
-                error: function () {
-                    alert('There was an error while fetching events.');
-                }
+                url: BASE_URL + '/calendar/plan_schedule/' + $("#pabrik").val(), // use the `url` property
+                color: 'yellow', // an option!
+                textColor: 'black' // an option!
+                // url: BASE_URL + 'schedule_maintenance/event/' + $("#pabrik").val() + "/" + $("#tahun").val(),
+                // type: 'POST', // Send post data
+                // error: function () {
+                //     alert('There was an error while fetching events.');
+                // }
             },
         });
     }
@@ -182,20 +191,8 @@ $(document).ready(function(){
         $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
-                    unit_refresh();
-                } else {
-                }
-            }
-        );
-    }
-
-    function unit_refresh() {
-        $("#unit").load(BASE_URL + "unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
-            function (responseTxt, statusTxt, xhr) {
-                if (statusTxt == "success") {
                     ajax_refresh();
                 } else {
-
                 }
             }
         );
@@ -204,12 +201,11 @@ $(document).ready(function(){
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "schedule/load",
+            url: BASE_URL + "schedule_maintenance/load_wo_unfinished",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
-                id_unit: $("#unit").val(),
-
+                // id_unit: $("#unit").val(),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -229,26 +225,46 @@ $(document).ready(function(){
 
         d.forEach(element => {
             console.log(element);
-            x = element[0]+"-"+$("#unit").val();
-            out = "";
-            if (element[3] == "Harian") {
+            x = element[0] + " / " + element[1];
+            a = element[2]==element[3] ? " "+element[2] : " "+element[2]+" "+element[3];
+            x+=a;
+            x+= "\n"+element[4];
+
+            // Fruit Reception 
+            // Sterilizer
+            // Thresher 
+            // Press
+            // Klarifikasi 
+            // Kernel
+            // Empty Bunch Treatment 
+            // Boiler
+            // Power House 
+            // Effluent
+            // Laboratorium 
+            // Maintenance
+            // Water Treatment Plant
+            // General
+            // out = "";
+            if (element[1] == "Fruit Reception") {
                 out = "<div class=\"external-event bg-red-active\">"+x+"</div>"
-            }else if (element[3] == "Mingguan")  { 
+            }else if (element[3] == "Sterilizer")  { 
                 out = "<div class=\"external-event bg-maroon-active\">"+x+"</div>"
-            }else if (element[3] == "2 Mingguan"){ 
+            }else if (element[3] == "Thresher"){ 
                 out = "<div class=\"external-event bg-orange-active\">"+x+"</div>"
-            }else if (element[3] == "Bulanan")   { 
+            }else if (element[3] == "Press")   { 
                 out = "<div class=\"external-event bg-purple-active\">"+x+"</div>"
-            }else if (element[3] == "2 Bulanan") { 
+            }else if (element[3] == "Klarifikasi") { 
                 out = "<div class=\"external-event bg-aqua-active\">"+x+"</div>"
-            }else if (element[3] == "3 Bulanan") {
+            }else if (element[3] == "Kernel") {
                 out = "<div class=\"external-event bg-light-blue-active\">"+x+"</div>"
-            }else if (element[3] == "4 Bulanan") {
+            }else if (element[3] == "Empty Bunch Treatment") {
                 out = "<div class=\"external-event bg-teal-active\">"+x+"</div>"
-            }else if (element[3] == "6 Bulanan") { 
+            }else if (element[3] == "Boiler") { 
                 out = "<div class=\"external-event bg-navy\">"+x+"</div>"
-            }else if (element[3] == "Tahunan")   { 
+            }else if (element[3] == "Effluent")   { 
                 out = "<div class=\"external-event bg-green-active\">"+x+"</div>"
+            }else{
+                out = "<div class=\"external-event bg-green-active\">" + x + "</div>"
             } 
             $("#external-events").append(out);
         });
@@ -315,11 +331,11 @@ $(document).ready(function(){
         station_refresh();
     });
     $("#station").change(function () {
-        unit_refresh();
-    });
-    $("#unit").change(function () {
         ajax_refresh();
     });
+    // $("#unit").change(function () {
+    //     ajax_refresh();
+    // });
 
     station_refresh();
 
