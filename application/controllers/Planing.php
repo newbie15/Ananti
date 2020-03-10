@@ -160,14 +160,6 @@ class Planing extends CI_Controller {
 			@$jm = $interval->format('%h');
 			@$mn = $interval->format('%i'); 
 
-			// if($jm<10){
-			// 	$jm = "0".$jm;
-			// }
-			
-			// if($mn<10){
-			// 	$mn = "0".$mn;
-			// }
-
 			@$time = ($jm*60) + $mn;
 
 			$data = array(
@@ -193,6 +185,64 @@ class Planing extends CI_Controller {
 				$this->db->insert('m_planing', $data);
 			}
 		}
+	}
+
+	public function tambah(){
+		$pabrik = $_REQUEST['id_pabrik'];
+		$no_wo = $_REQUEST['no_wo'];
+		$tanggal = $_REQUEST['tanggal'];
+		$station = $_REQUEST['id_station'];
+		$unit = $_REQUEST['id_unit'];
+		$sub_unit = $_REQUEST['id_sub_unit'];
+		$problem = $_REQUEST['problem'];
+
+		$data = array(
+			'tanggal' => $tanggal,
+			'id_pabrik' => $pabrik,
+			'no_wo' => $no_wo,
+			'station' => $station,
+			'unit' => $unit,
+			'sub_unit' => $sub_unit,
+			'problem' => $problem,
+		);
+
+		$this->db->insert('m_planing', $data);
+
+		$d['return'] = "ok";
+		echo json_encode($d);
+	}
+
+	public function hapus(){
+		$pabrik = $_REQUEST['id_pabrik'];
+		$no_wo = $_REQUEST['no_wo'];
+		$tanggal = $_REQUEST['tanggal'];
+		$station = $_REQUEST['id_station'];
+		$unit = $_REQUEST['id_unit'];
+		$sub_unit = $_REQUEST['id_sub_unit'];
+		$problem = $_REQUEST['problem'];
+
+		$data = array(
+			'tanggal' => $tanggal,
+			'id_pabrik' => $pabrik,
+			'no_wo' => $no_wo,
+			'station' => $station,
+			'unit' => $unit,
+			'sub_unit' => $sub_unit,
+			'problem' => $problem,
+		);
+
+		$this->db->insert('m_planing', $data);
+
+		$d['return'] = "ok";
+		echo json_encode($d);
+	}
+	
+	public function resize(){
+
+	}
+
+	public function ubah(){
+
 	}
 	
 	public function get_plan(){

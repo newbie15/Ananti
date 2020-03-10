@@ -40,11 +40,12 @@ $(document).ready(function(){
 
     var isEventOverDiv = function (x, y) {
 
+        console.log(x,y);
         var delete_area = $('#delete_area');
         var offset = delete_area.offset();
         offset.right = delete_area.width() + offset.left;
         offset.bottom = delete_area.height() + offset.top;
-
+        console.table(offset);
         // Compare
         if (x >= offset.left
             && y >= offset.top
@@ -121,10 +122,13 @@ $(document).ready(function(){
                     // if so, remove the element from the "Draggable Events" list
                     $(this).remove()
                 }
+                console.log(date._i);
                 console.log("here");
+                console.log(allDay);
                 console.log(originalEventObject);
                 console.log(copiedEventObject);
 
+                tambah(originalEventObject.title,date._i/1000);
 
             },
             eventDrop: function (event, delta) {
@@ -155,7 +159,8 @@ $(document).ready(function(){
             },
             eventDragStop: function (event, jsEvent, ui, view) {
 
-                if (isEventOverDiv(jsEvent.clientX, jsEvent.clientY)) {
+                if (!isEventOverDiv(jsEvent.clientX, jsEvent.clientY)) {
+                    console.log("deleted");
                     $('#calendar').fullCalendar('removeEvents', event._id);
                     var el = $("<div class='fc-event'>").appendTo('#external-events-listing').text(event.title);
                     el.draggable({
@@ -164,6 +169,8 @@ $(document).ready(function(){
                         revertDuration: 0
                     });
                     el.data('event', { title: event.title, id: event.id, stick: true });
+                }else{
+                    console.log("undeleted");
                 }
                 $("#list_wo").show();
                 $("#delete_area").hide();
@@ -211,7 +218,7 @@ $(document).ready(function(){
             console.log(msg);
             data = JSON.parse(msg);
             console.log(data);
-            refresh(data);
+            // refresh(data);
             update_list(data);
             init_events($('#external-events div.external-event'))
 
@@ -226,7 +233,7 @@ $(document).ready(function(){
         d.forEach(element => {
             console.log(element);
             x = element[0] + " / " + element[1];
-            a = element[2]==element[3] ? " "+element[2] : " "+element[2]+" "+element[3];
+            a = element[2]==element[3] ? " | "+element[2] : " | "+element[2]+" | "+element[3];
             x+=a;
             x+= "\n"+element[4];
 
@@ -271,39 +278,64 @@ $(document).ready(function(){
     }
 
 
-    function refresh() {
-        // $.ajax({
-        //     method: "POST",
-        //     url: BASE_URL+"schedule/load",
-        //     data: {
-        //         id_pabrik: $("#pabrik").val(),
-        //         id_station: $("#station").val(),
-        //         id_unit: $("#unit").val(),
-        //     }
-        // }).done(function (msg) {
-        //     console.log(msg);
-        //     data = JSON.parse(msg);
-        //     console.log(data);
-        //     $('#my-spreadsheet').jexcel({
-        //         data: data,
-        //         allowInsertColumn: false,
+    function tambah(title,epoch) {
+        
+        // var utcSeconds = 1234567890;
+        var ep = new Date(0); // The 0 there is the key, which sets the date to the epoch
+        ep.setUTCSeconds(epoch);
 
-        //         colHeaders: [
-        //             'Monitoring Item',
-        //             'Standard',
-        //             'Parameter',
-        //             'Frekuensi',
-        //         ],
+        var y = ep.getFullYear();
+        var m = ep.getMonth()+1;
+        var d = ep.getDate();
 
-        //         colWidths: [300, 300, 200, 100],
-        //         columns: [
-        //             { type: 'text' },
-        //             { type: 'text' },
-        //             { type: 'text' },
-        //             { type: 'dropdown', source: ['Harian', 'Mingguan', '2 Mingguan', 'Bulanan', '2 Bulanan', '3 Bulanan', '4 Bulanan', '6 Bulanan', 'Tahunan']},
-        //         ]
-        //     });
-        // });
+        m < 10 ? m = "0" + m : null;
+        d < 10 ? d = "0" + d : null;
+        // console.log(y+"-"+m+"-"+d);
+
+        var tanggal = y + "-" + m + "-" + d;
+
+        console.log(title);
+
+        var dt = title.split("/");
+        var no_wo = dt[0].trim();
+
+        dt = dt[1].split("\n");
+        var problem = "";
+        dt[1] == null ? problem = "" : problem = dt[1].trim();
+
+        dt = dt[0].split("|");
+
+        var station = dt[0].trim();
+        var unit = dt[1].trim();
+        var sub_unit = "";
+
+        dt[2]==null ? sub_unit = dt[1].trim() : sub_unit = dt[2].trim();
+
+        console.log(BASE_URL + "planing/tambah");
+        // console.log(tanggal);
+        // console.log(pabrik);
+        // console.log(tanggal);
+        // console.log(tanggal);
+        // console.log(tanggal);
+        // console.log(tanggal);
+
+        $.ajax({
+            method: "POST",
+            url: BASE_URL+"planing/tambah",
+            data: {
+                no_wo: no_wo,
+                tanggal: tanggal,
+                id_pabrik: $("#pabrik").val(),
+                id_station: station,
+                id_unit: unit,
+                id_sub_unit: sub_unit,
+                problem: problem,
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            data = JSON.parse(msg);
+            console.log(data);
+        });
     }
 
     $("#simpan").click(function () {
