@@ -25,14 +25,18 @@
 
         </div> -->
         <div class="col-lg-3">
-          <div style="height: 49px;">
-            <div style="width:25%;float: left;margin-bottom: 3px;">Tahun : </div>
-            <div style="width:25%;float: left;margin-bottom: 3px;"><select id="tahun"></select></div>
-            <div style="width:25%;float: left;margin-bottom: 3px;">Pabrik : </div>
-            <div style="width:25%;float:right;margin-bottom: 3px;"><?php echo $dropdown_pabrik ?></div>                      
-            <div style="width:25%;margin-bottom: 3px;float: left;">Station :</div>
-            <div style="width:75%;margin-bottom: 3px;float:right;"><?php echo $dropdown_station; ?></div>
-          </div>
+          <table width="100%" cellspacing="10" cellpadding="10" border="0">
+            <tr>
+              <td width="25%" style="padding: 2px;">Tahun : </td>
+              <td width="25%"><select id="tahun"></select></td>
+              <td width="25%">Pabrik : </td>
+              <td width="25%"><?php echo $dropdown_pabrik ?></td>
+            </tr>
+            <tr>
+              <td style="padding: 2px;">Station :</td>
+              <td colspan="3"><?php echo $dropdown_station; ?></td>
+            </tr>
+          </table>
           <div id="list_wo" class="box box-solid">
             <div class="box-header with-border">
               <i class="fa fa-check"></i>

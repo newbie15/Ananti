@@ -24,7 +24,7 @@ $(document).ready(function(){
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
             colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori', 'status'],
-            colWidths: [140, 250, 140, 250, 250, 100, 75, 80, 80],
+            colWidths: [140, 250, 340, 250, 75, 75, 75, 80, 80],
             columns: [
                 { type: 'text' },                
                 { type: 'text' , wordWrap: true },

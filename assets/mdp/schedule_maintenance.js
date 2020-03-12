@@ -46,34 +46,31 @@ $(document).ready(function(){
         offset.right = delete_area.width() + offset.left;
         offset.bottom = delete_area.height() + offset.top;
         console.table(offset);
-        // Compare
-        if (x >= offset.left
-            && y >= offset.top
-            && x <= offset.right
-            && y <= offset.bottom) { return true; }
-        return false;
 
+        console.log(offset.left, x, offset.right);
+        console.log(offset.top-90, y, offset.bottom);
+        // Compare
+        if (
+                x >= offset.left
+            &&  y >= (offset.top - 90)
+            &&  x <= offset.right
+            &&  y <= offset.bottom
+        ) { return true; }
+        return false;
     }
 
 
     function draw_calendar(){
         init_events($('#external-events div.external-event'))
 
-
         $('#calendar').fullCalendar('destroy');
         var bulan = tgl.getMonth()+1;
         var tanggal = tgl.getDate();
         var sbulan = "";
-        if(bulan < 10){
-            sbulan = "0"+bulan;
-        }else{
-            sbulan = bulan;
-        }
-        if (tanggal < 10) {
-            stanggal = "0" + tanggal;
-        } else {
-            stanggal = tanggal;
-        }
+
+        (bulan < 10) ? sbulan = "0"+bulan : sbulan = bulan;
+        (tanggal < 10) ? stanggal = "0" + tanggal : stanggal = tanggal;
+        
         console.log(bulan+" "+tanggal);
         var default_date = $("#tahun").val() + '-' + sbulan + '-' + stanggal;
         $('#calendar').fullCalendar({
@@ -81,7 +78,6 @@ $(document).ready(function(){
                 left: 'prev,next today',
                 center: 'title',
                 right: 'month,listDay,listWeek'
-
             },
             defaultDate: default_date,
             locale: 'id',
@@ -95,7 +91,7 @@ $(document).ready(function(){
             },
             navLinks: true, // can click day/week names to navigate views
             editable: true,
-
+            disableResizing: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
             drop: function (date, allDay) { // this function is called when something is dropped
                 // console.log(date);
@@ -113,7 +109,7 @@ $(document).ready(function(){
 
                 // render the event on the calendar
                 // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
+                // $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
 
                 // is the "remove after drop" checkbox checked?
                 // if ($('#drop-remove').is(':checked')) {
@@ -130,6 +126,9 @@ $(document).ready(function(){
 
                 tambah(originalEventObject.title,date._i/1000);
 
+                $('#calendar').fullCalendar('refetchEvents');
+
+
             },
             eventDrop: function (event, delta) {
                 var start_date = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD HH:mm:ss");
@@ -137,20 +136,31 @@ $(document).ready(function(){
                 if(event.end != null){
                     stop_date = $.fullCalendar.formatDate(event.end, "YYYY-MM-DD HH:mm:ss");
                 }
-                // $.ajax({
-                //     url: 'update_events.php',
-                //     data: 'title=' + event.title + '&start=' + start + '&end=' + end + '&id=' + event.id,
-                //     type: "POST",
-                //     success: function (json) {
-                //         alert("Updated Successfully");
-                //     }
-                // });
                 console.log("event.title " + event.title);
                 console.log("event.id " + event._id);
                 console.log("event.start " + start_date);
                 console.log("event.stop " + stop_date);
 
-                // console.log(event);
+                // console.log(event.);
+                // console.log(delta);
+                console.log(event.tgl_lama, event.tgl_baru);
+
+                event.tgl_lama == null ? event.tgl_lama = event.start._i : null;
+                event.tgl_baru == null ? event.tgl_baru = start_date : null;
+
+                console.log(event.tgl_lama,event.tgl_baru);
+
+                // update(event.title, event.start._i, start_date);
+                update(event.title, event.tgl_lama, event.tgl_baru);
+                // event.start = start_date;
+
+                // event.tgl_lama = event.tgl_baru;
+                // event.tgl_baru = null;
+
+                // console.log(event.tgl_lama, event.tgl_baru);
+                $('#calendar').fullCalendar('refetchEvents');
+
+
             },
             eventDragStart: function (){
                 console.log("tampilkan tempat pembuangan");
@@ -159,24 +169,42 @@ $(document).ready(function(){
             },
             eventDragStop: function (event, jsEvent, ui, view) {
 
-                if (!isEventOverDiv(jsEvent.clientX, jsEvent.clientY)) {
-                    console.log("deleted");
-                    $('#calendar').fullCalendar('removeEvents', event._id);
-                    var el = $("<div class='fc-event'>").appendTo('#external-events-listing').text(event.title);
-                    el.draggable({
-                        zIndex: 999,
-                        revert: true,
-                        revertDuration: 0
-                    });
-                    el.data('event', { title: event.title, id: event.id, stick: true });
-                }else{
-                    console.log("undeleted");
+                if (isEventOverDiv(jsEvent.clientX, jsEvent.clientY)) {
+                    // if (confirm("anda yakin ingin menghapus plan ini\n", event.title)) {
+
+                        console.log("deleted");
+                        $('#calendar').fullCalendar('removeEvents', event._id);
+                        var el = $("<div class='fc-event'>").appendTo('#external-events-listing').text(event.title);
+                        el.draggable({
+                            zIndex: 999,
+                            revert: true,
+                            revertDuration: 0
+                        });
+                        el.data('event', { title: event.title, id: event.id, stick: true });
+                        console.log(event);
+                            hapus(event.title, event.start._i);                        
+                    }else{
+                        console.log("undeleted");
+                    // }
                 }
                 $("#list_wo").show();
                 $("#delete_area").hide();
+
             },
-            eventResizeStop: function(){
+            eventResizeStop: function (event, delta, revertFunc, jsEvent, ui, view) {
                 console.log("stop");
+                console.log(event);
+                console.log(delta);
+
+                // var xstart = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+                // var xend = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+
+                // console.log(xstart);
+                // console.log(xend);
+            },
+
+            eventClick: function (event) {
+                alert(event.title);
             },
 
             eventLimit: true, // allow "more" link when too many events
@@ -222,7 +250,7 @@ $(document).ready(function(){
             update_list(data);
             init_events($('#external-events div.external-event'))
 
-            // draw_calendar();
+            draw_calendar();
         });
     }
 
@@ -277,6 +305,44 @@ $(document).ready(function(){
         });
     }
 
+    function update(title,date_old,date_new){
+        var x = title.split(" / ");
+        var no_wo = x[0];
+
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "planing/update",
+            data: {
+                no_wo: no_wo,
+                tanggal: date_old,
+                tanggal_baru: date_new,
+                id_pabrik: $("#pabrik").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            data = JSON.parse(msg);
+            console.log(data);
+        });
+    }
+
+    function hapus(title,date){
+        var x = title.split(" / ");
+        var no_wo = x[0];
+        
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "planing/hapus",
+            data: {
+                no_wo: no_wo,
+                tanggal: date,
+                id_pabrik: $("#pabrik").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            data = JSON.parse(msg);
+            console.log(data);
+        });
+    }
 
     function tambah(title,epoch) {
         
@@ -312,12 +378,6 @@ $(document).ready(function(){
         dt[2]==null ? sub_unit = dt[1].trim() : sub_unit = dt[2].trim();
 
         console.log(BASE_URL + "planing/tambah");
-        // console.log(tanggal);
-        // console.log(pabrik);
-        // console.log(tanggal);
-        // console.log(tanggal);
-        // console.log(tanggal);
-        // console.log(tanggal);
 
         $.ajax({
             method: "POST",
