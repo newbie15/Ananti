@@ -149,23 +149,8 @@ class Schedule_maintenance extends CI_Controller {
 			$d[$i][2] = $row->unit;
 			$d[$i][3] = $row->sub_unit;
 			$d[$i++][4] = $row->problem;
-			// $d[$i++][3] = $row->frekuensi;
 		}
 		echo json_encode($d);
-
-		// // $id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_pabrik = $this->uri->segment(3, 0);
-		// $query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik';");
-
-		// $i = 0;
-		// $d = [];
-		// foreach ($query->result() as $row)
-		// {
-		// 	$a['name'] = $row->nama;
-		// 	$a['id'] = $row->nama;
-		// 	$d[$i++] = $a;
-		// }
-		// echo json_encode($d);
 	}
 
 	public function event(){
