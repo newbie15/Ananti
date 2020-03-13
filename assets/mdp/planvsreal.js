@@ -142,7 +142,7 @@ $(document).ready(function () {
 
     $("#pabrik").change(function () {
         // station_refresh();
-        refresh_modal();
+        // refresh_modal();
 
         ajax_refresh();
     });
