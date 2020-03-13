@@ -44,7 +44,7 @@ class Schedule_maintenance extends CI_Controller {
 
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/pm.js"),
+			base_url("assets/mdp/schedule_maintenance.js"),
 		];
 		
 		$output['content'] = '';
@@ -56,9 +56,9 @@ class Schedule_maintenance extends CI_Controller {
 
 		$output['dropdown_pabrik']= "";
 		if($kategori<2){
-			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+			$output['dropdown_pabrik']= "<select style=\"width: -webkit-fill-available;\" id=\"pabrik\">";
 		}else{
-			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+			$output['dropdown_pabrik']= "<select style=\"width: -webkit-fill-available;\" id=\"pabrik\" disabled>";
 		}
 		
 		foreach ($query->result() as $row)
@@ -70,8 +70,8 @@ class Schedule_maintenance extends CI_Controller {
 			}
 		}
 		$output['dropdown_pabrik'] .= "/<select>";
-		$output['dropdown_station'] = "<select id=\"station\"></select>";		
-		$output['dropdown_unit'] = "<select id=\"unit\"></select>";		
+		$output['dropdown_station'] = "<select style=\"width: -webkit-fill-available;\" id=\"station\"></select>";		
+		// $output['dropdown_unit'] = "<select style=\"width: -webkit-fill-available;\" id=\"unit\"></select>";		
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-schedule-maintenance',$output);
@@ -126,151 +126,34 @@ class Schedule_maintenance extends CI_Controller {
 		}
 	}
 
-	public function ajax()
-	{
-		// $id_pabrik = $_REQUEST['id_pabrik'];
-		$id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik';");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$a['name'] = $row->nama;
-			$a['id'] = $row->nama;
-			$d[$i++] = $a;
-		}
-		echo json_encode($d);
-	}
-
-	public function ajax_default_list()
+	public function load_wo_unfinished()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
-		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		// $id_unit = $_REQUEST['id_unit'];
+
+		$query = $this->db->query(
+			"SELECT no_wo,station,unit,sub_unit,problem
+			FROM m_wo
+			where id_pabrik = '$id_pabrik' 
+			AND station = '$id_station' 
+			AND status = 'open';
+		");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				$d[$i++][0] = $row->nama; // access attributes
+			$d[$i][0] = $row->no_wo;
+			$d[$i][1] = $row->station;
+			$d[$i][2] = $row->unit;
+			$d[$i][3] = $row->sub_unit;
+			$d[$i++][4] = $row->problem;
 		}
 		echo json_encode($d);
 	}
 
-	public function hm_default_list()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
-		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND hm_installed=1;");
+	public function event(){
 
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i++][0] = $row->nama; // access attributes
-		}
-		echo json_encode($d);
 	}
-
-	public function screwpress_default_list()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
-		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND screwpress_monitoring=1;");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i++][0] = $row->nama; // access attributes
-		}
-		echo json_encode($d);
-	}
-
-	public function bunchpress_default_list()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
-		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND bunchpress_monitoring=1;");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i++][0] = $row->nama; // access attributes
-		}
-		echo json_encode($d);
-	}
-
-	public function hydrocyclone_default_list()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
-		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND hydrocyclone_monitoring=1;");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i++][0] = $row->nama; // access attributes
-		}
-		echo json_encode($d);
-	}
-
-	public function kcp_default_list()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
-		// $id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND kcp_monitoring=1;");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i++][0] = $row->nama; // access attributes
-		}
-		echo json_encode($d);
-	}
-
-	
-	public function ajax_dropdown(){
-		$id_pabrik = $this->uri->segment(3, 0);
-		$id_station = urldecode($this->uri->segment(4, 0));
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
-
-		foreach ($query->result() as $row)
-		{
-			echo "<option>".$row->nama."</option>";
-		}
-	}
-
-	public function dhtmlx(){
-		$id_pabrik = $this->uri->segment(3, 0);
-		// $id_station = urldecode($this->uri->segment(4, 0));
-		$query = $this->db->query("SELECT id_station,nama FROM master_unit where id_pabrik = '$id_pabrik'");
-		$i = 0;
-		$ls = "";
-		$d = [];
-		foreach ($query->result() as $row)
-		{	
-			// if($row->nama != "" || $row->id_station != ""){
-				if($ls!=$row->id_station){
-					$ls=$row->id_station;
-					$d[$i++] = "= = = = =".$row->id_station."= = = = =";
-					$d[$i++] = $row->nama;
-				}else{
-					$d[$i++] = $row->nama;
-				}
-			// }			
-		}
-		echo json_encode($d);
-	}
-
 }

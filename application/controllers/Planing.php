@@ -160,14 +160,6 @@ class Planing extends CI_Controller {
 			@$jm = $interval->format('%h');
 			@$mn = $interval->format('%i'); 
 
-			// if($jm<10){
-			// 	$jm = "0".$jm;
-			// }
-			
-			// if($mn<10){
-			// 	$mn = "0".$mn;
-			// }
-
 			@$time = ($jm*60) + $mn;
 
 			$data = array(
@@ -193,6 +185,82 @@ class Planing extends CI_Controller {
 				$this->db->insert('m_planing', $data);
 			}
 		}
+	}
+
+	public function tambah(){
+		$pabrik = $_REQUEST['id_pabrik'];
+		$no_wo = $_REQUEST['no_wo'];
+		$tanggal = $_REQUEST['tanggal'];
+		$station = $_REQUEST['id_station'];
+		$unit = $_REQUEST['id_unit'];
+		$sub_unit = $_REQUEST['id_sub_unit'];
+		$problem = $_REQUEST['problem'];
+
+		$data = array(
+			'tanggal' => $tanggal,
+			'id_pabrik' => $pabrik,
+			'no_wo' => $no_wo,
+			'station' => $station,
+			'unit' => $unit,
+			'sub_unit' => $sub_unit,
+			'problem' => $problem,
+		);
+
+		$this->db->insert('m_planing', $data);
+
+		$d['return'] = "ok";
+		echo json_encode($d);
+	}
+
+	public function hapus(){
+		$pabrik = $_REQUEST['id_pabrik'];
+		$no_wo = $_REQUEST['no_wo'];
+		$tanggal = $_REQUEST['tanggal'];
+
+		$data = array(
+			'tanggal' => $tanggal,
+			'id_pabrik' => $pabrik,
+			'no_wo' => $no_wo,
+		);
+
+		// $this->db->insert('m_planing', $data);
+
+		$this->db->delete('m_planing', $data); 
+
+		$d['return'] = "ok";
+		echo json_encode($d);
+	}
+	
+	public function resize(){
+
+	}
+
+	public function update(){
+		$pabrik = $_REQUEST['id_pabrik'];
+		$no_wo = $_REQUEST['no_wo'];
+		$tanggal = $_REQUEST['tanggal'];
+		$tanggal_baru = $_REQUEST['tanggal_baru'];
+
+		// $data = array(
+		// 	'tanggal' => $tanggal,
+		// 	'id_pabrik' => $pabrik,
+		// 	'no_wo' => $no_wo,
+		// );
+		$t1 = explode(" ",$tanggal);
+		$t = explode(" ",$tanggal_baru);
+
+
+		$this->db->set('tanggal', $t[0]);
+		$this->db->where('id_pabrik', $pabrik);
+		$this->db->where('no_wo', $no_wo);
+		$this->db->where('tanggal', $t1[0]);
+
+		$this->db->update('m_planing');
+
+		// $this->db->delete('m_planing', $data); 
+
+		$d['return'] = "ok";
+		echo json_encode($d);
 	}
 	
 	public function get_plan(){

@@ -44,9 +44,18 @@ class Calendar extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i]['title'] = $row->station." | ".$row->unit." | ".$row->sub_unit."\n".$row->plan;
-			$d[$i]['start'] = $row->tanggal."T".$row->start.":00+07:00";
-			$d[$i++]['end'] = $row->tanggal."T".$row->stop.":00+07:00";
+			$d[$i]['title'] = $row->no_wo." / ".$row->station." | ".$row->unit." | ".$row->sub_unit."\n".$row->plan;
+
+			if($row->start!=""){
+				$d[$i]['start'] = $row->tanggal."T".$row->start.":00+07:00";
+			}else{
+				$d[$i]['start'] = $row->tanggal."";
+			}
+			if($row->stop!=""){
+				$d[$i++]['end'] = $row->tanggal."T".$row->stop.":00+07:00";
+			}else{
+				$d[$i++]['end'] = $row->tanggal."";
+			}
 			// $d[$i++][10] = $row->ket;
 		}
 		echo json_encode($d);
