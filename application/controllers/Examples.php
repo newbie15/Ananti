@@ -34,11 +34,11 @@ class Examples extends CI_Controller {
 		try{
 			$crud = new grocery_CRUD();
 
-			$crud->set_theme('datatables');
-			$crud->set_table('offices');
-			$crud->set_subject('Office');
-			$crud->required_fields('city');
-			$crud->columns('city','country','phone','addressLine1','postalCode');
+			// $crud->set_theme('datatables');
+			$crud->set_table('w_project');
+			// $crud->set_subject('Office');
+			// $crud->required_fields('city');
+			// $crud->columns('city','country','phone','addressLine1','postalCode');
 
 			$output = $crud->render();
 
