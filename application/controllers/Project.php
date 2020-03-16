@@ -112,7 +112,7 @@ class Project extends CI_Controller {
 	{
 		$pabrik = $_REQUEST['pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_wo` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$this->db->query("DELETE FROM `w_project` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
@@ -122,21 +122,17 @@ class Project extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
 				'no_wo' => $value[0],
-				'station' => $eq[0],
-				'unit' => $eq[1],
-				'sub_unit' => $eq[2],
-				'problem' => $value[2],
-				'desc_masalah' => $value[3],
-				'hm' => $value[4],
-				'kategori' => $value[5],
-				'tipe' => $value[6],
-				'status' => $value[7],
-				'tanggal_closing' => $value[8],
-				// 'date' => 'My date'
+				'project_id' => $value[1],
+				'pt' => $value[2],
+				'nama' => $value[3],
+				'deskripsi' => $value[4],
+				'tgl_start' => $value[5],
+				'status' => $value[6],
+				'tgl_close' => $value[7],
 			);
 			// print_r($data);
 			if($value[0]!=""){
-				$this->db->insert('m_wo', $data);
+				$this->db->insert('w_project', $data);
 			}
 		}
 	}
