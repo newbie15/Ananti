@@ -138,11 +138,20 @@ class Planing extends CI_Controller {
 			// $this->db->insert
 			@$eq = explode("\n",$value[1]); 
 
+			$value[7] == "" ? $value[7] = "00:00" : null;
+			$value[8] == "" ? $value[8] = "00:00" : null;
+
 			@$awal = explode(":",$value[7]);
 			@$akhir = explode(":",$value[8]);
 
 			@$jam_aw = intval($awal[0]);
 			@$jam_ak = intval($akhir[0]);
+
+			$jam_aw < 10 ? $jam_aw = "0".$jam_aw : null;
+			$jam_ak < 10 ? $jam_ak = "0".$jam_ak : null;
+
+			$value[7] = $jam_aw.":".$awal[1]; 
+			$value[8] = $jam_ak.":".$akhir[1];
 
 			$datetime1 = null;
 			$datetime2 = null;
@@ -294,6 +303,8 @@ class Planing extends CI_Controller {
 
 		$tanggal = $tahun."-".$bulan."-".$tanggal;
 
+		$statistik = array();
+
 
 		$query = $this->db->query(
 			"SELECT * FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
@@ -320,14 +331,17 @@ class Planing extends CI_Controller {
 		{
 			$nama = explode(";",$row->nama_mpp);
 
-			$jam = intval($row->time / 60);
-			$menit = $row->time % 60;
+			$time = round(($row->time / 60),2);
+			// round(5.055, 2)
 
-			if($jam<10){
-				$jam = "0".$jam;
-			}
+			// $jam = intval($row->time / 60);
+			// $menit = $row->time % 60;
 
-			$time = $jam.":".$menit;
+			// if($jam<10){
+			// 	$jam = "0".$jam;
+			// }
+
+			// $time = $jam.":".$menit;
 
 			foreach ($nama as $key => $value) {
 				echo $row->id_pabrik; echo "\t";
@@ -342,9 +356,26 @@ class Planing extends CI_Controller {
 				echo $row->stop; echo "\t";
 				echo $time; echo "\t";
 				echo $row->plan; echo "\n";
+
+				// if(isset($statistik[$value])){
+
+				// }
+
+				// $row->tipe == "Corrective" ? $s = array($time, "", ""); : null ;  
+				// $row->tipe == "Preventive" ? $s = array("", $time, ""); : null ;  
+				// $row->tipe == "Predictive" ? $s = array("", "", $time); : null ;  
+				
+				// $statistik[$value] = 
+
+				// array_push($statistik,)
 			}
 		}
-
+		// echo "\n\n";
+		// print_r($statistik);
+		// foreach ($statistik as $key => $value) {
+		// 	# code...
+		// 	print_r()
+		// }
 
 	}
 }

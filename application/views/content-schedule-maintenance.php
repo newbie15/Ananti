@@ -37,14 +37,19 @@
               <td colspan="3"><?php echo $dropdown_station; ?></td>
             </tr>
           </table>
-          <div id="list_wo" class="box box-solid">
+          <div id="list_wo" class="box box-solid" style="
+						height: 450px;
+						width: 100%;
+						overflow-y: auto;
+						overflow-x: hidden;
+					">
             <div class="box-header with-border">
               <i class="fa fa-check"></i>
               <h3 class="box-title">Daftar WO Unfinished</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div id="external-events" >
+              <div id="external-events" style="font-size: 10px;">
                 <div class="external-event bg-green">Lunch</div>
               </div>
             </div>

@@ -142,7 +142,9 @@ class Activity extends CI_Controller {
 			$d[$row->no_wo][$i++][3] = $realisasi;
 
 		}
-		if($i>0){
+		// echo $i;
+		$nm = $query->num_rows();
+		if($nm>0){
 			echo json_encode($d);
 		}else{
 			$query = $this->db->query("SELECT no_wo,nama_mpp FROM m_planing where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
