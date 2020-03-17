@@ -207,8 +207,10 @@ $(document).ready(function(){
     }
 
     function updatescroll() {
-        var el = document.getElementById("scrll");
-        el.scrollTop = el.scrollHeight;
+        setTimeout(() => {
+            var el = document.getElementById("scrll");
+            el.scrollTop = el.scrollHeight;            
+        }, 500);
     }
 
     $("#simpan").click(function(){
