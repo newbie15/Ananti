@@ -119,15 +119,15 @@
           </ul>
         </li> -->
 
-
         <li class="treeview">
           <a href="#">
             <i class="fa fa-list"></i> <span>Master</span>
           </a>
           <ul class="treeview-menu" style="display: none;">
-          <?php if($this->session->kategori <= 1){ ?>
+<?php if($this->session->kategori <= 1){ ?>
             <li><a href="<?php echo base_url("pabrik"); ?>"><i class="fa fa-industry"></i>Pabrik</a></li>
-          <?php } ?>
+<?php } ?>
+<?php if($this->session->tipe == "mill" || $this->session->kategori <= 1){ ?>
             <li><a href="<?php echo base_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
             <li><a href="<?php echo base_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
             <li><a href="<?php echo base_url("sub_unit"); ?>"><i class="fa fa-calendar-check-o"></i>Sub Unit</a></li>
@@ -135,7 +135,9 @@
             <li><a href="<?php echo base_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
             <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-gears"></i>Unit Mekanik</a></li>
             <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>Schedule</a></li>
+<?php } ?>
             <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
+            
             <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
           </ul>
         </li>
@@ -149,6 +151,7 @@
             <li><a href="<?php echo base_url("cost"); ?>"><i class="fa fa-file"></i>Cost Harian <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
           </ul>
         </li> -->
+<?php if($this->session->tipe == "mill" || $this->session->kategori < 2){ ?>
 
         <li class="treeview">
           <a href="#">
@@ -163,25 +166,6 @@
             <!-- <li><a href="<?php echo base_url("monitoring"); ?>"><i class="fa fa-calendar"></i>Monitoring MTC <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
             <li><a href="<?php echo base_url("acm"); ?>"><i class="fa fa-warning"></i>Avaibility Critical Machine <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
             <li><a href="<?php echo base_url("recordhm"); ?>"><i class="fa fa-line-chart"></i>Hour Meter Alat <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-            <!-- <li><a href="<?php echo base_url("highlight"); ?>"><i class="fa fa-thumbs-o-down"></i>Highlight Problem <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
-            <!-- <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>LKPMP <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
-            <!-- <li><a href="<?php echo base_url("capex"); ?>"><i class="fa fa-file"></i>CAPEX <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
-            <!-- <li><a href="<?php echo base_url("inventory"); ?>"><i class="fa fa-file"></i>Inventory <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li> -->
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-gear"></i> <span>Workshop Central</span>
-          </a>
-          <ul class="treeview-menu" style="display: none;">
-            <li><a href="<?php echo base_url("project"); ?>"><i class="fa fa-industry"></i>Project <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-            <li><a href="<?php echo base_url("projectactivity"); ?>"><i class="fa fa-calendar"></i>Activity Project<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-            <!-- <li><a href="<?php echo base_url("planing"); ?>"><i class="fa fa-calendar-plus-o"></i>Planning MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
-            <!-- <li><a href="<?php echo base_url("activity"); ?>"><i class="fa fa-calendar-check-o"></i>Activity MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
-            <!-- <li><a href="<?php echo base_url("breakdown"); ?>"><i class="fa fa-industry"></i>Breakdown Pabrik & Downtime Unit <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
-            <!-- <li><a href="<?php echo base_url("monitoring"); ?>"><i class="fa fa-calendar"></i>Monitoring MTC <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
-            <!-- <li><a href="<?php echo base_url("acm"); ?>"><i class="fa fa-warning"></i>Avaibility Critical Machine <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
-            <!-- <li><a href="<?php echo base_url("recordhm"); ?>"><i class="fa fa-line-chart"></i>Hour Meter Alat <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
             <!-- <li><a href="<?php echo base_url("highlight"); ?>"><i class="fa fa-thumbs-o-down"></i>Highlight Problem <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
             <!-- <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>LKPMP <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
             <!-- <li><a href="<?php echo base_url("capex"); ?>"><i class="fa fa-file"></i>CAPEX <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
@@ -229,6 +213,31 @@
             <li><a href="<?php echo base_url("display/maintenance"); ?>"><i class="fa fa-money"></i>Potret Maintenance</a></li> -->
           </ul>
         </li>
+
+<?php } if($this->session->tipe == "wsc" || $this->session->kategori < 2) { ?>
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-gear"></i> <span>Workshop Central</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("project"); ?>"><i class="fa fa-industry"></i>Project <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
+            <li><a href="<?php echo base_url("projectactivity"); ?>"><i class="fa fa-calendar"></i>Activity Project<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
+            <!-- <li><a href="<?php echo base_url("planing"); ?>"><i class="fa fa-calendar-plus-o"></i>Planning MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
+            <!-- <li><a href="<?php echo base_url("activity"); ?>"><i class="fa fa-calendar-check-o"></i>Activity MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
+            <!-- <li><a href="<?php echo base_url("breakdown"); ?>"><i class="fa fa-industry"></i>Breakdown Pabrik & Downtime Unit <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
+            <!-- <li><a href="<?php echo base_url("monitoring"); ?>"><i class="fa fa-calendar"></i>Monitoring MTC <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
+            <!-- <li><a href="<?php echo base_url("acm"); ?>"><i class="fa fa-warning"></i>Avaibility Critical Machine <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
+            <!-- <li><a href="<?php echo base_url("recordhm"); ?>"><i class="fa fa-line-chart"></i>Hour Meter Alat <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li> -->
+            <!-- <li><a href="<?php echo base_url("highlight"); ?>"><i class="fa fa-thumbs-o-down"></i>Highlight Problem <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
+            <!-- <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>LKPMP <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
+            <!-- <li><a href="<?php echo base_url("capex"); ?>"><i class="fa fa-file"></i>CAPEX <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
+            <!-- <li><a href="<?php echo base_url("inventory"); ?>"><i class="fa fa-file"></i>Inventory <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li> -->
+          </ul>
+        </li>
+        
+<?php } ?>
+
       </ul>
     </section>
   </aside>
