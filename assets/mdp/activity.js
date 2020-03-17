@@ -474,13 +474,32 @@ $(document).ready(function () {
             data = JSON.parse(msg);
             console.log(data);
             if(data.length==0){
-                alert("anda belum punya data");
-                if(confirm("ambil data dari plan ?")){
+                // alert("anda belum punya data");
+                if(confirm("anda belum punya realisasi untuk hari ini\n\nambil data dari plan ?")){
                     ambil_dari_plan();
+
+                    $.ajax({
+                        method: "POST",
+                        url: BASE_URL + "activity/load_detail",
+                        data: {
+                            id_pabrik: $("#pabrik").val(),
+                            d: $("#tanggal").val(),
+                            m: $("#bulan").val(),
+                            y: $("#tahun").val(),
+                        }
+                    }).done(function (msg) {
+                        console.log("detail");
+                        data = JSON.parse(msg);
+                        console.log(data_detail);
+                        data_detail = data;
+                        console.log(data_detail);
+                    });
+
                 }else{
 
                 }
             }else{
+                // alert("goes here");
                 refresh(data);
 
                 $.ajax({
@@ -498,7 +517,6 @@ $(document).ready(function () {
                     console.log(data_detail);
                     data_detail = data;
                     console.log(data_detail);
-
                 });
 
                 $.ajax({
