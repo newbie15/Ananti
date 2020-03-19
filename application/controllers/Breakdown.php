@@ -176,4 +176,58 @@ class Breakdown extends CI_Controller {
 		}
 		echo json_encode($d);
 	}
+
+	public function summary()
+	{
+		// $this->load->view('welcome_message');
+
+		$output['content'] = "test";
+		$output['main_title'] = "Breakdown";
+		
+		$header['css_files'] = [
+			base_url("assets/jexcel/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+		];
+
+		$footer['js_files'] = [
+			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
+			base_url("assets/jexcel/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
+			base_url("assets/mdp/breakdown.js"),
+		];
+		
+		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
+		$output['dropdown_station'] = "<select id=\"station\"></select>";
+
+		$this->load->view('header',$header);
+		$this->load->view('content-breakdown-summary',$output);
+		$this->load->view('footer',$footer);
+
+	}
+
 }

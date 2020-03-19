@@ -4,17 +4,15 @@
     <section class="content-header">
       <h1>
         <ul class="nav nav-tabs">
-          <li class="active"><a href="" aria-expanded="true">Breakdown</a></li>
-          <li class=""><a href="<?php echo base_url("breakdown/summary")?>" aria-expanded="false">Summary</a></li>
+          <li class=""><a href="<?php echo base_url("breakdown")?>" aria-expanded="true">Breakdown</a></li>
+          <li class="active"><a href="" aria-expanded="false">Summary</a></li>
+          <!-- <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li> -->
         </ul>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
-        <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
-          <i class="fa fa-plus"></i> Tambah
-        </a>
-        <a class="btn btn-app btn-primary" id="simpan">
-          <i class="fa fa-save"></i> Simpan
+        <a class="btn btn-app btn-success" id="downloadcsv">
+          <i class="fa fa-file-excel-o"></i> Download
         </a>
       </ol>
     </section>

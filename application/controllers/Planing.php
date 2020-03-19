@@ -141,6 +141,9 @@ class Planing extends CI_Controller {
 			$value[7] == "" ? $value[7] = "00:00" : null;
 			$value[8] == "" ? $value[8] = "00:00" : null;
 
+			$value[7] = str_replace(".",":",$value[7]);
+			$value[8] = str_replace(".",":",$value[8]);
+
 			@$awal = explode(":",$value[7]);
 			@$akhir = explode(":",$value[8]);
 
