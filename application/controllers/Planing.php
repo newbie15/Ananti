@@ -309,13 +309,13 @@ class Planing extends CI_Controller {
 		$statistik = array();
 
 		$kquery = $this->db->query(
-			"SELECT * FROM `master_karyawan` WHERE `id_pabrik` = '$id_pabrik'
+			"SELECT * FROM `master_karyawan` WHERE `id_pabrik` = '$id_pabrik' ORDER BY nama ASC
 		");
 
 		foreach ($kquery->result() as $row){
 			$x = $row->nama;
 			// array_push($statistik, "x" => ""); 
-			$y = array("","","");
+			$y = array(0,0,0);
 			$statistik[$x] = $y;
 		}
 
@@ -376,8 +376,8 @@ class Planing extends CI_Controller {
 
 				// }
 
-				if($row->tipe == "Corrective") { $statistik[$value][0] += $time; }  
-				if($row->tipe == "Preventive") { $statistik[$value][1] += $time; }  
+				if($row->tipe == "Corrective") { $statistik[$value][1] += $time; }  
+				if($row->tipe == "Preventive") { $statistik[$value][0] += $time; }  
 				if($row->tipe == "Predictive") { $statistik[$value][2] += $time; }  
 				
 				// $statistik[$value] = 
@@ -388,8 +388,8 @@ class Planing extends CI_Controller {
 		echo "\n\n";
 		// print_r($statistik);
 		echo "nama\t";
-		echo "corrective\t";
 		echo "preventive\t";
+		echo "corrective\t";
 		echo "predictive\t";
 		echo "\n";
 
