@@ -147,7 +147,7 @@ class Activity extends CI_Controller {
 		if($nm>0){
 			echo json_encode($d);
 		}else{
-			$query = $this->db->query("SELECT no_wo,nama_mpp FROM m_planing where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+			$query = $this->db->query("SELECT no_wo,nama_mpp,`start`,`stop`,`time` FROM m_planing where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
 
 			$no_wo = "";
 			foreach ($query->result() as $row)
@@ -159,14 +159,25 @@ class Activity extends CI_Controller {
 				}
 
 				$nama = explode(";",$row->nama_mpp);
+				$startx = $row->start;
+				$stopx = $row->stop;
+
+				$jam = intval($row->time / 60);
+				$menit = $row->time % 60;
+				
+				$jam < 10 ? $jam = "0".$jam : null;
+				$menit < 10 ? $menit = "0".$menit : null;
+
+				$time = $jam.":".$menit;
+
 				$i = 0;
 				foreach ($nama as $key => $value) {
 					$d[$row->no_wo][$i][0] = $value;
 					// $d[$row->no_wo][$i][1] = $row->t_mulai;
 					// $d[$row->no_wo][$i][2] = $row->t_selesai;
-					$d[$row->no_wo][$i][1] = "";
-					$d[$row->no_wo][$i][2] = "";
-					$d[$row->no_wo][$i++][3] = "";
+					$d[$row->no_wo][$i][1] = $startx;
+					$d[$row->no_wo][$i][2] = $stopx;
+					$d[$row->no_wo][$i++][3] = $time;
 				}
 			}
 			echo json_encode($d);

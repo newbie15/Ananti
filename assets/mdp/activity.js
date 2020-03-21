@@ -132,7 +132,7 @@ $(document).ready(function () {
         });
     }
 
-    function add(no) {
+    function add(no,area) {
         var sama = 0;
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
@@ -148,11 +148,12 @@ $(document).ready(function () {
             if(dx.length==1){
                 if(dx[0][0]==""){ // kosong
                     dx[0][0] = no;
+                    dx[0][1] = area;
                 }else{ // isi satu
-                    dx.push([no, "", "", ""]);
+                    dx.push([no, area, "", ""]);
                 }
             }else{ // isi lebih dari 1
-                dx.push([no, "", "", ""]);
+                dx.push([no, area, "", ""]);
             }
             refresh(dx);
         }
@@ -190,7 +191,8 @@ $(document).ready(function () {
                     console.log('API row values : ', table.row(this).data());
                     var sp = table.row(this).data();
                     sp = sp[0].split(" - ");
-                    add(sp[0]);
+                    var area = sp[1] + "\n" + sp[2] + "\n" + sp[3];
+                    add(sp[0],area);
                     $('#modal-default').modal('toggle');
                 }
             });
@@ -416,23 +418,23 @@ $(document).ready(function () {
         $("#side-note").hide();
     });
 
-    $("#wo").keydown(function (e) {
-        if (e.which == 13 && $(this).val() != "") {
-            var t = $(this).val();
-            $(this).val("");
-            var x = t.split(" - ");
-            console.log(x.length);
-            console.log(t);
-            add(x[0]);
-        }
-    });
+    // $("#wo").keydown(function (e) {
+    //     if (e.which == 13 && $(this).val() != "") {
+    //         var t = $(this).val();
+    //         $(this).val("");
+    //         var x = t.split(" - ");
+    //         console.log(x.length);
+    //         console.log(t);
+    //         add(x[0]);
+    //     }
+    // });
 
     $("#tambah").click(function(){
-        if ($("#wo").val()!=""){
-            var t = $("#wo").val().split(' - ');
-            add(t[0]);
-            console.log(t[0]);
-        }
+        // if ($("#wo").val()!=""){
+        //     var t = $("#wo").val().split(' - ');
+        //     add(t[0]);
+        //     console.log(t[0]);
+        // }
     });
 
     $("#simpan").click(function () {
