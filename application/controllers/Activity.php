@@ -223,10 +223,24 @@ class Activity extends CI_Controller {
 				'no_wo' => $value[0],
 				'perbaikan' => $value[2],
 				'status_perbaikan' => $value[3],
-				// 'jenis_problem' => $value[3],
 			);
 			if($value[0]!=""){
 				$this->db->insert('m_activity', $data);
+				
+				if($value[3] == "Selesai"){
+					$sql = "UPDATE
+						m_wo
+						SET 
+						`status` = 'close',
+						`sync` = 0,
+						`tanggal_closing` = (CASE WHEN (`tanggal_closing` = '0000-00-00') THEN '$tanggal' ELSE `tanggal_closing` END)
+						WHERE
+						`no_wo` = '$value[0]'
+					";
+
+					$this->db->query($sql);
+
+				}
 			}
 		}
 

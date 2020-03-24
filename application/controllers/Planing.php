@@ -309,13 +309,13 @@ class Planing extends CI_Controller {
 		$statistik = array();
 
 		$kquery = $this->db->query(
-			"SELECT * FROM `master_karyawan` WHERE `id_pabrik` = '$id_pabrik'
+			"SELECT * FROM `master_karyawan` WHERE `id_pabrik` = '$id_pabrik' ORDER BY nama ASC
 		");
 
 		foreach ($kquery->result() as $row){
 			$x = $row->nama;
 			// array_push($statistik, "x" => ""); 
-			$y = array("","","");
+			$y = array(0,0,0);
 			$statistik[$x] = $y;
 		}
 
@@ -369,15 +369,15 @@ class Planing extends CI_Controller {
 				echo $row->tipe; echo "\t";
 				echo $row->start; echo "\t";
 				echo $row->stop; echo "\t";
-				echo $time; echo "\t";
+				echo number_format($time,2,",",""); echo "\t";
 				echo $row->plan; echo "\n";
 
 				// if(isset($statistik[$value])){
 
 				// }
 
-				if($row->tipe == "Corrective") { $statistik[$value][0] += $time; }  
-				if($row->tipe == "Preventive") { $statistik[$value][1] += $time; }  
+				if($row->tipe == "Corrective") { $statistik[$value][1] += $time; }  
+				if($row->tipe == "Preventive") { $statistik[$value][0] += $time; }  
 				if($row->tipe == "Predictive") { $statistik[$value][2] += $time; }  
 				
 				// $statistik[$value] = 
@@ -388,10 +388,10 @@ class Planing extends CI_Controller {
 		echo "\n\n";
 		// print_r($statistik);
 		echo "nama\t";
-		echo "corrective\t";
 		echo "preventive\t";
+		echo "corrective\t";
 		echo "predictive\t";
-		echo "\n";
+		echo "total\n";
 
 		$cor = 0;
 		$prv = 0;
@@ -401,16 +401,17 @@ class Planing extends CI_Controller {
 		// 	# code...
 			echo $key; echo "\t";
 
-			echo $value[0]; echo "\t"; $cor+= $value[0];
-			echo $value[1]; echo "\t"; $prv+= $value[1];
-			echo $value[2]; echo "\t"; $pdc+= $value[2];
+			echo number_format($value[0],2,",",""); echo "\t"; $cor+= $value[0];
+			echo number_format($value[1],2,",",""); echo "\t"; $prv+= $value[1];
+			echo number_format($value[2],2,",",""); echo "\t"; $pdc+= $value[2];
+			echo number_format(($value[0]+$value[1]+$value[2]),2,",","");
 
 			echo "\n";
 		}
-		echo "\t"; echo $cor;
-		echo "\t"; echo $prv;
-		echo "\t"; echo $pdc;
-
+		echo "\t"; echo number_format($prv,2,",","");
+		echo "\t"; echo number_format($cor,2,",","");
+		echo "\t"; echo number_format($pdc,2,",","");
+		echo "\t"; echo number_format(($pdc+$prv+$cor),2,",","");
 
 	}
 }
