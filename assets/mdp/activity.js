@@ -119,7 +119,8 @@ $(document).ready(function () {
                     ],
                     colWidths: [160, 230, 235, 160, 80, 100, 60, 100, 100],
                     columns: [
-                        { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                        // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                        { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
                         { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
@@ -282,71 +283,6 @@ $(document).ready(function () {
     }
 
     function refresh(data) {
-        // handlers = function (obj, cell, val) {
-        //     data_sparepart[no_wo_aktif] = $('#my-spare').jexcel('getData');
-        // };
-
-        // handler = function (obj, cell, val) {
-        //     data_detail[no_wo_aktif] = $('#my-spreadsheet2').jexcel('getData');
-
-        //     pos = $(cell).prop('id').split("-");
-
-        //     console.log(pos);
-
-        //     dt_start = data_detail[no_wo_aktif][pos[1]][3];
-        //     dt_stop = data_detail[no_wo_aktif][pos[1]][4];
-
-        //     if(dt_start!="" && dt_stop!="" && (pos[0]==3 || pos[0]==4)){
-        //         var date1 = new Date("08/05/2015 "+ dt_start+":00");
-        //         var date2 = new Date("08/05/2015 "+ dt_stop +":00");
-
-        //         var diff = date2.getTime() - date1.getTime();
-        //         if(diff<0){
-        //             date2 = new Date("08/06/2015 " + dt_stop + ":00");
-        //             diff = date2.getTime() - date1.getTime();
-        //         }
-
-        //         console.log("diff ="+diff);
-        //         var msec = diff;
-        //         var hh = Math.floor(msec / 1000 / 60 / 60);
-        //         console.log(hh);
-        //         msec -= hh * 1000 * 60 * 60;
-        //         var mm = Math.floor(msec / 1000 / 60);
-        //         console.log(mm);
-        //         msec -= mm * 1000 * 60;
-        //         var ss = Math.floor(msec / 1000);
-        //         msec -= ss * 1000;
-        //         hour = "";
-        //         min = "";
-
-        //         if (hh < 10) { hour = "0" + hh.toString(); } else { hour = hh.toString(); }
-        //         if (mm < 10) { min = "0" + mm.toString(); } else { min = mm.toString(); }
-
-        //         console.log(hour + ':' + min);
-        //         console.log(hh + ':' + mm);
-
-        //         $("#my-spreadsheet2").jexcel('setValue', 'D' + (parseInt(pos[1])+1).toString() ,hour+':'+min);
-        //     }
-
-        // };
-
-        // selection = function (obj, cell, val) {
-        //     var pos = $(cell).prop('id').split("-");
-
-        //     console.log('Cell select: ' + $(cell).prop('id'));
-        //     var value = pos[1];
-        //     var data = $("#my-spreadsheet").jexcel('getRowData', value)
-        //     console.log(data);
-        //     if(data[0]!=""){
-        //         $("#side-note").show();
-        //         no_wo_aktif = data[0];
-        //         detail_refresh(no_wo_aktif);
-        //     }else{
-        //         console.log("kosong");
-        //         $("#side-note").hide();
-        //     }
-        // }
-
         if (data == undefined) {
             data = [];
         }
@@ -359,17 +295,16 @@ $(document).ready(function () {
                 'Area',
                 'Perbaikan',
                 'Status<br>Perbaikan',
-                // 'Jenis<br>Problem'
             ],
             colWidths: [160, 230, 235, 160, 80, 100, 60, 100, 100],
             columns: [
-                { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
                 // { type: 'dropdown', source: ['alat', 'proses'] },
             ],
-            // onfocus: selection,
             onselection:selection,
         });
         detail_refresh();
@@ -398,11 +333,7 @@ $(document).ready(function () {
 
         ajax_refresh();
         $("#side-note").hide();
-
-
     });
-
-
 
     // $("#tahun").change(function () {
     //     ajax_refresh();
