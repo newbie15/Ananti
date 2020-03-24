@@ -369,6 +369,13 @@ $(document).ready(function () {
         refresh_modal();
     });
 
+    $("#download_activity").click(function () {
+    	// station_refresh();
+        window.open(BASE_URL + "index.php/activity/download_activity_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+    });
+
+
+
     $("#simpan").click(function () {
         var data_j = $('#my-spreadsheet').jexcel('getData');
         console.log(data_j);
@@ -430,7 +437,8 @@ $(document).ready(function () {
                     });
 
                 }else{
-
+                    // $("#my-spreadsheet").html("");
+                    refresh();
                 }
             }else{
                 // alert("goes here");

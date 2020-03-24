@@ -14,11 +14,12 @@
         <small>Input Harian</small> -->
       </h1>
       <ol class="breadcrumb">
-        <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-success" id="download_activity" href="#" role="button">
+          <i class="fa fa-file-excel-o"></i> Download
+        </a>
         <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
           <i class="fa fa-search-plus"></i> Cari WO
         </a>
-
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
