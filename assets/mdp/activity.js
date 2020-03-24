@@ -366,6 +366,7 @@ $(document).ready(function () {
         //     add(t[0]);
         //     console.log(t[0]);
         // }
+        refresh_modal();
     });
 
     $("#simpan").click(function () {
