@@ -11,9 +11,9 @@
         </ul>
       </h1>
       <ol class="breadcrumb">
-        <a class="btn btn-app btn-primary" id="simpan">
+        <!-- <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
-        </a>
+        </a> -->
       </ol>
     </section>
 

@@ -139,7 +139,7 @@ $(document).ready(function(){
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text' },
-                { type: 'dropdown', source: ['plan', 'unplan'] },
+                { type: 'dropdown', source: ['plan P', 'plan M', 'susulan', 'unplan' ] },
                 { type: 'dropdown', source: ['M', 'E'] },
                 { type: 'dropdown', source: ['open', 'close'] },
                 // { type: 'text' },
