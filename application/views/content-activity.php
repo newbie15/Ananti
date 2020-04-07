@@ -8,7 +8,6 @@
           <li class=""><a href="<?php echo base_url("planing")?>">Plan</a></li>
           <li class="active"><a href="">Realisasi</a></li>
           <li class=""><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li>
-
         </ul>
         <!-- Activity Maintenance
         <small>Input Harian</small> -->
@@ -103,6 +102,9 @@
             <option>30</option>
             <option>31</option>
           </select>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Filter by MPP : 
+          <select id="mpp"></select>
           <br><br>
         </div>
         <div class="col-xs-8">
