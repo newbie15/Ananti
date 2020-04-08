@@ -33,5 +33,3 @@ if(CUSTOM == 1) {
         var BASE_URL = "http://10.23.3.101/MDP/";
     }
 }
-
-
