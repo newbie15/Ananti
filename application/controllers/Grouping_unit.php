@@ -133,37 +133,49 @@ class Grouping_unit extends CI_Controller {
 		}
 	}
 
-	public function ajax()
+	public function ajax_load()
 	{
-		// $id_pabrik = $_REQUEST['id_pabrik'];
-		$id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
+		$id_pabrik = $_REQUEST['pabrik'];
+		$grouping = $_REQUEST['group_unit'];
+
+		$query = $this->db->query("SELECT id_station,id_unit,id_sub_unit FROM master_grouping where id_pabrik = '$id_pabrik' AND nama = '$grouping';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				// $d[$i][0] = $row->nama; // access attributes
-				$a['name'] = $row->nama;
-				$a['id'] = $row->nama;
-				$d[$i++] = $a;
+			$d[$i][0] = $row->id_station;
+			$d[$i][1] = $row->id_unit;
+			$d[$i++][2] = $row->id_sub_unit;
+			// $d[$i][3] = $row->kode_asset;
+			// $d[$i++][1] = $row->nama;
 		}
 		echo json_encode($d);
 	}
 
-	public function ajax_dropdown(){
+	public function ajax_table(){
 		$id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
+		$nama_group = urldecode($this->uri->segment(4, 0));
+		$query = $this->db->query("SELECT id_station,id_unit,id_sub_unit FROM master_grouping where id_pabrik = '$id_pabrik' AND nama = '$nama_group';");
 		// $i = 0;
 		// $d = [];
+		echo "<tbody><tr>
+			<th>Station</th>
+			<th>Unit</th>
+			<th>Sub Unit</th>
+		</tr>";
 		foreach ($query->result() as $row)
 		{
-				// $d[$i][0] = $row->nama; // access attributes
-				// $a['name'] = $row->nama;
-				// $a['id'] = $row->nama;
-				// $d[$i++] = $a;
-				echo "<option>".$row->nama."</option>";
+			echo "<tr>";
+			
+			echo "<td>".$row->id_station."</td>";
+			echo "<td>".$row->id_unit."</td>";
+			echo "<td>".$row->id_sub_unit."</td>";
+		
+			echo "</td>";
+		
 		}
+		echo "</tbody>";
 		// echo json_encode($d);
 	}
 

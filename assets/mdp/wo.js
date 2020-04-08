@@ -4,6 +4,23 @@ $(document).ready(function(){
         $(".n_success").fadeOut(3000);
     }
 
+    function group_refresh() {
+        $("#group_unit").load(BASE_URL + "grouping/ajax_dropdown/" + $("#pabrik").val(),
+            function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    // alert("success");
+                    group_unit_refresh();
+                } else {
+                    // alert("gaagal");
+                }
+            }
+        );
+    }
+
+    function group_unit_refresh(){
+        $("#dt-table").load(BASE_URL + "grouping_unit/ajax_table/" + $("#pabrik").val() + "/" + encodeURI($("#group_unit").val()));
+    }
+
     function station_refresh() {
         $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
@@ -105,10 +122,6 @@ $(document).ready(function(){
                     // }, 1000);
                 }
             }
-
-
-
-
         };
 
         if (data == undefined){
@@ -184,6 +197,10 @@ $(document).ready(function(){
         sub_unit_refresh();
     });
 
+    $("#group_unit").change(function () {
+        group_unit_refresh();
+    });
+
     function add(no, sx, ux, su) {
         var sama = 0;
         var index = 0;
@@ -204,6 +221,24 @@ $(document).ready(function(){
         $("#modal-default").modal("hide");
         
         updatescroll();
+    }
+
+    function multi_add(no, sx, ux, su) {
+        var sama = 0;
+        var index = 0;
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+        if (dx[0][0] == "") { // kosong
+            dx[0][0] = no;
+            dx[0][1] = sx + "\n" + ux + "\n" + su;
+        	// dx[0][2] = ux;
+        	// dx[0][3] = su;
+        } else { // isi satu
+            dx.push([no, sx + "\n" + ux + "\n" + su, "", "", "", "", "", "", "", "", ""]);
+        }
+
+        refresh(dx);
+
     }
 
     function updatescroll() {
@@ -303,6 +338,7 @@ $(document).ready(function(){
 
     $("#tambah").click(function () {
         station_refresh();
+        group_refresh();
         auto_wo_number();
         setTimeout(function(){
             $("#search").val("");
@@ -334,11 +370,29 @@ $(document).ready(function(){
 
     });
 
-
-
     $("#tplus").click(function () {
-        // console.log($("#no_wo_auto").val()+"-"+$("#station").val()+"-"+$("#unit").val()+"-"+$("#sub_unit").val())
         add($("#no_wo_auto").val(), $("#station").val(), $("#unit").val(), $("#sub_unit").val());
+    });
+
+    $("#tplusx").click(function(){
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "grouping_unit/ajax_load",
+            // success: sukses,
+            data: {
+                pabrik: $("#pabrik").val(),
+                group_unit: $("#group_unit").val()
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            var d = JSON.parse(msg);
+            console.log(d);
+            d.forEach(element => {
+                console.log(element);
+                add($("#no_wo_auto").val(), element[0], element[1], element[2]);
+                auto_wo_number();
+            });
+        });
     });
 
     function auto_wo_number(){

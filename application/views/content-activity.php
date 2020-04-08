@@ -13,6 +13,9 @@
         <small>Input Harian</small> -->
       </h1>
       <ol class="breadcrumb">
+        <a class="btn btn-app btn-warning" id="sync_activity" href="#modal-sync" role="button" data-toggle="modal">
+          <i class="fa fa-refresh"></i> Sync w/ Louhan
+        </a>
         <a class="btn btn-app btn-success" id="download_activity" href="#" role="button">
           <i class="fa fa-file-excel-o"></i> Download
         </a>
@@ -42,6 +45,173 @@
           </div>
         </div>
       </div>
+      <div class="modal fade in" id="modal-sync" style="display: none;">
+        <div class="modal-dialog" style="width :768px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Daftar Realisasi Job Harian</h4>
+            </div>
+            <div class="modal-body">
+              <div class="box-body no-padding" style="
+                height: 450px;
+                width: 100%;
+                overflow: auto;
+              ">
+                <table class="table table-striped">
+                  <tbody><tr>
+                    <th>No WO</th>
+                    <th>Area</th>
+                    <th>Perbaikan</th>
+                    <th style="width: 40px">Status</th>
+                  </tr>
+                  <tr>
+                    <td>1.</td>
+                    <td>Update software</td>
+                    <td></td>
+                    <td><span class="badge bg-red">55%</span></td>
+                  </tr>
+                  <tr>
+                    <td>2.</td>
+                    <td>Clean database</td>
+                    <td></td>
+                    <td><span class="badge bg-yellow">70%</span></td>
+                  </tr>
+                  <tr>
+                    <td>3.</td>
+                    <td>Cron job running</td>
+                    <td></td>
+                    <td><span class="badge bg-light-blue">30%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+
+                </tbody></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <?php  ?>
         <div class="col-xs-12">
