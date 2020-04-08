@@ -87,6 +87,9 @@ $(document).ready(function () {
         }
     }
 
+    function mpp_update(){
+        $("#mpp").load(BASE_URL + "karyawan/ajax_dropdown/"+$("#pabrik").val());
+    }
 
     function ambil_dari_plan(){
         // getplan
@@ -225,7 +228,6 @@ $(document).ready(function () {
             console.log("ada");
         }
 
-
         if(data_detail[no_wo_aktif]==undefined){
             data_detail[no_wo_aktif] = [["","","",""]];
             data_detailnya = data_detail[no_wo_aktif]; 
@@ -314,6 +316,7 @@ $(document).ready(function () {
     $("#pabrik").change(function () {
         refresh_modal();
         ajax_refresh();
+        mpp_update();
         $("#side-note").hide();
     });
 
@@ -335,11 +338,6 @@ $(document).ready(function () {
         $("#side-note").hide();
     });
 
-    // $("#tahun").change(function () {
-    //     ajax_refresh();
-    //     $("#side-note").hide();
-    // });
-
     $("#bulan").change(function () {
         ajax_refresh();
         $("#side-note").hide();
@@ -348,17 +346,6 @@ $(document).ready(function () {
         ajax_refresh();
         $("#side-note").hide();
     });
-
-    // $("#wo").keydown(function (e) {
-    //     if (e.which == 13 && $(this).val() != "") {
-    //         var t = $(this).val();
-    //         $(this).val("");
-    //         var x = t.split(" - ");
-    //         console.log(x.length);
-    //         console.log(t);
-    //         add(x[0]);
-    //     }
-    // });
 
     $("#tambah").click(function(){
         // if ($("#wo").val()!=""){
@@ -479,8 +466,22 @@ $(document).ready(function () {
 
             }
         });
-
     }
+
+    $("#mpp").change(function(){
+        var nama = $(this).val();
+        if(nama!="--PILIH SALAH SATU--"){
+            var data_all = $('#my-spreadsheet').jexcel('getData');
+
+            console.log(data_all);
+            // $('#my-spreadsheet').jexcel('setStyle', 'A1', 'background-color', 'yellow');
+        }else{
+            // var all = $("#my-spreadsheet").
+            var data_all = $('#my-spreadsheet').jexcel('getData');
+            console.log(data_all);
+
+        }
+    });
 
     var tgl = new Date();
     var m = tgl.getMonth() + 1;
@@ -512,4 +513,5 @@ $(document).ready(function () {
 
     ajax_refresh();
     refresh_modal();
+    mpp_update();
 });

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Karyawan extends CI_Controller {
+class Grouping extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -18,22 +18,34 @@ class Karyawan extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function __construct()
+	public function __construct($config = 'rest')
 	{
-		parent::__construct();
-
+ 		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+    	parent::__construct();
 		$this->load->database();
-		$this->load->helper('url');
 
-		$this->load->library('grocery_CRUD');
+		$this->load->helper('url');
+		// $this->load->library('grocery_CRUD');
+
 	}
+
+	// public function __construct()
+	// {
+	// 	parent::__construct();
+
+	// 	$this->load->database();
+	// 	$this->load->helper('url');
+
+	// 	$this->load->library('grocery_CRUD');
+	// }
 	
 	public function index()
 	{
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Asset Mesin";
+		$output['main_title'] = "Data Station";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -46,7 +58,7 @@ class Karyawan extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/karyawan.js"),
+			base_url("assets/mdp/grouping.js"),
 		];
 		
 		$output['content'] = '';
@@ -73,43 +85,41 @@ class Karyawan extends CI_Controller {
 		}
 		$output['dropdown_pabrik'] .= "/<select>";
 		
-		
 		$this->load->view('header',$header);
-		$this->load->view('content-karyawan',$output);
-		$this->load->view('footer',$footer);	
+		$this->load->view('content-grouping',$output);
+		$this->load->view('footer',$footer);
 	}
 
 	public function simpan()
 	{
 		$pabrik = $_REQUEST['pabrik'];
-		$this->db->query("DELETE FROM `master_karyawan` where id_pabrik = '$pabrik' ");
+		$this->db->query("DELETE FROM `master_group` where id_pabrik = '$pabrik' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
 				'id_pabrik' => $pabrik,
-				'nama' => $value[0],
-				'bagian' => $value[1],
+				'nama' => ucwords($value[0]),
 				// 'tipe' => $value[1],
 				// 'date' => 'My date'
 			);
 			// print_r($data);
-			$this->db->insert('master_karyawan', $data);
+			$this->db->insert('master_group', $data);
 		}
 	}
 	
 	public function load()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		$query = $this->db->query("SELECT nama,bagian FROM master_karyawan where id_pabrik = '$id_pabrik';");
+		$query = $this->db->query("SELECT nama FROM master_group where id_pabrik = '$id_pabrik';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				$d[$i][0] = $row->nama; // access attributes
-				$d[$i++][1] = $row->bagian; // or methods defined on the 'User' class
+				// $d[$i][0] = $row->nama; // access attributes
+				$d[$i++][0] = $row->nama; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 	}
@@ -118,7 +128,7 @@ class Karyawan extends CI_Controller {
 	{
 		// $id_pabrik = $_REQUEST['id_pabrik'];
 		$id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_karyawan where id_pabrik = '$id_pabrik';");
+		$query = $this->db->query("SELECT nama FROM master_group where id_pabrik = '$id_pabrik';");
 
 		$i = 0;
 		$d = [];
@@ -134,21 +144,13 @@ class Karyawan extends CI_Controller {
 
 	public function ajax_dropdown(){
 		$id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_karyawan WHERE id_pabrik = '$id_pabrik' ORDER BY nama ASC;");
-
-		$kategori = 0;
-		$nama_mpp = "";
-
-		$output['dropdown_mpp']= "<option>--PILIH SALAH SATU--</option>";
-		
+		$query = $this->db->query("SELECT nama FROM master_group where id_pabrik = '$id_pabrik';");
+		// $i = 0;
+		// $d = [];
 		foreach ($query->result() as $row)
 		{
-			$output['dropdown_mpp'] = $output['dropdown_mpp']."<option>".$row->nama."</option>";
+			echo "<option>".$row->nama."</option>";
 		}
-		// $output['dropdown_mpp'] .= "/<select>";
-
-		echo $output['dropdown_mpp'];
+		// echo json_encode($d);
 	}
-
 }
-
