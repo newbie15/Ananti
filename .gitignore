@@ -12,7 +12,7 @@ application/logs/*
 
 composer.lock
 
-assets/mdp/config.js
+#assets/mdp/config.js
 
 application/config/config.php
 
