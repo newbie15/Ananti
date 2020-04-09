@@ -3,11 +3,7 @@ $(document).ready(function () {
         $(".n_success").show();
         $(".n_success").fadeOut(3000);
     }
-    data = [
-        ['Google', '#542727'],
-        ['Yahoo', '#724f4f'],
-        ['Bing', '#b43131'],
-    ];
+    data = [];
 
     unit =[
         ''

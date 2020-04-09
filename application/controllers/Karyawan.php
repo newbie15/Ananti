@@ -114,7 +114,7 @@ class Karyawan extends CI_Controller {
 		echo json_encode($d);
 	}
 
-		public function ajax()
+	public function ajax()
 	{
 		// $id_pabrik = $_REQUEST['id_pabrik'];
 		$id_pabrik = $this->uri->segment(3, 0);
@@ -130,6 +130,24 @@ class Karyawan extends CI_Controller {
 				$d[$i++] = $a;
 		}
 		echo json_encode($d);
+	}
+
+	public function ajax_dropdown(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_karyawan WHERE id_pabrik = '$id_pabrik' ORDER BY nama ASC;");
+
+		$kategori = 0;
+		$nama_mpp = "";
+
+		$output['dropdown_mpp']= "<option>--PILIH SALAH SATU--</option>";
+		
+		foreach ($query->result() as $row)
+		{
+			$output['dropdown_mpp'] = $output['dropdown_mpp']."<option>".$row->nama."</option>";
+		}
+		// $output['dropdown_mpp'] .= "/<select>";
+
+		echo $output['dropdown_mpp'];
 	}
 
 }

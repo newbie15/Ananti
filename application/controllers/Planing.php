@@ -141,6 +141,9 @@ class Planing extends CI_Controller {
 			$value[7] == "" ? $value[7] = "00:00" : null;
 			$value[8] == "" ? $value[8] = "00:00" : null;
 
+			$value[7] = str_replace(".",":",$value[7]);
+			$value[8] = str_replace(".",":",$value[8]);
+
 			@$awal = explode(":",$value[7]);
 			@$akhir = explode(":",$value[8]);
 
@@ -305,6 +308,18 @@ class Planing extends CI_Controller {
 
 		$statistik = array();
 
+		$kquery = $this->db->query(
+			"SELECT * FROM `master_karyawan` WHERE `id_pabrik` = '$id_pabrik' ORDER BY nama ASC
+		");
+
+		foreach ($kquery->result() as $row){
+			$x = $row->nama;
+			// array_push($statistik, "x" => ""); 
+			$y = array(0,0,0);
+			$statistik[$x] = $y;
+		}
+
+		// print_r($statistik);
 
 		$query = $this->db->query(
 			"SELECT * FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
@@ -354,28 +369,49 @@ class Planing extends CI_Controller {
 				echo $row->tipe; echo "\t";
 				echo $row->start; echo "\t";
 				echo $row->stop; echo "\t";
-				echo $time; echo "\t";
+				echo number_format($time,2,",",""); echo "\t";
 				echo $row->plan; echo "\n";
 
 				// if(isset($statistik[$value])){
 
 				// }
 
-				// $row->tipe == "Corrective" ? $s = array($time, "", ""); : null ;  
-				// $row->tipe == "Preventive" ? $s = array("", $time, ""); : null ;  
-				// $row->tipe == "Predictive" ? $s = array("", "", $time); : null ;  
+				if($row->tipe == "Corrective") { $statistik[$value][1] += $time; }  
+				if($row->tipe == "Preventive") { $statistik[$value][0] += $time; }  
+				if($row->tipe == "Predictive") { $statistik[$value][2] += $time; }  
 				
 				// $statistik[$value] = 
 
 				// array_push($statistik,)
 			}
 		}
-		// echo "\n\n";
+		echo "\n\n";
 		// print_r($statistik);
-		// foreach ($statistik as $key => $value) {
+		echo "nama\t";
+		echo "preventive\t";
+		echo "corrective\t";
+		echo "predictive\t";
+		echo "total\n";
+
+		$cor = 0;
+		$prv = 0;
+		$pdc = 0;
+
+		foreach ($statistik as $key => $value) {
 		// 	# code...
-		// 	print_r()
-		// }
+			echo $key; echo "\t";
+
+			echo number_format($value[0],2,",",""); echo "\t"; $cor+= $value[0];
+			echo number_format($value[1],2,",",""); echo "\t"; $prv+= $value[1];
+			echo number_format($value[2],2,",",""); echo "\t"; $pdc+= $value[2];
+			echo number_format(($value[0]+$value[1]+$value[2]),2,",","");
+
+			echo "\n";
+		}
+		echo "\t"; echo number_format($prv,2,",","");
+		echo "\t"; echo number_format($cor,2,",","");
+		echo "\t"; echo number_format($pdc,2,",","");
+		echo "\t"; echo number_format(($pdc+$prv+$cor),2,",","");
 
 	}
 }

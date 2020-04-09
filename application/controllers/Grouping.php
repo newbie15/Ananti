@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Recordhm extends CI_Controller {
+class Grouping extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -18,21 +18,34 @@ class Recordhm extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function __construct()
+	public function __construct($config = 'rest')
 	{
-		parent::__construct();
-
+ 		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+    	parent::__construct();
 		$this->load->database();
-		$this->load->helper('url');
 
+		$this->load->helper('url');
 		// $this->load->library('grocery_CRUD');
+
 	}
+
+	// public function __construct()
+	// {
+	// 	parent::__construct();
+
+	// 	$this->load->database();
+	// 	$this->load->helper('url');
+
+	// 	$this->load->library('grocery_CRUD');
+	// }
 	
 	public function index()
 	{
 		// $this->load->view('welcome_message');
+
 		$output['content'] = "test";
-		$output['main_title'] = "Data Hour Meter Mesin";
+		$output['main_title'] = "Data Station";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -45,7 +58,7 @@ class Recordhm extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/recordhm.js"),
+			base_url("assets/mdp/grouping.js"),
 		];
 		
 		$output['content'] = '';
@@ -70,60 +83,74 @@ class Recordhm extends CI_Controller {
 				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
 			}
 		}
-		$output['dropdown_pabrik'] .= "/<select>";		
-
-		$output['dropdown_station'] = "<select id=\"station\"></select>";
-
+		$output['dropdown_pabrik'] .= "/<select>";
+		
 		$this->load->view('header',$header);
-		$this->load->view('content-recordhm',$output);
+		$this->load->view('content-grouping',$output);
 		$this->load->view('footer',$footer);
-
-	}
-
-	public function load()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT id_unit,id_sub_unit,hm FROM m_recordhm where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tanggal='$tanggal';");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i][0] = $row->id_unit;
-			$d[$i][1] = $row->id_sub_unit;
-			$d[$i++][2] = $row->hm;
-		}
-		echo json_encode($d);
 	}
 
 	public function simpan()
 	{
 		$pabrik = $_REQUEST['pabrik'];
-		$station = $_REQUEST['station'];
-		// $unit = $_REQUEST['unit'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-
-		$this->db->query("DELETE FROM `m_recordhm` where id_pabrik = '$pabrik' AND id_station = '$station' AND id_unit = '$unit' AND tanggal = '$tanggal' ");
-
-		// $query = $this->db->query("SELECT DISTINCT m_recordhm.unit,m_recordhm.hm FROM m_recordhm,m_recordhm_screwpress,master_unit WHERE m_recordhm.id_pabrik = '$pabrik' AND master_unit.screwpress_monitoring = 1 AND m_recordhm.unit = m_recordhm_screwpress.unit AND master_unit.nama = m_recordhm.unit	AND m_recordhm.tanggal = (SELECT max(tanggal) from m_recordhm_screwpress)");
-
+		$this->db->query("DELETE FROM `master_group` where id_pabrik = '$pabrik' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
-				'tanggal' => $tanggal,
 				'id_pabrik' => $pabrik,
-				'id_station' => $station,
-				'id_unit' => $value[0],
-				'id_sub_unit' => $value[1],
-				'hm' => $value[2],
-				'sync' => "0",
+				'nama' => ucwords($value[0]),
+				// 'tipe' => $value[1],
+				// 'date' => 'My date'
 			);
 			// print_r($data);
-			$this->db->insert('m_recordhm', $data);
+			$this->db->insert('master_group', $data);
 		}
+	}
+	
+	public function load()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$query = $this->db->query("SELECT nama FROM master_group where id_pabrik = '$id_pabrik';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				$d[$i++][0] = $row->nama; // or methods defined on the 'User' class
+		}
+		echo json_encode($d);
+	}
+
+	public function ajax()
+	{
+		// $id_pabrik = $_REQUEST['id_pabrik'];
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_group where id_pabrik = '$id_pabrik';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				$a['name'] = $row->nama;
+				$a['id'] = $row->nama;
+				$d[$i++] = $a;
+		}
+		echo json_encode($d);
+	}
+
+	public function ajax_dropdown(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_group where id_pabrik = '$id_pabrik';");
+		// $i = 0;
+		// $d = [];
+		foreach ($query->result() as $row)
+		{
+			echo "<option>".$row->nama."</option>";
+		}
+		// echo json_encode($d);
 	}
 }

@@ -3,8 +3,10 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <?=$main_title?>
-        <small>Control panel</small>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="" aria-expanded="true">Breakdown</a></li>
+          <li class=""><a href="<?php echo base_url("breakdown/summary")?>" aria-expanded="false">Summary</a></li>
+        </ul>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->

@@ -211,4 +211,86 @@ class Sub_unit extends CI_Controller {
 		// echo "]}}";
 		echo json_encode($d);
 	}
+
+	public function hm_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT id_unit,nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND hourmeter_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->id_unit; // access attributes
+			$d[$i++][1] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function temperature_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND temperature_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function vibration_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND vibration_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function oiling_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND oiling_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function electromotor_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND electromotor_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
 }

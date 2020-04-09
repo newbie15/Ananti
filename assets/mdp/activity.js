@@ -87,6 +87,9 @@ $(document).ready(function () {
         }
     }
 
+    function mpp_update(){
+        $("#mpp").load(BASE_URL + "karyawan/ajax_dropdown/"+$("#pabrik").val());
+    }
 
     function ambil_dari_plan(){
         // getplan
@@ -119,7 +122,8 @@ $(document).ready(function () {
                     ],
                     colWidths: [160, 230, 235, 160, 80, 100, 60, 100, 100],
                     columns: [
-                        { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                        // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                        { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
                         { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
@@ -132,7 +136,7 @@ $(document).ready(function () {
         });
     }
 
-    function add(no) {
+    function add(no,area) {
         var sama = 0;
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
@@ -148,15 +152,60 @@ $(document).ready(function () {
             if(dx.length==1){
                 if(dx[0][0]==""){ // kosong
                     dx[0][0] = no;
+                    dx[0][1] = area;
                 }else{ // isi satu
-                    dx.push([no, "", "", ""]);
+                    dx.push([no, area, "", ""]);
                 }
             }else{ // isi lebih dari 1
-                dx.push([no, "", "", ""]);
+                dx.push([no, area, "", ""]);
             }
             refresh(dx);
         }
         $("#wo").val("");
+    }
+
+    function louhan_refresh(){
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "act/ajax_load/",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                d: $("#tanggal").val(),
+                m: $("#bulan").val(),
+                y: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            // console.log(msg);
+            dx = JSON.parse(msg);
+            console.log(dx);
+            louhan_ui_refresh(dx);
+        });
+    }
+
+    function louhan_ui_refresh(params) {
+        shtml = "<tbody><tr>\
+        <th>Man Power</th>\
+        <th>No WO</th>\
+        <th>Area</th>\
+        <th>Problem & Penyelesaian</th>\
+        <th>Start</th>\
+        <th>Stop</th>\
+        <th>Status</th>\
+        </tr>";
+        params.forEach(element => {
+            shtml += "<tr>";
+            shtml += "<td>"+element[0]+"</td>";
+            shtml += "<td>"+element[1]+"</td>";
+            shtml += "<td>"+element[2]+"</td>";
+            shtml += "<td>Problem : "+element[3]+"<br>Penyelesaian:"+element[4]+"</td>";
+            shtml += "<td>"+element[5]+"</td>";
+            shtml += "<td>"+element[6]+"</td>";
+            shtml += "<td>"+element[7]+"</td>";
+            shtml += "</tr>";
+        });
+
+        shtml += "</tbody>"
+        $("#ui-louhan").html(shtml);
     }
 
     function refresh_modal(){
@@ -190,7 +239,8 @@ $(document).ready(function () {
                     console.log('API row values : ', table.row(this).data());
                     var sp = table.row(this).data();
                     sp = sp[0].split(" - ");
-                    add(sp[0]);
+                    var area = sp[1] + "\n" + sp[2] + "\n" + sp[3];
+                    add(sp[0],area);
                     $('#modal-default').modal('toggle');
                 }
             });
@@ -221,7 +271,6 @@ $(document).ready(function () {
             $("#keterangan").html(keterangan_detail[no]);
             console.log("ada");
         }
-
 
         if(data_detail[no_wo_aktif]==undefined){
             data_detail[no_wo_aktif] = [["","","",""]];
@@ -280,71 +329,6 @@ $(document).ready(function () {
     }
 
     function refresh(data) {
-        // handlers = function (obj, cell, val) {
-        //     data_sparepart[no_wo_aktif] = $('#my-spare').jexcel('getData');
-        // };
-
-        // handler = function (obj, cell, val) {
-        //     data_detail[no_wo_aktif] = $('#my-spreadsheet2').jexcel('getData');
-
-        //     pos = $(cell).prop('id').split("-");
-
-        //     console.log(pos);
-
-        //     dt_start = data_detail[no_wo_aktif][pos[1]][3];
-        //     dt_stop = data_detail[no_wo_aktif][pos[1]][4];
-
-        //     if(dt_start!="" && dt_stop!="" && (pos[0]==3 || pos[0]==4)){
-        //         var date1 = new Date("08/05/2015 "+ dt_start+":00");
-        //         var date2 = new Date("08/05/2015 "+ dt_stop +":00");
-
-        //         var diff = date2.getTime() - date1.getTime();
-        //         if(diff<0){
-        //             date2 = new Date("08/06/2015 " + dt_stop + ":00");
-        //             diff = date2.getTime() - date1.getTime();
-        //         }
-
-        //         console.log("diff ="+diff);
-        //         var msec = diff;
-        //         var hh = Math.floor(msec / 1000 / 60 / 60);
-        //         console.log(hh);
-        //         msec -= hh * 1000 * 60 * 60;
-        //         var mm = Math.floor(msec / 1000 / 60);
-        //         console.log(mm);
-        //         msec -= mm * 1000 * 60;
-        //         var ss = Math.floor(msec / 1000);
-        //         msec -= ss * 1000;
-        //         hour = "";
-        //         min = "";
-
-        //         if (hh < 10) { hour = "0" + hh.toString(); } else { hour = hh.toString(); }
-        //         if (mm < 10) { min = "0" + mm.toString(); } else { min = mm.toString(); }
-
-        //         console.log(hour + ':' + min);
-        //         console.log(hh + ':' + mm);
-
-        //         $("#my-spreadsheet2").jexcel('setValue', 'D' + (parseInt(pos[1])+1).toString() ,hour+':'+min);
-        //     }
-
-        // };
-
-        // selection = function (obj, cell, val) {
-        //     var pos = $(cell).prop('id').split("-");
-
-        //     console.log('Cell select: ' + $(cell).prop('id'));
-        //     var value = pos[1];
-        //     var data = $("#my-spreadsheet").jexcel('getRowData', value)
-        //     console.log(data);
-        //     if(data[0]!=""){
-        //         $("#side-note").show();
-        //         no_wo_aktif = data[0];
-        //         detail_refresh(no_wo_aktif);
-        //     }else{
-        //         console.log("kosong");
-        //         $("#side-note").hide();
-        //     }
-        // }
-
         if (data == undefined) {
             data = [];
         }
@@ -357,17 +341,16 @@ $(document).ready(function () {
                 'Area',
                 'Perbaikan',
                 'Status<br>Perbaikan',
-                // 'Jenis<br>Problem'
             ],
             colWidths: [160, 230, 235, 160, 80, 100, 60, 100, 100],
             columns: [
-                { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
                 // { type: 'dropdown', source: ['alat', 'proses'] },
             ],
-            // onfocus: selection,
             onselection:selection,
         });
         detail_refresh();
@@ -377,6 +360,7 @@ $(document).ready(function () {
     $("#pabrik").change(function () {
         refresh_modal();
         ajax_refresh();
+        mpp_update();
         $("#side-note").hide();
     });
 
@@ -396,16 +380,7 @@ $(document).ready(function () {
 
         ajax_refresh();
         $("#side-note").hide();
-
-
     });
-
-
-
-    // $("#tahun").change(function () {
-    //     ajax_refresh();
-    //     $("#side-note").hide();
-    // });
 
     $("#bulan").change(function () {
         ajax_refresh();
@@ -416,24 +391,21 @@ $(document).ready(function () {
         $("#side-note").hide();
     });
 
-    $("#wo").keydown(function (e) {
-        if (e.which == 13 && $(this).val() != "") {
-            var t = $(this).val();
-            $(this).val("");
-            var x = t.split(" - ");
-            console.log(x.length);
-            console.log(t);
-            add(x[0]);
-        }
+    $("#tambah").click(function(){
+        // if ($("#wo").val()!=""){
+        //     var t = $("#wo").val().split(' - ');
+        //     add(t[0]);
+        //     console.log(t[0]);
+        // }
+        refresh_modal();
     });
 
-    $("#tambah").click(function(){
-        if ($("#wo").val()!=""){
-            var t = $("#wo").val().split(' - ');
-            add(t[0]);
-            console.log(t[0]);
-        }
+    $("#download_activity").click(function () {
+    	// station_refresh();
+        window.open(BASE_URL + "index.php/activity/download_activity_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
+
+
 
     $("#simpan").click(function () {
         var data_j = $('#my-spreadsheet').jexcel('getData');
@@ -496,7 +468,8 @@ $(document).ready(function () {
                     });
 
                 }else{
-
+                    // $("#my-spreadsheet").html("");
+                    refresh();
                 }
             }else{
                 // alert("goes here");
@@ -537,8 +510,26 @@ $(document).ready(function () {
 
             }
         });
-
     }
+
+    $("#mpp").change(function(){
+        var nama = $(this).val();
+        if(nama!="--PILIH SALAH SATU--"){
+            var data_all = $('#my-spreadsheet').jexcel('getData');
+
+            console.log(data_all);
+            // $('#my-spreadsheet').jexcel('setStyle', 'A1', 'background-color', 'yellow');
+        }else{
+            // var all = $("#my-spreadsheet").
+            var data_all = $('#my-spreadsheet').jexcel('getData');
+            console.log(data_all);
+
+        }
+    });
+
+    $("#sync_activity").click(function() {
+        louhan_refresh();
+    });
 
     var tgl = new Date();
     var m = tgl.getMonth() + 1;
@@ -570,4 +561,5 @@ $(document).ready(function () {
 
     ajax_refresh();
     refresh_modal();
+    mpp_update();
 });
