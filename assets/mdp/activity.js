@@ -164,6 +164,50 @@ $(document).ready(function () {
         $("#wo").val("");
     }
 
+    function louhan_refresh(){
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "act/ajax_load/",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                d: $("#tanggal").val(),
+                m: $("#bulan").val(),
+                y: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            // console.log(msg);
+            dx = JSON.parse(msg);
+            console.log(dx);
+            louhan_ui_refresh(dx);
+        });
+    }
+
+    function louhan_ui_refresh(params) {
+        shtml = "<tbody><tr>\
+        <th>Man Power</th>\
+        <th>No WO</th>\
+        <th>Area</th>\
+        <th>Problem & Penyelesaian</th>\
+        <th>Start</th>\
+        <th>Stop</th>\
+        <th>Status</th>\
+        </tr>";
+        params.forEach(element => {
+            shtml += "<tr>";
+            shtml += "<td>"+element[0]+"</td>";
+            shtml += "<td>"+element[1]+"</td>";
+            shtml += "<td>"+element[2]+"</td>";
+            shtml += "<td>Problem : "+element[3]+"<br>Penyelesaian:"+element[4]+"</td>";
+            shtml += "<td>"+element[5]+"</td>";
+            shtml += "<td>"+element[6]+"</td>";
+            shtml += "<td>"+element[7]+"</td>";
+            shtml += "</tr>";
+        });
+
+        shtml += "</tbody>"
+        $("#ui-louhan").html(shtml);
+    }
+
     function refresh_modal(){
         $.ajax({
             method: "POST",
@@ -481,6 +525,10 @@ $(document).ready(function () {
             console.log(data_all);
 
         }
+    });
+
+    $("#sync_activity").click(function() {
+        louhan_refresh();
     });
 
     var tgl = new Date();
