@@ -110,7 +110,7 @@ $(document).ready(function () {
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
-                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective'] },
+                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective', 'Unplan'] },
                     { type: 'text' },
                 ],
             });
@@ -145,36 +145,23 @@ $(document).ready(function () {
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
-                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective'] },
+                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective','Unplan'] },
                     { type: 'text' },
                 ],
             });
 
-            // $('#my-spreadsheet').jexcel('updateSettings', {
-            //     cells: function (cell, col, row) {
-            //         // updatettl();
-            //         // checklimit();
-            //         if (col < 1) {
-            //             // value = $('#my').jexcel('getValue', $(cell));
-            //             // console.log(value);
-            //             // val = numeral($(cell).text()).format('0,0.00');
-            //             // $(cell).html('<input type="hidden" value="' + value + '">' + val);
-            //         }
-            //         console.log(col);
-            //     }
-            // });
         }
     }
 
     $("#pabrik").change(function () {
-        // station_refresh();
         refresh_modal();
-
         ajax_refresh();
     });
+
     $("#bulan").change(function () {
         ajax_refresh();
     });
+
     $("#tanggal").change(function () {
         ajax_refresh();
     });
@@ -239,7 +226,6 @@ $(document).ready(function () {
             url: BASE_URL + "planing/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                // id_station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
