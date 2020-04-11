@@ -58,10 +58,10 @@ $(document).ready(function () {
                     'Station<br>Unit<br>Sub Unit',
                     'Problem',
                     'Status',
+                    'Kategori',
                     'Tanggal<br>Closing',
                     'Plan',
                     'Real',
-
                 ],
                 // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
                 colWidths: [140, 250, 250, 100, 100, 60, 60, 75, 75, 75, 100],
@@ -81,7 +81,6 @@ $(document).ready(function () {
                 table: function (instance, cell, col, row, val, id) {
                     if (col == 3) {
                         console.log(val);
-
                         if (val == "open") {
                             $(cell).css('color', '#000000');
                             $(cell).css('background-color', '#ff0000');
@@ -104,6 +103,7 @@ $(document).ready(function () {
                     'Station<br>Unit<br>Sub Unit',
                     'Problem',
                     'Status',
+                    'Kategori',
                     'Tanggal<br>Closing',
                     'Plan',
                     'Real',
@@ -126,7 +126,6 @@ $(document).ready(function () {
                 table: function (instance, cell, col, row, val, id) {
                     if (col == 3) {
                         console.log(val);
-
                         if (val == "open") {
                             $(cell).css('color', '#000000');
                             $(cell).css('background-color', '#ff0000');
