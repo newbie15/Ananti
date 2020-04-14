@@ -58,6 +58,7 @@ $(document).ready(function(){
     });
 
     $("#simpan").click(function(){
+        $("#my-spreadsheet").jexcel("download");
     });
 
 

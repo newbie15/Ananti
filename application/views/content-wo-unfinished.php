@@ -26,13 +26,7 @@
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
           <br><br>
-          <div style="
-						height: 470px;
-						width: 100%;
-						overflow: auto;
-					">
           <div id='my-spreadsheet'></div>
-          </div>
           <!-- <button id="simpan" class="btn btn-small btn-danger">Simpan</button> -->
         </div>
       </div>
