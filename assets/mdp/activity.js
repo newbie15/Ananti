@@ -191,16 +191,22 @@ $(document).ready(function () {
         <th>Start</th>\
         <th>Stop</th>\
         <th>Status</th>\
+        <th>Action</th>\
         </tr>";
         params.forEach(element => {
             shtml += "<tr>";
             shtml += "<td>"+element[0]+"</td>";
-            shtml += "<td>"+element[1]+"</td>";
+            if(element[1]=="null"){
+                shtml += "<td><button class=\"btn btn-info\" onclick=\"create_unplan_wo()\">Create WO</button></td>";
+            }else{
+                shtml += "<td>"+element[1]+"</td>";
+            }
             shtml += "<td>"+element[2]+"</td>";
             shtml += "<td>Problem : "+element[3]+"<br>Penyelesaian:"+element[4]+"</td>";
             shtml += "<td>"+element[5]+"</td>";
             shtml += "<td>"+element[6]+"</td>";
             shtml += "<td>"+element[7]+"</td>";
+            shtml += "<td><button class=\"btn btn-xs btn-warning\">Verify</button></td>";
             shtml += "</tr>";
         });
 

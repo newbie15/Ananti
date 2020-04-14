@@ -31,17 +31,6 @@ class Sync extends CI_Controller {
 		if(!empty($data)){
 			// $this->db->query("TRUNCATE TABLE `master_pabrik`");
 			foreach ($data as $key => $value) {
-				// $this->db->insert
-				// $data = array(
-				// 	'nama' => $value[1],
-				// 	'kapasitas' => $value[2],
-				// 	'area' => $value[3],
-				// 	'sync' => "2"
-				// 	// 'date' => 'My date'
-				// );
-				// print_r($data);
-
-
 				$this->db->set('nama', $value[1]);
 				$this->db->set('kapasitas', $value[2]);
 				$this->db->set('area', $value[3]);
@@ -54,8 +43,62 @@ class Sync extends CI_Controller {
 		echo "ok";
 		// print_r($_REQUEST);
 	}
-	public function master_station(){}
-	public function master_unit(){}
+
+	public function master_station(){
+		$pabrik = $this->uri->segment(3, 0);
+
+		$data_json = $_REQUEST['data'];
+		$data = json_decode($data_json);
+		print_r($data);
+		if(!empty($data)){
+			$this->db->transStart();
+
+			$this->db->query("DELETE FROM `master_station` where id_pabrik = '$pabrik' ");
+			$data_json = $_REQUEST['data_json'];
+			$data = json_decode($data_json);
+			foreach ($data as $key => $value) {
+				// $this->db->insert
+				$data = array(
+					'id_pabrik' => $pabrik,
+					'nama' => ucwords($value[0]),
+					'sync' => 2,
+				);
+				// print_r($data);
+				$this->db->insert('master_station', $data);
+			}
+			
+			$this->db->transComplete();
+		}
+		echo "ok";		
+	}
+	
+	public function master_unit(){
+		$pabrik = $this->uri->segment(3, 0);
+
+		$data_json = $_REQUEST['data'];
+		$data = json_decode($data_json);
+		print_r($data);
+		if(!empty($data)){
+			$this->db->transStart();
+
+			$this->db->query("DELETE FROM `master_station` where id_pabrik = '$pabrik' ");
+			$data_json = $_REQUEST['data_json'];
+			$data = json_decode($data_json);
+			foreach ($data as $key => $value) {
+				// $this->db->insert
+				$data = array(
+					'id_pabrik' => $pabrik,
+					'nama' => ucwords($value[0]),
+					'sync' => 2,
+				);
+				// print_r($data);
+				$this->db->insert('master_station', $data);
+			}
+			
+			$this->db->transComplete();
+		}
+		echo "ok";		
+	}
 	public function master_sub_unit(){}
 	public function master_user(){}
 	public function master_karyawan(){}
