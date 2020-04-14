@@ -91,17 +91,17 @@ class Planvsreal extends CI_Controller {
 		$query_plan = $this->db->query(
 			"SELECT `no_wo`,sum(m_planing.mpp * m_planing.time) as waktu_plan
 			FROM `m_planing` WHERE 
-			no_wo LIKE '%$id_pabrik-$tanggal%'
+			no_wo LIKE '%$id_pabrik-$tanggal%' GROUP BY no_wo
 		");
 
 		$query_real = $this->db->query(
 			"SELECT `no_wo`,sum(m_activity_detail.realisasi) as waktu_real
 			FROM `m_activity_detail` WHERE 
-			no_wo LIKE '%$id_pabrik-$tanggal%'
+			no_wo LIKE '%$id_pabrik-$tanggal%' GROUP BY no_wo
 		");
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`
+			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`,`kategori`
 			FROM `m_wo` WHERE 
 			no_wo LIKE '%$id_pabrik-$tanggal%'
 			ORDER BY no_wo ASC
@@ -128,8 +128,6 @@ class Planvsreal extends CI_Controller {
 				$menit = "0".$menit;
 			}
 
-
-
 			$p[$plan->no_wo] = $jam.":".$menit;
 		}
 
@@ -144,7 +142,6 @@ class Planvsreal extends CI_Controller {
 				$menit = "0".$menit;
 			}
 
-
 			$r[$real->no_wo] = $jam.":".$menit;
 		}
 
@@ -155,21 +152,23 @@ class Planvsreal extends CI_Controller {
 			$d[$i][1] = $row->station ."\n". $row->unit . "\n" . $row->sub_unit;
 			$d[$i][2] = $row->problem;
 			$d[$i][3] = $row->status;
+			$d[$i][4] = $row->kategori;
+
 			if($row->tanggal_closing != "0000-00-00"){
-				$d[$i][4] = $row->tanggal_closing;
-			}else{
-				$d[$i][4] = "";
-			}
-			
-			if(isset($p[$row->no_wo])){
-				$d[$i][5] = $p[$row->no_wo];
+				$d[$i][5] = $row->tanggal_closing;
 			}else{
 				$d[$i][5] = "";
 			}
-			if(isset($r[$row->no_wo])){
-				$d[$i][6] = $r[$row->no_wo];
+			
+			if(isset($p[$row->no_wo])){
+				$d[$i][6] = $p[$row->no_wo];
 			}else{
 				$d[$i][6] = "";
+			}
+			if(isset($r[$row->no_wo])){
+				$d[$i][7] = $r[$row->no_wo];
+			}else{
+				$d[$i][7] = "";
 			}
 			$i++;
 		}
@@ -191,17 +190,17 @@ class Planvsreal extends CI_Controller {
 		$query_plan = $this->db->query(
 			"SELECT `no_wo`,sum(m_planing.mpp * m_planing.time) as waktu_plan
 			FROM `m_planing` WHERE 
-			no_wo LIKE '%$id_pabrik-$tanggal%'
+			no_wo LIKE '%$id_pabrik-$tanggal%' GROUP BY no_wo
 		");
 
 		$query_real = $this->db->query(
 			"SELECT `no_wo`,sum(m_activity_detail.realisasi) as waktu_real
 			FROM `m_activity_detail` WHERE 
-			no_wo LIKE '%$id_pabrik-$tanggal%'
+			no_wo LIKE '%$id_pabrik-$tanggal%' GROUP BY no_wo
 		");
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`
+			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`,`kategori`
 			FROM `m_wo` WHERE 
 			no_wo LIKE '%$id_pabrik-$tanggal%'
 			ORDER BY no_wo ASC
@@ -223,8 +222,6 @@ class Planvsreal extends CI_Controller {
 				$menit = "0".$menit;
 			}
 
-
-
 			$p[$plan->no_wo] = $jam.":".$menit;
 		}
 
@@ -239,7 +236,6 @@ class Planvsreal extends CI_Controller {
 				$menit = "0".$menit;
 			}
 
-
 			$r[$real->no_wo] = $jam.":".$menit;
 		}
 
@@ -252,6 +248,7 @@ class Planvsreal extends CI_Controller {
 		echo "SUB UNIT\t";
 		echo "PROBLEM\t";
 		echo "STATUS\t";
+		echo "KATEGORI\t";
 		echo "TANGGAL CLOSING\t";
 		echo "PLAN\t";
 		echo "REAL";
@@ -260,25 +257,26 @@ class Planvsreal extends CI_Controller {
 
 		foreach ($query->result() as $row)
 		{		
-			$d[$i][0] = $row->no_wo;
-			$d[$i][1] = $row->station ."\n". $row->unit . "\n" . $row->sub_unit;
-			$d[$i][2] = $row->problem;
-			$d[$i][3] = $row->status;
+			// $d[$i][0] = $row->no_wo;
+			// $d[$i][1] = $row->station ."\n". $row->unit . "\n" . $row->sub_unit;
+			// $d[$i][2] = $row->problem;
+			// $d[$i][3] = $row->status;
+			// $d[$i][4] = $row->kategori;
 			if($row->tanggal_closing != "0000-00-00"){
-				$d[$i][4] = $row->tanggal_closing;
-			}else{
-				$d[$i][4] = "";
-			}
-			
-			if(isset($p[$row->no_wo])){
-				$d[$i][5] = $p[$row->no_wo];
+				$d[$i][5] = $row->tanggal_closing;
 			}else{
 				$d[$i][5] = "";
 			}
-			if(isset($r[$row->no_wo])){
-				$d[$i][6] = $r[$row->no_wo];
+			
+			if(isset($p[$row->no_wo])){
+				$d[$i][6] = $p[$row->no_wo];
 			}else{
 				$d[$i][6] = "";
+			}
+			if(isset($r[$row->no_wo])){
+				$d[$i][7] = $r[$row->no_wo];
+			}else{
+				$d[$i][7] = "";
 			}
 
 			echo $row->no_wo; echo "\t";
@@ -287,9 +285,10 @@ class Planvsreal extends CI_Controller {
 			echo $row->sub_unit; echo "\t";
 			echo $row->problem; echo "\t";
 			echo $row->status; echo "\t";
-			echo $d[$i][4]; echo "\t";
+			echo $row->kategori; echo "\t";
 			echo $d[$i][5]; echo "\t";
-			echo $d[$i][6]; echo "\n";
+			echo $d[$i][6]; echo "\t";
+			echo $d[$i][7]; echo "\n";
 			$i++;
 		}
 		// echo json_encode($d);
