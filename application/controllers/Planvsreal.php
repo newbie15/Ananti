@@ -200,7 +200,7 @@ class Planvsreal extends CI_Controller {
 		");
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`
+			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`,`kategori`
 			FROM `m_wo` WHERE 
 			no_wo LIKE '%$id_pabrik-$tanggal%'
 			ORDER BY no_wo ASC
