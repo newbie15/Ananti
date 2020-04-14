@@ -8,16 +8,6 @@
 
 */
 
-<<<<<<< HEAD
-var DEBUG = 2;
-
-var BASE_URL = "";
-
-if (DEBUG == 2) {
-    var BASE_URL = "http://159.65.135.69/Ananti/";
-}else if(DEBUG==1){
-    var BASE_URL = "http://localhost/ananti/";
-=======
 var CUSTOM = 1;
 
 var DEBUG = 1;
@@ -34,7 +24,6 @@ if(CUSTOM == 1) {
     var BASE_URL = x[0]+"//"+x[2]+"/"+x[3]+"/"; // "http://10.23.3.101/MDP/";
     console.log(BASE_URL);
 
->>>>>>> development
 }else{
     if (DEBUG == 2) {
         var BASE_URL = "http://167.99.64.44/Ananti/";
