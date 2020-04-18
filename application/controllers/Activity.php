@@ -215,6 +215,7 @@ class Activity extends CI_Controller {
 		$this->db->query("DELETE FROM `m_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
+		$datax = array();
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
@@ -225,7 +226,8 @@ class Activity extends CI_Controller {
 				'status_perbaikan' => $value[3],
 			);
 			if($value[0]!=""){
-				$this->db->insert('m_activity', $data);
+				// $this->db->insert('m_activity', $data);
+				array_push($datax,$data);
 				
 				if($value[3] == "Selesai"){
 					$sql = "UPDATE
@@ -243,8 +245,11 @@ class Activity extends CI_Controller {
 				}
 			}
 		}
+		$this->db->insert_batch('m_activity', $datax);
+
 
 		$this->db->query("DELETE FROM `m_activity_detail` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$datax = array();
 		foreach ($detail as $key => $value) {
 			if($key!="_empty_" && $key!="undefined"){
 				foreach ($value as $ky => $val) {
@@ -263,12 +268,16 @@ class Activity extends CI_Controller {
 						'r_selesai' => $val[2],
 						'realisasi' => $realisasi,
 					);
-					$this->db->insert('m_activity_detail', $data);
+					// $this->db->insert('m_activity_detail', $data);
+					array_push($datax,$data);
 				}
 			}
 		}
+		$this->db->insert_batch('m_activity_detail', $datax);
+
 
 		$this->db->query("DELETE FROM `m_sparepart_usage` where no_wo LIKE '$pabrik%' AND tanggal = '$tanggal' ");
+		$datax = array();
 		foreach ($spare as $key => $value) {
 			if($key!="_empty_" && $key!="undefined"){
 				foreach ($value as $ky => $val) {
@@ -278,10 +287,13 @@ class Activity extends CI_Controller {
 						'material' => $val[0],
 						'qty' => $val[1],
 					);
-					$this->db->insert('m_sparepart_usage', $data);
+					// $this->db->insert('m_sparepart_usage', $data);
+					array_push($datax,$data);
 				}
 			}
 		}
+		$this->db->insert_batch('m_sparepart_usage', $datax);
+
 	}
 
 

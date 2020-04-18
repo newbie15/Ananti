@@ -49,25 +49,28 @@ class Sync extends CI_Controller {
 
 		$data_json = $_REQUEST['data'];
 		$data = json_decode($data_json);
-		print_r($data);
-		if(!empty($data)){
-			$this->db->transStart();
+		// print_r($data);
 
-			$this->db->query("DELETE FROM `master_station` where id_pabrik = '$pabrik' ");
-			$data_json = $_REQUEST['data_json'];
+		$clone = $this->load->database('clone', TRUE);
+
+		if(!empty($data)){
+			// $clone->transStart();
+
+			$clone->query("DELETE FROM `master_station` where id_pabrik = '$pabrik' and sync=0");
+			$data_json = $_REQUEST['data'];
 			$data = json_decode($data_json);
 			foreach ($data as $key => $value) {
-				// $this->db->insert
+				// $clone->insert
 				$data = array(
 					'id_pabrik' => $pabrik,
-					'nama' => ucwords($value[0]),
+					'nama' => ucwords($value[2]),
 					'sync' => 2,
 				);
 				// print_r($data);
-				$this->db->insert('master_station', $data);
+				$clone->insert('master_station', $data);
 			}
 			
-			$this->db->transComplete();
+			// $clone->transComplete();
 		}
 		echo "ok";		
 	}
@@ -81,7 +84,7 @@ class Sync extends CI_Controller {
 		if(!empty($data)){
 			$this->db->transStart();
 
-			$this->db->query("DELETE FROM `master_station` where id_pabrik = '$pabrik' ");
+			$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' and sync=0 ");
 			$data_json = $_REQUEST['data_json'];
 			$data = json_decode($data_json);
 			foreach ($data as $key => $value) {
@@ -92,35 +95,155 @@ class Sync extends CI_Controller {
 					'sync' => 2,
 				);
 				// print_r($data);
-				$this->db->insert('master_station', $data);
+				$this->db->insert('master_unit', $data);
 			}
 			
 			$this->db->transComplete();
 		}
 		echo "ok";		
 	}
-	public function master_sub_unit(){}
+
+	public function master_sub_unit(){
+		$pabrik = $this->uri->segment(3, 0);
+
+		$data_json = $_REQUEST['data'];
+		$data = json_decode($data_json);
+		print_r($data);
+		if(!empty($data)){
+			$this->db->transStart();
+
+			$this->db->query("DELETE FROM `master_sub_unit` where id_pabrik = '$pabrik' and sync=0 ");
+			$data_json = $_REQUEST['data_json'];
+			$data = json_decode($data_json);
+			foreach ($data as $key => $value) {
+				// $this->db->insert
+				$data = array(
+					'id_pabrik' => $pabrik,
+					'nama' => ucwords($value[0]),
+					'sync' => 2,
+				);
+				// print_r($data);
+				$this->db->insert('master_sub_unit', $data);
+			}
+			
+			$this->db->transComplete();
+		}
+		echo "ok";
+
+	}
+	
 	public function master_user(){}
-	public function master_karyawan(){}
+	public function master_karyawan(){
+		$pabrik = $this->uri->segment(3, 0);
 
-	public function m_wo(){}
-	public function m_planing(){}
-	public function m_activity(){}
+		$data_json = $_REQUEST['data'];
+		$data = json_decode($data_json);
+		print_r($data);
+		if(!empty($data)){
+			$this->db->transStart();
 
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
-	// public function master_unit(){}
+			$this->db->query("DELETE FROM `master_karyawan` where id_pabrik = '$pabrik' and sync=0 ");
+			$data_json = $_REQUEST['data_json'];
+			$data = json_decode($data_json);
+			foreach ($data as $key => $value) {
+				// $this->db->insert
+				$data = array(
+					'id_pabrik' => $pabrik,
+					'nama' => ucwords($value[0]),
+					'sync' => 2,
+				);
+				// print_r($data);
+				$this->db->insert('master_karyawan', $data);
+			}
+			
+			$this->db->transComplete();
+		}
+		echo "ok";
 
+	}
+
+	public function m_wo(){
+		$pabrik = $this->uri->segment(3, 0);
+
+		$data_json = $_REQUEST['data'];
+		$data = json_decode($data_json);
+		print_r($data);
+		if(!empty($data)){
+			$this->db->transStart();
+
+			$this->db->query("DELETE FROM `m_wo` where id_pabrik = '$pabrik' and sync=0 ");
+			$data_json = $_REQUEST['data_json'];
+			$data = json_decode($data_json);
+			foreach ($data as $key => $value) {
+				// $this->db->insert
+				$data = array(
+					'id_pabrik' => $pabrik,
+					'nama' => ucwords($value[0]),
+					'sync' => 2,
+				);
+				// print_r($data);
+				$this->db->insert('m_wo', $data);
+			}
+			
+			$this->db->transComplete();
+		}
+		echo "ok";
+
+	}
+	public function m_planing(){
+		$pabrik = $this->uri->segment(3, 0);
+
+		$data_json = $_REQUEST['data'];
+		$data = json_decode($data_json);
+		print_r($data);
+		if(!empty($data)){
+			$this->db->transStart();
+
+			$this->db->query("DELETE FROM `m_planing` where id_pabrik = '$pabrik' and sync=0 ");
+			$data_json = $_REQUEST['data_json'];
+			$data = json_decode($data_json);
+			foreach ($data as $key => $value) {
+				// $this->db->insert
+				$data = array(
+					'id_pabrik' => $pabrik,
+					'nama' => ucwords($value[0]),
+					'sync' => 2,
+				);
+				// print_r($data);
+				$this->db->insert('m_planing', $data);
+			}
+			
+			$this->db->transComplete();
+		}
+		echo "ok";
+		
+	}
+	public function m_activity(){
+		$pabrik = $this->uri->segment(3, 0);
+
+		$data_json = $_REQUEST['data'];
+		$data = json_decode($data_json);
+		print_r($data);
+		if(!empty($data)){
+			$this->db->transStart();
+
+			$this->db->query("DELETE FROM `m_activity` where id_pabrik = '$pabrik' and sync=0 ");
+			$data_json = $_REQUEST['data_json'];
+			$data = json_decode($data_json);
+			foreach ($data as $key => $value) {
+				// $this->db->insert
+				$data = array(
+					'id_pabrik' => $pabrik,
+					'nama' => ucwords($value[0]),
+					'sync' => 2,
+				);
+				// print_r($data);
+				$this->db->insert('m_activity', $data);
+			}
+			
+			$this->db->transComplete();
+		}
+		echo "ok";		
+	}
 
 }
