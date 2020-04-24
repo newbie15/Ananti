@@ -133,7 +133,7 @@ class Unit extends CI_Controller {
 				array_push($datax,$data);
 			}
 		}
-		$this->db->insert_batch('m_planing', $datax);
+		$this->db->insert_batch('master_unit', $datax);
 	}
 
 	public function ajax()
