@@ -6,8 +6,8 @@ import datetime
 import pprint
 import time
 
-# url = "http://159.65.135.69/Ananti/sync"
-url = "http://localhost/ananti/sync"
+url = "http://159.65.135.69/Ananti/sync"
+# url = "http://localhost/ananti/sync"
 
 id_pabrik = "SDI1"
 
@@ -546,9 +546,10 @@ if __name__ == '__main__':
   #   print("something happens")
     # pass
   # main()
-  # m_planing()
-  # m_activity()
-  # m_activity_detail()
+  m_wo()
+  m_planing()
+  m_activity()
+  m_activity_detail()
   m_sparepart_usage()
 
 
