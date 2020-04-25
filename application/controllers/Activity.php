@@ -282,6 +282,7 @@ class Activity extends CI_Controller {
 			if($key!="_empty_" && $key!="undefined"){
 				foreach ($value as $ky => $val) {
 					$data = array(
+						'id_pabrik' => $pabrik,
 						'no_wo' => $key,
 						'tanggal' =>$tanggal,
 						'material' => $val[0],
