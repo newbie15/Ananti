@@ -152,7 +152,7 @@ $(document).ready(function(){
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text' },
-                { type: 'dropdown', source: ['plan P', 'plan M', 'unplan' ] },
+                { type: 'dropdown', source: ['Proses', 'Maintenance', 'Vendor' ] },
                 { type: 'dropdown', source: ['M', 'E'] },
                 { type: 'dropdown', source: ['open', 'close'] },
                 // { type: 'text' },

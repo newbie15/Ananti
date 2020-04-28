@@ -200,7 +200,7 @@ class Planvsreal extends CI_Controller {
 		");
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`
+			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`,`kategori`
 			FROM `m_wo` WHERE 
 			no_wo LIKE '%$id_pabrik-$tanggal%'
 			ORDER BY no_wo ASC
@@ -292,5 +292,59 @@ class Planvsreal extends CI_Controller {
 			$i++;
 		}
 		// echo json_encode($d);
+	}
+
+	public function download_excel(){
+		include APPPATH.'third_party\PHPExcel.php';
+
+		$fe = "template_planvsreal.xls";
+		$filex = dirname(__FILE__) .'\..\..\assets\excel\\'.$fe;
+
+		// Panggil class PHPExcel nya
+		$phpExcel = PHPExcel_IOFactory::load($filex);
+
+		$cell_collection = $phpExcel->getActiveSheet()->getCellCollection();
+
+		// $excel = new PHPExcel();
+		// Settingan awal file excel
+		$id_pabrik = "SDI1";
+		$bulan = "04";
+		$tahun = "2020";
+
+		$phpExcel->getProperties()->setCreator('ANANTI')
+					->setLastModifiedBy('ANANTI')
+					->setTitle("PLANVSREAL-".$id_pabrik."-".$bulan."-".$tahun)
+					->setSubject("PLAN VS REAL")
+					->setDescription("Laporan Plan VS Real")
+					->setKeywords("Plan VS Real");
+
+		for ($i=0; $i < 100; $i++) { 
+			# code...
+			$numrow = $i+7;
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $numrow*1);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $numrow*2);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $numrow*3);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $numrow*4);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $numrow*5);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $numrow*6);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $numrow*7);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $numrow*8);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $numrow*9);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('N'.$numrow, $numrow*0);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('O'.$numrow, $numrow*1);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, $numrow*2);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('Q'.$numrow, $numrow*3);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('R'.$numrow, $numrow*4);
+		}
+					
+		// Proses file excel
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="tes.xlsx"'); // Set nama file excel nya
+		header('Cache-Control: max-age=0');
+		$write = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel2007');
+		$write->save('php://output');
+
+
+
 	}
 }

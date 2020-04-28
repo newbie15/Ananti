@@ -109,6 +109,7 @@ class Unit extends CI_Controller {
 		$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' AND id_station = '$station' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
+		$datax = array();
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
@@ -126,8 +127,13 @@ class Unit extends CI_Controller {
 				// 'date' => 'My date'
 			);
 			// print_r($data);
-			$this->db->insert('master_unit', $data);
+			// $this->db->insert('master_unit', $data);
+			if($value[1]!=""){
+				// $this->db->insert('m_planing', $data);
+				array_push($datax,$data);
+			}
 		}
+		$this->db->insert_batch('master_unit', $datax);
 	}
 
 	public function ajax()

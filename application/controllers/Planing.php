@@ -134,6 +134,7 @@ class Planing extends CI_Controller {
 		$this->db->query("DELETE FROM `m_planing` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
+		$datax = array();
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			@$eq = explode("\n",$value[1]); 
@@ -194,9 +195,12 @@ class Planing extends CI_Controller {
 			);
 			// print_r($data);
 			if($value[0]!=""){
-				$this->db->insert('m_planing', $data);
+				// $this->db->insert('m_planing', $data);
+				array_push($datax,$data);
 			}
 		}
+		$this->db->insert_batch('m_planing', $datax);
+
 	}
 
 	public function tambah(){

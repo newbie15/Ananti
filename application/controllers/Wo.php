@@ -115,6 +115,7 @@ class Wo extends CI_Controller {
 		$this->db->query("DELETE FROM `m_wo` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
+		$datax = array();
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$eq = explode("\n",$value[1]); 
@@ -136,9 +137,12 @@ class Wo extends CI_Controller {
 			);
 			// print_r($data);
 			if($value[0]!=""){
-				$this->db->insert('m_wo', $data);
+				// $this->db->insert('m_wo', $data);
+				array_push($datax,$data);
 			}
 		}
+		$this->db->insert_batch('m_wo', $datax);
+		// print_r($datax);
 	}
 	
 	public function ajax()
