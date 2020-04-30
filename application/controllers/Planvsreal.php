@@ -406,7 +406,7 @@ class Planvsreal extends CI_Controller {
 				}
 			}
 
-			foreach ($plan[$row->no_wo] as $tanggal => $value) {
+			foreach ($real[$row->no_wo] as $tanggal => $value) {
 				# code...
 				$date = explode("-",$tanggal);
 				$tgl = $date[2];
