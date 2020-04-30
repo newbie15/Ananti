@@ -317,11 +317,22 @@ class Planvsreal extends CI_Controller {
 		// $tahun = "2020";
 
 		$query_wo_list = $this->db->query(
-			"SELECT distinct `m_planing`.no_wo,`m_planing`.tanggal, m_wo.status,`m_planing`.station,
-			`m_planing`.unit,`m_planing`.sub_unit,`m_planing`.problem
+			"SELECT DISTINCT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status,`m_wo`.station,
+			`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem
 			FROM `m_planing`,m_wo WHERE 
-			MONTH(`m_planing`.tanggal) = 4 AND YEAR(`m_planing`.tanggal) = 2020
-			AND `m_planing`.no_wo = m_wo.no_wo
+			MONTH(`m_planing`.tanggal) = $bulan AND YEAR(`m_planing`.tanggal) = $tahun
+			AND `m_planing`.no_wo = m_wo.no_wo 
+			AND m_wo.id_pabrik = '$id_pabrik'
+
+			UNION 
+
+			SELECT DISTINCT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status, `m_wo`.station,
+			`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem
+			FROM `m_activity`,m_wo WHERE 
+			MONTH (`m_activity`.tanggal) = $bulan AND
+			YEAR (`m_activity`.tanggal) = $tahun AND
+			`m_activity`.no_wo = m_wo.no_wo 
+			AND m_wo.id_pabrik = '$id_pabrik'
 		");
 
 		$query_plan_list = $this->db->query(
@@ -367,6 +378,7 @@ class Planvsreal extends CI_Controller {
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $row->sub_unit);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $row->problem);
 
+			if(isset($plan[$row->no_wo])){
 			foreach ($plan[$row->no_wo] as $tanggal => $value) {
 				# code...
 				$date = explode("-",$tanggal);
@@ -405,8 +417,10 @@ class Planvsreal extends CI_Controller {
 				case '31': $phpExcel->setActiveSheetIndex(0)->setCellValue('BV'.$numrow, round($value/60,2)); break;					
 				}
 			}
+			}
 
-			foreach ($plan[$row->no_wo] as $tanggal => $value) {
+			if(isset($real[$row->no_wo])){
+			foreach ($real[$row->no_wo] as $tanggal => $value) {
 				# code...
 				$date = explode("-",$tanggal);
 				$tgl = $date[2];
@@ -444,7 +458,7 @@ class Planvsreal extends CI_Controller {
 				case '31': $phpExcel->setActiveSheetIndex(0)->setCellValue('BW'.$numrow, round($value/60,2)); break;				
 				}
 			}
-			
+			}			
 			$i++;
 		}
 					
