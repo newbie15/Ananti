@@ -307,9 +307,14 @@ class Planvsreal extends CI_Controller {
 
 		// $excel = new PHPExcel();
 		// Settingan awal file excel
-		$id_pabrik = "SDI1";
-		$bulan = "04";
-		$tahun = "2020";
+		$id_pabrik = $this->uri->segment(3);
+		$tahun = urldecode($this->uri->segment(4));
+		$bulan = urldecode($this->uri->segment(5));
+		$tgl = urldecode($this->uri->segment(6));
+
+		// $id_pabrik = "SDI1";
+		// $bulan = "04";
+		// $tahun = "2020";
 
 		$query_wo_list = $this->db->query(
 			"SELECT distinct `m_planing`.no_wo,`m_planing`.tanggal, m_wo.status,`m_planing`.station,
@@ -445,7 +450,7 @@ class Planvsreal extends CI_Controller {
 					
 		// Proses file excel
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment; filename="tes.xlsx"'); // Set nama file excel nya
+		header('Content-Disposition: attachment; filename="PLANVSREAL_'.$id_pabrik."_".$tahun."_".$bulan.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel2007');
 		$write->save('php://output');
