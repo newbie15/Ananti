@@ -310,7 +310,7 @@ class Planvsreal extends CI_Controller {
 		$id_pabrik = $this->uri->segment(3);
 		$tahun = urldecode($this->uri->segment(4));
 		$bulan = urldecode($this->uri->segment(5));
-		$tgl = urldecode($this->uri->segment(6));
+		// $tgl = urldecode($this->uri->segment(6));
 
 		// $id_pabrik = "SDI1";
 		// $bulan = "04";
@@ -350,7 +350,7 @@ class Planvsreal extends CI_Controller {
 
 		$phpExcel->getProperties()->setCreator('ANANTI')
 					->setLastModifiedBy('ANANTI')
-					->setTitle("PLANVSREAL-".$id_pabrik."-".$bulan."-".$tahun)
+					->setTitle("PLANVSREAL-".$id_pabrik."-".$tahun."-".$bulan)
 					->setSubject("PLAN VS REAL")
 					->setDescription("Laporan Plan VS Real")
 					->setKeywords("Plan VS Real");
