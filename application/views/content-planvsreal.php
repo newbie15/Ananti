@@ -21,7 +21,7 @@
         <a class="btn btn-app btn-info" id="tambahwo" href="#modal-wo" role="button" data-toggle="modal">
           <i class="fa fa-industry"></i> WO
         </a> -->
-        <a class="btn btn-app btn-success" id="download_plan" href="#" role="button" data-toggle="modal">
+        <a class="btn btn-app btn-success" id="download_excel" href="#" role="button" data-toggle="modal">
           <i class="fa fa-file-excel-o"></i> Download
         </a>
         <!-- <a class="btn btn-app btn-primary" id="simpan">
