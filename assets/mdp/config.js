@@ -14,6 +14,8 @@ var DEBUG = 1;
 
 var BASE_URL = "";
 
+
+
 if(CUSTOM == 1) {
     var url = window.location.href;
     console.log(url);
@@ -32,4 +34,5 @@ if(CUSTOM == 1) {
     } else {
         var BASE_URL = "http://10.23.3.101/MDP/";
     }
+
 }
