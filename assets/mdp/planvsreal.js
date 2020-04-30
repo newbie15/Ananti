@@ -213,8 +213,8 @@ $(document).ready(function () {
 
     ajax_refresh();
 
-    $("#download_plan").click(function () {
+    $("#download_excel").click(function () {
         // station_refresh();
-        window.open(BASE_URL + "index.php/planvsreal/download/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(BASE_URL + "index.php/planvsreal/download_excel/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 });

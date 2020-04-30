@@ -5,6 +5,7 @@ import requests
 import datetime
 import pprint
 import time
+import os
 
 url = "http://159.65.135.69/Ananti/sync"
 # url = "http://localhost/ananti/sync"
@@ -214,6 +215,8 @@ def master_karyawan():
 
 # m_wo clear
 def m_wo():
+  main()
+  print("Sync data m_wo :")
   unsync_data = -1
   while unsync_data != 0 :  
     try:
@@ -226,7 +229,8 @@ def m_wo():
       # cursor = server.cursor()
       cursor.execute(sql_select_Query)
       records = cursor.fetchall()
-      print("Total unsync data m_wo group by date is: ", cursor.rowcount)
+      print("    Total unsync data m_wo group by date is: ", cursor.rowcount)
+      print("    ",end='')
       unsync_data = cursor.rowcount
 
       if unsync_data > 0:
@@ -242,17 +246,18 @@ def m_wo():
 
         myobj = {'data': json.dumps(records, default=str)}
 
-        print(url+"/m_wo")
+        # print(url+"/m_wo")
         x = requests.post(url+"/m_wo/"+id_pabrik+"/"+tanggal+"/", data=myobj)
 
-        print(x.text)
+        # print(x.text)
 
         if(x.text == "ok"):
           for row in records:
             no_wo = row[3]
             # print(no_wo)
             sql = "UPDATE `ananti`.`m_wo` SET `sync` = '2' WHERE `m_wo`.`no_wo` = '"+no_wo+"';"
-            print(sql)
+            # print(sql)
+            print("#", end='')
             cursor = connection.cursor()
             cursor.execute(sql)
             connection.commit()
@@ -265,7 +270,7 @@ def m_wo():
       if (connection.is_connected()):
         connection.close()
         cursor.close()
-        print("MySQL connection is closed")
+        print("")
 
     pass
     time.sleep(1)
@@ -273,6 +278,8 @@ def m_wo():
 
 # m_planing clear
 def m_planing():
+  main()
+  print("Sync data m_planing :")
   unsync_data = -1
   while unsync_data != 0:
     try:
@@ -287,7 +294,9 @@ def m_planing():
       records = cursor.fetchall()
 
       # pprint.pprint(records)
-      print("Total unsync data m_planing group by date is: ", cursor.rowcount)
+      print("    Total unsync data m_planing group by date is: ", cursor.rowcount)
+      print("    ", end='')
+
       unsync_data = cursor.rowcount
 
       if unsync_data > 0:
@@ -305,18 +314,20 @@ def m_planing():
 
         myobj = {'data': json.dumps(records, default=str)}
 
-        print(url+"/m_planing")
+        # print(url+"/m_planing")
         x = requests.post(url+"/m_planing/"+id_pabrik+"/"+tanggal+"/", data=myobj)
 
-        print(x.text)
+        # print(x.text)
 
         if(x.text == "ok"):
           for row in records:
             no_wo = row[3]
-            print(no_wo)
+            # print(no_wo)
             sql = "UPDATE `ananti`.`m_planing` SET `sync` = '2' WHERE `m_planing`.`no_wo` = '" + \
                 no_wo+"' AND `m_planing`.`tanggal` = '"+tanggal+"';"
-            print(sql)
+            # print(sql)
+            print("#",end='')
+
             cursor = connection.cursor()
             cursor.execute(sql)
             connection.commit()
@@ -329,7 +340,7 @@ def m_planing():
       if (connection.is_connected()):
         connection.close()
         cursor.close()
-        print("MySQL connection is closed")
+        print("")
 
     pass
     time.sleep(1)
@@ -337,6 +348,9 @@ def m_planing():
 
 # m_activity clear
 def m_activity():
+  main()
+  print("Sync data m_activity :")
+
   unsync_data = -1
   while unsync_data != 0:
     try:
@@ -351,7 +365,9 @@ def m_activity():
       records = cursor.fetchall()
 
       # pprint.pprint(records)
-      print("Total unsync data m_activity group by date is: ", cursor.rowcount)
+      print("    Total unsync data m_activity group by date is: ", cursor.rowcount)
+      print("    ",end='')
+
       unsync_data = cursor.rowcount
 
       if unsync_data > 0:
@@ -369,20 +385,21 @@ def m_activity():
 
         myobj = {'data': json.dumps(records, default=str)}
 
-        print(url+"/m_activity")
+        # print(url+"/m_activity")
         x = requests.post(url+"/m_activity/"+id_pabrik +
                           "/"+tanggal+"/", data=myobj)
 
-        print(x.text)
+        # print(x.text)
 
         if(x.text == "ok"):
           for row in records:
             no_wo = row[0]
-            print(no_wo)
+            # print(no_wo)
             sql = "UPDATE `ananti`.`m_activity` SET `sync` = '2' WHERE `m_activity`.`no_wo` = '" + \
                 no_wo+"' AND `m_activity`.`id_pabrik` = '"+ id_pabrik + \
                   "' AND `m_activity`.`tanggal` = '"+ tanggal +"';"
-            print(sql)
+            # print(sql)
+            print("#",end='')
             cursor = connection.cursor()
             cursor.execute(sql)
             connection.commit()
@@ -395,7 +412,7 @@ def m_activity():
       if (connection.is_connected()):
         connection.close()
         cursor.close()
-        print("MySQL connection is closed")
+        print("")
 
     pass
     time.sleep(1)
@@ -403,6 +420,9 @@ def m_activity():
 
 # m_activity_detail
 def m_activity_detail():
+  main()
+  print("Sync data m_activity_detail :")
+
   unsync_data = -1
   while unsync_data != 0:
     try:
@@ -417,7 +437,9 @@ def m_activity_detail():
       records = cursor.fetchall()
 
       # pprint.pprint(records)
-      print("Total unsync data m_activity_detail group by date is: ", cursor.rowcount)
+      print("    Total unsync data m_activity_detail group by date is: ", cursor.rowcount)
+      print("    ",end='')
+
       unsync_data = cursor.rowcount
 
       if unsync_data > 0:
@@ -435,11 +457,11 @@ def m_activity_detail():
 
         myobj = {'data': json.dumps(records, default=str)}
 
-        print(url+"/m_activity_detail")
+        # print(url+"/m_activity_detail")
         x = requests.post(url+"/m_activity_detail/"+id_pabrik +
                           "/"+tanggal+"/", data=myobj)
 
-        print(x.text)
+        # print(x.text)
 
         if(x.text == "ok"):
           for row in records:
@@ -448,7 +470,8 @@ def m_activity_detail():
             sql = "UPDATE `ananti`.`m_activity_detail` SET `sync` = '2' WHERE `m_activity_detail`.`no_wo` = '" + \
                 no_wo+"' AND `m_activity_detail`.`id_pabrik` = '"+ id_pabrik + \
                   "' AND `m_activity_detail`.`tanggal` = '"+ tanggal +"';"
-            print(sql)
+            # print(sql)
+            print("#",end='')
             cursor = connection.cursor()
             cursor.execute(sql)
             connection.commit()
@@ -461,7 +484,7 @@ def m_activity_detail():
       if (connection.is_connected()):
         connection.close()
         cursor.close()
-        print("MySQL connection is closed")
+        print("")
 
     pass
     time.sleep(1)
@@ -469,6 +492,9 @@ def m_activity_detail():
 
 # m_activity_detail
 def m_sparepart_usage():
+  main()
+  print("Sync data m_sparepart_usage :")
+
   unsync_data = -1
   while unsync_data != 0:
     try:
@@ -483,7 +509,9 @@ def m_sparepart_usage():
       records = cursor.fetchall()
 
       # pprint.pprint(records)
-      print("Total unsync data m_sparepart_usage group by date is: ", cursor.rowcount)
+      print("    Total unsync data m_sparepart_usage group by date is: ", cursor.rowcount)
+      print("    ",end='')
+
       unsync_data = cursor.rowcount
 
       if unsync_data > 0:
@@ -501,20 +529,21 @@ def m_sparepart_usage():
 
         myobj = {'data': json.dumps(records, default=str)}
 
-        print(url+"/m_sparepart_usage")
+        # print(url+"/m_sparepart_usage")
         x = requests.post(url+"/m_sparepart_usage/"+id_pabrik +
                           "/"+tanggal+"/", data=myobj)
 
-        print(x.text)
+        # print(x.text)
 
         if(x.text == "ok"):
           for row in records:
             no_wo = row[0]
-            print(no_wo)
+            # print(no_wo)
             sql = "UPDATE `ananti`.`m_sparepart_usage` SET `sync` = '2' WHERE `m_sparepart_usage`.`no_wo` = '" + \
                 no_wo+"' AND `m_sparepart_usage`.`id_pabrik` = '"+id_pabrik+"' AND `m_sparepart_usage`.`tanggal` = '"+tanggal+"'"
 
-            print(sql)
+            # print(sql)
+            print("#",end='')
             cursor = connection.cursor()
             cursor.execute(sql)
             connection.commit()
@@ -527,25 +556,22 @@ def m_sparepart_usage():
       if (connection.is_connected()):
         connection.close()
         cursor.close()
-        print("MySQL connection is closed")
+        print("")
 
     pass
     time.sleep(1)
   pass
 
 def main():
+  os.system("cls")
+  print("   _   _  _   _   _  _ _____ ___ ")
+  print("  /_\ | \| | /_\ | \| |_   _|_ _|")
+  print(" / _ \| .` |/ _ \| .` | | |  | | ")
+  print("/_/ \_\_|\_/_/ \_\_|\_| |_| |___|")
+  print("")
   pass
 
 if __name__ == '__main__':
-  # master_pabrik()
-  # try:
-  #   m_wo()
-
-  #   pass
-  # except:
-  #   print("something happens")
-    # pass
-  # main()
   m_wo()
   m_planing()
   m_activity()
