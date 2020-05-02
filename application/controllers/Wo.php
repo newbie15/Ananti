@@ -30,14 +30,14 @@ class Wo extends CI_Controller {
 	
 	public function index()
 	{
-		$output['content'] = "test";
+		$output['content'] = "Work Order";
 		$output['main_title'] = "Work Order";
 		
+		$header['title'] = "Work Order";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
 			base_url("assets/easyautocomplete/easy-autocomplete.min.css"),			
-
 		];
 
 		$footer['js_files'] = [

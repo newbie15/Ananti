@@ -25,6 +25,7 @@ class Schedule extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Master Schedule";
 		
+		$header['title'] = "Schedule";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),

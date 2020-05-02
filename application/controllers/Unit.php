@@ -32,6 +32,7 @@ class Unit extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Unit";
 		
+		$header['title'] = "Unit";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),

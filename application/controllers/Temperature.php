@@ -32,6 +32,7 @@ class Temperature extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Temperature";
 		
+		$header['title'] = "Temperature";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),

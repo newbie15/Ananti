@@ -23,6 +23,7 @@ class Planing extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Planing Harian Maintenance";
 		
+		$header['title'] = "Planing";
 		$header['css_files'] = [
 			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),

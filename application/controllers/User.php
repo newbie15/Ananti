@@ -25,6 +25,7 @@ class User extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data User";
 		
+		$header['title'] = "User";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),

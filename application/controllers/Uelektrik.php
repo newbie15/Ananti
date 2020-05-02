@@ -25,6 +25,7 @@ class Uelektrik extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Asset Electromotor & Panel Starter";
 		
+		$header['title'] = "Unit Elektrik";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
