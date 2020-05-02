@@ -27,14 +27,12 @@ class Schedule extends CI_Controller {
 		
 		$header['title'] = "Schedule";
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			// base_url("assets/jexcel/css/jquery.jexcel.css"),
+			base_url("assets/daypilot/css/scheduler_traditional.css"),
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/daypilot/js/daypilot-all.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/schedule.js"),
@@ -65,6 +63,7 @@ class Schedule extends CI_Controller {
 		$output['dropdown_pabrik'] .= "/<select>";
 		$output['dropdown_station'] = "<select id=\"station\"></select>";		
 		$output['dropdown_unit'] = "<select id=\"unit\"></select>";		
+		$output['dropdown_sub_unit'] = "<select id=\"sub_unit\"></select>";		
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-schedule',$output);
@@ -72,13 +71,69 @@ class Schedule extends CI_Controller {
 
 	}
 
+	public function monitoring_item()
+	{
+		// $this->load->view('welcome_message');
+
+		$output['content'] = "test";
+		$output['main_title'] = "Data Master Schedule";
+		
+		$header['title'] = "Schedule";
+		$header['css_files'] = [
+			base_url("assets/jexcel/css/jquery.jexcel.css"),
+			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+		];
+
+		$footer['js_files'] = [
+			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
+			base_url("assets/jexcel/js/jquery.jexcel.js"),
+			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
+			base_url("assets/mdp/schedule_monitoring_item.js"),
+		];
+		
+		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
+		$output['dropdown_station'] = "<select id=\"station\"></select>";		
+		$output['dropdown_unit'] = "<select id=\"unit\"></select>";		
+		$output['dropdown_sub_unit'] = "<select id=\"sub_unit\"></select>";		
+		
+		$this->load->view('header',$header);
+		$this->load->view('content-schedule-monitoring-item',$output);
+		$this->load->view('footer',$footer);
+
+	}	
+
 	public function load()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 		$id_unit = $_REQUEST['id_unit'];
+		$id_sub_unit = $_REQUEST['id_sub_unit'];
 
-		$query = $this->db->query("SELECT monitoring_item,standard,parameter,frekuensi FROM master_schedule where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
+		$query = $this->db->query("SELECT monitoring_item,standard,parameter,waktu,frekuensi FROM master_schedule where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit';");
 
 		$i = 0;
 		$d = [];
@@ -87,7 +142,8 @@ class Schedule extends CI_Controller {
 			$d[$i][0] = $row->monitoring_item;
 			$d[$i][1] = $row->standard;
 			$d[$i][2] = $row->parameter;
-			$d[$i++][3] = $row->frekuensi;
+			$d[$i][3] = $row->waktu;
+			$d[$i++][4] = $row->frekuensi;
 		}
 		echo json_encode($d);
 	}
@@ -97,6 +153,7 @@ class Schedule extends CI_Controller {
 		$pabrik = $_REQUEST['pabrik'];
 		$station = $_REQUEST['station'];
 		$unit = $_REQUEST['unit'];
+		$sub_unit = $_REQUEST['sub_unit'];
 
 		$this->db->query("DELETE FROM `master_schedule` where id_pabrik = '$pabrik' AND id_station = '$station' AND id_unit = '$unit' ");
 		$data_json = $_REQUEST['data_json'];
@@ -107,10 +164,12 @@ class Schedule extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
 				'id_unit' => $unit,
+				'id_sub_unit' => $sub_unit,
 				'monitoring_item' => $value[0],
 				'standard' => $value[1],
 				'parameter' => $value[2],
-				'frekuensi' => $value[3],
+				'waktu' => $value[3],
+				'frekuensi' => $value[4],
 			);
 			// print_r($data);
 			if($value[0]!=""){
