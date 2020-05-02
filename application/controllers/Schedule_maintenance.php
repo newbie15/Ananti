@@ -72,7 +72,7 @@ class Schedule_maintenance extends CI_Controller {
 		}
 		$output['dropdown_pabrik'] .= "/<select>";
 		$output['dropdown_station'] = "<select style=\"width: -webkit-fill-available;\" id=\"station\"></select>";		
-		// $output['dropdown_unit'] = "<select style=\"width: -webkit-fill-available;\" id=\"unit\"></select>";		
+		$output['dropdown_unit'] = "<select style=\"width: -webkit-fill-available;\" id=\"unit\"></select>";		
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-schedule-maintenance',$output);
@@ -131,15 +131,26 @@ class Schedule_maintenance extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
-		// $id_unit = $_REQUEST['id_unit'];
+		$id_unit = $_REQUEST['id_unit'];
 
-		$query = $this->db->query(
-			"SELECT no_wo,station,unit,sub_unit,problem
-			FROM m_wo
-			where id_pabrik = '$id_pabrik' 
-			AND station = '$id_station' 
-			AND status = 'open';
-		");
+		if($id_unit=="=== ALL ==="){
+			$query = $this->db->query(
+				"SELECT no_wo,station,unit,sub_unit,problem
+				FROM m_wo
+				where id_pabrik = '$id_pabrik' 
+				AND station = '$id_station' 
+				AND status = 'open';
+			");
+		}else{
+			$query = $this->db->query(
+				"SELECT no_wo,station,unit,sub_unit,problem
+				FROM m_wo
+				where id_pabrik = '$id_pabrik' 
+				AND station = '$id_station' 
+				AND unit = '$id_unit' 
+				AND status = 'open';
+			");
+		}
 
 		$i = 0;
 		$d = [];

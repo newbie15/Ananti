@@ -159,6 +159,17 @@ class Station extends CI_Controller {
 		// echo json_encode($d);
 	}
 
+	public function ajax_dropdown_sch(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT DISTINCT station as nama FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open';");
+		// $i = 0;
+		// $d = [];
+		foreach ($query->result() as $row)
+		{
+			echo "<option>".$row->nama."</option>";
+		}
+	}
+
 	public function dhtmlx(){
 		$id_pabrik = $this->uri->segment(3, 0);
 		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
