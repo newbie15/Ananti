@@ -36,6 +36,7 @@ class Main extends CI_Controller {
 
 	public function index()
 	{
+		$header['title'] = "Dashboard";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/fullcalendar-3.9.0/fullcalendar.min.css"),

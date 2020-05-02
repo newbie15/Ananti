@@ -23,6 +23,7 @@ class Planvsreal extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Planing Harian Maintenance";
 		
+		$header['title'] = "Plan VS Real";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -366,13 +367,30 @@ class Planvsreal extends CI_Controller {
 					->setDescription("Laporan Plan VS Real")
 					->setKeywords("Plan VS Real");
 
+		$nama_bulan = array(
+			'01' => "Januari",
+			'02' => "Februari",
+			'03' => "Maret",
+			'04' => "April",
+			'05' => "Mei",
+			'06' => "Juni",
+			'07' => "Juli",
+			'08' => "Agustus",
+			'09' => "September",
+			'10' => "Oktober",
+			'11' => "November",
+			'12' => "Desember",
+		);
+
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('N5', $nama_bulan[$bulan]);
+
 		$i = 0;
 		foreach ($query_wo_list->result() as $row){
-			$numrow = $i+7;
+			$numrow = $i+8;
 			// $hour = round( $row->time / 60, 2);
-			// $phpExcel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $row->tanggal);
-			$phpExcel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $row->status);
-			$phpExcel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $row->no_wo);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $row->no_wo);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $row->tipe);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $row->status);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $row->station);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $row->unit);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $row->sub_unit);

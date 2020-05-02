@@ -36,6 +36,11 @@
               <td style="padding: 2px;">Station :</td>
               <td colspan="3"><?php echo $dropdown_station; ?></td>
             </tr>
+            <tr>
+              <td style="padding: 2px;">Unit :</td>
+              <td colspan="3"><?php echo $dropdown_unit; ?></td>
+            </tr>
+
           </table>
           <div id="list_wo" class="box box-solid" style="
 						height: 450px;

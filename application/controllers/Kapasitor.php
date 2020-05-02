@@ -32,6 +32,7 @@ class Kapasitor extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Kapasitor Bank";
 		
+		$header['title'] = "Kapasitor";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),

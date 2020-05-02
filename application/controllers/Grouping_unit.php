@@ -47,6 +47,7 @@ class Grouping_unit extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Station";
 		
+		$header['title'] = "Grup Unit";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),

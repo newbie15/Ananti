@@ -33,6 +33,7 @@ class High_maintenance extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "High Maintenance Unit";
 		
+		$header['title'] = "High Maintenance";
 		$header['css_files'] = [
 			// base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jexcel.css"),
