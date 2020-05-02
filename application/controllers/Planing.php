@@ -340,6 +340,7 @@ class Planing extends CI_Controller {
 		echo "STATION\t";
 		echo "UNIT\t";
 		echo "SUB UNIT\t";
+		echo "PROBLEM\t";
 		echo "KATEGORI\t";
 		echo "JAM START\t";
 		echo "JAM STOP\t";
@@ -371,6 +372,7 @@ class Planing extends CI_Controller {
 				echo $row->station; echo "\t";
 				echo $row->unit; echo "\t";
 				echo $row->sub_unit; echo "\t";
+				echo $row->problem; echo "\t";
 				echo $row->tipe; echo "\t";
 				echo $row->start; echo "\t";
 				echo $row->stop; echo "\t";
