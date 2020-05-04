@@ -78,7 +78,7 @@ class Planing extends CI_Controller {
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`plan`,`mpp`,`nama_mpp`,`mek_el`,`start`,`stop`,`tipe`,`ket`
+			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`plan`,`mpp`,`nama_mpp`,`mek_el`,`start`,`stop`,`istirahat`,`tipe`,`ket`
 			FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
 		");
 
@@ -95,8 +95,9 @@ class Planing extends CI_Controller {
 			$d[$i][6] = $row->mek_el;
 			$d[$i][7] = $row->start;
 			$d[$i][8] = $row->stop;
-			$d[$i][9] = $row->tipe;
-			$d[$i++][10] = $row->ket;
+			$d[$i][9] = $row->istirahat;
+			$d[$i][10] = $row->tipe;
+			$d[$i++][11] = $row->ket;
 		}
 		echo json_encode($d);
 	}
@@ -174,7 +175,9 @@ class Planing extends CI_Controller {
 			@$jm = $interval->format('%h');
 			@$mn = $interval->format('%i'); 
 
-			@$time = ($jm*60) + $mn;
+			if($value[9]==""){ $value[9] = 0; }
+
+			@$time = (($jm-$value[9])*60) + $mn;
 
 			$data = array(
 				'tanggal' => $tanggal,
@@ -191,8 +194,9 @@ class Planing extends CI_Controller {
 				'start' => $value[7],
 				'stop' => $value[8],
 				'time' => $time,
-				'tipe' => $value[9],
-				'ket' => $value[10]
+				'istirahat' => $value[9],
+				'tipe' => $value[10],
+				'ket' => $value[11]
 			);
 			// print_r($data);
 			if($value[0]!=""){
