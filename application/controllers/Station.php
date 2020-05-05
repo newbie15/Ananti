@@ -161,7 +161,7 @@ class Station extends CI_Controller {
 
 	public function ajax_dropdown_sch(){
 		$id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT DISTINCT station as nama FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open';");
+		$query = $this->db->query("SELECT DISTINCT station as nama FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open' ORDER BY station ASC;");
 		// $i = 0;
 		// $d = [];
 		foreach ($query->result() as $row)
