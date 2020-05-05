@@ -361,6 +361,8 @@ $(document).ready(function () {
 
     function share_wa() {
 
+        $('#my-spreadsheet').jexcel('orderBy', 5);
+
         dx = $('#my-spreadsheet').jexcel('getData');
         console.log(dx);
 
@@ -371,30 +373,93 @@ $(document).ready(function () {
         
         text_wa += "\n" + "Planned Maintenance (PM) : Preventive (P) – Corrective (C) – Predictive (Pd)" + "\n";
         
-        dx.forEach(element => {
-            console.log(element);
+        text_wa_m = text_wa;
 
-            dt = element[1].split("\n");
+        // dx.forEach(element => {
+        //     console.log(element);
 
-            text_wa += "\n" + "Area : " + (dt[0]);
-            if(dt[1]==dt[2]){
-                text_wa += " - " + (dt[1]);
-            }else{
-                text_wa += " - " + (dt[1]);
-                text_wa += " - " + (dt[2]);
-            }
-            text_wa += "\n" + "Problem\n - " + (element[2]);
-            text_wa += "\n" + "Plan\n - " + (element[3]);
-            text_wa += "\n" + "MPP : " + (element[4]) + " *" + (element[5]) + "*";
-            text_wa += "\n" + "Waktu : " + get_category(element[7], element[8]) +" ("+ (element[7] + "-" + element[8]) + ")";
-            text_wa += "\n" + "Tipe : " + (element[9]);
-            text_wa += "\n";
-        });        
-        console.log(text_wa);
+        //     dt = element[1].split("\n");
+
+        //     text_wa += "\n" + "Area : " + (dt[0]);
+        //     if(dt[1]==dt[2]){
+        //         text_wa += " - " + (dt[1]);
+        //     }else{
+        //         text_wa += " - " + (dt[1]);
+        //         text_wa += " - " + (dt[2]);
+        //     }
+        //     text_wa += "\n" + "Problem\n - " + (element[2]);
+        //     text_wa += "\n" + "Plan\n - " + (element[3]);
+        //     text_wa += "\n" + "MPP : " + (element[4]) + " *" + (element[5]) + "*";
+        //     text_wa += "\n" + "Waktu : " + get_category(element[7], element[8]) +" ("+ (element[7] + "-" + element[8]) + ")";
+        //     text_wa += "\n" + "Tipe : " + (element[10]);
+        //     text_wa += "\n";
+        // });
+        
+        
+        dt_mpp = "";
+
+        i = 0;
+
+
+        setTimeout(() => {
+            dx.forEach(element => {
+                console.log(element);
+
+                dt = element[1].split("\n");
+
+                if (dt_mpp != element[5]) {
+                    text_wa_m += "\n" + "MPP: " + (element[4]) + "*" + (element[5]) + "*";
+                    dt_mpp = element[5];
+                }
+
+                if (dt[1] == dt[2]) {
+                    text_wa_m += "\n  " + dt[0] + " | " + dt[1];
+                } else {
+                    text_wa_m += "\n  " + dt[0] + " | " + dt[1] + " | " + dt[2];
+                }
+
+
+                text_wa_m += "\n  Problem : " + element[2];
+                text_wa_m += "\n  Plan : " + element[10] + get_category(element[7], element[8]) + "(" + (element[7] + " - " + element[8]) + ")" + "\n  " + element[3];
+                text_wa_m += "\n";
+            });
+
+            dt_station = "";
+
+            console.log(text_wa);
+
+            console.log("\n\n");
+            console.log(text_wa_m);
+
+            $("#generatewa").text(text_wa_m);
+
+        }, 15);
+
+
         // https://api.whatsapp.com/send?phone=91XXXXXXXXXX&text=urlencodedtext
         // var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
-        var href = "whatsapp://send?text=" + encodeURI(text_wa);
-        $("#sharewa").attr("target", "_blank");
-        $("#sharewa").attr("href", href);
+        
+        // var href = "whatsapp://send?text=" + encodeURI(text_wa);
+        // $("#sharewa").attr("target", "_blank");
+        // $("#sharewa").attr("href", href);
     }
+
+    $("#bcopy").click(function () {
+        $("#generatewa").select();
+        document.execCommand("copy");
+    });
+
+    $("#bwaweb").click(function () {
+        var text_wa = $("#generatewa").val();
+        var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+        $(this).attr("target", "_blank");
+        $(this).attr("href", href);
+    });
+
+    $("#bwaapp").click(function () {
+        var text_wa = $("#generatewa").val();
+        var href = "whatsapp://send?text=" + encodeURI(text_wa);
+        $(this).attr("target", "_blank");
+        $(this).attr("href", href);
+    });
 });
