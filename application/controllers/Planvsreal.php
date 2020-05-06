@@ -340,13 +340,13 @@ class Planvsreal extends CI_Controller {
 			"SELECT `m_planing`.tanggal, `m_planing`.no_wo, 
 			(`m_planing`.mpp * `m_planing`.time) as total
 			FROM `m_planing` WHERE 
-			MONTH(`m_planing`.tanggal) = 4 AND YEAR(`m_planing`.tanggal) = 2020
+			MONTH(`m_planing`.tanggal) = $bulan AND YEAR(`m_planing`.tanggal) = $tahun
 		");
 
 		$query_real_list = $this->db->query(
 			"SELECT `m_activity_detail`.tanggal, `m_activity_detail`.no_wo, sum(`m_activity_detail`.realisasi)
 			as total FROM `m_activity_detail` WHERE 
-			MONTH(`m_activity_detail`.tanggal) = 4 AND YEAR(`m_activity_detail`.tanggal) = 2020
+			MONTH(`m_activity_detail`.tanggal) = $bulan AND YEAR(`m_activity_detail`.tanggal) = $tahun
 			group by m_activity_detail.tanggal, m_activity_detail.no_wo
 		");
 
@@ -485,6 +485,8 @@ class Planvsreal extends CI_Controller {
 		header('Content-Disposition: attachment; filename="PLANVSREAL_'.$id_pabrik."_".$tahun."_".$bulan.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel2007');
+		ob_end_clean();
+		// $write = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel5');
 		$write->save('php://output');
 
 
