@@ -18,7 +18,6 @@
   }?>
 
   <style>
-  <?php if(isset($customcss)){ echo $customcss; } ?>
   .n_success {
     position:fixed;
     width: 400px;

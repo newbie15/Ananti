@@ -29,25 +29,10 @@ class Schedule extends CI_Controller {
 		$header['css_files'] = [
 			// base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/daypilot/css/scheduler_traditional.css"),
-
-			base_url("assets/fullcalendar-3.9.0/fullcalendar.min.css"),
-			base_url("assets/fullcalendar-3.9.0/scheduler.min.css"),
 		];
-
-		$header['customcss'] = "
-		.fc-sun {
-			background-color: red !important;
-		}
-		";
 
 		$footer['js_files'] = [
 			base_url("assets/daypilot/js/daypilot-all.min.js"),
-
-			base_url("assets/fullcalendar-3.9.0/lib/moment.min.js"),
-			base_url("assets/fullcalendar-3.9.0/fullcalendar.min.js"),
-			base_url("assets/fullcalendar-3.9.0/locale/id.js"),
-			base_url("assets/fullcalendar-3.9.0/scheduler.min.js"),
-
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/schedule.js"),
@@ -210,122 +195,134 @@ class Schedule extends CI_Controller {
 		echo json_encode($d);
 	}
 
-	public function get_monitoring_list()
+	public function ajax_default_list()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
-		$id_unit = $_REQUEST['id_unit'];
-		$id_sub_unit = $_REQUEST['id_sub_unit'];
-
-		$query = $this->db->query("SELECT * FROM master_schedule WHERE
-		id_pabrik = '$id_pabrik' AND
-		id_station = '$id_station' AND
-		id_unit = '$id_unit' AND
-		id_sub_unit = '$id_sub_unit'
-		");
-
-		$i=0;
-		$d=null;
-		foreach ($query->result() as $row)
-		{
-			$d[$i]['id'] = str_replace(" ","_",$row->id_pabrik)."-".str_replace(" ","_",$row->id_station)."-".str_replace(" ","_",$row->id_unit)."-".str_replace(" ","_",$row->id_sub_unit)."+".str_replace(" ","_",$row->monitoring_item);
-			$d[$i]['monitoring'] = $row->id_sub_unit;
-			$d[$i++]['title'] = $row->monitoring_item;
-			// $d[$i++]['stop'] = $row->tgl_stop."T00:00:00";
-		}
-		echo json_encode($d);
-	}
-
-	public function get_monitoring_event_list()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
-		$id_unit = $_REQUEST['id_unit'];
-		$id_sub_unit = $_REQUEST['id_sub_unit'];
-
-		$query = $this->db->query("SELECT * FROM master_schedule WHERE
-		id_pabrik = '$id_pabrik' AND
-		id_station = '$id_station' AND
-		id_unit = '$id_unit' AND
-		id_sub_unit = '$id_sub_unit'
-		");
-
-		$i=0;
-		foreach ($query->result() as $row)
-		{
-
-			$d[$i]['id'] = str_replace(" ","_",$row->id_pabrik)."-".str_replace(" ","_",$row->id_station)."-".str_replace(" ","_",$row->id_unit)."-".str_replace(" ","_",$row->id_sub_unit)."+".$i;
-			$d[$i]['monitoring'] = $row->id_sub_unit;
-			$d[$i++]['title'] = $row->monitoring_item;
-			// $d[$i++]['stop'] = $row->tgl_stop."T00:00:00";
-		}
-		echo json_encode($d);
-	}
-
-
-	public function monitoring_schedule()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
-		$id_unit = $_REQUEST['id_unit'];
-		$id_sub_unit = $_REQUEST['id_sub_unit'];
-		$tahun = $_REQUEST['tahun'];
-
-		$query = $this->db->query("SELECT * FROM m_schedule WHERE
-		id_pabrik = '$id_pabrik' AND
-		id_station = '$id_station' AND
-		id_unit = '$id_unit' AND
-		id_sub_unit = '$id_sub_unit' AND
-		tahun = $tahun
-		");
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i]['id'] = $row->id_pabrik."_".$row->id_station."_".$row->id_unit."_".$row->id_sub_unit;
-			$d[$i]['title'] = $row->item;
-			$d[$i]['start'] = $row->tgl_mulai."T00:00:00";
-			$d[$i++]['stop'] = $row->tgl_stop."T00:00:00";
+				$d[$i++][0] = $row->nama; // access attributes
 		}
 		echo json_encode($d);
-
 	}
 
-	public function add_monitoring_schedule()
+	public function hm_default_list()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
-		$id_unit = $_REQUEST['id_unit'];
-		$id_sub_unit = $_REQUEST['id_sub_unit'];
-		$tahun = $_REQUEST['tahun'];
-
-		$query = $this->db->query("SELECT * FROM m_schedule WHERE
-		id_pabrik = '$id_pabrik' AND
-		id_station = '$id_station' AND
-		id_unit = '$id_unit' AND
-		id_sub_unit = '$id_sub_unit' AND
-		tahun = $tahun
-		");
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND hm_installed=1;");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i]['id'] = $row->id_pabrik."_".$row->id_station."_".$row->id_unit."_".$row->id_sub_unit;
-			$d[$i]['title'] = $row->item;
-			$d[$i]['start'] = $row->tgl_mulai."T00:00:00";
-			$d[$i++]['stop'] = $row->tgl_stop."T00:00:00";
+			$d[$i++][0] = $row->nama; // access attributes
 		}
 		echo json_encode($d);
 	}
 
-	public function delete_monitoring_schedule()
+	public function screwpress_default_list()
 	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND screwpress_monitoring=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function bunchpress_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND bunchpress_monitoring=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function hydrocyclone_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND hydrocyclone_monitoring=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function kcp_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND kcp_monitoring=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
 	
+	public function ajax_dropdown(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$id_station = urldecode($this->uri->segment(4, 0));
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+
+		foreach ($query->result() as $row)
+		{
+			echo "<option>".$row->nama."</option>";
+		}
 	}
 
-
-
+	public function dhtmlx(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		// $id_station = urldecode($this->uri->segment(4, 0));
+		$query = $this->db->query("SELECT id_station,nama FROM master_unit where id_pabrik = '$id_pabrik'");
+		$i = 0;
+		$ls = "";
+		$d = [];
+		foreach ($query->result() as $row)
+		{	
+			// if($row->nama != "" || $row->id_station != ""){
+				if($ls!=$row->id_station){
+					$ls=$row->id_station;
+					$d[$i++] = "= = = = =".$row->id_station."= = = = =";
+					$d[$i++] = $row->nama;
+				}else{
+					$d[$i++] = $row->nama;
+				}
+			// }			
+		}
+		echo json_encode($d);
+	}
 
 }

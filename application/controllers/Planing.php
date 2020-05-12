@@ -133,7 +133,6 @@ class Planing extends CI_Controller {
 		$pabrik = $_REQUEST['pabrik'];
 		// $station = $_REQUEST['station'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->trans_start();
 		$this->db->query("DELETE FROM `m_planing` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
@@ -206,7 +205,7 @@ class Planing extends CI_Controller {
 			}
 		}
 		$this->db->insert_batch('m_planing', $datax);
-		$this->db->trans_complete();
+
 	}
 
 	public function tambah(){
