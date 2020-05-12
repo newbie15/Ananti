@@ -164,6 +164,21 @@ $(document).ready(function () {
         $("#wo").val("");
     }
 
+    function pick_wo(area) {
+        console.log(area);
+        x = area.split('<br>');
+        console.log(x);
+        window.show_pick_wo_ui();
+    }
+
+    // function create_unplan_wo(){
+
+    // }
+
+    function show_pick_wo_ui(){
+        $("#modal-create-wo").modal();
+    }
+
     function louhan_refresh(){
         $.ajax({
             method: "POST",
@@ -197,7 +212,7 @@ $(document).ready(function () {
             shtml += "<tr>";
             shtml += "<td>"+element[0]+"</td>";
             if(element[1]=="null"){
-                shtml += "<td><button class=\"btn btn-info\" onclick=\"create_unplan_wo()\">Create WO</button></td>";
+                shtml += "<td><button class=\"btn btn-info\" area=\"'" + element[2] + "<br>" + element[3] + "<br>" + element[4]+"'\">Pick WO</button></td>";
             }else{
                 shtml += "<td>"+element[1]+"</td>";
             }
@@ -206,7 +221,11 @@ $(document).ready(function () {
             shtml += "<td>"+element[5]+"</td>";
             shtml += "<td>"+element[6]+"</td>";
             shtml += "<td>"+element[7]+"</td>";
-            shtml += "<td><button class=\"btn btn-xs btn-warning\">Verify</button></td>";
+            if(element[8]==0){
+                shtml += "<td><button class=\"btn btn-xs btn-warning\">Verify</button></td>";
+            }else{
+                shtml += "<td><button class=\"btn btn-xs btn-success\">Verified</button></td>";
+            }
             shtml += "</tr>";
         });
 
@@ -362,6 +381,33 @@ $(document).ready(function () {
         detail_refresh();
     }
 
+    $(".modal-dialog").click(function(e){
+        // console.log(e.target.outerHTML);
+
+        str = e.target.textContent;
+        area = e.target.outerHTML;
+        // console.log(area);
+
+        if(str=="Pick WO"){
+            // show_pick_wo_ui();
+            console.log("ya benar pick up wo");
+
+            area = area.replace('<button class="btn btn-info" area="','');
+            area = area.replace('">Pick WO</button>', '');
+            area = area.replace("'","");
+
+            ar = area.split("<br>");
+            console.log(ar);
+
+            var newWindow = window.open(BASE_URL+"popup/pick_wo", 'targetWindow', 'toolbar=no,location = no,status = no, menubar = no, scrollbars = yes, resizable = yes, width = 768, height = 500');
+
+            newWindow.passdata = ar;
+
+        }else if(str=="Verify"){
+            console.log("ya benar verify");
+
+        }
+    });
 
     $("#pabrik").change(function () {
         refresh_modal();

@@ -210,7 +210,8 @@ class Act extends CI_Controller {
 			$d[$i][4] = $row->penyelesaian;
 			$d[$i][5] = $row->start;
 			$d[$i][6] = $row->stop;
-			$d[$i++][7] = $row->status;
+			$d[$i][7] = $row->status;
+			$d[$i++][8] = $row->verify;
 		}
 
 		$nm = $query1->num_rows();
