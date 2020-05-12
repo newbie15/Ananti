@@ -45,6 +45,22 @@
           </div>
         </div>
       </div>
+
+      <div class="modal fade in" id="modal-create-wo" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Pilih WO / Buat WO</h4>
+            </div>
+            <div class="modal-body">
+              content
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="modal fade in" id="modal-sync" style="display: none;">
         <div class="modal-dialog" style="width :90%;">
           <div class="modal-content">
@@ -71,138 +87,6 @@
                     <td>Update software</td>
                     <td></td>
                     <td><span class="badge bg-red">55%</span></td>
-                  </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>Clean database</td>
-                    <td></td>
-                    <td><span class="badge bg-yellow">70%</span></td>
-                  </tr>
-                  <tr>
-                    <td>3.</td>
-                    <td>Cron job running</td>
-                    <td></td>
-                    <td><span class="badge bg-light-blue">30%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td></td>
-                    <td><span class="badge bg-green">90%</span></td>
                   </tr>
 
                 </tbody></table>
