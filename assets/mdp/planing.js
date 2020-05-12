@@ -406,7 +406,7 @@ $(document).ready(function () {
                 dt = element[1].split("\n");
 
                 if (dt_mpp != element[5]) {
-                    text_wa_m += "\n" + "MPP: " + (element[4]) + " *" + (element[5]) + "* ";
+                    text_wa_m += "\n" + "MPP: " + (element[4]) + "*" + (element[5]) + "*";
                     dt_mpp = element[5];
                 }
 
@@ -418,7 +418,7 @@ $(document).ready(function () {
 
 
                 text_wa_m += "\n  Problem : " + element[2];
-                text_wa_m += "\n  Plan : " + element[10] +" "+ get_category(element[7], element[8]) + " (" + (element[7] + " - " + element[8]) + ")" + "\n  " + element[3];
+                text_wa_m += "\n  Plan : " + element[10] + get_category(element[7], element[8]) + "(" + (element[7] + " - " + element[8]) + ")" + "\n  " + element[3];
                 text_wa_m += "\n";
             });
 
