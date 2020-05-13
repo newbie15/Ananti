@@ -239,5 +239,32 @@ class Act extends CI_Controller {
 		}
 	}
 
+	public function put_wo(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$tanggal = $_REQUEST['tanggal'];
+		$area = $_REQUEST['area'];
+		$problem = $_REQUEST['problem'];
+		$mpp = $_REQUEST['mpp'];
+		$no_wo = $_REQUEST['no_wo'];
+		
+		$x = explode("\n",$area);
+		$station = $x[0];
+		$unit = $x[1];
+		$sub_unit = $x[2];
+
+		$this->db->set('no_wo', $no_wo);
+		$this->db->where('id_pabrik', $id_pabrik);
+		$this->db->where('tanggal', $tanggal);
+		$this->db->where('mpp', $mpp);
+		$this->db->where('problem', $problem);
+		$this->db->where('id_station', $station);
+		$this->db->where('id_unit', $unit);
+		$this->db->where('id_sub_unit', $sub_unit);
+
+		$this->db->update('m_act');
+
+		// $query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");		
+	}
+
 
 }

@@ -126,7 +126,7 @@ $(document).ready(function () {
                         { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
-                        { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
+                        { type: 'dropdown', source: ['Tidak Dikerjakan','Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
                         // { type: 'dropdown', source: ['alat', 'proses'] },
                     ],
                     // onfocus: selection,
@@ -162,6 +162,68 @@ $(document).ready(function () {
             refresh(dx);
         }
         $("#wo").val("");
+    }
+
+    function pick_wo(area) {
+        console.log(area);
+        x = area.split('<br>');
+        console.log(x);
+        window.show_pick_wo_ui();
+    }
+
+    function add_unplan_wo(no,area,perbaikan,status){
+        var sama = 0;
+        var index = 0;
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+        dx.forEach(element => {
+            if (no == element[0]) {
+                sama = 1;
+            }
+            index++;
+        });
+        $("#wo").val("");
+        if (sama == 0) {
+            if (dx.length == 1) {
+                if (dx[0][0] == "") { // kosong
+                    dx[0][0] = no;
+                    dx[0][1] = area;
+                    dx[0][2] = perbaikan;
+                    dx[0][3] = status;
+                } else { // isi satu
+                    dx.push([no, area, perbaikan, status]);
+                }
+            } else { // isi lebih dari 1
+                dx.push([no, area, perbaikan, status]);
+            }
+            refresh(dx);
+        }
+        $("#wo").val("");
+    }
+
+    function put_wo_to_m_act(t){
+
+    }
+
+    function wait_pick_wo(t) {
+        var intId = setInterval(() => {
+            if (val_wo != '' && val_wo != 'null') {
+                console.log("wo = " + val_wo);
+                clearInterval(intId);
+                $(t).html(val_wo);
+                $(t).val(val_wo);
+                put_wo_to_m_act(t);
+            } else {
+                console.log("wo belum / tidak dipilih atau ditemukan");
+                if(val_wo == 'null'){
+                    clearInterval(intId);
+                }
+            }
+        }, 500);
+    }
+
+    function show_pick_wo_ui(){
+        $("#modal-create-wo").modal();
     }
 
     function louhan_refresh(){
@@ -354,7 +416,7 @@ $(document).ready(function () {
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
-                { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
+                { type: 'dropdown', source: ['Tidak Dikerjakan','Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
                 // { type: 'dropdown', source: ['alat', 'proses'] },
             ],
             onselection:selection,
@@ -362,6 +424,45 @@ $(document).ready(function () {
         detail_refresh();
     }
 
+    $(".modal-dialog").click(function(e){
+        // console.log(e.target.outerHTML);
+
+        str = e.target.textContent;
+        area = e.target.outerHTML;
+        // console.log(area);
+
+        if(str=="Pick WO"){
+            // show_pick_wo_ui();
+            console.log("ya benar pick up wo");
+
+            area = area.replace('<button class="btn btn-info" area="','');
+            area = area.replace('">Pick WO</button>', '');
+            area = area.replace("'","");
+
+            ar = area.split("<br>");
+            console.log(ar);
+
+            if (ar[0] != '' && ar[0] != ' '){
+
+                var newWindow = window.open(BASE_URL + "popup/pick_wo", 'targetWindow', 'toolbar=no,location = no,status = no, menubar = no, scrollbars = yes, resizable = yes, width = 1024, height = 500');
+
+                newWindow.passdata = ar;
+                newWindow.onbeforeunload = function (e) {
+                    if (val_wo == '') {
+                        val_wo = 'null';
+                    }
+                }
+
+                val_wo = '';
+                wait_pick_wo(e.target);
+
+
+            }
+        }else if(str=="Verify"){
+            console.log("ya benar verify");
+            // add_unplan_wo(val_wo, area);
+        }
+    });
 
     $("#pabrik").change(function () {
         refresh_modal();
@@ -513,7 +614,6 @@ $(document).ready(function () {
                     data_sparepart = data;
                     console.log(data_sparepart);
                 });
-
             }
         });
     }

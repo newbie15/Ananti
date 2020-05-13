@@ -44,6 +44,13 @@ class Activity extends CI_Controller {
 			base_url("assets/mdp/activity.js"),
 		];
 		
+		$footer['js_tambahan'] = "
+			var val_wo = '';
+			function set_wo(a){
+				val_wo = a;
+			}
+		";
+		
 		$query = $this->db->query("SELECT nama FROM master_pabrik;");
 
 		$output['content'] = '';
