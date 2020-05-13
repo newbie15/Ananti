@@ -7,6 +7,7 @@ $(document).ready(function(){
     var first = 0;
 
     function station_refresh() {
+        $("#inp_station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val());
         $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success" && first == 1) {
@@ -18,6 +19,7 @@ $(document).ready(function(){
     }
 
     function unit_refresh() {
+        $("#inp_unit").load(BASE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()));
         $("#unit").load(BASE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success" && first == 1) {
@@ -29,6 +31,7 @@ $(document).ready(function(){
     }
 
     function sub_unit_refresh() {
+        $("#inp_sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()));
         $("#sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success" && first == 1) {
@@ -43,9 +46,7 @@ $(document).ready(function(){
         shtml = "<tbody><tr>\
             <th>No WO</th>\
             <th>Area</th>\
-            <th>Problem & Penyelesaian</th>\
-            <th>Start</th>\
-            <th>Stop</th>\
+            <th>Problem</th>\
             <th>Status</th>\
             <th>Action</th>\
             </tr>";
@@ -58,15 +59,15 @@ $(document).ready(function(){
                 shtml += "<td>" + element[1] + "</td>";
             }
             shtml += "<td>" + element[2] + "</td>";
-            shtml += "<td>Problem : " + element[3] + "<br>Penyelesaian:" + element[4] + "</td>";
-            shtml += "<td>" + element[5] + "</td>";
-            shtml += "<td>" + element[6] + "</td>";
+            // shtml += "<td>Problem : " + element[3] + "<br>Penyelesaian:" + element[4] + "</td>";
+            // shtml += "<td>" + element[5] + "</td>";
+            // shtml += "<td>" + element[6] + "</td>";
             shtml += "<td>" + element[7] + "</td>";
-            if (element[8] == 0) {
-                shtml += "<td><button class=\"btn btn-xs btn-warning\">Verify</button></td>";
-            } else {
-                shtml += "<td><button class=\"btn btn-xs btn-success\">Verified</button></td>";
-            }
+            // if (element[8] == 0) {
+            //     shtml += "<td><button class=\"btn btn-xs btn-warning\">Pick</button></td>";
+            // } else {
+                shtml += "<td><button class=\"btn btn-success\" onclick=\"pick('"+element[0]+"')\">Pick WO</button></td>";
+            // }
             shtml += "</tr>";
         });
 
@@ -117,13 +118,20 @@ $(document).ready(function(){
     function firts_ui(){
         first = 1;
         $("#station").val(passdata[0]);
+        $("#inp_station").val(passdata[0]);
+
+        $("#problem").html(passdata[3]);
+        $("#inp_problem").val(passdata[3]);
+        $("#penyelesaian").html(passdata[4]);
         unit_refresh();
         setTimeout(() => {
             $("#unit").val(passdata[1]);
+            $("#inp_unit").val(passdata[1]);
             sub_unit_refresh();            
         }, 1500);
         setTimeout(() => {
             $("#sub_unit").val(passdata[2]);
+            $("#inp_sub_unit").val(passdata[2]);
             ajax_refresh();            
         }, 3000);
     }
@@ -141,6 +149,21 @@ $(document).ready(function(){
     });
 
     $("#sub_unit").change(function () {
+        ajax_refresh();
+    });
+
+    $("#inp_station").change(function () {
+        $("#station").val($(this).val());
+        unit_refresh();
+    });
+
+    $("#inp_unit").change(function () {
+        $("#unit").val($(this).val());
+        sub_unit_refresh();
+    });
+
+    $("#inp_sub_unit").change(function () {
+        $("#sub_unit").val($(this).val());
         ajax_refresh();
     });
 

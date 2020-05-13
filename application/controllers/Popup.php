@@ -37,7 +37,7 @@ class Popup extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Pilih WO / Buat WO";
 		
-		$header['title'] = "Realisasi";
+		$header['title'] = "Pick WO";
 		$header['css_files'] = [
 			// base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -87,7 +87,11 @@ class Popup extends CI_Controller {
 		$output['dropdown_sub_unit'] = "<select id=\"sub_unit\"></select>";	
 
 		$footer['js_tambahan'] = "
-			
+			function pick(a) {
+				window.opener.set_wo(a);
+				console.log(a);
+				window.close();
+			}
 		";
 
 		$this->load->view('header-less',$header);

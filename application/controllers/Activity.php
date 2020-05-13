@@ -45,7 +45,10 @@ class Activity extends CI_Controller {
 		];
 
 		$footer['js_tambahan'] = "
-			
+			var val_wo = '';
+			function set_wo(a){
+				val_wo = a;
+			}
 		";
 		
 		$query = $this->db->query("SELECT nama FROM master_pabrik;");
