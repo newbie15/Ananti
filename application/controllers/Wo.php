@@ -425,4 +425,63 @@ class Wo extends CI_Controller {
 			}
 		}
 	}
+
+	public function generate_no_wo(){
+		$id_pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['tanggal'];		
+		$query = $this->db->query("SELECT no_wo FROM m_wo where id_pabrik = '$id_pabrik' AND tanggal='$tanggal' ORDER BY no_wo desc LIMIT 0,1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			echo $row->no_wo;
+		}
+		// echo json_encode($d);		
+	}
+
+	public function simpan_single()
+	{
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['tanggal'];
+		$no_wo = $_REQUEST['no_wo'];
+		$station = $_REQUEST['station'];
+		$unit = $_REQUEST['unit'];
+		$sub_unit = $_REQUEST['sub_unit'];
+		$problem = $_REQUEST['problem'];
+		// $tanggal = $_REQUEST['desc_masalah'];
+		
+		$this->db->trans_start();
+		// $this->db->query("DELETE FROM `m_wo` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		// $data_json = $_REQUEST['data_json'];
+		$data = array(
+			'id_pabrik' => $pabrik,
+			'tanggal' => $tanggal,
+			'no_wo' => $no_wo,
+			'station' => $station,
+			'unit' => $unit,
+			'sub_unit' => $sub_unit,
+			'problem' => $problem,
+			'desc_masalah' => $desc_masalah,
+			'hm' => $hm,
+			'kategori' => "unplan",
+			'tipe' => $value[6],
+			'status' => "open",
+			'tanggal_closing' => $value[8],
+			// 'date' => 'My date'
+		);
+			// print_r($data);
+		// if($value[0]!=""){
+		// 	// $this->db->insert('m_wo', $data);
+		// 	array_push($datax,$data);
+		// }
+		// }
+		$this->db->insert('m_wo', $data);
+		// print_r($datax);
+		$this->db->trans_complete();
+	}
+
+
+
+
 }

@@ -53,7 +53,7 @@
                       <input type="text" class="form-control" id="inp_no_wo" placeholder="Nomor Work Order">
                     </div>
                     <div class="col-sm-4">
-                      <a class="btn btn-danger pull-left">Generate No WO</a>
+                      <a class="btn btn-danger pull-left" id="gen_no_wo">Generate No WO</a>
                       <!-- <input type="text" class="form-control" id="inp_no_wo" placeholder="Nomor Work Order"> -->
                     </div>
                   </div>
@@ -89,8 +89,8 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <button type="submit" class="btn btn-default">Cancel</button>
-                  <button type="submit" class="btn btn-primary pull-right">Sign in</button>
+                  <button onclick="window.close()" class="btn btn-default">Cancel</button>
+                  <button class="btn btn-primary pull-right" id="savenchoose">Simpan & Pilih</button>
                 </div>
                 <!-- /.box-footer -->
               </form>
