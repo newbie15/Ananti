@@ -101,9 +101,11 @@ $(document).ready(function () {
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true, wordWrap: true },
-                    { type: 'text' , wordWrap: true},
-                    { type: 'text' , wordWrap: true},
-                    { type: 'number' },
+                    // { type: 'text', readOnly: true },
+                    // { type: 'text', readOnly: true },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
                     // { type: 'text' },
                     { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
                     { type: 'dropdown', source: ['M', 'E'] },
@@ -139,9 +141,9 @@ $(document).ready(function () {
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true ,wordWrap: true},
-                    { type: 'text', wordWrap: true },
-                    { type: 'text', wordWrap: true },
-                    { type: 'number' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
                     { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
@@ -406,7 +408,7 @@ $(document).ready(function () {
                 dt = element[1].split("\n");
 
                 if (dt_mpp != element[5]) {
-                    text_wa_m += "\n" + "MPP: " + (element[4]) + " *" + (element[5]) + "* ";
+                    text_wa_m += "\n" + "MPP: " + (element[4]) + " *" + (element[5]) + "*";
                     dt_mpp = element[5];
                 }
 
@@ -418,7 +420,7 @@ $(document).ready(function () {
 
 
                 text_wa_m += "\n  Problem : " + element[2];
-                text_wa_m += "\n  Plan : " + element[10] +" "+ get_category(element[7], element[8]) + " (" + (element[7] + " - " + element[8]) + ")" + "\n  " + element[3];
+                text_wa_m += "\n  Plan : " + element[10] + get_category(element[7], element[8]) + "(" + (element[7] + " - " + element[8]) + ")" + "\n  " + element[3];
                 text_wa_m += "\n";
             });
 
