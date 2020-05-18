@@ -6,6 +6,14 @@ $(document).ready(function(){
 
     var first = 0;
 
+    setInterval(() => {
+        if ($("#inp_no_wo").val() == "" || $("#inp_tipe").val()=="Pilih Salah Satu") {
+            $("#savenchoose").attr('disabled', true);
+        }else{
+            $("#savenchoose").attr('disabled', false);
+        }
+    }, 500);
+
     function station_refresh() {
         $("#inp_station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val());
         $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
@@ -95,25 +103,62 @@ $(document).ready(function(){
 
     var data = [];
 
-    $("#simpan").click(function () {
-        var data_j = $('#my-spreadsheet').jexcel('getData');
-        console.log(data_j);
+    $("form").submit(function (e) {
+        e.preventDefault();
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"attachment/simpan",
-            success: sukses,
+            url: BASE_URL + "wo/simpan_single",
+            // success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
-                unit: $("#unit").val(),
-                sub_unit: $("#sub_unit").val(),
-                data_json: JSON.stringify(data_j),
+                tanggal: $("#inp_tanggal").val(),
+                no_wo: $("#inp_no_wo").val(),
+                station: $("#inp_station").val(),
+                unit: $("#inp_unit").val(),
+                sub_unit: $("#inp_sub_unit").val(),
+                problem: $("#inp_problem").val(),
+                tipe: $("#inp_tipe").val(),
             }
         }).done(function (msg) {
             console.log(msg);
+            pick($("#inp_no_wo").val());
         });
+
     });
+
+    // $("#savenchoose").click(function () {
+    //     // var data_j = $('#my-spreadsheet').jexcel('getData');
+    //     // console.log(data_j);
+
+    //     // var pabrik = $("#pabrik").val();
+    //     // var tanggal = $("#inp_tanggal").val();
+    //     // var no_wo = $("#inp_no_wo").val();
+    //     // var station = $("#inp_station").val();
+    //     // var unit = $("#inp_unit").val();
+    //     // var sub_unit = $("#inp_sub_unit").val();
+    //     // var problem = $("#inp_problem").val();
+    //     // var tipe = $("#inp_tipe").val();
+
+    //     $.ajax({
+    //         method: "POST",
+    //         url: BASE_URL+"wo/simpan_single",
+    //         // success: sukses,
+    //         data: {
+    //             pabrik : $("#pabrik").val(),
+    //             tanggal : $("#inp_tanggal").val(),
+    //             no_wo : $("#inp_no_wo").val(),
+    //             station : $("#inp_station").val(),
+    //             unit : $("#inp_unit").val(),
+    //             sub_unit : $("#inp_sub_unit").val(),
+    //             problem : $("#inp_problem").val(),
+    //             tipe : $("#inp_tipe").val(),
+    //         }
+    //     }).done(function (msg) {
+    //         console.log(msg);
+    //         pick($("#inp_no_wo").val());
+    //     });
+    // });
 
     function firts_ui(){
         first = 1;
@@ -135,6 +180,16 @@ $(document).ready(function(){
             ajax_refresh();            
         }, 3000);
     }
+
+    var tgl = new Date();
+    var y = tgl.getFullYear();
+    var m = tgl.getMonth() + 1;
+    var d = tgl.getDate();
+
+    if (m < 10) { m = "0" + m; } else {}
+    if (d < 10) { d = "0" + d; } else {}
+
+    $("#inp_tanggal").val(y+"-"+m+"-"+d);
 
     $("#pabrik").change(function(){
         station_refresh();
@@ -165,6 +220,36 @@ $(document).ready(function(){
     $("#inp_sub_unit").change(function () {
         $("#sub_unit").val($(this).val());
         ajax_refresh();
+    });
+
+    $("#gen_no_wo").click(function(){
+        var tanggal = $("#inp_tanggal").val();
+        console.log(tanggal);
+
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "wo/generate_no_wo",
+            // success: sukses,
+            data: {
+                pabrik: $("#pabrik").val(),
+                tanggal: tanggal,
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            if(msg!=''){
+                no_wo = msg.split('-');
+                no = parseInt(no_wo[4]) + 1;
+                if(no<10){ no = "0"+no }
+                no_wo_baru = no_wo[0] + "-" + no_wo[1] + "-" + no_wo[2] + "-" + no_wo[3] + "-" + no;
+                $("#inp_no_wo").val(no_wo_baru);
+            }else{
+                no_wo = $("#inp_tanggal").val().split('-');
+                // no = parseInt(no_wo[4]) + 1;
+                no_wo_baru = $("#pabrik").val() + "-" + no_wo[0] + "-" + no_wo[1] + "-" + no_wo[2] + "-01";
+                $("#inp_no_wo").val(no_wo_baru);
+            }
+        });
+
     });
 
     station_refresh();

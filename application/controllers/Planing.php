@@ -133,79 +133,93 @@ class Planing extends CI_Controller {
 		$pabrik = $_REQUEST['pabrik'];
 		// $station = $_REQUEST['station'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_planing` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
-		$data_json = $_REQUEST['data_json'];
-		$data = json_decode($data_json);
-		$datax = array();
-		foreach ($data as $key => $value) {
-			// $this->db->insert
-			@$eq = explode("\n",$value[1]); 
+		try {
+			$this->db->trans_begin();
+			$this->db->query("DELETE FROM `m_planing` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+			$data_json = $_REQUEST['data_json'];
+			$data = json_decode($data_json);
+			$datax = array();
+			foreach ($data as $key => $value) {
+				// $this->db->insert
+				@$eq = explode("\n",$value[1]); 
 
-			$value[7] == "" ? $value[7] = "00:00" : null;
-			$value[8] == "" ? $value[8] = "00:00" : null;
+				$value[7] == "" ? $value[7] = "00:00" : null;
+				$value[8] == "" ? $value[8] = "00:00" : null;
 
-			$value[7] = str_replace(".",":",$value[7]);
-			$value[8] = str_replace(".",":",$value[8]);
+				$value[7] = str_replace(".",":",$value[7]);
+				$value[8] = str_replace(".",":",$value[8]);
 
-			@$awal = explode(":",$value[7]);
-			@$akhir = explode(":",$value[8]);
+				@$awal = explode(":",$value[7]);
+				@$akhir = explode(":",$value[8]);
 
-			@$jam_aw = intval($awal[0]);
-			@$jam_ak = intval($akhir[0]);
+				@$jam_aw = intval($awal[0]);
+				@$jam_ak = intval($akhir[0]);
 
-			$jam_aw < 10 ? $jam_aw = "0".$jam_aw : null;
-			$jam_ak < 10 ? $jam_ak = "0".$jam_ak : null;
+				$jam_aw < 10 ? $jam_aw = "0".$jam_aw : null;
+				$jam_ak < 10 ? $jam_ak = "0".$jam_ak : null;
 
-			$value[7] = $jam_aw.":".$awal[1]; 
-			$value[8] = $jam_ak.":".$akhir[1];
+				$value[7] = $jam_aw.":".$awal[1]; 
+				$value[8] = $jam_ak.":".$akhir[1];
 
-			$datetime1 = null;
-			$datetime2 = null;
+				$datetime1 = null;
+				$datetime2 = null;
 
-			if ($jam_aw > $jam_ak){ // lewat hari misal start 21:00 selesai 01:00
-				@$datetime1 = new DateTime('2014-02-11 '.$value[7].':00'); // awal 
-				@$datetime2 = new DateTime('2014-02-12 '.$value[8].':00'); // akhir
+				if ($jam_aw > $jam_ak){ // lewat hari misal start 21:00 selesai 01:00
+					@$datetime1 = new DateTime('2014-02-11 '.$value[7].':00'); // awal 
+					@$datetime2 = new DateTime('2014-02-12 '.$value[8].':00'); // akhir
+				}else{
+					@$datetime1 = new DateTime('2014-02-11 '.$value[7].':00'); // awal 
+					@$datetime2 = new DateTime('2014-02-11 '.$value[8].':00'); // akhir
+				}
+
+				@$interval = $datetime1->diff($datetime2);
+
+				@$jm = $interval->format('%h');
+				@$mn = $interval->format('%i'); 
+
+				if($value[9]==""){ $value[9] = 0; }
+
+				@$time = (($jm-$value[9])*60) + $mn;
+
+				$data = array(
+					'tanggal' => $tanggal,
+					'id_pabrik' => $pabrik,
+					'no_wo' => $value[0],
+					'station' => $eq[0],
+					'unit' => $eq[1],
+					'sub_unit' => $eq[2],
+					'problem' => $value[2],
+					'plan' => $value[3],
+					'mpp' => $value[4],
+					'nama_mpp' => $value[5],
+					'mek_el' => $value[6],
+					'start' => $value[7],
+					'stop' => $value[8],
+					'time' => $time,
+					'istirahat' => $value[9],
+					'tipe' => $value[10],
+					'ket' => $value[11]
+				);
+				// print_r($data);
+				if($value[0]!=""){
+					// $this->db->insert('m_planing', $data);
+					array_push($datax,$data);
+				}
+			}
+			
+			$this->db->insert_batch('m_planing', $datax);
+			// $this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
 			}else{
-				@$datetime1 = new DateTime('2014-02-11 '.$value[7].':00'); // awal 
-				@$datetime2 = new DateTime('2014-02-11 '.$value[8].':00'); // akhir
+				$this->db->trans_commit();
 			}
 
-			@$interval = $datetime1->diff($datetime2);
-
-			@$jm = $interval->format('%h');
-			@$mn = $interval->format('%i'); 
-
-			if($value[9]==""){ $value[9] = 0; }
-
-			@$time = (($jm-$value[9])*60) + $mn;
-
-			$data = array(
-				'tanggal' => $tanggal,
-				'id_pabrik' => $pabrik,
-				'no_wo' => $value[0],
-				'station' => $eq[0],
-				'unit' => $eq[1],
-				'sub_unit' => $eq[2],
-				'problem' => $value[2],
-				'plan' => $value[3],
-				'mpp' => $value[4],
-				'nama_mpp' => $value[5],
-				'mek_el' => $value[6],
-				'start' => $value[7],
-				'stop' => $value[8],
-				'time' => $time,
-				'istirahat' => $value[9],
-				'tipe' => $value[10],
-				'ket' => $value[11]
-			);
-			// print_r($data);
-			if($value[0]!=""){
-				// $this->db->insert('m_planing', $data);
-				array_push($datax,$data);
-			}
+		} catch (\Throwable $th) {
+			//throw $th;
+			$this->db->trans_rollback();
 		}
-		$this->db->insert_batch('m_planing', $datax);
-
 	}
 
 	public function tambah(){

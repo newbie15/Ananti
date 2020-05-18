@@ -241,13 +241,13 @@ class Act extends CI_Controller {
 
 	public function put_wo(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		$tanggal = $_REQUEST['tanggal'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 		$area = $_REQUEST['area'];
 		$problem = $_REQUEST['problem'];
 		$mpp = $_REQUEST['mpp'];
 		$no_wo = $_REQUEST['no_wo'];
 		
-		$x = explode("\n",$area);
+		$x = explode("<br>",$area);
 		$station = $x[0];
 		$unit = $x[1];
 		$sub_unit = $x[2];
