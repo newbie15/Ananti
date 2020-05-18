@@ -124,13 +124,16 @@ $(document).ready(function () {
 			columns: [
                 { type: 'text', readOnly: true },
 				{ type: 'text', },
+				// { type: 'text', wordWrap: true },
+				{ type: 'dropdown', source: ['GSIP','GSDI','GSPP','SINP','NAL','BUMIHARJO','AAL1','SAM','TBM'] },
 				{ type: 'text', wordWrap: true },
 				{ type: 'text', wordWrap: true },
-				{ type: 'text' },
-				{ type: 'dropdown', source: ['GSIP','GSDI','GSPP'] },
 				// { type: 'dropdown',source: ['M', 'E'] },
 				{ type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
-                { type: 'dropdown',source: ['open', 'close'] },
+                {
+					type: 'dropdown',
+					source: ['open', 'in progress', 'fabrikasi', 'install', 'close']
+                },
 				{ type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
 			]
 		});
@@ -205,7 +208,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "wo/simpan",
+			url: BASE_URL + "project/simpan",
 			success: sukses,
 			data: {
 				pabrik: $("#pabrik").val(),
@@ -270,7 +273,7 @@ $(document).ready(function () {
 	function ajax_refresh() {
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "wo/load",
+			url: BASE_URL + "project/load",
 			data: {
 				id_pabrik: $("#pabrik").val(),
 				d: $("#tanggal").val(),

@@ -7,7 +7,7 @@
         <ul class="nav nav-tabs">
           <li class="active"><a href="#" aria-expanded="true">Project</a></li>
           <li class=""><a href="<?php echo base_url("projectactivity")?>">Activity</a></li>
-          <li class=""><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Project Man Hour</a></li>
+          <li class=""><a href="<?php echo base_url("projectmanhour")?>" aria-expanded="false">Project Man Hour</a></li>
 
           <!-- <li class=""><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
           <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li> -->

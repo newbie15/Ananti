@@ -129,8 +129,8 @@ $(document).ready(function () {
 					type: 'dropdown',
 					source: ['marking', 'cutting', 'machining', 'assembly', 'welding', 'painting', 'balancing', 'finishing', 'install']
 				},
-                { type: 'text', readOnly: true },
-                { type: 'dropdown',source: ['A', 'B', 'C'] },
+                { type: 'text' },
+                { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val() },
 				{ type: 'text' },
 				{ type: 'text' },
 				{ type: 'text' },
@@ -179,6 +179,45 @@ $(document).ready(function () {
 		sub_unit_refresh();
 	});
 
+	function refresh_modal() {
+		$.ajax({
+			method: "POST",
+			url: BASE_URL + "project/list_open/" + $("#pabrik").val(),
+			data: {
+				id_pabrik: $("#pabrik").val(),
+			}
+		}).done(function (msg) {
+			x = [];
+			y = [];
+			data = JSON.parse(msg);
+
+			for (i in data) {
+				console.log(data[i].daftar);
+				x.push(data[i].daftar);
+				y[i] = x;
+				x = [];
+			}
+			var table = $('#dt-table').DataTable({
+				destroy: true,
+				data: y,
+				columns: [{
+					title: "Daftar"
+				}, ]
+			});
+
+			$('.dataTable tbody').on('click', 'tr', function () {
+				if (table.row(this).data() != undefined) {
+					console.log('API row values : ', table.row(this).data());
+					var sp = table.row(this).data();
+					sp = sp[0].split(" - ");
+					add(sp[0],sp[1],sp[2]);
+					$('#modal-default').modal('toggle');
+				}
+			});
+		});
+	}
+
+
 	function add(no, sx, ux, su) {
 		var sama = 0;
 		var index = 0;
@@ -186,11 +225,11 @@ $(document).ready(function () {
 		console.log(dx);
 		if (dx[0][0] == "") { // kosong
 			dx[0][0] = no;
-			dx[0][1] = sx + "\n" + ux + "\n" + su;
-			// dx[0][2] = ux;
+			dx[0][1] = sx; // + "\n" + ux + "\n" + su;
+			dx[0][2] = ux;
 			// dx[0][3] = su;
 		} else { // isi satu
-			dx.push([no, sx + "\n" + ux + "\n" + su, "", "", "", "", "", "", "", "", ""]);
+			dx.push([no, sx, ux, "", "", "", "", "", ""]);
 		}
 
 		refresh(dx);
@@ -212,7 +251,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "wo/simpan",
+			url: BASE_URL + "projectactivity/simpan",
 			success: sukses,
 			data: {
 				pabrik: $("#pabrik").val(),
@@ -277,7 +316,7 @@ $(document).ready(function () {
 	function ajax_refresh() {
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "wo/load",
+			url: BASE_URL + "projectactivity/load",
 			data: {
 				id_pabrik: $("#pabrik").val(),
 				d: $("#tanggal").val(),
@@ -293,39 +332,40 @@ $(document).ready(function () {
 	}
 
 	ajax_refresh();
+    refresh_modal();
 
-	$("#tambah").click(function () {
-		station_refresh();
-		auto_wo_number();
-		setTimeout(function () {
-			$("#search").val("");
-			$("#search").focus();
-		}, 500);
+	// $("#tambah").click(function () {
+	// 	// station_refresh();
+	// 	auto_wo_number();
+	// 	setTimeout(function () {
+	// 		$("#search").val("");
+	// 		$("#search").focus();
+	// 	}, 500);
 
-		var list = {
-			url: BASE_URL + "index.php/sub_unit/listing/" + $("#pabrik").val(),
-			getValue: "list",
-			requestDelay: 500,
-			list: {
-				match: {
-					enabled: true
-				}
-			}
-		};
+	// 	var list = {
+	// 		url: BASE_URL + "index.php/sub_unit/listing/" + $("#pabrik").val(),
+	// 		getValue: "list",
+	// 		requestDelay: 500,
+	// 		list: {
+	// 			match: {
+	// 				enabled: true
+	// 			}
+	// 		}
+	// 	};
 
-		$("#search").easyAutocomplete(list);
-		$("#search").parent().css("width", "100%");
+	// 	$("#search").easyAutocomplete(list);
+	// 	$("#search").parent().css("width", "100%");
 
-		$("#search").keypress(function (e) {
-			if (e.which == 13 && $(this).val() != "") {
-				var txt = $(this).val();
-				var item = txt.split("-");
-				add($("#no_wo_auto").val(), item[0], item[1], item[2]);
-			}
-			console.log(e);
-		});
+	// 	$("#search").keypress(function (e) {
+	// 		if (e.which == 13 && $(this).val() != "") {
+	// 			var txt = $(this).val();
+	// 			var item = txt.split("-");
+	// 			add($("#no_wo_auto").val(), item[0], item[1], item[2]);
+	// 		}
+	// 		console.log(e);
+	// 	});
 
-	});
+	// });
 
 
 
@@ -334,39 +374,39 @@ $(document).ready(function () {
 		add($("#no_wo_auto").val(), $("#station").val(), $("#unit").val(), $("#sub_unit").val());
 	});
 
-	function auto_wo_number() {
-		var nama_pt = $("#pabrik").val();
-		var tahun = $("#tahun").val();
-		var bulan = $("#bulan").val();
-		var tanggal = $("#tanggal").val();
+	// function auto_wo_number() {
+	// 	var nama_pt = $("#pabrik").val();
+	// 	var tahun = $("#tahun").val();
+	// 	var bulan = $("#bulan").val();
+	// 	var tanggal = $("#tanggal").val();
 
-		var no_wo = nama_pt + "-" + tahun + "-" + bulan + "-" + tanggal;
+	// 	var no_wo = nama_pt + "-" + tahun + "-" + bulan + "-" + tanggal;
 
-		dx = $('#my-spreadsheet').jexcel('getData');
-		console.log(dx);
-		// if (dx[0][0] == "") { // kosong
-		//     dx[0][0] = no;
-		//     dx[0][0] = sx;
-		//     dx[0][1] = ux;
-		//     dx[0][2] = su;
-		// } else { // isi satu
-		console.log(dx.length);
-		// if(dx.length){}
-		var auto_number = null;
-		var last = dx[dx.length - 1][0];
-		if (last == "" && dx.length == 1) {
-			auto_number = 1;
-		} else if (last != "") {
-			d = last.split("-");
-			last_number = parseInt(d[4]);
-			auto_number = last_number + 1;
-		}
-		if (auto_number < 10) {
-			auto_number = "0" + auto_number;
-		}
+	// 	dx = $('#my-spreadsheet').jexcel('getData');
+	// 	console.log(dx);
+	// 	// if (dx[0][0] == "") { // kosong
+	// 	//     dx[0][0] = no;
+	// 	//     dx[0][0] = sx;
+	// 	//     dx[0][1] = ux;
+	// 	//     dx[0][2] = su;
+	// 	// } else { // isi satu
+	// 	console.log(dx.length);
+	// 	// if(dx.length){}
+	// 	var auto_number = null;
+	// 	var last = dx[dx.length - 1][0];
+	// 	if (last == "" && dx.length == 1) {
+	// 		auto_number = 1;
+	// 	} else if (last != "") {
+	// 		d = last.split("-");
+	// 		last_number = parseInt(d[4]);
+	// 		auto_number = last_number + 1;
+	// 	}
+	// 	if (auto_number < 10) {
+	// 		auto_number = "0" + auto_number;
+	// 	}
 
-		no_wo += "-" + auto_number;
+	// 	no_wo += "-" + auto_number;
 
-		$("#no_wo_auto").val(no_wo);
-	}
+	// 	$("#no_wo_auto").val(no_wo);
+	// }
 });

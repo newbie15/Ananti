@@ -82,23 +82,24 @@ class Projectactivity extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
 		$query = $this->db->query("
-			SELECT m_activity.no_wo,
-				CONCAT(station,'\n',unit,'\n',sub_unit,'\n',problem) as daftar,
-				m_activity.perbaikan,
-				m_activity.status_perbaikan
-			FROM m_activity,m_wo
-			WHERE m_activity.id_pabrik = '$id_pabrik' AND m_activity.tanggal='$tanggal' 
-			AND m_activity.no_wo = m_wo.no_wo ;
+			SELECT *
+			FROM w_activity
+			WHERE w_activity.id_pabrik = '$id_pabrik' AND w_activity.tanggal='$tanggal' 
 			");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i][0] = $row->no_wo;
-			$d[$i][1] = $row->daftar;
-			$d[$i][2] = $row->perbaikan;
-			$d[$i++][3] = $row->status_perbaikan;
+			$d[$i][0] = $row->project_id;
+			$d[$i][1] = $row->pt;
+			$d[$i][2] = $row->nama;
+			$d[$i][3] = $row->activity;
+			$d[$i][4] = $row->keterangan;
+			$d[$i][5] = $row->mpp;
+			$d[$i][6] = $row->start;
+			$d[$i][7] = $row->stop;
+			$d[$i++][8] = $row->total_time;
 			// $d[$i++][3] = $row->jenis_problem;
 		}
 		echo json_encode($d);
@@ -196,10 +197,8 @@ class Projectactivity extends CI_Controller {
 	{
 		$pabrik = $_REQUEST['pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$detail = json_decode($_REQUEST['detail']);
-		$spare = json_decode($_REQUEST['sparepart']);
 
-		$this->db->query("DELETE FROM `m_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$this->db->query("DELETE FROM `w_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
@@ -207,55 +206,21 @@ class Projectactivity extends CI_Controller {
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
-				'no_wo' => $value[0],
-				'perbaikan' => $value[2],
-				'status_perbaikan' => $value[3],
+				'project_id' => $value[0],
+				'pt' => $value[1],
+				'nama' => $value[2],
+				'activity' => $value[3],
+				'keterangan' => $value[4],
+				'mpp' => $value[5],
+				'start' => $value[6],
+				'stop' => $value[7],
+				'total_time' => $value[8],
+				// 'status_perbaikan' => $value[3],
 				// 'jenis_problem' => $value[3],
 			);
 			if($value[0]!=""){
-				$this->db->insert('m_activity', $data);
-			}
-		}
-
-		$this->db->query("DELETE FROM `m_activity_detail` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
-		foreach ($detail as $key => $value) {
-			if($key!="_empty_" && $key!="undefined"){
-				foreach ($value as $ky => $val) {
-
-					$tm = explode(":",$val[3]);
-					$realisasi = ($tm[0] * 60) + $tm[1]; // jam dalam bentuk menit
-
-					$data = array(
-						'id_pabrik' => $pabrik,
-						'tanggal' => $tanggal,
-						'no_wo' => $key,
-						'nama_teknisi' =>$val[0],
-						// 't_mulai' => $val[1],
-						// 't_selesai' => $val[2],
-						'r_mulai' => $val[1],
-						'r_selesai' => $val[2],
-						'realisasi' => $realisasi,
-					);
-					$this->db->insert('m_activity_detail', $data);
-				}
-			}
-		}
-
-		$this->db->query("DELETE FROM `m_sparepart_usage` where no_wo LIKE '$pabrik%' AND tanggal = '$tanggal' ");
-		foreach ($spare as $key => $value) {
-			if($key!="_empty_" && $key!="undefined"){
-				foreach ($value as $ky => $val) {
-					$data = array(
-						'no_wo' => $key,
-						'tanggal' =>$tanggal,
-						'material' => $val[0],
-						'qty' => $val[1],
-					);
-					$this->db->insert('m_sparepart_usage', $data);
-				}
+				$this->db->insert('w_activity', $data);
 			}
 		}
 	}
-
-
 }

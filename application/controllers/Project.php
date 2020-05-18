@@ -86,7 +86,7 @@ class Project extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,status,tanggal_closing FROM m_wo where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$query = $this->db->query("SELECT no_wo,project_id,pt,nama,deskripsi,tgl_start,status,tgl_close FROM w_project where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
 
 		$i = 0;
 		$d = [];
@@ -94,16 +94,15 @@ class Project extends CI_Controller {
 		{
 			$d[$i][0] = $row->no_wo;
 			// $d[$i][1] = $row->station;
-			$d[$i][1] = $row->station ."\n". $row->unit . "\n" . $row->sub_unit;
+			$d[$i][1] = $row->project_id;
 			// $d[$i][2] = $row->unit;
 			// $d[$i][3] = $row->sub_unit;
-			$d[$i][2] = $row->problem;
-			$d[$i][3] = $row->desc_masalah;
-			$d[$i][4] = $row->hm;
-			$d[$i][5] = $row->kategori;
-			$d[$i][6] = $row->kategori;
-			$d[$i][7] = $row->status;
-			$d[$i++][8] = $row->tanggal_closing;
+			$d[$i][2] = $row->pt;
+			$d[$i][3] = $row->nama;
+			$d[$i][4] = $row->deskripsi;
+			$d[$i][5] = $row->tgl_start;
+			$d[$i][6] = $row->status;
+			$d[$i++][7] = $row->tgl_close;
 		}
 		echo json_encode($d);
 	}
@@ -179,7 +178,7 @@ class Project extends CI_Controller {
 
 	public function list_open(){
 		$pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,' - ',unit,' - ',sub_unit,' - ',problem) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
+		$query = $this->db->query("SELECT CONCAT(project_id,' - ',pt,' - ',nama) as daftar FROM w_project where w_project.status != 'close' AND w_project.id_pabrik = '$pabrik'");
         echo(json_encode($query->result()));
 	}
 
