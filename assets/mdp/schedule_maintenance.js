@@ -223,10 +223,23 @@ $(document).ready(function(){
 
 
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(BASE_URL + "station/ajax_dropdown_sch/" + $("#pabrik").val(),
+            function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    // ajax_refresh();
+                    unit_refresh();
+                } else {
+                }
+            }
+        );
+    }
+
+    function unit_refresh() {
+        $("#unit").load(BASE_URL + "unit/ajax_dropdown_sub_sch/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     ajax_refresh();
+                    // sub_unit_refresh();
                 } else {
                 }
             }
@@ -240,7 +253,7 @@ $(document).ready(function(){
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
-                // id_unit: $("#unit").val(),
+                id_unit: $("#unit").val(),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -423,11 +436,11 @@ $(document).ready(function(){
         station_refresh();
     });
     $("#station").change(function () {
+        unit_refresh();
+    });
+    $("#unit").change(function () {
         ajax_refresh();
     });
-    // $("#unit").change(function () {
-    //     ajax_refresh();
-    // });
 
     station_refresh();
 

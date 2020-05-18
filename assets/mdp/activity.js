@@ -126,7 +126,7 @@ $(document).ready(function () {
                         { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
-                        { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
+                        { type: 'dropdown', source: ['Tidak Dikerjakan','Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
                         // { type: 'dropdown', source: ['alat', 'proses'] },
                     ],
                     // onfocus: selection,
@@ -162,6 +162,106 @@ $(document).ready(function () {
             refresh(dx);
         }
         $("#wo").val("");
+    }
+
+    function pick_wo(area) {
+        console.log(area);
+        x = area.split('<br>');
+        console.log(x);
+        window.show_pick_wo_ui();
+    }
+
+    function add_unplan_wo(no,area,perbaikan,status){
+        var sama = 0;
+        var index = 0;
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+        dx.forEach(element => {
+            if (no == element[0]) {
+                sama = 1;
+            }
+            index++;
+        });
+        $("#wo").val("");
+        if (sama == 0) {
+            if (dx.length == 1) {
+                if (dx[0][0] == "") { // kosong
+                    dx[0][0] = no;
+                    dx[0][1] = area;
+                    dx[0][2] = perbaikan;
+                    dx[0][3] = status;
+                } else { // isi satu
+                    dx.push([no, area, perbaikan, status]);
+                }
+            } else { // isi lebih dari 1
+                dx.push([no, area, perbaikan, status]);
+            }
+            refresh(dx);
+        }
+        $("#wo").val("");
+    }
+
+    function put_wo_to_m_act(t){
+        console.log($(t).html());
+        console.log($(t).parent().html());
+        console.log($(t).parent().prev().html());
+        console.log($(t).parent().next().html());
+        console.log($(t).parent().next().next().html());
+        console.log($(t).parent().next().next().next().html());
+        console.log($(t).parent().next().next().next().next().html());
+        console.log($(t).parent().next().next().next().next().next().html());
+        var mpp = $(t).parent().prev().html();
+        var area_r = $(t).parent().next().html();
+        var pp = $(t).parent().next().next().html().split("<br>");
+        var problem = pp[0].replace("Problem : ","");
+        var penyelesaian = pp[1].replace("Penyelesaian:","");
+        var jam_start = $(t).parent().next().next().next().html();
+        var jam_stop = $(t).parent().next().next().next().next().html();
+        var status = $(t).parent().next().next().next().next().next().html();
+
+        var nowo = $(t).val();
+        // console.log($(t).html());
+
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "act/put_wo/",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                d: $("#tanggal").val(),
+                m: $("#bulan").val(),
+                y: $("#tahun").val(),
+                area : area_r,
+                problem : problem,
+                mpp : mpp,
+                no_wo : nowo,
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            // dx = JSON.parse(msg);
+            // console.log(dx);
+            // louhan_ui_refresh(dx);
+        });
+    }
+
+    function wait_pick_wo(t) {
+        var intId = setInterval(() => {
+            if (val_wo != '' && val_wo != 'null') {
+                console.log("wo = " + val_wo);
+                clearInterval(intId);
+                $(t).html(val_wo);
+                $(t).val(val_wo);
+                put_wo_to_m_act(t);
+            } else {
+                console.log("wo belum / tidak dipilih atau ditemukan");
+                if(val_wo == 'null'){
+                    clearInterval(intId);
+                }
+            }
+        }, 500);
+    }
+
+    function show_pick_wo_ui(){
+        $("#modal-create-wo").modal();
     }
 
     function louhan_refresh(){
@@ -212,6 +312,16 @@ $(document).ready(function () {
 
         shtml += "</tbody>"
         $("#ui-louhan").html(shtml);
+    }
+
+    // $("#mpp").change(function(){
+    //     console.log($(this).val());
+    // });
+
+    function highlight_mpp(){
+        data_detail.forEach(element => {
+            console.log(element)
+        });
     }
 
     function refresh_modal(){
@@ -292,6 +402,7 @@ $(document).ready(function () {
             data_sparepartnya = data_sparepart[no_wo_aktif];
         }
 
+        $('#my-spreadsheet2').html("");
         $('#my-spreadsheet2').jexcel({
             allowInsertColumn: false,
             data: data_detailnya,
@@ -316,6 +427,7 @@ $(document).ready(function () {
             ]
         });
 
+        $('#my-spare').html("");
         $('#my-spare').jexcel({
             allowInsertColumn: false,
             data: data_sparepartnya,
@@ -338,7 +450,7 @@ $(document).ready(function () {
         if (data == undefined) {
             data = [];
         }
-
+        $('#my-spreadsheet').html("");
         $('#my-spreadsheet').jexcel({
             data: data,
             allowInsertColumn: false,
@@ -354,7 +466,7 @@ $(document).ready(function () {
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
-                { type: 'dropdown', source: ['Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
+                { type: 'dropdown', source: ['Tidak Dikerjakan','Belum Selesai','Tunggu Sparepart','Monitoring', 'Selesai'] },
                 // { type: 'dropdown', source: ['alat', 'proses'] },
             ],
             onselection:selection,
@@ -362,6 +474,47 @@ $(document).ready(function () {
         detail_refresh();
     }
 
+    $("#dialog").click(function(e){
+    // $(".modal-dialog").click(function (e) {
+
+        // console.log(e.target.outerHTML);
+
+        str = e.target.textContent;
+        area = e.target.outerHTML;
+        // console.log(area);
+
+        if(str=="Pick WO"){
+            // show_pick_wo_ui();
+            console.log("ya benar pick up wo");
+
+            area = area.replace('<button class="btn btn-info" area="','');
+            area = area.replace('">Pick WO</button>', '');
+            area = area.replace("'","");
+
+            ar = area.split("<br>");
+            console.log(ar);
+
+            if (ar[0] != '' && ar[0] != ' '){
+
+                var newWindow = window.open(BASE_URL + "popup/pick_wo", 'targetWindow', 'toolbar=no,location = no,status = no, menubar = no, scrollbars = yes, resizable = yes, width = 1024, height = 600');
+
+                newWindow.passdata = ar;
+                newWindow.onbeforeunload = function (e) {
+                    if (val_wo == '') {
+                        val_wo = 'null';
+                    }
+                }
+
+                val_wo = '';
+                wait_pick_wo(e.target);
+
+
+            }
+        }else if(str=="Verify"){
+            console.log("ya benar verify");
+            // add_unplan_wo(val_wo, area);
+        }
+    });
 
     $("#pabrik").change(function () {
         refresh_modal();
@@ -513,7 +666,6 @@ $(document).ready(function () {
                     data_sparepart = data;
                     console.log(data_sparepart);
                 });
-
             }
         });
     }
@@ -522,18 +674,63 @@ $(document).ready(function () {
         var nama = $(this).val();
         if(nama!="--PILIH SALAH SATU--"){
             var data_all = $('#my-spreadsheet').jexcel('getData');
+            nama = $(this).val();
 
             console.log(data_all);
+            console.log(data_detail);
+            num = 1;
+            data_all.forEach(element => {
+                $('#my-spreadsheet').jexcel('setStyle', 'A' + num, 'background-color', 'white');
+                $('#my-spreadsheet').jexcel('setStyle', 'B' + num, 'background-color', 'white');
+                $('#my-spreadsheet').jexcel('setStyle', 'C' + num, 'background-color', 'white');
+                $('#my-spreadsheet').jexcel('setStyle', 'D' + num, 'background-color', 'white');
+                num++;
+            });
+            Object.keys(data_detail).forEach(function (key) {
+                // console.log(key, data_detail[key]);
+                a = data_detail[key];
+                a.forEach(element => {
+                    // console.log(element);
+                    if(element[0]==nama){
+                        console.log(key+" sama ");
+                        num = 1;
+                        data_all.forEach(element => {
+                            if(element[0]==key){
+                                console.log("set");
+                                $('#my-spreadsheet').jexcel('setStyle', 'A' + num, 'background-color', 'yellow');
+                                $('#my-spreadsheet').jexcel('setStyle', 'B' + num, 'background-color', 'yellow');
+                                $('#my-spreadsheet').jexcel('setStyle', 'C' + num, 'background-color', 'yellow');
+                                $('#my-spreadsheet').jexcel('setStyle', 'D' + num, 'background-color', 'yellow');
+                            }else{
+                                // $('#my-spreadsheet').jexcel('setStyle', 'A' + num, 'background-color', 'white');
+                            }
+                            num++;
+                        });
+                    }
+                });
+            });
             // $('#my-spreadsheet').jexcel('setStyle', 'A1', 'background-color', 'yellow');
         }else{
             // var all = $("#my-spreadsheet").
             var data_all = $('#my-spreadsheet').jexcel('getData');
             console.log(data_all);
+            console.log(data_detail);
 
         }
     });
 
     $("#sync_activity").click(function() {
+
+        $("#dialog").dialog({
+            resizable: true,
+            minWidth: 1024,
+            maxWidth: 1300,
+            minHeight: 200,
+            maxHeight: 500,
+            height: 350,
+            // modal: true
+        });
+
         louhan_refresh();
     });
 

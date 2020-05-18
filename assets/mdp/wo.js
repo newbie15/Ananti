@@ -349,11 +349,15 @@ $(document).ready(function(){
             url: BASE_URL+"index.php/sub_unit/listing/"+$("#pabrik").val(),
             getValue: "list",
             requestDelay: 500,
+            ajaxSettings: {
+                cache: false,
+            }, 
             list: {
                 match: {
                     enabled: true
                 }
             }
+
         };
 
         $("#search").easyAutocomplete(list);

@@ -23,6 +23,7 @@ class Planvsreal extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Planing Harian Maintenance";
 		
+		$header['title'] = "Plan VS Real";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -317,24 +318,35 @@ class Planvsreal extends CI_Controller {
 		// $tahun = "2020";
 
 		$query_wo_list = $this->db->query(
-			"SELECT distinct `m_planing`.no_wo,`m_planing`.tanggal, m_wo.status,`m_planing`.station,
-			`m_planing`.unit,`m_planing`.sub_unit,`m_planing`.problem
+			"SELECT DISTINCT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status,`m_wo`.station,
+			`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem
 			FROM `m_planing`,m_wo WHERE 
-			MONTH(`m_planing`.tanggal) = 4 AND YEAR(`m_planing`.tanggal) = 2020
-			AND `m_planing`.no_wo = m_wo.no_wo
+			MONTH(`m_planing`.tanggal) = $bulan AND YEAR(`m_planing`.tanggal) = $tahun
+			AND `m_planing`.no_wo = m_wo.no_wo 
+			AND m_wo.id_pabrik = '$id_pabrik'
+
+			UNION 
+
+			SELECT DISTINCT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status, `m_wo`.station,
+			`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem
+			FROM `m_activity`,m_wo WHERE 
+			MONTH (`m_activity`.tanggal) = $bulan AND
+			YEAR (`m_activity`.tanggal) = $tahun AND
+			`m_activity`.no_wo = m_wo.no_wo 
+			AND m_wo.id_pabrik = '$id_pabrik'
 		");
 
 		$query_plan_list = $this->db->query(
 			"SELECT `m_planing`.tanggal, `m_planing`.no_wo, 
 			(`m_planing`.mpp * `m_planing`.time) as total
 			FROM `m_planing` WHERE 
-			MONTH(`m_planing`.tanggal) = 4 AND YEAR(`m_planing`.tanggal) = 2020
+			MONTH(`m_planing`.tanggal) = $bulan AND YEAR(`m_planing`.tanggal) = $tahun
 		");
 
 		$query_real_list = $this->db->query(
 			"SELECT `m_activity_detail`.tanggal, `m_activity_detail`.no_wo, sum(`m_activity_detail`.realisasi)
 			as total FROM `m_activity_detail` WHERE 
-			MONTH(`m_activity_detail`.tanggal) = 4 AND YEAR(`m_activity_detail`.tanggal) = 2020
+			MONTH(`m_activity_detail`.tanggal) = $bulan AND YEAR(`m_activity_detail`.tanggal) = $tahun
 			group by m_activity_detail.tanggal, m_activity_detail.no_wo
 		");
 
@@ -355,18 +367,36 @@ class Planvsreal extends CI_Controller {
 					->setDescription("Laporan Plan VS Real")
 					->setKeywords("Plan VS Real");
 
+		$nama_bulan = array(
+			'01' => "Januari",
+			'02' => "Februari",
+			'03' => "Maret",
+			'04' => "April",
+			'05' => "Mei",
+			'06' => "Juni",
+			'07' => "Juli",
+			'08' => "Agustus",
+			'09' => "September",
+			'10' => "Oktober",
+			'11' => "November",
+			'12' => "Desember",
+		);
+
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('N5', $nama_bulan[$bulan]);
+
 		$i = 0;
 		foreach ($query_wo_list->result() as $row){
-			$numrow = $i+7;
+			$numrow = $i+8;
 			// $hour = round( $row->time / 60, 2);
-			// $phpExcel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $row->tanggal);
-			$phpExcel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $row->status);
-			$phpExcel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $row->no_wo);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $row->no_wo);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $row->tipe);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $row->status);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $row->station);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $row->unit);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $row->sub_unit);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $row->problem);
 
+			if(isset($plan[$row->no_wo])){
 			foreach ($plan[$row->no_wo] as $tanggal => $value) {
 				# code...
 				$date = explode("-",$tanggal);
@@ -405,8 +435,10 @@ class Planvsreal extends CI_Controller {
 				case '31': $phpExcel->setActiveSheetIndex(0)->setCellValue('BV'.$numrow, round($value/60,2)); break;					
 				}
 			}
+			}
 
-			foreach ($plan[$row->no_wo] as $tanggal => $value) {
+			if(isset($real[$row->no_wo])){
+			foreach ($real[$row->no_wo] as $tanggal => $value) {
 				# code...
 				$date = explode("-",$tanggal);
 				$tgl = $date[2];
@@ -444,7 +476,7 @@ class Planvsreal extends CI_Controller {
 				case '31': $phpExcel->setActiveSheetIndex(0)->setCellValue('BW'.$numrow, round($value/60,2)); break;				
 				}
 			}
-			
+			}			
 			$i++;
 		}
 					
@@ -453,6 +485,8 @@ class Planvsreal extends CI_Controller {
 		header('Content-Disposition: attachment; filename="PLANVSREAL_'.$id_pabrik."_".$tahun."_".$bulan.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel2007');
+		ob_end_clean();
+		// $write = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel5');
 		$write->save('php://output');
 
 

@@ -32,6 +32,7 @@ class Oli extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Penggunaan Oli";
 		
+		$header['title'] = "Oiling";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
