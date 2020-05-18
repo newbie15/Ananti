@@ -246,8 +246,9 @@ class Sync extends CI_Controller {
 					'start' => $value[12],
 					'stop' => $value[13],
 					'time' => $value[14],
-					'tipe' => $value[15],
-					'ket' => $value[16],
+					'istirahat' => $value[15],
+					'tipe' => $value[16],
+					'ket' => $value[17],
 					'sync' => 2,
 				);
 				// print_r($data);
