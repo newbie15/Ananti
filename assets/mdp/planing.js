@@ -408,7 +408,7 @@ $(document).ready(function () {
                 dt = element[1].split("\n");
 
                 if (dt_mpp != element[5]) {
-                    text_wa_m += "\n" + "MPP: " + (element[4]) + "*" + (element[5]) + "*";
+                    text_wa_m += "\n" + "MPP: " + (element[4]) + " *" + (element[5]) + "*";
                     dt_mpp = element[5];
                 }
 
