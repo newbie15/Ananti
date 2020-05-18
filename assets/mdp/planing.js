@@ -349,11 +349,11 @@ $(document).ready(function () {
         var min = min_2 - min_1;
 
         if(min<=60){
-            return "*A*";
+            return " *A* ";
         }else if(min<=120){
-            return "*B*";
+            return " *B* ";
         }else if(min>120){
-            return "*C*";
+            return " *C* ";
         }
     }
 
