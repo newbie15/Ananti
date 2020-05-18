@@ -13,7 +13,8 @@
         <small>Input Harian</small> -->
       </h1>
       <ol class="breadcrumb">
-        <a class="btn btn-app btn-warning" id="sync_activity" href="#modal-sync" role="button" data-toggle="modal">
+        <!-- <a class="btn btn-app btn-warning" id="sync_activity" href="#modal-sync" role="button" data-toggle="modal" data-backdrop="false"> -->
+        <a class="btn btn-app btn-warning" id="sync_activity">
           <i class="fa fa-refresh"></i> Sync w/ Louhan
         </a>
         <a class="btn btn-app btn-success" id="download_activity" href="#" role="button">
@@ -61,7 +62,36 @@
         </div>
       </div>
 
-      <div class="modal fade in" id="modal-sync" style="display: none;">
+      <div id="dialog" title="Daftar Realisasi Job Harian" width="1024" style="display:none; border-color: red;">
+        <div data-role="body">
+          <!-- <div class="box-body no-padding" style="
+            height: 450px;
+            width: 100%;
+            overflow: auto;
+          "> -->
+            <table class="table table-striped" id="ui-louhan">
+              <tbody><tr>
+                <th>No WO</th>
+                <th>Area</th>
+                <th>Perbaikan</th>
+                <th style="width: 40px">Status</th>
+              </tr>
+              <tr>
+                <td>1.</td>
+                <td>Update software</td>
+                <td></td>
+                <td><span class="badge bg-red">55%</span></td>
+              </tr>
+
+            </tbody></table>
+          <!-- </div> -->
+        </div>
+        <div data-role="footer">
+
+        </div>
+      </div>      
+
+      <!-- <div class="modal fade in" id="modal-sync" style="display: none;">
         <div class="modal-dialog" style="width :90%;">
           <div class="modal-content">
             <div class="modal-header">
@@ -94,7 +124,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="row">
         <?php  ?>

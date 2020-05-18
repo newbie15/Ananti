@@ -86,6 +86,17 @@
                     </div>
                   </div>
 
+                  <div class="form-group">
+                    <label for="no_wo" class="col-sm-2 control-label">Tipe</label>
+                    <div class="col-sm-6">
+                      <select id="inp_tipe" class="form-control">
+                        <option>Pilih Salah Satu</option>
+                        <option value="M">Mekanik</option>
+                        <option value="E">Elektrik</option>
+                      </select>
+                    </div>
+                  </div>
+
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">

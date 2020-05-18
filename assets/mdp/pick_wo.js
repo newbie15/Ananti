@@ -6,6 +6,14 @@ $(document).ready(function(){
 
     var first = 0;
 
+    setInterval(() => {
+        if ($("#inp_no_wo").val() == "" || $("#inp_tipe").val()=="Pilih Salah Satu") {
+            $("#savenchoose").attr('disabled', true);
+        }else{
+            $("#savenchoose").attr('disabled', false);
+        }
+    }, 500);
+
     function station_refresh() {
         $("#inp_station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val());
         $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
@@ -95,35 +103,62 @@ $(document).ready(function(){
 
     var data = [];
 
-    $("#savenchoose").click(function () {
-        // var data_j = $('#my-spreadsheet').jexcel('getData');
-        // console.log(data_j);
+    $("form").submit(function (e) {
+        e.preventDefault();
 
-        // var pabrik = $("#pabrik").val();
-        // var tanggal = $("#inp_tanggal").val();
-        // var no_wo = $("#inp_no_wo").val();
-        // var station = $("#inp_station").val();
-        // var unit = $("#inp_unit").val();
-        // var sub_unit = $("#inp_sub_unit").val();
-        // var problem = $("#inp_problem").val();
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "wo/simpan_single",
+            // success: sukses,
+            data: {
+                pabrik: $("#pabrik").val(),
+                tanggal: $("#inp_tanggal").val(),
+                no_wo: $("#inp_no_wo").val(),
+                station: $("#inp_station").val(),
+                unit: $("#inp_unit").val(),
+                sub_unit: $("#inp_sub_unit").val(),
+                problem: $("#inp_problem").val(),
+                tipe: $("#inp_tipe").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            pick($("#inp_no_wo").val());
+        });
 
-        // $.ajax({
-        //     method: "POST",
-        //     url: BASE_URL+"wo/simpan_single",
-        //     success: sukses,
-        //     data: {
-        //         pabrik = $("#pabrik").val(),
-        //         tanggal = $("#inp_tanggal").val(),
-        //         no_wo = $("#inp_no_wo").val(),
-        //         station = $("#inp_station").val(),
-        //         unit = $("#inp_unit").val(),
-        //         sub_unit = $("#inp_sub_unit").val(),
-        //         problem = $("#inp_problem").val(),
-        //     }
-        // }).done(function (msg) {
-        //     console.log(msg);
-        // });
     });
+
+    // $("#savenchoose").click(function () {
+    //     // var data_j = $('#my-spreadsheet').jexcel('getData');
+    //     // console.log(data_j);
+
+    //     // var pabrik = $("#pabrik").val();
+    //     // var tanggal = $("#inp_tanggal").val();
+    //     // var no_wo = $("#inp_no_wo").val();
+    //     // var station = $("#inp_station").val();
+    //     // var unit = $("#inp_unit").val();
+    //     // var sub_unit = $("#inp_sub_unit").val();
+    //     // var problem = $("#inp_problem").val();
+    //     // var tipe = $("#inp_tipe").val();
+
+    //     $.ajax({
+    //         method: "POST",
+    //         url: BASE_URL+"wo/simpan_single",
+    //         // success: sukses,
+    //         data: {
+    //             pabrik : $("#pabrik").val(),
+    //             tanggal : $("#inp_tanggal").val(),
+    //             no_wo : $("#inp_no_wo").val(),
+    //             station : $("#inp_station").val(),
+    //             unit : $("#inp_unit").val(),
+    //             sub_unit : $("#inp_sub_unit").val(),
+    //             problem : $("#inp_problem").val(),
+    //             tipe : $("#inp_tipe").val(),
+    //         }
+    //     }).done(function (msg) {
+    //         console.log(msg);
+    //         pick($("#inp_no_wo").val());
+    //     });
+    // });
 
     function firts_ui(){
         first = 1;
@@ -204,12 +239,13 @@ $(document).ready(function(){
             if(msg!=''){
                 no_wo = msg.split('-');
                 no = parseInt(no_wo[4]) + 1;
+                if(no<10){ no = "0"+no }
                 no_wo_baru = no_wo[0] + "-" + no_wo[1] + "-" + no_wo[2] + "-" + no_wo[3] + "-" + no;
                 $("#inp_no_wo").val(no_wo_baru);
             }else{
                 no_wo = $("#inp_tanggal").val().split('-');
                 // no = parseInt(no_wo[4]) + 1;
-                no_wo_baru = $("#pabrik").val() + "-" + no_wo[0] + "-" + no_wo[1] + "-" + no_wo[1] + "-01";
+                no_wo_baru = $("#pabrik").val() + "-" + no_wo[0] + "-" + no_wo[1] + "-" + no_wo[2] + "-01";
                 $("#inp_no_wo").val(no_wo_baru);
             }
         });

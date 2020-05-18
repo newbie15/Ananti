@@ -449,6 +449,7 @@ class Wo extends CI_Controller {
 		$unit = $_REQUEST['unit'];
 		$sub_unit = $_REQUEST['sub_unit'];
 		$problem = $_REQUEST['problem'];
+		$tipe = $_REQUEST['tipe'];
 		// $tanggal = $_REQUEST['desc_masalah'];
 		
 		$this->db->trans_start();
@@ -462,12 +463,12 @@ class Wo extends CI_Controller {
 			'unit' => $unit,
 			'sub_unit' => $sub_unit,
 			'problem' => $problem,
-			'desc_masalah' => $desc_masalah,
-			'hm' => $hm,
+			'desc_masalah' => "",
+			'hm' => "",
 			'kategori' => "unplan",
-			'tipe' => $value[6],
+			'tipe' => $tipe,
 			'status' => "open",
-			'tanggal_closing' => $value[8],
+			// 'tanggal_closing' => "",
 			// 'date' => 'My date'
 		);
 			// print_r($data);

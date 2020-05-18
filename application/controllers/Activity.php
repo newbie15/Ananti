@@ -27,18 +27,39 @@ class Activity extends CI_Controller {
 		
 		$header['title'] = "Realisasi";
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
+
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
+
+			// base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
 			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+			base_url("assets/jquery-ui-1.12.1/jquery-ui.min.css")
 
 		];
 
+
+		$header['customcss'] = "
+.ui-dialog, .ui-dialog-content {
+	box-sizing: content-box;
+	border-color: red;
+}		
+";
+		
 		$footer['js_files'] = [
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
+
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/jexcel/js/jquery.mask.min.js"),
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/jquery-ui-1.12.1/jquery-ui.min.js"),
+			// base_url("assets/jexcel/js/jquery.jexcel.js"),
+
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/activity.js"),
