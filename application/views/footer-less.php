@@ -6,7 +6,6 @@
     reserved.
   </footer> -->
 
-
 </div>
 <!-- ./wrapper -->
 <!-- jQuery 3 -->
