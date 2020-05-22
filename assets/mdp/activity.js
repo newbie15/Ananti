@@ -302,7 +302,7 @@ $(document).ready(function () {
                 shtml += "<td>"+element[1]+"</td>";
             }
             shtml += "<td>"+element[2]+"</td>";
-            shtml += "<td>Problem : "+element[3]+"<br>Penyelesaian:"+element[4]+"</td>";
+            shtml += "<td>Problem : "+element[3]+"<br>Penyelesaian : "+element[4]+"</td>";
             shtml += "<td>"+element[5]+"</td>";
             shtml += "<td>"+element[6]+"</td>";
             shtml += "<td>"+element[7]+"</td>";
