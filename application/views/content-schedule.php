@@ -25,6 +25,12 @@
           <?php //echo $content; ?>
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
+          Tahun : 
+          <select id="tahun">
+            <option>2017</option>
+            <option>2018</option>
+            <option>2019</option>
+          </select>
           Station :
           <?php echo $dropdown_station; ?>
           Unit :
@@ -34,7 +40,7 @@
         </div>
         <div class="col-xs-12">
           <br>
-          <div id="dp"></div>
+          <div id="dp" style="background-color:white;"></div>
         </div>
       </div>
       <!-- /.row -->
