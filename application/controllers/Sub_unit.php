@@ -188,11 +188,23 @@ class Sub_unit extends CI_Controller {
 		// $d = [];
 		foreach ($query->result() as $row)
 		{
-				// $d[$i][0] = $row->nama; // access attributes
-				// $a['name'] = $row->nama;
-				// $a['id'] = $row->nama;
-				// $d[$i++] = $a;
-				echo "<option>".$row->nama."</option>";
+			echo "<option>".$row->nama."</option>";
+		}
+		// echo json_encode($d);
+	}
+
+	public function ajax_dropdown_all(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$id_station = urldecode($this->uri->segment(4, 0));
+		$id_unit = urldecode($this->uri->segment(5, 0));
+
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
+
+		echo "<option>-- ALL --</option>";
+
+		foreach ($query->result() as $row)
+		{
+			echo "<option>".$row->nama."</option>";
 		}
 		// echo json_encode($d);
 	}
