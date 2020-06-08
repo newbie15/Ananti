@@ -217,20 +217,28 @@ class Schedule extends CI_Controller {
 		$id_unit = $_REQUEST['id_unit'];
 		$id_sub_unit = $_REQUEST['id_sub_unit'];
 
-		$query = $this->db->query("SELECT * FROM master_schedule WHERE
+		$sql = "SELECT * FROM master_schedule WHERE
 		id_pabrik = '$id_pabrik' AND
-		id_station = '$id_station' AND
-		id_unit = '$id_unit' AND
-		id_sub_unit = '$id_sub_unit'
-		");
+		id_station = '$id_station' 
+		";
+
+		if($id_unit != "-- ALL --"){
+			$sql = $sql ." AND id_unit = '$id_unit'";
+		}
+
+		if($id_sub_unit != "-- ALL --"){
+			$sql = $sql ." AND id_sub_unit = '$id_sub_unit'";
+		}
+
+		$query = $this->db->query($sql);
 
 		$i=0;
 		$d=null;
 		foreach ($query->result() as $row)
 		{
 			$d[$i]['id'] = str_replace(" ","_",$row->id_pabrik)."-".str_replace(" ","_",$row->id_station)."-".str_replace(" ","_",$row->id_unit)."-".str_replace(" ","_",$row->id_sub_unit)."+".str_replace(" ","_",$row->monitoring_item);
-			$d[$i]['monitoring'] = $row->id_sub_unit;
-			$d[$i++]['title'] = $row->monitoring_item;
+			$d[$i]['monitoring'] = $row->id_unit;
+			$d[$i++]['title'] = $row->id_sub_unit." - ".$row->monitoring_item;
 			// $d[$i++]['stop'] = $row->tgl_stop."T00:00:00";
 		}
 		echo json_encode($d);
@@ -258,6 +266,42 @@ class Schedule extends CI_Controller {
 			$d[$i]['monitoring'] = $row->id_sub_unit;
 			$d[$i++]['title'] = $row->monitoring_item;
 			// $d[$i++]['stop'] = $row->tgl_stop."T00:00:00";
+		}
+		echo json_encode($d);
+	}
+
+	public function item_schedule_monitoring(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$tahun = $this->uri->segment(4, 0);
+
+		// $tanggal = date("Y-m-");
+
+		$sql = "SELECT * FROM `master_schedule_monitoring` 
+			WHERE `id_pabrik` = '$id_pabrik'
+			AND `tahun` = $tahun;
+		";
+
+		$query = $this->db->query($sql);
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i]['resourceId'] = $row->id_pabrik."-".str_replace(' ','_',$row->id_station)."-".str_replace(' ','_',$row->id_unit)."-".str_replace(' ','_',$row->id_sub_unit)."+".str_replace(' ','_',$row->item);
+			// $d[$i]['title'] = $row->no_wo." / ".$row->station." | ".$row->unit." | ".$row->sub_unit."\n".$row->plan;
+			$d[$i]['title'] = $row->id_sub_unit." - ".$row->item;
+
+			// if($row->start!=""){
+				$d[$i]['start'] = $row->start;//."T00:00".":00+07:00";
+			// }else{
+			// 	$d[$i]['start'] = $row->start."";
+			// }
+			// if($row->stop!=""){
+				$d[$i++]['stop'] = $row->stop;//."T23:59".":00+07:00";
+			// }else{
+			// 	$d[$i++]['end'] = $row->tanggal."";
+			// }
+			// $d[$i++][10] = $row->ket;
 		}
 		echo json_encode($d);
 	}
@@ -292,40 +336,64 @@ class Schedule extends CI_Controller {
 
 	}
 
-	public function add_monitoring_schedule()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
-		$id_unit = $_REQUEST['id_unit'];
-		$id_sub_unit = $_REQUEST['id_sub_unit'];
-		$tahun = $_REQUEST['tahun'];
-
-		$query = $this->db->query("SELECT * FROM m_schedule WHERE
-		id_pabrik = '$id_pabrik' AND
-		id_station = '$id_station' AND
-		id_unit = '$id_unit' AND
-		id_sub_unit = '$id_sub_unit' AND
-		tahun = $tahun
-		");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i]['id'] = $row->id_pabrik."_".$row->id_station."_".$row->id_unit."_".$row->id_sub_unit;
-			$d[$i]['title'] = $row->item;
-			$d[$i]['start'] = $row->tgl_mulai."T00:00:00";
-			$d[$i++]['stop'] = $row->tgl_stop."T00:00:00";
-		}
-		echo json_encode($d);
-	}
-
 	public function delete_monitoring_schedule()
 	{
-	
+		$pabrik = $_REQUEST['id_pabrik'];
+		$station = str_replace('_',' ',$_REQUEST['id_station']);
+		$unit = str_replace('_',' ',$_REQUEST['id_unit']);
+		$sub_unit = str_replace('_',' ',$_REQUEST['id_sub_unit']);
+		$title = $_REQUEST['title'];
+		$start = $_REQUEST['start'];
+		$stop = $_REQUEST['start'];
+		$tahun = $_REQUEST['tahun'];
+
+		$this->db->query("DELETE FROM `master_schedule_monitoring`
+		where `id_pabrik` = '$pabrik'
+		AND `id_station` = '$station'
+		AND `id_unit` = '$unit'
+		AND `id_sub_unit` = '$sub_unit'
+		AND `item` = '$title'
+		AND `start` = '$start'
+		AND `stop` = '$stop'
+		AND `tahun` = $tahun
+		");
+
+		echo "ok";
 	}
 
+	public function add_monitoring_schedule()
+	{
+		$pabrik = $_REQUEST['id_pabrik'];
+		$station = str_replace('_',' ',$_REQUEST['id_station']);
+		$unit = str_replace('_',' ',$_REQUEST['id_unit']);
+		$sub_unit = str_replace('_',' ',$_REQUEST['id_sub_unit']);
+		$title = $_REQUEST['title'];
+		$start = $_REQUEST['start'];
+		$stop = $_REQUEST['start'];
+		$tahun = $_REQUEST['tahun'];
 
-
+		// $this->db->query("DELETE FROM `master_schedule` where id_pabrik = '$pabrik' AND id_station = '$station' AND id_unit = '$unit' ");
+		// $data_json = $_REQUEST['data_json'];
+		// $data = json_decode($data_json);
+		// foreach ($data as $key => $value) {
+		// 	// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'id_station' => $station,
+				'id_unit' => $unit,
+				'id_sub_unit' => $sub_unit,
+				'item' => $title,
+				'start' => $start,
+				'stop' => $stop,
+				'tahun' => $tahun,
+				// 'frekuensi' => $value[4],
+			);
+			// print_r($data);
+			// if($value[0]!=""){
+				$this->db->insert('master_schedule_monitoring', $data);
+				echo "ok";
+			// }
+		// }
+	}
 
 }
