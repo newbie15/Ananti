@@ -155,7 +155,7 @@ class Wo extends CI_Controller {
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$eq = explode("\n",$value[1]); 
-			$data = array(
+			@$data = array(
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
 				'no_wo' => $value[0],
@@ -177,7 +177,10 @@ class Wo extends CI_Controller {
 				array_push($datax,$data);
 			}
 		}
-		$this->db->insert_batch('m_wo', $datax);
+
+		if(count($datax)>0){
+			@$this->db->insert_batch('m_wo', $datax);
+		}
 		// print_r($datax);
 		$this->db->trans_complete();
 	}
@@ -233,6 +236,7 @@ class Wo extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Work Order";
 		
+		$header['title'] = "Search Work Order";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
