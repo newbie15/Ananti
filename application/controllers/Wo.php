@@ -236,7 +236,7 @@ class Wo extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Work Order";
 		
-		$header['title'] = "Search Work Order";
+		$header['title'] = "Unfinished Work Order";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -309,6 +309,7 @@ class Wo extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Work Order";
 		
+		$header['title'] = "Search Work Order";
 		$header['css_files'] = [
 			// base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),

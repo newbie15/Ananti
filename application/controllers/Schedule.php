@@ -359,18 +359,18 @@ class Schedule extends CI_Controller {
 
 		$this->db->query("DELETE FROM `m_wo`
 		where `id_pabrik` = '$pabrik'
-		AND `id_station` = '$station'
-		AND `id_unit` = '$unit'
-		AND `id_sub_unit` = '$sub_unit'
+		AND `station` = '$station'
+		AND `unit` = '$unit'
+		AND `sub_unit` = '$sub_unit'
 		AND `problem` = '$title'
 		AND `tanggal` = '$start'
 		");
 
-		$this->db->query("DELETE FROM `m_plan`
+		$this->db->query("DELETE FROM `m_planing`
 		where `id_pabrik` = '$pabrik'
-		AND `id_station` = '$station'
-		AND `id_unit` = '$unit'
-		AND `id_sub_unit` = '$sub_unit'
+		AND `station` = '$station'
+		AND `unit` = '$unit'
+		AND `sub_unit` = '$sub_unit'
 		AND `problem` = '$title'
 		AND `tanggal` = '$start'
 		");
@@ -419,18 +419,30 @@ class Schedule extends CI_Controller {
 			$no_wo = $row->no_wo;
 		}
 
-		// echo $no_wo;
+		$s = explode("-",$no_wo);
 
-		if ($no_wo == 0){
+		// echo $no_wo;
+		// echo "\n";
+
+		if (count($s) < 3){
 			$no_wo = "01";
+			// echo "no wo = 0";
+			// echo "\n";
+			// echo $no_wo;
+			// echo "\n";
 		} else {
-			$i = (int) $no_wo + 1;
+			// echo "no wo != 0";
+			// echo "\n";
+			// $s = explode("-",$no_wo);
+			// print_r($s);
+			$i = (int) $s[4] + 1;
 			if($i < 10){
-				$no_wo = "0".$no_wo;
+				$no_wo = "0".$i;
 			}
 		}
-		// echo "\n";
+		// echo "=====\n";
 		// echo $no_wo;
+		// echo "\n";
 
 		$wo = array(
 			'id_pabrik' => $pabrik,
