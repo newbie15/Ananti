@@ -306,7 +306,6 @@ class Schedule extends CI_Controller {
 		echo json_encode($d);
 	}
 
-
 	public function monitoring_schedule()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
@@ -358,6 +357,25 @@ class Schedule extends CI_Controller {
 		AND `tahun` = $tahun
 		");
 
+		$this->db->query("DELETE FROM `m_wo`
+		where `id_pabrik` = '$pabrik'
+		AND `id_station` = '$station'
+		AND `id_unit` = '$unit'
+		AND `id_sub_unit` = '$sub_unit'
+		AND `problem` = '$title'
+		AND `tanggal` = '$start'
+		");
+
+		$this->db->query("DELETE FROM `m_plan`
+		where `id_pabrik` = '$pabrik'
+		AND `id_station` = '$station'
+		AND `id_unit` = '$unit'
+		AND `id_sub_unit` = '$sub_unit'
+		AND `problem` = '$title'
+		AND `tanggal` = '$start'
+		");
+
+
 		echo "ok";
 	}
 
@@ -377,23 +395,83 @@ class Schedule extends CI_Controller {
 		// $data = json_decode($data_json);
 		// foreach ($data as $key => $value) {
 		// 	// $this->db->insert
-			$data = array(
-				'id_pabrik' => $pabrik,
-				'id_station' => $station,
-				'id_unit' => $unit,
-				'id_sub_unit' => $sub_unit,
-				'item' => $title,
-				'start' => $start,
-				'stop' => $stop,
-				'tahun' => $tahun,
-				// 'frekuensi' => $value[4],
-			);
-			// print_r($data);
-			// if($value[0]!=""){
-				$this->db->insert('master_schedule_monitoring', $data);
-				echo "ok";
-			// }
-		// }
+
+		$data = array(
+			'id_pabrik' => $pabrik,
+			'id_station' => $station,
+			'id_unit' => $unit,
+			'id_sub_unit' => $sub_unit,
+			'item' => $title,
+			'start' => $start,
+			'stop' => $stop,
+			'tahun' => $tahun,
+			// 'frekuensi' => $value[4],
+		);
+
+		$this->db->insert('master_schedule_monitoring', $data);
+
+		$tanggal = $_REQUEST['start'];		
+		$query = $this->db->query("SELECT no_wo FROM m_wo where id_pabrik = '$pabrik' AND tanggal='$tanggal' ORDER BY no_wo desc LIMIT 0,1;");
+
+		$no_wo = 0;
+		foreach ($query->result() as $row)
+		{
+			$no_wo = $row->no_wo;
+		}
+
+		// echo $no_wo;
+
+		if ($no_wo == 0){
+			$no_wo = "01";
+		} else {
+			$i = (int) $no_wo + 1;
+			if($i < 10){
+				$no_wo = "0".$no_wo;
+			}
+		}
+		// echo "\n";
+		// echo $no_wo;
+
+		$wo = array(
+			'id_pabrik' => $pabrik,
+			'tanggal' => $start,
+			'no_wo' => $pabrik.'-'.$start.'-'.$no_wo,
+			'station' => $station,
+			'unit' => $unit,
+			'sub_unit' => $sub_unit,
+			'problem' => $title,
+			'desc_masalah' => '',
+			'hm' => '',
+			'kategori' => '',
+			'tipe' => 'maintenance',
+			'status' => 'open',
+			'tanggal_closing' => '0000-00-00',
+			// 'date' => 'My date'
+		);
+		$this->db->insert('m_wo', $wo);
+
+		$plan = array(
+			'tanggal' => $start,
+			'id_pabrik' => $pabrik,
+			'no_wo' => $pabrik.'-'.$start.'-'.$no_wo,
+			'station' => $station,
+			'unit' => $unit,
+			'sub_unit' => $sub_unit,
+			'problem' => $title,
+			'plan' => $title,
+			'mpp' => '',
+			'nama_mpp' => '',
+			'mek_el' => '',
+			'start' => '',
+			'stop' => '',
+			'time' => '',
+			'istirahat' => '',
+			'tipe' => '',
+			'ket' => ''
+		);
+		$this->db->insert('m_planing', $plan);
+
+		echo "ok";
 	}
 
 }

@@ -181,7 +181,7 @@ class Planing extends CI_Controller {
 
 				@$time = (($jm-$value[9])*60) + $mn;
 
-				$data = array(
+				@$data = array(
 					'tanggal' => $tanggal,
 					'id_pabrik' => $pabrik,
 					'no_wo' => $value[0],
@@ -207,7 +207,9 @@ class Planing extends CI_Controller {
 				}
 			}
 			
-			$this->db->insert_batch('m_planing', $datax);
+			if(count($datax)>0){
+				@$this->db->insert_batch('m_planing', $datax);
+			}
 			// $this->db->trans_complete();
 
 			if ($this->db->trans_status() === FALSE){
