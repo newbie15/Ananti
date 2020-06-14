@@ -305,7 +305,7 @@ class Planvsreal extends CI_Controller {
 		} else {
 			// echo 'This is a server not using Windows!';
 			include APPPATH.'third_party/PHPExcel.php';
-		$fe = "template_planvsreal.xlsx";
+		$fe = "template_planvsreal.xls";
 		$filex = dirname(__FILE__) .'/../../assets/excel/'.$fe;
 
 		}
