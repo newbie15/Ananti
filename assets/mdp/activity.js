@@ -440,9 +440,11 @@ $(document).ready(function () {
             colHeaders: [
                 'Nama Sparepart / Material',
                 'Qty',
+                'Rupiah',
             ],
-            colWidths: [265, 95, 53, 50, 53, 100, 75, 80, 80],
+            colWidths: [200, 50, 110, 50, 53, 100, 75, 80, 80],
             columns: [
+                { type: 'text' },
                 { type: 'text' },
                 { type: 'text' },
             ]

@@ -100,7 +100,12 @@
         <ul class="nav navbar-nav">
           <li>
             <a href="<?php echo base_url("login/signout");?>">
-              <span class="hidden-xs"><?php echo $this->session->user; ?> | Logout </span>
+              <span class="hidden-xs">
+                <?php 
+                  if($this->session->kategori == 3) { echo "PRO_"; }
+                  echo $this->session->user;
+                ?> | Logout
+              </span>
             </a>
           </li>
         </ul>
@@ -119,9 +124,22 @@
             <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
           </ul>
         </li> -->
-
-
+<?php 
+if($this->session->kategori == 3){
+?>
         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-file"></i> <span>Process</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("woprocess"); ?>"><i class="fa fa-file"></i>WO Process <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
+            <!-- <li><a href="<?php echo base_url("cost"); ?>"><i class="fa fa-file"></i>Cost Harian <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li> -->
+          </ul>
+        </li>
+<?php
+}else{
+?>
+          <li class="treeview">
           <a href="#">
             <i class="fa fa-list"></i> <span>Master</span>
           </a>
@@ -142,15 +160,6 @@
           </ul>
         </li>
 
-        <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-gear"></i> <span>Process</span>
-          </a>
-          <ul class="treeview-menu" style="display: none;">
-            <li><a href="<?php echo base_url("feedback"); ?>"><i class="fa fa-file"></i>Feedback Process <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
-            <li><a href="<?php echo base_url("cost"); ?>"><i class="fa fa-file"></i>Cost Harian <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
-          </ul>
-        </li> -->
 
         <li class="treeview">
           <a href="#">
@@ -212,6 +221,10 @@
             <li><a href="<?php echo base_url("display/maintenance"); ?>"><i class="fa fa-money"></i>Potret Maintenance</a></li> -->
           </ul>
         </li>
+<?php
+}
+?>
+
       </ul>
     </section>
   </aside>
