@@ -181,7 +181,7 @@ class Planing extends CI_Controller {
 
 				@$time = (($jm-$value[9])*60) + $mn;
 
-				$data = array(
+				@$data = array(
 					'tanggal' => $tanggal,
 					'id_pabrik' => $pabrik,
 					'no_wo' => $value[0],
@@ -207,7 +207,9 @@ class Planing extends CI_Controller {
 				}
 			}
 			
-			$this->db->insert_batch('m_planing', $datax);
+			if(count($datax)>0){
+				@$this->db->insert_batch('m_planing', $datax);
+			}
 			// $this->db->trans_complete();
 
 			if ($this->db->trans_status() === FALSE){
@@ -397,24 +399,20 @@ class Planing extends CI_Controller {
 				echo number_format($time,2,",",""); echo "\t";
 				echo $row->plan; echo "\n";
 
-				// if(isset($statistik[$value])){
+				if($value != null || $value != ''){
+					if($row->tipe == "Corrective") { $statistik[$value][1] += $time; }  
+					if($row->tipe == "Preventive") { $statistik[$value][0] += $time; }  
+					if($row->tipe == "Predictive") { $statistik[$value][2] += $time; }  
+				}
 
-				// }
 
-				if($row->tipe == "Corrective") { $statistik[$value][1] += $time; }  
-				if($row->tipe == "Preventive") { $statistik[$value][0] += $time; }  
-				if($row->tipe == "Predictive") { $statistik[$value][2] += $time; }  
-				
-				// $statistik[$value] = 
-
-				// array_push($statistik,)
 			}
 		}
 		echo "\n\n";
 		// print_r($statistik);
 		echo "nama\t";
-		echo "preventive\t";
 		echo "corrective\t";
+		echo "preventive\t";
 		echo "predictive\t";
 		echo "total\n";
 

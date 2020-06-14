@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Wo extends CI_Controller {
+class Woprocess extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -47,7 +47,7 @@ class Wo extends CI_Controller {
 			base_url("assets/easyautocomplete/jquery.easy-autocomplete.min.js"),			
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/wo.js"),
+			base_url("assets/mdp/wo_process.js"),
 		];
 			
 		$query = $this->db->query("SELECT nama FROM master_pabrik;");
@@ -86,7 +86,7 @@ class Wo extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,tipe,status,tanggal_closing FROM m_wo where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,tipe,status,tanggal_closing FROM m_wo_process where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
 
 		$i = 0;
 		$d = [];
@@ -108,11 +108,47 @@ class Wo extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function pick_wo(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$station = $_REQUEST['id_station'];
+        $unit = $_REQUEST['id_unit'];
+		$sub_unit = $_REQUEST['id_sub_unit'];
+		
+		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,
+		problem,desc_masalah,hm,kategori,tipe,status,tanggal_closing FROM m_wo where 
+		id_pabrik = '$id_pabrik' AND
+		station = '$station' AND
+		unit = '$unit' AND
+		sub_unit = '$sub_unit' AND
+		status = 'open'
+		;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->no_wo;
+			// $d[$i][1] = $row->station;
+			$d[$i][1] = $row->station ."<br>". $row->unit . "<br>" . $row->sub_unit;
+			// $d[$i][2] = $row->unit;
+			// $d[$i][3] = $row->sub_unit;
+			$d[$i][2] = $row->problem;
+			$d[$i][3] = $row->desc_masalah;
+			$d[$i][4] = $row->hm;
+			$d[$i][5] = $row->kategori;
+			$d[$i][6] = $row->tipe;
+			$d[$i][7] = $row->status;
+			$d[$i++][8] = $row->tanggal_closing;
+		}
+		echo json_encode($d);		
+	}
+
 	public function simpan()
 	{
 		$pabrik = $_REQUEST['pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_wo` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$this->db->trans_start();
+		$this->db->query("DELETE FROM `m_wo_process` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		$datax = array();
@@ -143,9 +179,10 @@ class Wo extends CI_Controller {
 		}
 
 		if(count($datax)>0){
-			@$this->db->insert_batch('m_wo', $datax);
+			@$this->db->insert_batch('m_wo_process', $datax);
 		}
 		// print_r($datax);
+		$this->db->trans_complete();
 	}
 	
 	public function ajax()
