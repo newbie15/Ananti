@@ -14,6 +14,9 @@
       </h1>
       <ol class="breadcrumb">
         <!-- <a class="btn btn-app btn-warning" id="sync_activity" href="#modal-sync" role="button" data-toggle="modal" data-backdrop="false"> -->
+        <a class="btn btn-app btn-success" id="sharewa" href="#modal-wa" data-toggle="modal">
+          <i class="fa fa-whatsapp"></i> Share
+        </a>
         <a class="btn btn-app btn-warning" id="sync_activity">
           <i class="fa fa-refresh"></i> Sync w/ Louhan
         </a>
