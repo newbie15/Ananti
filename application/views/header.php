@@ -151,9 +151,9 @@ if($this->session->kategori == 3){
             <li><a href="<?php echo base_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
             <li><a href="<?php echo base_url("sub_unit"); ?>"><i class="fa fa-calendar-check-o"></i>Sub Unit</a></li>
             <li><a href="<?php echo base_url("attachment"); ?>"><i class="fa fa-calendar-check-o"></i>Attachment</a></li>
-            <li><a href="<?php echo base_url("grouping"); ?>"><i class="fa fa-bolt"></i>Group Unit</a></li>
+            <li><a href="<?php echo base_url("grouping"); ?>"><i class="fa fa-object-group"></i>Group Unit</a></li>
             <li><a href="<?php echo base_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
-            <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-gears"></i>Unit Mekanik</a></li>
+            <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-wrench"></i>Unit Mekanik</a></li>
             <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>Schedule</a></li>
             <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
             <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
@@ -163,7 +163,7 @@ if($this->session->kategori == 3){
 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-gear"></i> <span>Maintenance</span>
+            <i class="fa fa-gears"></i> <span>Maintenance</span>
           </a>
           <ul class="treeview-menu" style="display: none;">
             <li><a href="<?php echo base_url("wo"); ?>"><i class="fa fa-industry"></i>Work Order <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
@@ -205,6 +205,15 @@ if($this->session->kategori == 3){
             <li><a href="<?php echo base_url("kcp"); ?>"><i class="fa fa-file"></i>KCP <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li> -->
           </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-database"></i> <span>Gudang</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("mr"); ?>"><i class="fa fa-file"></i>Material Requisition<span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
+          </ul>
+        </li>        
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-newspaper-o"></i> <span>Report</span>

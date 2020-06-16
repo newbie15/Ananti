@@ -14,6 +14,9 @@
       </h1>
       <ol class="breadcrumb">
         <!-- <a class="btn btn-app btn-warning" id="sync_activity" href="#modal-sync" role="button" data-toggle="modal" data-backdrop="false"> -->
+        <a class="btn btn-app btn-success" id="sharewa" href="#modal-wa" data-toggle="modal">
+          <i class="fa fa-whatsapp"></i> Share
+        </a>
         <a class="btn btn-app btn-warning" id="sync_activity">
           <i class="fa fa-refresh"></i> Sync w/ Louhan
         </a>
@@ -46,6 +49,27 @@
           </div>
         </div>
       </div>
+
+      <div class="modal fade in" id="modal-wa" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">WA Laporan Realisasi Job</h4>
+            </div>
+            <div class="modal-body">
+              <textarea class="form-control" rows="20" placeholder="Enter ..." id="generatewa"></textarea>
+              <br>
+              <button class="btn bg-orange" id="bcopy"><i class="fa fa-copy"></i> Copy</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a class="btn btn-success" id="bwaweb"><i class="fa fa-whatsapp"></i> Share Via WA web</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a class="btn btn-success" id="bwaapp"><i class="fa fa-whatsapp"></i> Share Via WA App</a>
+              <table id="dt-table" class="display" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
       <div class="modal fade in" id="modal-create-wo" style="display: none;">
         <div class="modal-dialog">
