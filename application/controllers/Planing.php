@@ -399,24 +399,20 @@ class Planing extends CI_Controller {
 				echo number_format($time,2,",",""); echo "\t";
 				echo $row->plan; echo "\n";
 
-				// if(isset($statistik[$value])){
+				if($value != null || $value != ''){
+					if($row->tipe == "Corrective") { $statistik[$value][1] += $time; }  
+					if($row->tipe == "Preventive") { $statistik[$value][0] += $time; }  
+					if($row->tipe == "Predictive") { $statistik[$value][2] += $time; }  
+				}
 
-				// }
 
-				if($row->tipe == "Corrective") { $statistik[$value][1] += $time; }  
-				if($row->tipe == "Preventive") { $statistik[$value][0] += $time; }  
-				if($row->tipe == "Predictive") { $statistik[$value][2] += $time; }  
-				
-				// $statistik[$value] = 
-
-				// array_push($statistik,)
 			}
 		}
 		echo "\n\n";
 		// print_r($statistik);
 		echo "nama\t";
-		echo "preventive\t";
 		echo "corrective\t";
+		echo "preventive\t";
 		echo "predictive\t";
 		echo "total\n";
 

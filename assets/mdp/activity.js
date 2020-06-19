@@ -440,9 +440,11 @@ $(document).ready(function () {
             colHeaders: [
                 'Nama Sparepart / Material',
                 'Qty',
+                'Rupiah',
             ],
-            colWidths: [265, 95, 53, 50, 53, 100, 75, 80, 80],
+            colWidths: [200, 50, 110, 50, 53, 100, 75, 80, 80],
             columns: [
+                { type: 'text' },
                 { type: 'text' },
                 { type: 'text' },
             ]
@@ -591,6 +593,101 @@ $(document).ready(function () {
         }).done(function (msg) {
             console.log(msg);
         });
+    });
+
+    $("#sharewa").click(function () {
+        share_wa();
+    });
+
+    function share_wa() {
+
+        // $('#my-spreadsheet').jexcel('orderBy', 5);
+
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+
+        var tanggal = $("#tanggal").val() + "-" + $("#bulan").val() + "-" + $("#tahun").val();
+
+        var text_wa = "Realisasi Harian " + $("#pabrik").val() + "\n\n";
+        text_wa += "Tanggal : " + tanggal;
+
+        text_wa += "\n" + "Planned Maintenance (PM) : Preventive (P) – Corrective (C) – Predictive (Pd)" + "\n";
+
+        text_wa_m = text_wa;
+
+        dt_mpp = "";
+        i = 0;
+
+        setTimeout(() => {
+            dx.forEach(element => {
+                console.log(element);
+
+                dt = element[1].split("\n");
+
+                // if (dt_mpp != element[5]) {
+                //     text_wa_m += "\n" + "MPP: " + (element[4]) + " *" + (element[5]) + "*";
+                //     dt_mpp = element[5];
+                // }
+
+                if (dt[1] == dt[2]) {
+                    text_wa_m += "\n  " + dt[0] + " | " + dt[1];
+                } else {
+                    text_wa_m += "\n  " + dt[0] + " | " + dt[1] + " | " + dt[2];
+                }
+
+                text_wa_m += "\n  Problem : " + dt[3];
+                text_wa_m += "\n  Perbaikan : " + element[2];
+                text_wa_m += "\n  Status : " + element[3] ;
+                if (element[3]=="Selesai"){
+                    text_wa_m += " ✅ ";
+                }else{
+                    text_wa_m += " ❌ ";
+                }
+                text_wa_m += "\n";
+
+                x = data_detail[element[1]];
+
+                console.log(x);
+
+            });
+
+            dt_station = "";
+
+            console.log(text_wa);
+
+            console.log("\n\n");
+            console.log(text_wa_m);
+
+            $("#generatewa").text(text_wa_m);
+
+        }, 15);
+
+
+        // https://api.whatsapp.com/send?phone=91XXXXXXXXXX&text=urlencodedtext
+        // var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+
+        // var href = "whatsapp://send?text=" + encodeURI(text_wa);
+        // $("#sharewa").attr("target", "_blank");
+        // $("#sharewa").attr("href", href);
+    }
+
+    $("#bcopy").click(function () {
+        $("#generatewa").select();
+        document.execCommand("copy");
+    });
+
+    $("#bwaweb").click(function () {
+        var text_wa = $("#generatewa").val();
+        var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+        $(this).attr("target", "_blank");
+        $(this).attr("href", href);
+    });
+
+    $("#bwaapp").click(function () {
+        var text_wa = $("#generatewa").val();
+        var href = "whatsapp://send?text=" + encodeURI(text_wa);
+        $(this).attr("target", "_blank");
+        $(this).attr("href", href);
     });
 
     function ajax_refresh() {

@@ -3,17 +3,9 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <!-- Create Work Order | Unfinished WO | Search WO -->
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#" aria-expanded="true">Work Order</a></li>
-<?php 
-if($this->session->kategori != 3){
-?>
-          <li class=""><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
-          <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li>
-<?php 
-}
-?>
+          <li class="active"><a href="" aria-expanded="true">Material Requisition</a></li>
+          <li class=""><a href="<?php echo base_url("breakdown/summary")?>" aria-expanded="false">Summary</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
@@ -21,7 +13,6 @@ if($this->session->kategori != 3){
         <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
           <i class="fa fa-plus"></i> Tambah
         </a>
-
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -36,51 +27,23 @@ if($this->session->kategori != 3){
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Tambah Work Order</h4>
+              <h4 class="modal-title">Tambah Breakdown / Problem</h4>
             </div>
             <div class="modal-body">
-              <!-- <input type="text" id="search" class=""> -->
               <h3 id="dpabrik"></h3>
-              No WO  &nbsp;&nbsp; : <input type="text" id="no_wo_auto"/>
-              <br/><br/>
-              <div style="width:100%;">
-                <input class="form-control w-100" id="search" autocomplete="off" placeholder="cari item disini"/>            
-              </div>
-              <br/>
-              <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                  <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Single Item</a></li>
-                  <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Multi Item</a></li>
-                </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1">
-                    Station &nbsp;&nbsp;&nbsp;&nbsp;: <select id="station"><option></option></select>
-                    <br>
-                    <br>
-                    Unit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <select id="unit"><option></option></select>
-                    <br>
-                    <br>
-                    Sub Unit &nbsp;: <select id="sub_unit"><option></option></select>
-                    <br>
-                    <!-- <hr> -->
-                    <span style="float:right;">
-                      <button id="tplus">Tambah +1</button>              
-                    </span>
-
-                  </div>
-                  <!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2">
-                    Group Unit &nbsp;&nbsp;&nbsp;&nbsp;: <select id="group_unit"><option></option></select>
-                    <br><br>
-                    <table id="dt-table" class="table table-condensed" width="100%"></table>
-                    <!-- <hr> -->
-                    <span style="float:right;">
-                      <button id="tplusx">Tambah ++</button>              
-                    </span>
-                  </div>
-                </div>
-                <!-- /.tab-content -->
-              </div>
+              Station : <select id="station"><option></option></select>
+              <br>
+              <br>
+              Unit : <select id="unit"><option></option></select>
+              <br>
+              <br>
+              Sub Unit : <select id="sub_unit"><option></option></select>
+              <br>
+              <hr>
+              <span style="float:right;">
+                <button id="tplus">Tambah</button>              
+              </span>
+              <table id="dt-table" class="display" width="100%"></table>
             </div>
           </div>
         </div>
@@ -88,7 +51,6 @@ if($this->session->kategori != 3){
 
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <?php  ?>
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
@@ -148,14 +110,7 @@ if($this->session->kategori != 3){
             <option>31</option>
           </select>
           <br><br>
-          <div id="scrll" style="
-						height: 450px;
-						width: 100%;
-						overflow: auto;
-					">
-            <div id='my-spreadsheet'></div>
-            </div>
-          <!-- <button id="simpan" class="btn btn-small btn-danger">Simpan</button> -->
+          <div id='my-spreadsheet'></div>      
         </div>
       </div>
       <!-- /.row -->
