@@ -1,12 +1,14 @@
 $(function () {
     var problem_chart = $("#donut-chart");
 
+    var breakdown = $("#breakdown");
     var unit_problem = $("#unit_problem");
     var wo_unfinished = $("#wo_unfinished");
     var wo_baru = $("#wo_baru");
     var mill_availibility = $("#mill_avaibility");
 
     function refresh(d){
+        breakdown.html(d['breakdown']);
         unit_problem.html(d['unit_problem']);
         wo_unfinished.html(d['wo_unfinished']);
         wo_baru.html(d['wo_baru']);
