@@ -74,7 +74,7 @@
             <option value="12">desember</option>
           </select>
           Tanggal : 
-          <select id="tanggal">
+          <!-- <select id="tanggal">
             <option>01</option>
             <option>02</option>
             <option>03</option>
@@ -106,7 +106,7 @@
             <option>29</option>
             <option>30</option>
             <option>31</option>
-          </select>
+          </select> -->
           <br><br>
           <div id='my-spreadsheet'></div>      
         </div>
