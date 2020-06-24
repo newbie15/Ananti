@@ -20,9 +20,26 @@
         <a class="btn btn-app btn-warning" id="sync_activity">
           <i class="fa fa-refresh"></i> Sync w/ Louhan
         </a>
-        <a class="btn btn-app btn-success" id="download_activity" href="#" role="button">
+        <div class="btn-group" style="margin-left: 10px;">
+          <a class="btn btn-app btn-success" id="download_activity" href="#" role="button">
+            <i class="fa fa-file-excel-o"></i> Download
+          </a>
+          <!-- <button type="button" class="btn btn-success">Action</button> -->
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="height: 60px;">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" id="download_activity_bulanan">Download 1 Month</a></li>
+            <!-- <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li> -->
+          </ul>
+        </div>       
+        <!-- <a class="btn btn-app btn-success" id="download_activity" href="#" role="button">
           <i class="fa fa-file-excel-o"></i> Download
-        </a>
+        </a> -->
         <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
           <i class="fa fa-search-plus"></i> Cari WO
         </a>
