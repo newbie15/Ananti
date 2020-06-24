@@ -73,7 +73,7 @@
             <option value="11">november</option>
             <option value="12">desember</option>
           </select>
-          Tanggal : 
+          <!-- Tanggal :  -->
           <!-- <select id="tanggal">
             <option>01</option>
             <option>02</option>
