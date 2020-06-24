@@ -299,7 +299,8 @@ $(document).ready(function () {
             if(element[1]=="null"){
                 shtml += "<td><button class=\"btn btn-info\" area=\"'" + element[2] + "<br>" + element[3] + "<br>" + element[4]+"'\">Pick WO</button></td>";
             }else{
-                shtml += "<td>"+element[1]+"</td>";
+                shtml += "<td><button class=\"btn btn-success\" area=\"'" + element[2] + "<br>" + element[3] + "<br>" + element[4] + "'\">" + element[1] + "</button></td>";
+                // shtml += "<td>"+element[1]+"</td>";
             }
             shtml += "<td>"+element[2]+"</td>";
             shtml += "<td>Problem : "+element[3]+"<br>Penyelesaian:"+element[4]+"</td>";
@@ -519,6 +520,11 @@ $(document).ready(function () {
         }else if(str=="Verify"){
             console.log("ya benar verify");
             // add_unplan_wo(val_wo, area);
+        }else{
+            var strx = str.split("-");
+            if(strx[0]==$("#pabrik").val()){
+                alert(strx[0]);
+            }
         }
     });
 
@@ -570,6 +576,10 @@ $(document).ready(function () {
         window.open(BASE_URL + "index.php/activity/download_activity_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
+    $("#download_activity_bulanan").click(function () {
+    	// station_refresh();
+        window.open(BASE_URL + "index.php/activity/download_activity_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val());
+    });
 
 
     $("#simpan").click(function () {
@@ -691,7 +701,6 @@ $(document).ready(function () {
     });
 
     function ajax_refresh() {
-
         $.ajax({
             method: "POST",
             url: BASE_URL + "activity/load",
