@@ -299,7 +299,8 @@ $(document).ready(function () {
             if(element[1]=="null"){
                 shtml += "<td><button class=\"btn btn-info\" onclick=\"create_unplan_wo()\">Create WO</button></td>";
             }else{
-                shtml += "<td>"+element[1]+"</td>";
+                shtml += "<td><button class=\"btn btn-success\" area=\"'" + element[2] + "<br>" + element[3] + "<br>" + element[4] + "'\">" + element[1] + "</button></td>";
+                // shtml += "<td>"+element[1]+"</td>";
             }
             shtml += "<td>"+element[2]+"</td>";
             shtml += "<td>Problem : "+element[3]+"<br>Penyelesaian:"+element[4]+"</td>";
@@ -515,6 +516,11 @@ $(document).ready(function () {
         }else if(str=="Verify"){
             console.log("ya benar verify");
             // add_unplan_wo(val_wo, area);
+        }else{
+            var strx = str.split("-");
+            if(strx[0]==$("#pabrik").val()){
+                alert(strx[0]);
+            }
         }
     });
 
@@ -566,6 +572,10 @@ $(document).ready(function () {
         window.open(BASE_URL + "index.php/activity/download_activity_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
+    $("#download_activity_bulanan").click(function () {
+    	// station_refresh();
+        window.open(BASE_URL + "index.php/activity/download_activity_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val());
+    });
 
 
     $("#simpan").click(function () {
@@ -591,8 +601,102 @@ $(document).ready(function () {
         });
     });
 
-    function ajax_refresh() {
+    $("#sharewa").click(function () {
+        share_wa();
+    });
 
+    function share_wa() {
+
+        // $('#my-spreadsheet').jexcel('orderBy', 5);
+
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+
+        var tanggal = $("#tanggal").val() + "-" + $("#bulan").val() + "-" + $("#tahun").val();
+
+        var text_wa = "Realisasi Harian " + $("#pabrik").val() + "\n\n";
+        text_wa += "Tanggal : " + tanggal;
+
+        text_wa += "\n" + "Planned Maintenance (PM) : Preventive (P) – Corrective (C) – Predictive (Pd)" + "\n";
+
+        text_wa_m = text_wa;
+
+        dt_mpp = "";
+        i = 0;
+
+        setTimeout(() => {
+            dx.forEach(element => {
+                console.log(element);
+
+                dt = element[1].split("\n");
+
+                // if (dt_mpp != element[5]) {
+                //     text_wa_m += "\n" + "MPP: " + (element[4]) + " *" + (element[5]) + "*";
+                //     dt_mpp = element[5];
+                // }
+
+                if (dt[1] == dt[2]) {
+                    text_wa_m += "\n  " + dt[0] + " | " + dt[1];
+                } else {
+                    text_wa_m += "\n  " + dt[0] + " | " + dt[1] + " | " + dt[2];
+                }
+
+                text_wa_m += "\n  Problem : " + dt[3];
+                text_wa_m += "\n  Perbaikan : " + element[2];
+                text_wa_m += "\n  Status : " + element[3] ;
+                if (element[3]=="Selesai"){
+                    text_wa_m += " ✅ ";
+                }else{
+                    text_wa_m += " ❌ ";
+                }
+                text_wa_m += "\n";
+
+                x = data_detail[element[1]];
+
+                console.log(x);
+
+            });
+
+            dt_station = "";
+
+            console.log(text_wa);
+
+            console.log("\n\n");
+            console.log(text_wa_m);
+
+            $("#generatewa").text(text_wa_m);
+
+        }, 15);
+
+
+        // https://api.whatsapp.com/send?phone=91XXXXXXXXXX&text=urlencodedtext
+        // var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+
+        // var href = "whatsapp://send?text=" + encodeURI(text_wa);
+        // $("#sharewa").attr("target", "_blank");
+        // $("#sharewa").attr("href", href);
+    }
+
+    $("#bcopy").click(function () {
+        $("#generatewa").select();
+        document.execCommand("copy");
+    });
+
+    $("#bwaweb").click(function () {
+        var text_wa = $("#generatewa").val();
+        var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+        $(this).attr("target", "_blank");
+        $(this).attr("href", href);
+    });
+
+    $("#bwaapp").click(function () {
+        var text_wa = $("#generatewa").val();
+        var href = "whatsapp://send?text=" + encodeURI(text_wa);
+        $(this).attr("target", "_blank");
+        $(this).attr("href", href);
+    });
+
+    function ajax_refresh() {
         $.ajax({
             method: "POST",
             url: BASE_URL + "activity/load",

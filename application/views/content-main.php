@@ -21,7 +21,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3><span id="breakdown">0</span><sup style="font-size: 20px">%</sup></h3>
+              <h3><span id="breakdown">0</span> Jam<sup style="font-size: 20px"></sup></h3>
               <p>Breakdown</p>
             </div>
             <div class="icon">

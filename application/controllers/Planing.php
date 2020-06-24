@@ -437,4 +437,122 @@ class Planing extends CI_Controller {
 		echo "\t"; echo number_format(($pdc+$prv+$cor),2,",","");
 
 	}
+
+	public function download_plan_bulanan(){
+		$id_pabrik = $this->uri->segment(3);
+		$tahun = urldecode($this->uri->segment(4));
+		$bulan = urldecode($this->uri->segment(5));
+		// $tanggal = urldecode($this->uri->segment(6));
+
+		// $id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+
+		$tanggal = $tahun."-".$bulan;//."-".$tanggal;
+
+		$statistik = array();
+
+		$kquery = $this->db->query(
+			"SELECT * FROM `master_karyawan` WHERE `id_pabrik` = '$id_pabrik' ORDER BY nama ASC
+		");
+
+		foreach ($kquery->result() as $row){
+			$x = $row->nama;
+			// array_push($statistik, "x" => ""); 
+			$y = array(0,0,0);
+			$statistik[$x] = $y;
+		}
+
+		// print_r($statistik);
+
+		$query = $this->db->query(
+			"SELECT * FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND `tanggal` LIKE '%$tanggal%'
+		");
+
+		header('Content-Type: aplication/vnd-ms-excel; charset=utf-8');
+		header('Content-Disposition: attachment; filename=PLAN_'.$id_pabrik.'_'.$tanggal.'.xls');
+
+		echo "SITE\t";
+		echo "TANGGAL\t";
+		echo "NAMA KARYAWAN\t";
+		echo "WO\t";
+		echo "STATION\t";
+		echo "UNIT\t";
+		echo "SUB UNIT\t";
+		echo "PROBLEM\t";
+		echo "KATEGORI\t";
+		echo "JAM START\t";
+		echo "JAM STOP\t";
+		echo "MAN HOUR\t";
+		echo "SCOPE OF WORK";
+		echo "\n";
+
+		foreach ($query->result() as $row)
+		{
+			$nama = explode(";",$row->nama_mpp);
+
+			$time = round(($row->time / 60),2);
+			// round(5.055, 2)
+
+			// $jam = intval($row->time / 60);
+			// $menit = $row->time % 60;
+
+			// if($jam<10){
+			// 	$jam = "0".$jam;
+			// }
+
+			// $time = $jam.":".$menit;
+
+			foreach ($nama as $key => $value) {
+				echo $row->id_pabrik; echo "\t";
+				echo $row->tanggal; echo "\t";
+				echo $value; echo "\t";
+				echo $row->no_wo; echo "\t";
+				echo $row->station; echo "\t";
+				echo $row->unit; echo "\t";
+				echo $row->sub_unit; echo "\t";
+				echo $row->problem; echo "\t";
+				echo $row->tipe; echo "\t";
+				echo $row->start; echo "\t";
+				echo $row->stop; echo "\t";
+				echo number_format($time,2,",",""); echo "\t";
+				echo $row->plan; echo "\n";
+
+				// if($value != null || $value != ''){
+				// 	if($row->tipe == "Corrective") { $statistik[$value][1] += $time; }  
+				// 	if($row->tipe == "Preventive") { $statistik[$value][0] += $time; }  
+				// 	if($row->tipe == "Predictive") { $statistik[$value][2] += $time; }  
+				// }
+
+
+			}
+		}
+		// echo "\n\n";
+		// // print_r($statistik);
+		// echo "nama\t";
+		// echo "corrective\t";
+		// echo "preventive\t";
+		// echo "predictive\t";
+		// echo "total\n";
+
+		// $cor = 0;
+		// $prv = 0;
+		// $pdc = 0;
+
+		// foreach ($statistik as $key => $value) {
+		// // 	# code...
+		// 	echo $key; echo "\t";
+
+		// 	echo number_format($value[0],2,",",""); echo "\t"; $cor+= $value[0];
+		// 	echo number_format($value[1],2,",",""); echo "\t"; $prv+= $value[1];
+		// 	echo number_format($value[2],2,",",""); echo "\t"; $pdc+= $value[2];
+		// 	echo number_format(($value[0]+$value[1]+$value[2]),2,",","");
+
+		// 	echo "\n";
+		// }
+		// echo "\t"; echo number_format($prv,2,",","");
+		// echo "\t"; echo number_format($cor,2,",","");
+		// echo "\t"; echo number_format($pdc,2,",","");
+		// echo "\t"; echo number_format(($pdc+$prv+$cor),2,",","");
+
+	}
 }

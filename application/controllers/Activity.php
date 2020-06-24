@@ -448,4 +448,94 @@ class Activity extends CI_Controller {
 
 	}	
 
+	public function download_activity_bulanan(){
+		$id_pabrik = $this->uri->segment(3);
+		$tahun = urldecode($this->uri->segment(4));
+		$bulan = urldecode($this->uri->segment(5));
+		// $tanggal = urldecode($this->uri->segment(6));
+
+		// $id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+
+		$tanggal = $tahun."-".$bulan;//."-".$tanggal;
+
+		$statistik = array();
+
+		$kquery = $this->db->query(
+			"SELECT * FROM `master_karyawan` WHERE `id_pabrik` = '$id_pabrik' ORDER BY nama ASC
+		");
+
+		foreach ($kquery->result() as $row){
+			$x = $row->nama;
+			// array_push($statistik, "x" => ""); 
+			$y = array(0,0,0);
+			$statistik[$x] = $y;
+		}
+
+		// print_r($statistik);
+
+		$query = $this->db->query(
+			"SELECT 
+			m_activity_detail.id_pabrik,
+			m_activity_detail.tanggal,
+			m_activity_detail.nama_teknisi,
+			m_activity_detail.no_wo,
+			m_wo.station,
+			m_wo.unit,
+			m_wo.sub_unit,
+			m_wo.kategori,
+			m_activity_detail.r_mulai,
+			m_activity_detail.r_selesai,
+			m_activity_detail.realisasi,
+			m_activity.perbaikan
+			FROM
+			m_activity_detail
+			RIGHT JOIN m_activity 
+			ON m_activity_detail.no_wo = m_activity.no_wo
+			AND m_activity_detail.tanggal = m_activity.tanggal
+			LEFT JOIN m_wo
+			ON m_activity.no_wo = m_wo.no_wo
+			WHERE m_activity.`id_pabrik` = '$id_pabrik' AND m_activity.`tanggal` LIKE '%$tanggal%'
+			"
+		);
+
+		header('Content-Type: aplication/vnd-ms-excel; charset=utf-8');
+		header('Content-Disposition: attachment; filename=REALISASI_'.$id_pabrik.'_'.$tanggal.'.xls');
+
+		echo "SITE\t";
+		echo "TANGGAL\t";
+		echo "NAMA KARYAWAN\t";
+		echo "WO\t";
+		echo "STATION\t";
+		echo "UNIT\t";
+		echo "SUB UNIT\t";
+		echo "KATEGORI\t";
+		echo "JAM START\t";
+		echo "JAM STOP\t";
+		echo "MAN HOUR\t";
+		echo "SCOPE OF WORK";
+		echo "\n";
+
+		foreach ($query->result() as $row)
+		{
+			// $nama = explode(";",$row->nama_mpp);
+
+			$realisasi = round(($row->realisasi / 60),2);
+
+
+			echo $row->id_pabrik; echo "\t";
+			echo $row->tanggal; echo "\t";
+			echo $row->nama_teknisi; echo "\t";
+			echo $row->no_wo; echo "\t";
+			echo $row->station; echo "\t";
+			echo $row->unit; echo "\t";
+			echo $row->sub_unit; echo "\t";
+			echo $row->kategori; echo "\t";
+			echo $row->r_mulai; echo "\t";
+			echo $row->r_selesai; echo "\t";
+			echo number_format($realisasi,2,",",""); echo "\t";
+			echo $row->perbaikan; echo "\n";
+		}
+	}
+
 }

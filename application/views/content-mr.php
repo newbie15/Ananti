@@ -4,15 +4,17 @@
     <section class="content-header">
       <h1>
         <ul class="nav nav-tabs">
-          <li class=""><a href="<?php echo base_url("breakdown")?>" aria-expanded="true">Breakdown</a></li>
-          <li class="active"><a href="" aria-expanded="false">Summary</a></li>
-          <!-- <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li> -->
+          <li class="active"><a href="" aria-expanded="true">Material Requisition</a></li>
+          <li class=""><a href="<?php echo base_url("breakdown/summary")?>" aria-expanded="false">Summary</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
-        <a class="btn btn-app btn-success" id="downloadcsv">
-          <i class="fa fa-file-excel-o"></i> Download
+        <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
+          <i class="fa fa-plus"></i> Tambah
+        </a>
+        <a class="btn btn-app btn-primary" id="simpan">
+          <i class="fa fa-save"></i> Simpan
         </a>
       </ol>
     </section>
@@ -74,7 +76,7 @@
             <option value="12">desember</option>
           </select>
           Tanggal : 
-          <!-- <select id="tanggal">
+          <select id="tanggal">
             <option>01</option>
             <option>02</option>
             <option>03</option>
@@ -106,7 +108,7 @@
             <option>29</option>
             <option>30</option>
             <option>31</option>
-          </select> -->
+          </select>
           <br><br>
           <div id='my-spreadsheet'></div>      
         </div>
