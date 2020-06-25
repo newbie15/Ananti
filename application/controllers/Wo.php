@@ -231,6 +231,31 @@ class Wo extends CI_Controller {
         echo(json_encode($query->result()));
 	}
 
+	public function close_wo_unfinished(){
+		$pabrik = $_REQUEST['id_pabrik'];
+		$wo = $_REQUEST['wo'];
+		$tanggal_close = date("Y-m-d");
+
+		$sql = "UPDATE `ananti`.`m_wo` SET `status` = 'close', tanggal_closing = '$tanggal_close' ";
+		$i = 0;
+		foreach ($wo as $key => $value) {
+			if($i==0){
+				$sql = $sql . "WHERE `m_wo`.`no_wo` = '$value' ";
+				$i++;
+			}else{
+				$sql = $sql . "OR `m_wo`.`no_wo` = '$value' ";
+			}
+		}
+
+		if ($this->db->simple_query($sql)){
+			echo "OK";
+		}else{
+			echo "NOK";
+		}
+		
+	}
+
+
 	public function unfinished(){
 
 		$output['content'] = "test";
