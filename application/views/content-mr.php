@@ -22,24 +22,17 @@
     <!-- Main content -->
     <section class="content">
       <div class="modal fade in" id="modal-default" style="display: none;">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width: 1300px;">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Tambah Breakdown / Problem</h4>
+              <h4 class="modal-title">Tambah MR</h4>
             </div>
             <div class="modal-body">
-              <h3 id="dpabrik"></h3>
-              Station : <select id="station"><option></option></select>
+              <h4 id="dpabrik">Copy Paste Data MR Gudang</h4>
+              <div id="mr-spreadsheet" style="overflow:auto;"></div>
               <br>
-              <br>
-              Unit : <select id="unit"><option></option></select>
-              <br>
-              <br>
-              Sub Unit : <select id="sub_unit"><option></option></select>
-              <br>
-              <hr>
               <span style="float:right;">
                 <button id="tplus">Tambah</button>              
               </span>
@@ -110,7 +103,7 @@
             <option>31</option>
           </select>
           <br><br>
-          <div id='my-spreadsheet'></div>      
+          <div id='my-spreadsheet' style="overflow:auto;"></div>      
         </div>
       </div>
       <!-- /.row -->
