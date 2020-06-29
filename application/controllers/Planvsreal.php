@@ -331,22 +331,24 @@ class Planvsreal extends CI_Controller {
 		// $tahun = "2020";
 
 		$query_wo_list = $this->db->query(
-			"SELECT DISTINCT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status,`m_wo`.station,
-			`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem,`m_wo`.kategori as asal_wo , `m_planing`.tipe as kategori
-			FROM `m_planing`,m_wo WHERE 
-			MONTH(`m_planing`.tanggal) = $bulan AND YEAR(`m_planing`.tanggal) = $tahun
-			AND `m_planing`.no_wo = m_wo.no_wo 
-			AND m_wo.id_pabrik = '$id_pabrik'
+			"SELECT * from (
+				SELECT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status,`m_wo`.station,
+				`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem,`m_wo`.kategori as asal_wo , `m_planing`.tipe as kategori
+				FROM `m_planing`,m_wo WHERE 
+				MONTH(`m_planing`.tanggal) = $bulan AND YEAR(`m_planing`.tanggal) = $tahun
+				AND `m_planing`.no_wo = m_wo.no_wo 
+				AND m_wo.id_pabrik = '$id_pabrik'
 
-			UNION 
+				UNION 
 
-			SELECT DISTINCT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status, `m_wo`.station,
-			`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem, null as asal_wo, null as kategori
-			FROM `m_activity`,m_wo WHERE 
-			MONTH (`m_activity`.tanggal) = $bulan AND
-			YEAR (`m_activity`.tanggal) = $tahun AND
-			`m_activity`.no_wo = m_wo.no_wo 
-			AND m_wo.id_pabrik = '$id_pabrik'
+				SELECT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status, `m_wo`.station,
+				`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem, null as asal_wo, null as kategori
+				FROM `m_activity`,m_wo WHERE 
+				MONTH (`m_activity`.tanggal) = $bulan AND
+				YEAR (`m_activity`.tanggal) = $tahun AND
+				`m_activity`.no_wo = m_wo.no_wo 
+				AND m_wo.id_pabrik = '$id_pabrik'
+			) as tabel group by tabel.no_wo
 		");
 
 		$query_plan_list = $this->db->query(
