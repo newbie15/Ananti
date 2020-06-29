@@ -417,47 +417,6 @@ class Planvsreal extends CI_Controller {
 				$date = explode("-",$tanggal);
 				$tgl = $date[2];
 				switch ($tgl) {
-				case '01': $phpExcel->setActiveSheetIndex(0)->setCellValue('N'.$numrow, round($value/60,2)); break;
-				case '02': $phpExcel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, round($value/60,2)); break;
-				case '03': $phpExcel->setActiveSheetIndex(0)->setCellValue('R'.$numrow, round($value/60,2)); break;
-				case '04': $phpExcel->setActiveSheetIndex(0)->setCellValue('T'.$numrow, round($value/60,2)); break;
-				case '05': $phpExcel->setActiveSheetIndex(0)->setCellValue('V'.$numrow, round($value/60,2)); break;
-				case '06': $phpExcel->setActiveSheetIndex(0)->setCellValue('X'.$numrow, round($value/60,2)); break;
-				case '07': $phpExcel->setActiveSheetIndex(0)->setCellValue('Z'.$numrow, round($value/60,2)); break;
-				case '08': $phpExcel->setActiveSheetIndex(0)->setCellValue('AB'.$numrow, round($value/60,2)); break;
-				case '09': $phpExcel->setActiveSheetIndex(0)->setCellValue('AD'.$numrow, round($value/60,2)); break;
-				case '10': $phpExcel->setActiveSheetIndex(0)->setCellValue('AF'.$numrow, round($value/60,2)); break;
-				case '11': $phpExcel->setActiveSheetIndex(0)->setCellValue('AH'.$numrow, round($value/60,2)); break;
-				case '12': $phpExcel->setActiveSheetIndex(0)->setCellValue('AJ'.$numrow, round($value/60,2)); break;
-				case '13': $phpExcel->setActiveSheetIndex(0)->setCellValue('AL'.$numrow, round($value/60,2)); break;
-				case '14': $phpExcel->setActiveSheetIndex(0)->setCellValue('AN'.$numrow, round($value/60,2)); break;
-				case '15': $phpExcel->setActiveSheetIndex(0)->setCellValue('AP'.$numrow, round($value/60,2)); break;
-				case '16': $phpExcel->setActiveSheetIndex(0)->setCellValue('AR'.$numrow, round($value/60,2)); break;
-				case '17': $phpExcel->setActiveSheetIndex(0)->setCellValue('AT'.$numrow, round($value/60,2)); break;
-				case '18': $phpExcel->setActiveSheetIndex(0)->setCellValue('AV'.$numrow, round($value/60,2)); break;
-				case '19': $phpExcel->setActiveSheetIndex(0)->setCellValue('AX'.$numrow, round($value/60,2)); break;
-				case '20': $phpExcel->setActiveSheetIndex(0)->setCellValue('AZ'.$numrow, round($value/60,2)); break;
-				case '21': $phpExcel->setActiveSheetIndex(0)->setCellValue('BB'.$numrow, round($value/60,2)); break;
-				case '22': $phpExcel->setActiveSheetIndex(0)->setCellValue('BD'.$numrow, round($value/60,2)); break;
-				case '23': $phpExcel->setActiveSheetIndex(0)->setCellValue('BF'.$numrow, round($value/60,2)); break;
-				case '24': $phpExcel->setActiveSheetIndex(0)->setCellValue('BH'.$numrow, round($value/60,2)); break;
-				case '25': $phpExcel->setActiveSheetIndex(0)->setCellValue('BJ'.$numrow, round($value/60,2)); break;
-				case '26': $phpExcel->setActiveSheetIndex(0)->setCellValue('BL'.$numrow, round($value/60,2)); break;
-				case '27': $phpExcel->setActiveSheetIndex(0)->setCellValue('BN'.$numrow, round($value/60,2)); break;
-				case '28': $phpExcel->setActiveSheetIndex(0)->setCellValue('BP'.$numrow, round($value/60,2)); break;
-				case '29': $phpExcel->setActiveSheetIndex(0)->setCellValue('BR'.$numrow, round($value/60,2)); break;
-				case '30': $phpExcel->setActiveSheetIndex(0)->setCellValue('BT'.$numrow, round($value/60,2)); break;
-				case '31': $phpExcel->setActiveSheetIndex(0)->setCellValue('BV'.$numrow, round($value/60,2)); break;					
-				}
-			}
-			}
-
-			if(isset($real[$row->no_wo])){
-			foreach ($real[$row->no_wo] as $tanggal => $value) {
-				# code...
-				$date = explode("-",$tanggal);
-				$tgl = $date[2];
-				switch ($tgl) {
 				case '01': $phpExcel->setActiveSheetIndex(0)->setCellValue('O'.$numrow, round($value/60,2)); break;
 				case '02': $phpExcel->setActiveSheetIndex(0)->setCellValue('Q'.$numrow, round($value/60,2)); break;
 				case '03': $phpExcel->setActiveSheetIndex(0)->setCellValue('S'.$numrow, round($value/60,2)); break;
@@ -488,7 +447,49 @@ class Planvsreal extends CI_Controller {
 				case '28': $phpExcel->setActiveSheetIndex(0)->setCellValue('BQ'.$numrow, round($value/60,2)); break;
 				case '29': $phpExcel->setActiveSheetIndex(0)->setCellValue('BS'.$numrow, round($value/60,2)); break;
 				case '30': $phpExcel->setActiveSheetIndex(0)->setCellValue('BU'.$numrow, round($value/60,2)); break;
-				case '31': $phpExcel->setActiveSheetIndex(0)->setCellValue('BW'.$numrow, round($value/60,2)); break;				
+				case '31': $phpExcel->setActiveSheetIndex(0)->setCellValue('BW'.$numrow, round($value/60,2)); break;					
+				}
+			}
+			}
+
+			if(isset($real[$row->no_wo])){
+			foreach ($real[$row->no_wo] as $tanggal => $value) {
+				# code...
+				$date = explode("-",$tanggal);
+				$tgl = $date[2];
+				switch ($tgl) {
+
+				case '01': $phpExcel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, round($value/60,2)); break;
+				case '02': $phpExcel->setActiveSheetIndex(0)->setCellValue('R'.$numrow, round($value/60,2)); break;
+				case '03': $phpExcel->setActiveSheetIndex(0)->setCellValue('T'.$numrow, round($value/60,2)); break;
+				case '04': $phpExcel->setActiveSheetIndex(0)->setCellValue('V'.$numrow, round($value/60,2)); break;
+				case '05': $phpExcel->setActiveSheetIndex(0)->setCellValue('X'.$numrow, round($value/60,2)); break;
+				case '06': $phpExcel->setActiveSheetIndex(0)->setCellValue('Z'.$numrow, round($value/60,2)); break;
+				case '07': $phpExcel->setActiveSheetIndex(0)->setCellValue('AB'.$numrow, round($value/60,2)); break;
+				case '08': $phpExcel->setActiveSheetIndex(0)->setCellValue('AD'.$numrow, round($value/60,2)); break;
+				case '09': $phpExcel->setActiveSheetIndex(0)->setCellValue('AF'.$numrow, round($value/60,2)); break;
+				case '10': $phpExcel->setActiveSheetIndex(0)->setCellValue('AH'.$numrow, round($value/60,2)); break;
+				case '11': $phpExcel->setActiveSheetIndex(0)->setCellValue('AJ'.$numrow, round($value/60,2)); break;
+				case '12': $phpExcel->setActiveSheetIndex(0)->setCellValue('AL'.$numrow, round($value/60,2)); break;
+				case '13': $phpExcel->setActiveSheetIndex(0)->setCellValue('AN'.$numrow, round($value/60,2)); break;
+				case '14': $phpExcel->setActiveSheetIndex(0)->setCellValue('AP'.$numrow, round($value/60,2)); break;
+				case '15': $phpExcel->setActiveSheetIndex(0)->setCellValue('AR'.$numrow, round($value/60,2)); break;
+				case '16': $phpExcel->setActiveSheetIndex(0)->setCellValue('AT'.$numrow, round($value/60,2)); break;
+				case '17': $phpExcel->setActiveSheetIndex(0)->setCellValue('AV'.$numrow, round($value/60,2)); break;
+				case '18': $phpExcel->setActiveSheetIndex(0)->setCellValue('AX'.$numrow, round($value/60,2)); break;
+				case '19': $phpExcel->setActiveSheetIndex(0)->setCellValue('AZ'.$numrow, round($value/60,2)); break;
+				case '20': $phpExcel->setActiveSheetIndex(0)->setCellValue('BB'.$numrow, round($value/60,2)); break;
+				case '21': $phpExcel->setActiveSheetIndex(0)->setCellValue('BD'.$numrow, round($value/60,2)); break;
+				case '22': $phpExcel->setActiveSheetIndex(0)->setCellValue('BF'.$numrow, round($value/60,2)); break;
+				case '23': $phpExcel->setActiveSheetIndex(0)->setCellValue('BH'.$numrow, round($value/60,2)); break;
+				case '24': $phpExcel->setActiveSheetIndex(0)->setCellValue('BJ'.$numrow, round($value/60,2)); break;
+				case '25': $phpExcel->setActiveSheetIndex(0)->setCellValue('BL'.$numrow, round($value/60,2)); break;
+				case '26': $phpExcel->setActiveSheetIndex(0)->setCellValue('BN'.$numrow, round($value/60,2)); break;
+				case '27': $phpExcel->setActiveSheetIndex(0)->setCellValue('BP'.$numrow, round($value/60,2)); break;
+				case '28': $phpExcel->setActiveSheetIndex(0)->setCellValue('BR'.$numrow, round($value/60,2)); break;
+				case '29': $phpExcel->setActiveSheetIndex(0)->setCellValue('BT'.$numrow, round($value/60,2)); break;
+				case '30': $phpExcel->setActiveSheetIndex(0)->setCellValue('BV'.$numrow, round($value/60,2)); break;					
+				case '31': $phpExcel->setActiveSheetIndex(0)->setCellValue('BX'.$numrow, round($value/60,2)); break;
 				}
 			}
 			}			

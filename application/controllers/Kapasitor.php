@@ -35,13 +35,21 @@ class Kapasitor extends CI_Controller {
 		$header['title'] = "Kapasitor";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
+			base_url("assets/jquery-ui-1.12.1/jquery-ui.min.css")
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
 		];
 
+		$header['customcss'] = "
+.ui-dialog, .ui-dialog-content {
+	box-sizing: content-box;
+	border-color: red;
+}		
+";		
 		$footer['js_files'] = [
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/numeral.min.js"),
+			base_url("assets/jquery-ui-1.12.1/jquery-ui.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/kapasitor.js"),
