@@ -14,6 +14,8 @@ var DEBUG = 1;
 
 var BASE_URL = "";
 
+var INET_URL = "http://159.65.135.69/Ananti/";
+
 
 
 if(CUSTOM == 1) {

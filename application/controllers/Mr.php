@@ -25,7 +25,7 @@ class Mr extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Breakdown";
 		
-		$header['title'] = "Breakdown";
+		$header['title'] = "Material Requisition";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -38,7 +38,7 @@ class Mr extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/breakdown.js"),
+			base_url("assets/mdp/mr.js"),
 		];
 		
 		$output['content'] = '';
@@ -74,34 +74,29 @@ class Mr extends CI_Controller {
 
 	public function load(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
-
 		$tanggal = $_REQUEST['tahun'].'-'.$_REQUEST['bulan'].'-'.$_REQUEST['tanggal'];
 
 		$query = $this->db->query(
-			"SELECT station,unit,sub_unit,problem,jenis,tipe,tindakan,mulai,selesai,keterangan
-			FROM m_breakdown_pabrik where id_pabrik = '$id_pabrik' AND tanggal = '$tanggal';
+			"SELECT *
+			FROM m_mr where id_pabrik = '$id_pabrik' AND tanggal = '$tanggal';
 		");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$mulai = explode(" ",$row->mulai);
-			$selesai = explode(" ",$row->selesai);
-
-			$d[$i][0] = $row->station;
-			$d[$i][1] = $row->unit;
-			$d[$i][2] = $row->sub_unit;
-			$d[$i][3] = $row->problem;
-			$d[$i][4] = $row->jenis;
-			$d[$i][5] = $row->tipe;
-			$d[$i][6] = $row->tindakan;
-			$d[$i][7] = $mulai[0];
-			$d[$i][8] = substr($mulai[1], 0, -3);
-			$d[$i][9] = $selesai[0];
-			$d[$i][10] = substr($selesai[1], 0, -3);
-			$d[$i++][11] = $row->keterangan;
+			$d[$i][0] = $row->part_no;
+			$d[$i][1] = $row->part_desc;
+			$d[$i][2] = $row->spec1;
+			$d[$i][3] = $row->um;
+			$d[$i][4] = $row->qty;
+			$d[$i][5] = $row->total_cost;
+			$d[$i][6] = $row->cost_center;
+			$d[$i][7] = $row->kategori;
+			$d[$i][8] = $row->no_wo;
+			$d[$i][9] = $row->station;
+			$d[$i][10] = $row->unit;
+			$d[$i++][11] = $row->sub_unit;
 		}
 		echo json_encode($d);
 	}
@@ -111,44 +106,44 @@ class Mr extends CI_Controller {
 		$pabrik = $_REQUEST['id_pabrik'];
 		// $station = $_REQUEST['station'];
 		$tanggal = $_REQUEST['tahun']."-".$_REQUEST['bulan']."-".$_REQUEST['tanggal'];
-		$this->db->query("DELETE FROM `m_breakdown_pabrik` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$this->db->query("DELETE FROM `m_mr` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 
-
+		$datax = array();
 
 		foreach ($data as $key => $value) {
-			$tanggal_mulai = str_replace(" 00:00:00","",$value[7]);
-			$tanggal_stop = str_replace(" 00:00:00","",$value[9]);
-
-			$jam_mulai = $value[8].":00";
-			$jam_stop = $value[10].":00";
-
-
 			// $this->db->insert
 			$data = array(
-				'tanggal' => $tanggal,
 				'id_pabrik' => $pabrik,
-				'station' => $value[0],
-				'unit' => $value[1],
-				'sub_unit' => $value[2],
-				'problem' => $value[3],
-				'jenis' => $value[4],
-				'tipe' => $value[5],
-				'tindakan' => $value[6],
-				'mulai' => $tanggal_mulai." ".$jam_mulai,
-				'selesai' => $tanggal_stop." ".$jam_stop,
-				'keterangan' => $value[11],
+				'tanggal' => $tanggal,
+
+				'part_no' => $value[0],
+				'part_desc' => $value[1],
+
+				'spec1' => $value[2],
+				'um' => $value[3],
+				'qty' => $value[4],
+				'total_cost' => $value[5],
+				'cost_center' => $value[6],
+				'kategori' => $value[7],
+				'no_wo' => $value[8],
+
+				'station' => $value[9],
+				'unit' => $value[10],
+				'sub_unit' => $value[11],
+
+				
 			);
 			// print_r($data);
 			if($value[0]!=""){
-				$this->db->insert('m_breakdown_pabrik', $data);
+				// $this->db->insert('m_mr', $data);
+				array_push($datax,$data);
 			}
 		}
-		// echo $value[6]." ".$value[7];
-		// echo "\n";
-		// echo $value[8]." ".$value[9];
-
+		if(count($datax)>0){
+			@$this->db->insert_batch('m_mr', $datax);
+		}
 	}
 
 
