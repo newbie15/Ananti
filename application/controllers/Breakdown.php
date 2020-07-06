@@ -185,6 +185,7 @@ class Breakdown extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Breakdown";
 		
+		$header['title'] = "Summary Breakdown";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -197,7 +198,7 @@ class Breakdown extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/breakdown.js"),
+			base_url("assets/mdp/breakdown_summary.js"),
 		];
 		
 		$output['content'] = '';
@@ -231,4 +232,39 @@ class Breakdown extends CI_Controller {
 
 	}
 
+	public function load_summary(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+
+		$tanggal = $_REQUEST['tahun'].'-'.$_REQUEST['bulan'];
+
+		$query = $this->db->query(
+			"SELECT 
+			tanggal,
+			station, unit, sub_unit,
+			problem,
+			jenis,
+			tipe,
+			tindakan,
+			mulai,
+			selesai,
+			keterangan,
+			TIMESTAMPDIFF(MINUTE,mulai,selesai) as waktu
+			FROM m_breakdown_pabrik where id_pabrik = '$id_pabrik' AND tanggal like '%$tanggal%'
+			order by tanggal asc
+			;
+		");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->tanggal;
+			$d[$i][1] = $row->station."\n".$row->unit."\n".$row->sub_unit;
+			$d[$i][2] = $row->problem;
+			$d[$i][3] = $row->jenis;
+			$d[$i][4] = $row->tipe;
+			$d[$i++][5] = $row->waktu;
+		}
+		echo json_encode($d);
+	}	
 }

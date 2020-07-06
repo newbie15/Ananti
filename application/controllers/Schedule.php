@@ -438,6 +438,8 @@ class Schedule extends CI_Controller {
 			$i = (int) $s[4] + 1;
 			if($i < 10){
 				$no_wo = "0".$i;
+			}else{
+				$no_wo = $i;
 			}
 		}
 		// echo "=====\n";

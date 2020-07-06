@@ -290,6 +290,11 @@ $(document).ready(function () {
         window.open(BASE_URL + "index.php/planing/download_plan_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
+    $("#download_plan_bulanan").click(function () {
+    	// station_refresh();
+        window.open(BASE_URL + "index.php/planing/download_plan_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+    });
+
     $("#tambahwo").click(function () {
         refresh_modal();
     });

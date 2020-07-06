@@ -57,10 +57,42 @@ $(document).ready(function(){
         ajax_refresh();
     });
 
-    $("#simpan").click(function(){
+    $("#download").click(function(){
         $("#my-spreadsheet").jexcel("download");
     });
 
+    $("#simpan").click(function () {
+        var data_j = $('#my-spreadsheet').jexcel('getData');
+
+        var closed_wo = [];
+
+        data_j.forEach(element => {
+            // console.log(element);
+            if(element[6]=="close"){
+                closed_wo.push(element[0]);
+            }            
+        });
+
+        closed_wo.forEach(element => {
+            console.log(element);
+        });
+
+        if (confirm("anda yakin untuk close "+closed_wo.length+" WO ini ?")) {
+            $.ajax({
+                method: "POST",
+                url: BASE_URL + "wo/close_wo_unfinished",
+                data: {
+                    id_pabrik: $("#pabrik").val(),
+                    wo: closed_wo
+                }
+            }).done(function (msg) {
+                console.log(msg);
+                if(msg=="OK"){
+                    window.location.reload();
+                }
+            });
+        }
+    });
 
     // refresh();
     function ajax_refresh(){

@@ -65,4 +65,8 @@ class Login extends CI_Controller {
 		$this->session->kategori = "";
 		redirect("login");
 	}
+
+	public function cek_session(){
+		echo "?".$this->session->user;
+	}
 }

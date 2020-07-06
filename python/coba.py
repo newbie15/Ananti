@@ -7,8 +7,8 @@ import pprint
 import time
 import os
 
-# url = "http://159.65.135.69/Ananti/sync"
-url = "http://localhost/ananti/sync"
+url = "http://159.65.135.69/Ananti/sync"
+# url = "http://localhost/ananti/sync"
 
 id_pabrik = "SDI1"
 
