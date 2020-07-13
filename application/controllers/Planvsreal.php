@@ -401,7 +401,7 @@ class Planvsreal extends CI_Controller {
 
 		$i = 0;
 		foreach ($query_wo_list->result() as $row){
-			$numrow = $i+8;
+			$numrow = $i+9;
 			// $hour = round( $row->time / 60, 2);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $row->no_wo);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $row->tipe);
