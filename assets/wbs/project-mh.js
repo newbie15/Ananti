@@ -118,66 +118,14 @@ $(document).ready(function () {
 			// tableHeight: '400px',
 			onchange: handler,
 			// colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-			colHeaders: ['No WO<br>(PIMS)', 'Project ID<br>(IFS)', 'PT', 'Nama Project', 'Deskripsi Project', 'Tanggal<br>Start', 'Status', 'Tanggal<br>Closing'],
-			// colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
-			colWidths: [140, 80, 100, 225, 225, 90, 75, 90],
-			columns: [
-                { type: 'text', },
-				{ type: 'text', },
-				// { type: 'text', wordWrap: true },
-				{ type: 'dropdown', source: ['GSIP','GSDI','GSPP','SINP','NAL','BUMIHARJO','AAL1','SAM','TBM'] },
-				{ type: 'text', wordWrap: true },
-				{ type: 'text', wordWrap: true },
-				// { type: 'dropdown',source: ['M', 'E'] },
-				{ type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
-                {
-					type: 'dropdown',
-					source: ['open', 'in progress', 'fabrikasi', 'install', 'close']
-                },
-				{ type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
-			]
-		});
-
-		var data_mh = [
-			['marking', ''],
-			['cutting', ''],
-			['machining', ''],
-			['assembly', ''],
-			['welding', ''],
-			['painting', ''],
-			['balancing', ''],
-			['finishing', ''],
-		];
-		$('#my-mh').jexcel({
-			data: data_mh,
-			allowInsertColumn: false,
-			// tableOverflow: true,
-			// tableHeight: '400px',
-			onchange: handler,
-			// colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
 			colHeaders: ['Activity', 'Man Hour Plan'],
 			// colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
-			colWidths: [140, 120, 100, 250, 250, 100, 100, 100, 80],
+			colWidths: [140, 140, 100, 250, 250, 100, 100, 100, 80],
 			columns: [
                 { type: 'text', },
 				{ type: 'text', },
 			]
 		});
-
-		$('#my-spreadsheet').jexcel('updateSettings', {
-			table: function (instance, cell, col, row, val, id) {
-				if (col == 7) {
-					if (val == "open") {
-						$(cell).css('color', '#000000');
-						$(cell).css('background-color', '#ff0000');
-					} else if (val == "close") {
-						$(cell).css('color', '#000000');
-						$(cell).css('background-color', '#00ff00');
-					}
-				}
-			}
-		});
-
 	}
 
 	$("#pabrik").change(function () {
@@ -299,12 +247,12 @@ $(document).ready(function () {
 	function ajax_refresh() {
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "project/load",
+			url: BASE_URL + "project/load_mh",
 			data: {
-				id_pabrik: $("#pabrik").val(),
-				d: $("#tanggal").val(),
-				m: $("#bulan").val(),
-				y: $("#tahun").val(),
+                id_pabrik: $("#pabrik").val(),                
+				project_id: $("#tanggal").val(),
+				no_wo: $("#bulan").val(),
+				// y: $("#tahun").val(),
 			}
 		}).done(function (msg) {
 			console.log(msg);

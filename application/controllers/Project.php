@@ -24,8 +24,6 @@ class Project extends CI_Controller {
 
 		$this->load->database();
 		$this->load->helper('url');
-
-		// $this->load->library('grocery_CRUD');
 	}
 	
 	public function index()
@@ -79,8 +77,88 @@ class Project extends CI_Controller {
 		$this->load->view('header',$header);
 		$this->load->view('content-project',$output);
 		$this->load->view('footer',$footer);
-
 	}
+
+
+	public function mh()
+	{
+		$output['content'] = "test";
+		$output['main_title'] = "Work Order";
+		
+		$header['css_files'] = [
+			base_url("assets/jexcel/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/easyautocomplete/easy-autocomplete.min.css"),			
+
+		];
+
+		$footer['js_files'] = [
+			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
+			base_url("assets/jexcel/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/easyautocomplete/jquery.easy-autocomplete.min.js"),			
+			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
+			base_url("assets/wbs/project-mh.js"),
+		];
+			
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
+
+		$this->load->view('header',$header);
+		$this->load->view('content-project-mh',$output);
+		$this->load->view('footer',$footer);
+	}
+
+	public function load_mh()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$no_wo = $_REQUEST['no_wo'];
+		$pid = $_REQUEST['pid'];
+
+		$query = $this->db->query("SELECT * FROM w_project_mh where id_pabrik = '$id_pabrik' AND no_wo='$no_wo' AND project_id='$pid';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->marking;
+			$d[$i][1] = $row->cutting;
+			$d[$i][2] = $row->machining;
+			$d[$i][3] = $row->assembly;
+			$d[$i][4] = $row->welding;
+			$d[$i][5] = $row->painting;
+			$d[$i][6] = $row->balancing;
+			$d[$i][7] = $row->finishing;
+			$d[$i++][8] = $row->install;
+			// $d[$i++][7] = $row->tgl_close;
+		}
+		echo json_encode($d);
+	}	
+
 
 	public function load()
 	{
@@ -93,10 +171,7 @@ class Project extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->no_wo;
-			// $d[$i][1] = $row->station;
 			$d[$i][1] = $row->project_id;
-			// $d[$i][2] = $row->unit;
-			// $d[$i][3] = $row->sub_unit;
 			$d[$i][2] = $row->pt;
 			$d[$i][3] = $row->nama;
 			$d[$i][4] = $row->deskripsi;

@@ -6,6 +6,7 @@
         <!-- Create Work Order | Unfinished WO | Search WO -->
         <ul class="nav nav-tabs">
           <li class="active"><a href="#" aria-expanded="true">Project</a></li>
+          <li class=""><a href="<?php echo base_url("project/mh")?>" aria-expanded="true">Project MH</a></li>
           <li class=""><a href="<?php echo base_url("projectactivity")?>">Activity</a></li>
           <li class=""><a href="<?php echo base_url("projectmanhour")?>" aria-expanded="false">Project Man Hour</a></li>
 
@@ -125,16 +126,29 @@
             <option>31</option>
           </select>
           <br><br>
-          <div id="scrll" style="
-						height: 450px;
-						width: 100%;
-						overflow: auto;
-					">
-            <div id='my-spreadsheet'></div>
-            </div>
+
           <!-- <button id="simpan" class="btn btn-small btn-danger">Simpan</button> -->
+        </>
+      </div>
+      <div class="col-xs-9">
+        <div id="scrll" style="
+          height: 450px;
+          width: 100%;
+          overflow: auto;
+        ">
+          <div id='my-spreadsheet'></div>
         </div>
       </div>
+      <div class="col-xs-2">
+        Nama Project :
+        <br>Project ID :
+        <br>No Wo :
+        <br>Total Man Hour :
+        <br>
+        <br>
+        <div id='my-mh'></div>
+      </div>
+
       <!-- /.row -->
     </section>
     <!-- /.content -->
