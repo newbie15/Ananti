@@ -21,7 +21,7 @@ $(document).ready(function () {
                     'Bagian',
                 ],
 
-                colWidths: [150, 150, 150, 100, 250, 250, 75, 75],
+                colWidths: [300, 150, 150, 100, 250, 250, 75, 75],
                 columns: [
                     { type: 'text' },
                     { type: 'dropdown', source: ["mekanik", "elektrik"] },
