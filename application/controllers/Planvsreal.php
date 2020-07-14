@@ -299,13 +299,15 @@ class Planvsreal extends CI_Controller {
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 			// echo 'This is a server using Windows!';
 			include APPPATH.'third_party\PHPExcel.php';
-		$fe = "template_planvsreal.xlsx";
+		// $fe = "template_planvsreal.xlsx";
+		$fe = "template_00_planvsreal.xls";
 		$filex = dirname(__FILE__) .'\..\..\assets\excel\\'.$fe;
 
 		} else {
 			// echo 'This is a server not using Windows!';
 			include APPPATH.'third_party/PHPExcel.php';
-		$fe = "template_planvsreal.xlsx";
+		$fe = "template_00_planvsreal.xls";
+		// $fe = "template_planvsreal.xlsx";
 		$filex = dirname(__FILE__) .'/../../assets/excel/'.$fe;
 
 		}
@@ -398,6 +400,8 @@ class Planvsreal extends CI_Controller {
 		);
 
 		$phpExcel->setActiveSheetIndex(0)->setCellValue('N5', $nama_bulan[$bulan]);
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('B1', $tahun);
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('D1', (int)$bulan);
 
 		$i = 0;
 		foreach ($query_wo_list->result() as $row){
