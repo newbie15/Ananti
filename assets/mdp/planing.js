@@ -174,7 +174,7 @@ $(document).ready(function () {
         unit_refresh();
     });
 
-    function add(nw, sx, ux, su, pb) {
+    function add(nw, sx, ux, su, pb, tp) {
         var sama = 0;
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
@@ -185,9 +185,10 @@ $(document).ready(function () {
             // dx[0][2] = ux;
             // dx[0][3] = su;
             dx[0][2] = pb;
+            dx[0][10] = tp;
 
         } else { // isi satu
-            dx.push([nw, sx+"\n"+ux+"\n"+su, pb, "", "", "", "", "", "", "", ""]);
+            dx.push([nw, sx+"\n"+ux+"\n"+su, pb, "", "", "", "", "", "", "", tp,""]);
         }
 
         refresh(dx);
@@ -310,7 +311,7 @@ $(document).ready(function () {
     function refresh_modal() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "wo/list_open/" + $("#pabrik").val(),
+            url: BASE_URL + "wo/list_open_tipe/" + $("#pabrik").val(),
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
@@ -339,7 +340,7 @@ $(document).ready(function () {
                     console.log('API row values : ', table.row(this).data());
                     var sp = table.row(this).data();
                     sp = sp[0].split(" - ");
-                    add(sp[0],sp[1],sp[2],sp[3],sp[4]);
+                    add(sp[0],sp[1],sp[2],sp[3],sp[4],sp[5]);
                     $('#modal-wo').modal('toggle');
                 }
             });
