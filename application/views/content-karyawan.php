@@ -4,7 +4,6 @@
     <section class="content-header">
       <h1>
         <?=$main_title?>
-        <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->

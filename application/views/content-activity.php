@@ -8,17 +8,41 @@
           <li class=""><a href="<?php echo base_url("planing")?>">Plan</a></li>
           <li class="active"><a href="">Realisasi</a></li>
           <li class=""><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li>
-
         </ul>
         <!-- Activity Maintenance
         <small>Input Harian</small> -->
       </h1>
       <ol class="breadcrumb">
-        <!-- <button id="simpan">Simpan</button> -->
+        <!-- <a class="btn btn-app btn-warning" id="sync_activity" href="#modal-sync" role="button" data-toggle="modal" data-backdrop="false"> -->
+        <a class="btn btn-app btn-success" id="sharewa" href="#modal-wa" data-toggle="modal">
+          <i class="fa fa-whatsapp"></i> Share
+        </a>
+        <a class="btn btn-app btn-warning" id="sync_activity">
+          <i class="fa fa-refresh"></i> Sync w/ Louhan
+        </a>
+        <div class="btn-group" style="margin-left: 10px;">
+          <a class="btn btn-app btn-success" id="download_activity" href="#" role="button">
+            <i class="fa fa-file-excel-o"></i> Download
+          </a>
+          <!-- <button type="button" class="btn btn-success">Action</button> -->
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="height: 60px;">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" id="download_activity_bulanan">Download 1 Month</a></li>
+            <!-- <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li> -->
+          </ul>
+        </div>       
+        <!-- <a class="btn btn-app btn-success" id="download_activity" href="#" role="button">
+          <i class="fa fa-file-excel-o"></i> Download
+        </a> -->
         <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
           <i class="fa fa-search-plus"></i> Cari WO
         </a>
-
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -42,6 +66,107 @@
           </div>
         </div>
       </div>
+
+      <div class="modal fade in" id="modal-wa" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">WA Laporan Realisasi Job</h4>
+            </div>
+            <div class="modal-body">
+              <textarea class="form-control" rows="20" placeholder="Enter ..." id="generatewa"></textarea>
+              <br>
+              <button class="btn bg-orange" id="bcopy"><i class="fa fa-copy"></i> Copy</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a class="btn btn-success" id="bwaweb"><i class="fa fa-whatsapp"></i> Share Via WA web</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a class="btn btn-success" id="bwaapp"><i class="fa fa-whatsapp"></i> Share Via WA App</a>
+              <table id="dt-table" class="display" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal fade in" id="modal-create-wo" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Pilih WO / Buat WO</h4>
+            </div>
+            <div class="modal-body">
+              content
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="dialog" title="Daftar Realisasi Job Harian" width="1024" style="display:none; border-color: red;">
+        <div data-role="body">
+          <!-- <div class="box-body no-padding" style="
+            height: 450px;
+            width: 100%;
+            overflow: auto;
+          "> -->
+            <table class="table table-striped" id="ui-louhan">
+              <tbody><tr>
+                <th>No WO</th>
+                <th>Area</th>
+                <th>Perbaikan</th>
+                <th style="width: 40px">Status</th>
+              </tr>
+              <tr>
+                <td>1.</td>
+                <td>Update software</td>
+                <td></td>
+                <td><span class="badge bg-red">55%</span></td>
+              </tr>
+
+            </tbody></table>
+          <!-- </div> -->
+        </div>
+        <div data-role="footer">
+
+        </div>
+      </div>      
+
+      <!-- <div class="modal fade in" id="modal-sync" style="display: none;">
+        <div class="modal-dialog" style="width :90%;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Daftar Realisasi Job Harian</h4>
+            </div>
+            <div class="modal-body">
+              <div class="box-body no-padding" style="
+                height: 450px;
+                width: 100%;
+                overflow: auto;
+              ">
+                <table class="table table-striped" id="ui-louhan">
+                  <tbody><tr>
+                    <th>No WO</th>
+                    <th>Area</th>
+                    <th>Perbaikan</th>
+                    <th style="width: 40px">Status</th>
+                  </tr>
+                  <tr>
+                    <td>1.</td>
+                    <td>Update software</td>
+                    <td></td>
+                    <td><span class="badge bg-red">55%</span></td>
+                  </tr>
+
+                </tbody></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
       <div class="row">
         <?php  ?>
         <div class="col-xs-12">
@@ -102,10 +227,13 @@
             <option>30</option>
             <option>31</option>
           </select>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Filter by MPP : 
+          <select id="mpp"></select>
           <br><br>
         </div>
         <div class="col-xs-8">
-          <div style="
+          <div id="scrll" style="
 						height: 410px;
 						width: 100%;
 						overflow: auto;

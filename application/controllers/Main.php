@@ -36,6 +36,7 @@ class Main extends CI_Controller {
 
 	public function index()
 	{
+		$header['title'] = "Dashboard";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/fullcalendar-3.9.0/fullcalendar.min.css"),
@@ -99,7 +100,13 @@ class Main extends CI_Controller {
 		$tanggal = $_REQUEST['tanggal']; //"2018-11-22";
 		$tgl = date("Y-m-d");
 		$m = date("m");
+		$y = date("Y");
 		// $t = explode("-",$tanggal);
+
+		//nilai data jam breakdown
+		$query = $this->db->query("SELECT SUM(TIMESTAMPDIFF(MINUTE,mulai,selesai)) as jumlah FROM `m_breakdown_pabrik` WHERE `jenis` = 'total' and id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m-%'");
+		$row = $query->row();
+		$menit_breakdown = $row->jumlah;
 
 		//nilai data jumlah wo belum close atau selesai
 		$query = $this->db->query("SELECT count(no_wo) as jumlah FROM `m_wo` WHERE `status` = 'open' and id_pabrik = '$nama_pabrik'");
@@ -107,7 +114,7 @@ class Main extends CI_Controller {
 		$jumlah_no_wo = $row->jumlah;
 
 		//nilai data jumlah wo bulan ini
-		$query = $this->db->query("SELECT count(no_wo) as jumlah FROM `m_wo` WHERE `status` = 'open' and id_pabrik = '$nama_pabrik' and tanggal LIKE '%-$m-%' ");
+		$query = $this->db->query("SELECT count(no_wo) as jumlah FROM `m_wo` WHERE `status` = 'open' and id_pabrik = '$nama_pabrik' and tanggal LIKE '%$y-$m-%' ");
 		$row = $query->row();
 		$jumlah_wo_baru = $row->jumlah;
 
@@ -159,6 +166,7 @@ class Main extends CI_Controller {
 
 		// $query = $this->db->query("SELECT jenis_breakdown,count(id) as jumlah FROM `m_activity` where tanggal LIKE '%$t[1]%' and id_pabrik = '$nama_pabrik' group by jenis_breakdown");
 
+		$out['breakdown'] = round($menit_breakdown/60,2);
 		$out['wo_unfinished'] = $jumlah_no_wo;
 		$out['unit_problem'] = $jumlah_unit_trouble;
 		$out['wo_baru'] = $jumlah_wo_baru;

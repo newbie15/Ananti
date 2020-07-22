@@ -3,8 +3,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <?=$main_title?>
-        <small>Input Jadwal</small>
+        <ul class="nav nav-tabs">
+          <li class=""><a href="<?php echo base_url("schedule/monitoring_item")?>" aria-expanded="true">Monitoring Item</a></li>
+          <li class="active"><a href="#" aria-expanded="false">Schedule</a></li>
+          <!-- <li class=""><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li> -->
+        </ul>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
@@ -22,64 +25,22 @@
           <?php //echo $content; ?>
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
+          Tahun : 
+          <select id="tahun">
+            <option>2017</option>
+            <option>2018</option>
+            <option>2019</option>
+          </select>
           Station :
           <?php echo $dropdown_station; ?>
           Unit :
           <?php echo $dropdown_unit; ?>
+          Sub Unit :
+          <?php echo $dropdown_sub_unit; ?>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-12">
           <br>
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <i class="fa fa-check"></i>
-
-              <h3 class="box-title">List Umum Perawatan</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <ul>
-                <li>Untuk Elektromotor</li>
-                  <ul>
-                    <li>Cek Temperature</li>
-                    <li>Cek kebersihan, Fan</li>
-                    <li>Cek Bearing</li>
-                    <li>Megger setiap 2 tahun sekali</li>
-                  </ul>
-                <li>Untuk Gearbox</li>
-                  <ul>
-                    <li>Cek Level Oli</li>
-                    <!-- <li>Cek kebersihan, Fan</li>
-                    <li>Cek Bearing</li>
-                    <li>Megger setiap 2 tahun sekali</li> -->
-                  </ul>
-                <li>Untuk Powerpack</li>
-                  <ul>
-                    <li>Cek Level Oli</li>
-                    <li>Cek Filter Oli</li>
-                    <li>Cek Temperature Oli</li>
-                    <!-- <li>Megger setiap 2 tahun sekali</li> -->
-                  </ul>
-                <!-- <li>Untuk Sensor</li>
-                  <ul>
-                    <li>Cek Temperature</li>
-                    <li>Cek kebersihan, Fan</li>
-                    <li>Cek Bearing</li>
-                    <li>Megger setiap 2 tahun sekali</li>
-                  </ul> -->
-              </ul>
-            </div>
-            <!-- /.box-body -->
-          </div>
-        </div>
-        <div class="col-xs-9">
-          <br>
-          <div style="
-						height: 500px;
-						width: 100%;
-						overflow: auto;
-					">
-            <div id='my-spreadsheet'></div>              
-          </div>
+          <div id="dp" style="background-color:white;"></div>
         </div>
       </div>
       <!-- /.row -->

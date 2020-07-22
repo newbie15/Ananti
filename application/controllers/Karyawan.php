@@ -25,7 +25,7 @@ class Karyawan extends CI_Controller {
 		$this->load->database();
 		$this->load->helper('url');
 
-		$this->load->library('grocery_CRUD');
+		// $this->load->library('grocery_CRUD');
 	}
 	
 	public function index()
@@ -33,8 +33,9 @@ class Karyawan extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Asset Mesin";
+		$output['main_title'] = "Data Karyawan";
 		
+		$header['title'] = "Karyawan";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -114,7 +115,7 @@ class Karyawan extends CI_Controller {
 		echo json_encode($d);
 	}
 
-		public function ajax()
+	public function ajax()
 	{
 		// $id_pabrik = $_REQUEST['id_pabrik'];
 		$id_pabrik = $this->uri->segment(3, 0);
@@ -130,6 +131,24 @@ class Karyawan extends CI_Controller {
 				$d[$i++] = $a;
 		}
 		echo json_encode($d);
+	}
+
+	public function ajax_dropdown(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_karyawan WHERE id_pabrik = '$id_pabrik' ORDER BY nama ASC;");
+
+		$kategori = 0;
+		$nama_mpp = "";
+
+		$output['dropdown_mpp']= "<option>--PILIH SALAH SATU--</option>";
+		
+		foreach ($query->result() as $row)
+		{
+			$output['dropdown_mpp'] = $output['dropdown_mpp']."<option>".$row->nama."</option>";
+		}
+		// $output['dropdown_mpp'] .= "/<select>";
+
+		echo $output['dropdown_mpp'];
 	}
 
 }

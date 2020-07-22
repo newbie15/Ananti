@@ -92,11 +92,12 @@ $(document).ready(function () {
                     'Mek /<br>Elek',
                     'Jam<br>Start',
                     'Jam<br>Stop',
+                    'Jam<br>Istirahat',
                     'PM',
                     'Ket',
                 ],
                 // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
-                colWidths: [140, 160, 200, 200, 40, 100, 60, 75, 75, 75, 100],
+                colWidths: [140, 160, 200, 200, 40, 100, 60, 75, 75, 75, 75, 100],
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true, wordWrap: true },
@@ -110,7 +111,8 @@ $(document).ready(function () {
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
-                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective'] },
+                    { type: 'number' },
+                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective', 'Unplan'] },
                     { type: 'text' },
                 ],
             });
@@ -122,10 +124,7 @@ $(document).ready(function () {
                 onchange: handler,
                 colHeaders: [
                     'No WO',
-                    // 'Station',
                     'Station<br>Unit<br>Sub Unit',
-                    // 'Unit',
-                    // 'Sub Unit',
                     'Problem',
                     'Plan',
                     'MPP',
@@ -133,54 +132,40 @@ $(document).ready(function () {
                     'Mek /<br>Elek',
                     'Jam<br>Start',
                     'Jam<br>Stop',
+                    'Jam<br>Istirahat',
                     'PM',
                     'Ket',
                 ],
                 // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
-                colWidths: [140, 160, 200, 200, 40, 100, 60, 75, 75, 75, 100],
+                colWidths: [140, 160, 200, 200, 40, 100, 60, 75, 75, 75, 75, 100],
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true ,wordWrap: true},
-                    // { type: 'text', readOnly: true },
-                    // { type: 'text', readOnly: true },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
-                    // { type: 'text' },
                     { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
-                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective'] },
+                    { type: 'number'},
+                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective','Unplan'] },
                     { type: 'text' },
                 ],
             });
 
-            // $('#my-spreadsheet').jexcel('updateSettings', {
-            //     cells: function (cell, col, row) {
-            //         // updatettl();
-            //         // checklimit();
-            //         if (col < 1) {
-            //             // value = $('#my').jexcel('getValue', $(cell));
-            //             // console.log(value);
-            //             // val = numeral($(cell).text()).format('0,0.00');
-            //             // $(cell).html('<input type="hidden" value="' + value + '">' + val);
-            //         }
-            //         console.log(col);
-            //     }
-            // });
         }
     }
 
     $("#pabrik").change(function () {
-        // station_refresh();
         refresh_modal();
-
         ajax_refresh();
     });
+
     $("#bulan").change(function () {
         ajax_refresh();
     });
+
     $("#tanggal").change(function () {
         ajax_refresh();
     });
@@ -189,7 +174,7 @@ $(document).ready(function () {
         unit_refresh();
     });
 
-    function add(nw, sx, ux, su, pb) {
+    function add(nw, sx, ux, su, pb, tp) {
         var sama = 0;
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
@@ -200,15 +185,25 @@ $(document).ready(function () {
             // dx[0][2] = ux;
             // dx[0][3] = su;
             dx[0][2] = pb;
+            dx[0][10] = tp;
 
         } else { // isi satu
-            dx.push([nw, sx+"\n"+ux+"\n"+su, pb, "", "", "", "", "", "", "", ""]);
+            dx.push([nw, sx+"\n"+ux+"\n"+su, pb, "", "", "", "", "", "", "", tp,""]);
         }
 
         refresh(dx);
 
         $("#wo").val("");
         $("#modal-default").modal("hide");
+
+        updatescroll();
+    }
+
+    function updatescroll() {
+        setTimeout(() => {
+            var el = document.getElementById("scrll");
+            el.scrollTop = el.scrollHeight;            
+        }, 500);
     }
 
     $("#simpan").click(function () {
@@ -236,7 +231,6 @@ $(document).ready(function () {
             url: BASE_URL + "planing/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                // id_station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -297,6 +291,11 @@ $(document).ready(function () {
         window.open(BASE_URL + "index.php/planing/download_plan_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
+    $("#download_plan_bulanan").click(function () {
+    	// station_refresh();
+        window.open(BASE_URL + "index.php/planing/download_plan_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+    });
+
     $("#tambahwo").click(function () {
         refresh_modal();
     });
@@ -312,7 +311,7 @@ $(document).ready(function () {
     function refresh_modal() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "wo/list_open/" + $("#pabrik").val(),
+            url: BASE_URL + "wo/list_open_tipe/" + $("#pabrik").val(),
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
@@ -341,7 +340,7 @@ $(document).ready(function () {
                     console.log('API row values : ', table.row(this).data());
                     var sp = table.row(this).data();
                     sp = sp[0].split(" - ");
-                    add(sp[0],sp[1],sp[2],sp[3],sp[4]);
+                    add(sp[0],sp[1],sp[2],sp[3],sp[4],sp[5]);
                     $('#modal-wo').modal('toggle');
                 }
             });
@@ -358,15 +357,17 @@ $(document).ready(function () {
         var min = min_2 - min_1;
 
         if(min<=60){
-            return "*A*";
+            return " *A* ";
         }else if(min<=120){
-            return "*B*";
+            return " *B* ";
         }else if(min>120){
-            return "*C*";
+            return " *C* ";
         }
     }
 
     function share_wa() {
+
+        $('#my-spreadsheet').jexcel('orderBy', 5);
 
         dx = $('#my-spreadsheet').jexcel('getData');
         console.log(dx);
@@ -378,23 +379,93 @@ $(document).ready(function () {
         
         text_wa += "\n" + "Planned Maintenance (PM) : Preventive (P) – Corrective (C) – Predictive (Pd)" + "\n";
         
-        dx.forEach(element => {
-            console.log(element);
-            text_wa += "\n" + "Station : " + (element[1]);
-            text_wa += "\n" + "Unit : " + (element[2]);
-            text_wa += "\n" + "Sub Unit : " + (element[3]);
-            text_wa += "\n" + "Problem\n - " + (element[4]);
-            text_wa += "\n" + "Plan\n - " + (element[5]);
-            text_wa += "\n" + "MPP : " + (element[6]);
-            text_wa += "\n" + "Waktu : " + get_category(element[9], element[10]) +" ("+ (element[9] + "-" + element[10]) + ")";
-            text_wa += "\n" + "Tipe : " + (element[11]);
-            text_wa += "\n";
-        });        
-        console.log(text_wa);
+        text_wa_m = text_wa;
+
+        // dx.forEach(element => {
+        //     console.log(element);
+
+        //     dt = element[1].split("\n");
+
+        //     text_wa += "\n" + "Area : " + (dt[0]);
+        //     if(dt[1]==dt[2]){
+        //         text_wa += " - " + (dt[1]);
+        //     }else{
+        //         text_wa += " - " + (dt[1]);
+        //         text_wa += " - " + (dt[2]);
+        //     }
+        //     text_wa += "\n" + "Problem\n - " + (element[2]);
+        //     text_wa += "\n" + "Plan\n - " + (element[3]);
+        //     text_wa += "\n" + "MPP : " + (element[4]) + " *" + (element[5]) + "*";
+        //     text_wa += "\n" + "Waktu : " + get_category(element[7], element[8]) +" ("+ (element[7] + "-" + element[8]) + ")";
+        //     text_wa += "\n" + "Tipe : " + (element[10]);
+        //     text_wa += "\n";
+        // });
+        
+        
+        dt_mpp = "";
+
+        i = 0;
+
+
+        setTimeout(() => {
+            dx.forEach(element => {
+                console.log(element);
+
+                dt = element[1].split("\n");
+
+                if (dt_mpp != element[5]) {
+                    text_wa_m += "\n" + "MPP: " + (element[4]) + " *" + (element[5]) + "*";
+                    dt_mpp = element[5];
+                }
+
+                if (dt[1] == dt[2]) {
+                    text_wa_m += "\n  " + dt[0] + " | " + dt[1];
+                } else {
+                    text_wa_m += "\n  " + dt[0] + " | " + dt[1] + " | " + dt[2];
+                }
+
+
+                text_wa_m += "\n  Problem : " + element[2];
+                text_wa_m += "\n  Plan : " + element[10] + get_category(element[7], element[8]) + "(" + (element[7] + " - " + element[8]) + ")" + "\n  " + element[3];
+                text_wa_m += "\n";
+            });
+
+            dt_station = "";
+
+            console.log(text_wa);
+
+            console.log("\n\n");
+            console.log(text_wa_m);
+
+            $("#generatewa").text(text_wa_m);
+
+        }, 15);
+
+
         // https://api.whatsapp.com/send?phone=91XXXXXXXXXX&text=urlencodedtext
         // var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
-        var href = "whatsapp://send?text=" + encodeURI(text_wa);
-        $("#sharewa").attr("target", "_blank");
-        $("#sharewa").attr("href", href);
+        
+        // var href = "whatsapp://send?text=" + encodeURI(text_wa);
+        // $("#sharewa").attr("target", "_blank");
+        // $("#sharewa").attr("href", href);
     }
+
+    $("#bcopy").click(function () {
+        $("#generatewa").select();
+        document.execCommand("copy");
+    });
+
+    $("#bwaweb").click(function () {
+        var text_wa = $("#generatewa").val();
+        var href = "https://api.whatsapp.com/send?text=" + encodeURI(text_wa);
+        $(this).attr("target", "_blank");
+        $(this).attr("href", href);
+    });
+
+    $("#bwaapp").click(function () {
+        var text_wa = $("#generatewa").val();
+        var href = "whatsapp://send?text=" + encodeURI(text_wa);
+        $(this).attr("target", "_blank");
+        $(this).attr("href", href);
+    });
 });

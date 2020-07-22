@@ -61,7 +61,22 @@ $(document).ready(function(){
                     // { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
                     { type: 'text' },
                     { type: 'text' },
-                    { type: 'dropdown', source: [{ 'id': '0', 'name': ' ' },{ 'id': '1', 'name': 'Head Office' }, { 'id': '2', 'name': 'Site' }] },
+                    {
+                    	type: 'dropdown',
+                    	source: [{
+                    		'id': '0',
+                    		'name': 'Superuser'
+                    	}, {
+                    		'id': '1',
+                    		'name': 'Head Office'
+                    	}, {
+                    		'id': '2',
+                    		'name': 'Maintenance Site'
+                    	}, {
+                    		'id': '3',
+                    		'name': 'Process Site'
+                    	}]
+                    },
                 ]
             });
         });

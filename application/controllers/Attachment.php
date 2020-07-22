@@ -47,6 +47,7 @@ class Attachment extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Sub Unit";
 		
+		$header['title'] = "Attachment";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),

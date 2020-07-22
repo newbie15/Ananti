@@ -32,6 +32,7 @@ class Unit extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Unit";
 		
+		$header['title'] = "Unit";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -109,6 +110,7 @@ class Unit extends CI_Controller {
 		$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' AND id_station = '$station' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
+		$datax = array();
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
@@ -126,8 +128,13 @@ class Unit extends CI_Controller {
 				// 'date' => 'My date'
 			);
 			// print_r($data);
-			$this->db->insert('master_unit', $data);
+			// $this->db->insert('master_unit', $data);
+			if($value[1]!=""){
+				// $this->db->insert('m_planing', $data);
+				array_push($datax,$data);
+			}
 		}
+		$this->db->insert_batch('master_unit', $datax);
 	}
 
 	public function ajax()
@@ -164,6 +171,19 @@ class Unit extends CI_Controller {
 		// echo json_encode($d);
 		// echo "SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';";
 	}	
+
+	public function ajax_dropdown_sub_sch(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$id_station = urldecode( $this->uri->segment(4, 0) );
+		$query = $this->db->query("SELECT DISTINCT unit as nama FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND status = 'open' ORDER BY unit ASC;");
+
+		echo "<option>=== ALL ===</option>";
+		foreach ($query->result() as $row)
+		{
+			echo "<option>".$row->nama."</option>";
+		}
+	}	
+
 
 	public function ajax_default_list()
 	{

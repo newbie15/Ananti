@@ -31,6 +31,7 @@ class Megger extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Inspeksi Megger Motor";
 		
+		$header['title'] = "Megger";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
