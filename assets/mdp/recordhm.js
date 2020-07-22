@@ -22,7 +22,7 @@ $(document).ready(function () {
             console.log("yes");
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "unit/hm_default_list",
+                url: BASE_URL + "sub_unit/hm_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),
@@ -37,10 +37,12 @@ $(document).ready(function () {
                     allowInsertColumn: false,
                     colHeaders: [
                         'Unit',
+                        'Sub Unit',
                         'Hour Meter',
                     ],
-                    colWidths: [360, 100, 95, 90, 50, 100, 60, 100, 100],
+                    colWidths: [300, 360, 100, 95, 90, 50, 100, 60, 100, 100],
                     columns: [
+                        { type: 'text' },
                         { type: 'text' },
                         { type: 'numeric', wordWrap: true },
                     ],
@@ -54,10 +56,12 @@ $(document).ready(function () {
                 allowInsertColumn: false,
                 colHeaders: [
                     'Unit',
+                    'Sub Unit',
                     'Hour Meter',
                 ],
-                colWidths: [360, 100, 95, 90, 50, 100, 60, 100, 100],
+                colWidths: [300, 360, 100, 95, 90, 50, 100, 60, 100, 100],
                 columns: [
+                    { type: 'text' },
                     { type: 'text' },
                     { type: 'numeric', wordWrap: true },
                 ],
@@ -97,10 +101,10 @@ $(document).ready(function () {
                 y: $("#tahun").val(),
                 data_json: JSON.stringify(data_j),
 
-                screwpress : type_screw,
-                bunchpress : type_bunch,
-                hydrocyclone : type_hydro,
-                kcp: type_kcp,
+                // screwpress : type_screw,
+                // bunchpress : type_bunch,
+                // hydrocyclone : type_hydro,
+                // kcp: type_kcp,
 
             }
         }).done(function (msg) {
@@ -138,45 +142,45 @@ $(document).ready(function () {
             refresh(data);
         });
 
-        $.ajax({
-            method: "POST",
-            url: BASE_URL + "recordhm/load_type_monitoring",
-            data: {
-                id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
-            }
-        }).done(function (msg) {
-            // console.log(msg);
-            data = JSON.parse(msg);
-            // console.log(data);
-            // console.log(data.screwpress);
+        // $.ajax({
+        //     method: "POST",
+        //     url: BASE_URL + "recordhm/load_type_monitoring",
+        //     data: {
+        //         id_pabrik: $("#pabrik").val(),
+        //         id_station: $("#station").val(),
+        //     }
+        // }).done(function (msg) {
+        //     // console.log(msg);
+        //     data = JSON.parse(msg);
+        //     // console.log(data);
+        //     // console.log(data.screwpress);
 
-            if(data.screwpress == 1){
-                type_screw = 1;
-            }else{
-                type_screw = 0;
-            }
+        //     if(data.screwpress == 1){
+        //         type_screw = 1;
+        //     }else{
+        //         type_screw = 0;
+        //     }
 
-            if (data.bunchpress == 1) {
-                type_bunch = 1;
-            } else {
-                type_bunch = 0;
-            }
+        //     if (data.bunchpress == 1) {
+        //         type_bunch = 1;
+        //     } else {
+        //         type_bunch = 0;
+        //     }
 
-            if (data.hydrocyclone == 1) {
-                type_hydro = 1;
-            } else {
-                type_hydro = 0;
-            }
+        //     if (data.hydrocyclone == 1) {
+        //         type_hydro = 1;
+        //     } else {
+        //         type_hydro = 0;
+        //     }
 
-            if (data.kcp == 1) {
-                type_kcp = 1;
-                // alert("kcp");
-            } else {
-                type_kcp = 0;
-            }
-            // refresh(data);
-        });
+        //     if (data.kcp == 1) {
+        //         type_kcp = 1;
+        //         // alert("kcp");
+        //     } else {
+        //         type_kcp = 0;
+        //     }
+        //     // refresh(data);
+        // });
     }
 
     $("#tahun").change(function () {

@@ -4,6 +4,23 @@ $(document).ready(function(){
         $(".n_success").fadeOut(3000);
     }
 
+    function group_refresh() {
+        $("#group_unit").load(BASE_URL + "grouping/ajax_dropdown/" + $("#pabrik").val(),
+            function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    // alert("success");
+                    group_unit_refresh();
+                } else {
+                    // alert("gaagal");
+                }
+            }
+        );
+    }
+
+    function group_unit_refresh(){
+        $("#dt-table").load(BASE_URL + "grouping_unit/ajax_table/" + $("#pabrik").val() + "/" + encodeURI($("#group_unit").val()));
+    }
+
     function station_refresh() {
         $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
@@ -79,7 +96,13 @@ $(document).ready(function(){
             cll = $(cell).prop('id');
             dd = cll.split("-");
 
-            if(dd[0]=="7" && val == "close"){
+            if(dd[0]=="5" && val == "Proses"){
+                roww = "H"+roww;
+                $("#my-spreadsheet").jexcel('setValue', roww, 'Corrective');
+                // console.log("Corrective");
+            }
+
+            if(dd[0]=="8" && val == "close"){
                 var roww = parseInt(dd[1])+1;
                 var y = tgl.getFullYear();
                 var m = tgl.getMonth() + 1;
@@ -92,7 +115,7 @@ $(document).ready(function(){
                     d = ("0" + d.toString());
                 }
 
-                roww = "I"+roww;
+                roww = "J"+roww;
                 console.log(d + "-" + m + "-" + y);
                 // console.log(id);
                 var vv = $("#my-spreadsheet").jexcel('getValue', roww);
@@ -105,10 +128,6 @@ $(document).ready(function(){
                     // }, 1000);
                 }
             }
-
-
-
-
         };
 
         if (data == undefined){
@@ -122,9 +141,9 @@ $(document).ready(function(){
             // tableHeight: '400px',
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori','Tipe','Status','Tanggal<br>Closing'],
+            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori','Jenis','Tipe','Status','Tanggal<br>Closing'],
             // colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
-            colWidths: [140, 220, 250, 250, 100, 65, 40, 80, 80],
+            colWidths: [140, 220, 250, 250, 100, 65, 40, 80, 80, 80],
             columns: [
                 { type: 'text', readOnly: true },
                 { type: 'text', readOnly: true, wordWrap: true },
@@ -139,8 +158,9 @@ $(document).ready(function(){
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text' },
-                { type: 'dropdown', source: ['plan', 'unplan'] },
+                { type: 'dropdown', source: ['Proses', 'Maintenance', 'Vendor' ] },
                 { type: 'dropdown', source: ['M', 'E'] },
+                { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective' ] },
                 { type: 'dropdown', source: ['open', 'close'] },
                 // { type: 'text' },
                 { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
@@ -149,7 +169,7 @@ $(document).ready(function(){
 
         $('#my-spreadsheet').jexcel('updateSettings', {
             table: function (instance, cell, col, row, val, id) {
-                if (col == 7) {
+                if (col == 8) {
                     if (val == "open") {
                         $(cell).css('color', '#000000');
                         $(cell).css('background-color', '#ff0000');
@@ -184,6 +204,10 @@ $(document).ready(function(){
         sub_unit_refresh();
     });
 
+    $("#group_unit").change(function () {
+        group_unit_refresh();
+    });
+
     function add(no, sx, ux, su) {
         var sama = 0;
         var index = 0;
@@ -206,9 +230,29 @@ $(document).ready(function(){
         updatescroll();
     }
 
+    function multi_add(no, sx, ux, su) {
+        var sama = 0;
+        var index = 0;
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+        if (dx[0][0] == "") { // kosong
+            dx[0][0] = no;
+            dx[0][1] = sx + "\n" + ux + "\n" + su;
+        	// dx[0][2] = ux;
+        	// dx[0][3] = su;
+        } else { // isi satu
+            dx.push([no, sx + "\n" + ux + "\n" + su, "", "", "", "", "", "", "", "", ""]);
+        }
+
+        refresh(dx);
+
+    }
+
     function updatescroll() {
-        var el = document.getElementById("scrll");
-        el.scrollTop = el.scrollHeight;
+        setTimeout(() => {
+            var el = document.getElementById("scrll");
+            el.scrollTop = el.scrollHeight;            
+        }, 500);
     }
 
     $("#simpan").click(function(){
@@ -301,6 +345,7 @@ $(document).ready(function(){
 
     $("#tambah").click(function () {
         station_refresh();
+        group_refresh();
         auto_wo_number();
         setTimeout(function(){
             $("#search").val("");
@@ -311,11 +356,15 @@ $(document).ready(function(){
             url: BASE_URL+"index.php/sub_unit/listing/"+$("#pabrik").val(),
             getValue: "list",
             requestDelay: 500,
+            ajaxSettings: {
+                cache: false,
+            }, 
             list: {
                 match: {
                     enabled: true
                 }
             }
+
         };
 
         $("#search").easyAutocomplete(list);
@@ -332,11 +381,29 @@ $(document).ready(function(){
 
     });
 
-
-
     $("#tplus").click(function () {
-        // console.log($("#no_wo_auto").val()+"-"+$("#station").val()+"-"+$("#unit").val()+"-"+$("#sub_unit").val())
         add($("#no_wo_auto").val(), $("#station").val(), $("#unit").val(), $("#sub_unit").val());
+    });
+
+    $("#tplusx").click(function(){
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "grouping_unit/ajax_load",
+            // success: sukses,
+            data: {
+                pabrik: $("#pabrik").val(),
+                group_unit: $("#group_unit").val()
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            var d = JSON.parse(msg);
+            console.log(d);
+            d.forEach(element => {
+                console.log(element);
+                add($("#no_wo_auto").val(), element[0], element[1], element[2]);
+                auto_wo_number();
+            });
+        });
     });
 
     function auto_wo_number(){

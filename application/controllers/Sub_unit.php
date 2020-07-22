@@ -47,6 +47,7 @@ class Sub_unit extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Sub Unit";
 		
+		$header['title'] = "Sub Unit";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -187,11 +188,23 @@ class Sub_unit extends CI_Controller {
 		// $d = [];
 		foreach ($query->result() as $row)
 		{
-				// $d[$i][0] = $row->nama; // access attributes
-				// $a['name'] = $row->nama;
-				// $a['id'] = $row->nama;
-				// $d[$i++] = $a;
-				echo "<option>".$row->nama."</option>";
+			echo "<option>".$row->nama."</option>";
+		}
+		// echo json_encode($d);
+	}
+
+	public function ajax_dropdown_all(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$id_station = urldecode($this->uri->segment(4, 0));
+		$id_unit = urldecode($this->uri->segment(5, 0));
+
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
+
+		echo "<option>-- ALL --</option>";
+
+		foreach ($query->result() as $row)
+		{
+			echo "<option>".$row->nama."</option>";
 		}
 		// echo json_encode($d);
 	}
@@ -211,4 +224,86 @@ class Sub_unit extends CI_Controller {
 		// echo "]}}";
 		echo json_encode($d);
 	}
+
+	public function hm_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT id_unit,nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND hourmeter_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->id_unit; // access attributes
+			$d[$i++][1] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function temperature_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND temperature_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function vibration_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND vibration_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function oiling_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND oiling_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function electromotor_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND electromotor_mod=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
 }

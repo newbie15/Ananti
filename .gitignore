@@ -1,5 +1,7 @@
 .DS_Store
 
+assets/mdp/config.js
+
 application/cache/*
 !application/cache/index.html
 
@@ -10,7 +12,7 @@ application/logs/*
 
 composer.lock
 
-assets/mdp/config.js
+#assets/mdp/config.js
 
 application/config/config.php
 
@@ -33,3 +35,8 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
+application/config/config.php
+assets/excel/~$template_planvsreal.xlsx
+application/config/config.php
+application/config/database.php
+assets/mdp/config.js

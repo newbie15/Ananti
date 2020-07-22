@@ -24,7 +24,7 @@ $(document).ready(function(){
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
             colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori', 'status'],
-            colWidths: [140, 250, 140, 250, 250, 100, 75, 80, 80],
+            colWidths: [140, 250, 340, 250, 75, 75, 75, 80, 80],
             columns: [
                 { type: 'text' },                
                 { type: 'text' , wordWrap: true },
@@ -57,9 +57,42 @@ $(document).ready(function(){
         ajax_refresh();
     });
 
-    $("#simpan").click(function(){
+    $("#download").click(function(){
+        $("#my-spreadsheet").jexcel("download");
     });
 
+    $("#simpan").click(function () {
+        var data_j = $('#my-spreadsheet').jexcel('getData');
+
+        var closed_wo = [];
+
+        data_j.forEach(element => {
+            // console.log(element);
+            if(element[6]=="close"){
+                closed_wo.push(element[0]);
+            }            
+        });
+
+        closed_wo.forEach(element => {
+            console.log(element);
+        });
+
+        if (confirm("anda yakin untuk close "+closed_wo.length+" WO ini ?")) {
+            $.ajax({
+                method: "POST",
+                url: BASE_URL + "wo/close_wo_unfinished",
+                data: {
+                    id_pabrik: $("#pabrik").val(),
+                    wo: closed_wo
+                }
+            }).done(function (msg) {
+                console.log(msg);
+                if(msg=="OK"){
+                    window.location.reload();
+                }
+            });
+        }
+    });
 
     // refresh();
     function ajax_refresh(){

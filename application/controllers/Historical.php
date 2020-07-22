@@ -25,7 +25,7 @@ class Historical extends CI_Controller {
 		$this->load->database();
 		$this->load->helper('url');
 
-		$this->load->library('grocery_CRUD');
+		// $this->load->library('grocery_CRUD');
 	}
 	
 	public function index()
@@ -33,6 +33,7 @@ class Historical extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Historical Card Machineries";
 		
+		$header['title'] = "Historical";
 		$header['css_files'] = [
 			// base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jexcel.css"),

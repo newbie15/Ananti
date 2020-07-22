@@ -31,6 +31,7 @@ class Polarisasi extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Indeks Polarisasi Turbin & Genset";
 		
+		$header['title'] = "Indeks Polarisasi";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),

@@ -47,6 +47,7 @@ class Station extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Station";
 		
+		$header['title'] = "Station";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -156,6 +157,17 @@ class Station extends CI_Controller {
 				echo "<option>".$row->nama."</option>";
 		}
 		// echo json_encode($d);
+	}
+
+	public function ajax_dropdown_sch(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT DISTINCT station as nama FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open' ORDER BY station ASC;");
+		// $i = 0;
+		// $d = [];
+		foreach ($query->result() as $row)
+		{
+			echo "<option>".$row->nama."</option>";
+		}
 	}
 
 	public function dhtmlx(){

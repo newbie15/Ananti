@@ -6,8 +6,14 @@
         <!-- Create Work Order | Unfinished WO | Search WO -->
         <ul class="nav nav-tabs">
           <li class="active"><a href="#" aria-expanded="true">Work Order</a></li>
+<?php 
+if($this->session->kategori != 3){
+?>
           <li class=""><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
           <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li>
+<?php 
+}
+?>
         </ul>
       </h1>
       <ol class="breadcrumb">
@@ -34,27 +40,47 @@
             </div>
             <div class="modal-body">
               <!-- <input type="text" id="search" class=""> -->
-
               <h3 id="dpabrik"></h3>
               No WO  &nbsp;&nbsp; : <input type="text" id="no_wo_auto"/>
-              <hr/>
+              <br/><br/>
               <div style="width:100%;">
                 <input class="form-control w-100" id="search" autocomplete="off" placeholder="cari item disini"/>            
               </div>
-              <hr/>
-              Station &nbsp;&nbsp;&nbsp;&nbsp;: <select id="station"><option></option></select>
-              <br>
-              <br>
-              Unit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <select id="unit"><option></option></select>
-              <br>
-              <br>
-              Sub Unit &nbsp;: <select id="sub_unit"><option></option></select>
-              <br>
-              <hr>
-              <span style="float:right;">
-                <button id="tplus">Tambah</button>              
-              </span>
-              <table id="dt-table" class="display" width="100%"></table>
+              <br/>
+              <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Single Item</a></li>
+                  <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Multi Item</a></li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1">
+                    Station &nbsp;&nbsp;&nbsp;&nbsp;: <select id="station"><option></option></select>
+                    <br>
+                    <br>
+                    Unit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <select id="unit"><option></option></select>
+                    <br>
+                    <br>
+                    Sub Unit &nbsp;: <select id="sub_unit"><option></option></select>
+                    <br>
+                    <!-- <hr> -->
+                    <span style="float:right;">
+                      <button id="tplus">Tambah +1</button>              
+                    </span>
+
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_2">
+                    Group Unit &nbsp;&nbsp;&nbsp;&nbsp;: <select id="group_unit"><option></option></select>
+                    <br><br>
+                    <table id="dt-table" class="table table-condensed" width="100%"></table>
+                    <!-- <hr> -->
+                    <span style="float:right;">
+                      <button id="tplusx">Tambah ++</button>              
+                    </span>
+                  </div>
+                </div>
+                <!-- /.tab-content -->
+              </div>
             </div>
           </div>
         </div>
