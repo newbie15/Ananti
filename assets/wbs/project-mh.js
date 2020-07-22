@@ -49,64 +49,6 @@ $(document).ready(function () {
 		var bulan = $("#bulan").val();
 		var tanggal = $("#tanggal").val();
 
-
-		var no_wo = nama_pt + "-" + tahun + "-" + bulan + "-" + tanggal;
-
-		var arr_no_wo = [];
-
-		var no_last_wo = 1;
-		var no_max_wo = no_last_wo + 100;
-		if (no_max_wo > 9999) {
-			no_max_wo = 9999;
-		}
-		var j = 0;
-		for (var i = no_last_wo; i < no_max_wo; i++) {
-			if (i < 10) {
-				arr_no_wo[j++] = no_wo + "-0" + i.toString();
-			} else if (i < 100) {
-				arr_no_wo[j++] = no_wo + "-" + i.toString();
-			}
-		}
-
-		handler = function (obj, cell, val) {
-			console.log('My table id: ' + $(obj).prop('id'));
-			console.log('Cell changed: ' + $(cell).prop('id'));
-			console.log('Value: ' + val);
-
-			// console.log(cell);
-			// console.log(col);
-			// console.log(row);
-			cll = $(cell).prop('id');
-			dd = cll.split("-");
-
-			if (dd[0] == "7" && val == "close") {
-				var roww = parseInt(dd[1]) + 1;
-				var y = tgl.getFullYear();
-				var m = tgl.getMonth() + 1;
-				if (m < 10) {
-					m = ("0" + m.toString());
-				}
-
-				var d = tgl.getDate();
-				if (d < 10) {
-					d = ("0" + d.toString());
-				}
-
-				roww = "I" + roww;
-				console.log(d + "-" + m + "-" + y);
-				// console.log(id);
-				var vv = $("#my-spreadsheet").jexcel('getValue', roww);
-				// console.log(vv);
-				if (vv == "" || vv == "00-00-0000" || vv == "0000-00-00") {
-					$("#my-spreadsheet").jexcel('setValue', roww, d + "-" + m + "-" + y);
-				}
-			}
-
-
-
-
-		};
-
 		if (data == undefined) {
 			data = [];
 		}
@@ -116,13 +58,16 @@ $(document).ready(function () {
 			allowInsertColumn: false,
 			// tableOverflow: true,
 			// tableHeight: '400px',
-			onchange: handler,
+			// onchange: handler,
 			// colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-			colHeaders: ['Activity', 'Man Hour Plan'],
+			colHeaders: ['No WO', 'Project ID', 'PT', 'Nama', 'Desc', 'Plan MH', 'Real MH'],
 			// colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
 			colWidths: [140, 140, 100, 250, 250, 100, 100, 100, 80],
 			columns: [
                 { type: 'text', },
+				{ type: 'text', },
+				{ type: 'text', },
+				{ type: 'text', },
 				{ type: 'text', },
 			]
 		});
@@ -176,25 +121,25 @@ $(document).ready(function () {
 		el.scrollTop = el.scrollHeight;
 	}
 
-	$("#simpan").click(function () {
-		var data_j = $('#my-spreadsheet').jexcel('getData');
-		console.log(data_j);
+	// $("#simpan").click(function () {
+	// 	var data_j = $('#my-spreadsheet').jexcel('getData');
+	// 	console.log(data_j);
 
-		$.ajax({
-			method: "POST",
-			url: BASE_URL + "project/simpan",
-			success: sukses,
-			data: {
-				pabrik: $("#pabrik").val(),
-				d: $("#tanggal").val(),
-				m: $("#bulan").val(),
-				y: $("#tahun").val(),
-				data_json: JSON.stringify(data_j),
-			}
-		}).done(function (msg) {
-			console.log(msg);
-		});
-	});
+	// 	$.ajax({
+	// 		method: "POST",
+	// 		url: BASE_URL + "project/simpan",
+	// 		success: sukses,
+	// 		data: {
+	// 			pabrik: $("#pabrik").val(),
+	// 			d: $("#tanggal").val(),
+	// 			m: $("#bulan").val(),
+	// 			y: $("#tahun").val(),
+	// 			data_json: JSON.stringify(data_j),
+	// 		}
+	// 	}).done(function (msg) {
+	// 		console.log(msg);
+	// 	});
+	// });
 
 	var tgl = new Date();
 	var m = tgl.getMonth() + 1;
@@ -247,12 +192,12 @@ $(document).ready(function () {
 	function ajax_refresh() {
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "project/load_mh",
+			url: BASE_URL + "projectmanhour/load_mh",
 			data: {
                 id_pabrik: $("#pabrik").val(),                
-				project_id: $("#tanggal").val(),
-				no_wo: $("#bulan").val(),
-				// y: $("#tahun").val(),
+				tanggal: $("#tanggal").val(),
+				bulan: $("#bulan").val(),
+				tahun: $("#tahun").val(),
 			}
 		}).done(function (msg) {
 			console.log(msg);

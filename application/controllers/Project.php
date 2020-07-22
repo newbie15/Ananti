@@ -163,8 +163,8 @@ class Project extends CI_Controller {
 	public function load()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,project_id,pt,nama,deskripsi,tgl_start,status,tgl_close FROM w_project where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-01";//.$_REQUEST['d'];		
+		$query = $this->db->query("SELECT no_wo,project_id,pt,nama,deskripsi,tgl_start,status,tgl_close,marking,cutting,machining,assembly,welding,painting,balancing,finishing,install FROM w_project where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
 
 		$i = 0;
 		$d = [];
@@ -177,7 +177,17 @@ class Project extends CI_Controller {
 			$d[$i][4] = $row->deskripsi;
 			$d[$i][5] = $row->tgl_start;
 			$d[$i][6] = $row->status;
-			$d[$i++][7] = $row->tgl_close;
+			$d[$i][7] = $row->tgl_close;
+			$d[$i][8] = $row->marking;
+			$d[$i][9] = $row->cutting;
+			$d[$i][10] = $row->machining;
+			$d[$i][11] = $row->assembly;
+			$d[$i][12] = $row->welding;
+			$d[$i][13] = $row->painting;
+			$d[$i][14] = $row->balancing;
+			$d[$i][15] = $row->finishing;
+			$d[$i++][16] = $row->install;
+
 		}
 		echo json_encode($d);
 	}
@@ -185,13 +195,13 @@ class Project extends CI_Controller {
 	public function simpan()
 	{
 		$pabrik = $_REQUEST['pabrik'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-01";//.$_REQUEST['d'];
 		$this->db->query("DELETE FROM `w_project` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
-			$eq = explode("\n",$value[1]); 
+			// $eq = explode("\n",$value[1]); 
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
@@ -203,6 +213,15 @@ class Project extends CI_Controller {
 				'tgl_start' => $value[5],
 				'status' => $value[6],
 				'tgl_close' => $value[7],
+				'marking' => $value[8],
+				'cutting' => $value[9],
+				'machining' => $value[10],
+				'assembly' => $value[11],
+				'welding' => $value[12],
+				'painting' => $value[13],
+				'balancing' => $value[14],
+				'finishing' => $value[15],
+				'install' => $value[16],
 			);
 			// print_r($data);
 			if($value[0]!=""){

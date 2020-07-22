@@ -1,60 +1,59 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-    <h1>
+      <h1>
         <ul class="nav nav-tabs">
-        <li class=""><a href="<?php echo base_url("project")?>">Project</a></li>
-        <li class=""><a href="<?php echo base_url("projectplan")?>">Plan</a></li>
-        <li class=""><a href="<?php echo base_url("projectactivity")?>">Activity</a></li>
-        <li class="active"><a href="<?php echo base_url("projectmanhour")?>" aria-expanded="false">Project Man Hour</a></li>
-
+          <li class=""><a href="<?php echo base_url("project")?>">Project</a></li>
+          <li class="active"><a href="">Plan</a></li>
+          <li class=""><a href="<?php echo base_url("projectactivity")?>">Activity</a></li>
+          <li class=""><a href="<?php echo base_url("projectmanhour")?>" aria-expanded="false">Project Man Hour</a></li>
         </ul>
         <!-- Activity Maintenance
         <small>Input Harian</small> -->
-    </h1>
-    <ol class="breadcrumb">
+      </h1>
+      <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
         <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
-        <i class="fa fa-search-plus"></i> Cari WO
+          <i class="fa fa-search-plus"></i> Cari Project
         </a>
 
         <a class="btn btn-app btn-primary" id="simpan">
-        <i class="fa fa-save"></i> Simpan
+          <i class="fa fa-save"></i> Simpan
         </a>
-    </ol>
+      </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-    <!-- Small boxes (Stat box) -->
-    <div class="modal fade in" id="modal-default" style="display: none;">
+      <!-- Small boxes (Stat box) -->
+      <div class="modal fade in" id="modal-default" style="display: none;">
         <div class="modal-dialog">
-        <div class="modal-content">
+          <div class="modal-content">
             <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-            <h4 class="modal-title">Daftar WO belum selesai</h4>
+              <h4 class="modal-title">Daftar Project belum selesai</h4>
             </div>
             <div class="modal-body">
-            <table id="dt-table" class="display" width="100%"></table>
+              <table id="dt-table" class="display" width="100%"></table>
             </div>
+          </div>
         </div>
-        </div>
-    </div>
-    <div class="row">
+      </div>
+      <div class="row">
         <?php  ?>
         <div class="col-xs-12">
-        Pabrik : 
-        <?php echo $dropdown_pabrik ?>
-        Tahun : 
-        <select id="tahun">
+          Pabrik : 
+          <?php echo $dropdown_pabrik ?>
+          Tahun : 
+          <select id="tahun">
             <option>2017</option>
             <option>2018</option>
             <option>2019</option>
-        </select>
-        Bulan : 
-        <select id="bulan">
+          </select>
+          Bulan : 
+          <select id="bulan">
             <option value="01">januari</option>
             <option value="02">februari</option>
             <option value="03">maret</option>
@@ -67,9 +66,9 @@
             <option value="10">oktober</option>
             <option value="11">november</option>
             <option value="12">desember</option>
-        </select>
-        Tanggal : 
-        <select id="tanggal">
+          </select>
+          Tanggal : 
+          <select id="tanggal">
             <option>01</option>
             <option>02</option>
             <option>03</option>
@@ -101,38 +100,38 @@
             <option>29</option>
             <option>30</option>
             <option>31</option>
-        </select>
-        <br><br>
+          </select>
+          <br><br>
         </div>
         <div class="col-xs-12">
-        <div style="
-                        height: 410px;
-                        width: 100%;
-                        overflow: auto;
-                    ">
+          <div style="
+						height: 410px;
+						width: 100%;
+						overflow: auto;
+					">
             <div id='my-spreadsheet'></div>      
-        </div>
+          </div>
         </div>
         <!-- <div class="col-xs-4" id="side-note">
-        <div style="
-                        height: 410px;
-                        width: 100%;
-                        overflow: auto;
-                    ">
+          <div style="
+						height: 410px;
+						width: 100%;
+						overflow: auto;
+					">
             <div id="keterangan">
-            Station<br>
-            Unit<br>
-            Problem<br>
-            Desc masalah 
+              Station<br>
+              Unit<br>
+              Problem<br>
+              Desc masalah 
             </div><br>
             <div id='my-spreadsheet2'></div><br>
             <div id='my-spare'></div>
-        </div>
+          </div>
         </div> -->
-    </div>
+      </div>
 
-    <!-- /.row -->
+      <!-- /.row -->
     </section>
     <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+  </div>
+  <!-- /.content-wrapper -->

@@ -43,6 +43,105 @@ $(document).ready(function () {
 		);
 	}
 
+	handler = function (obj, cell, val) {
+		data_detail = $('#my-spreadsheet').jexcel('getData');
+
+		pos = $(cell).prop('id').split("-");
+
+		console.log(pos);
+
+		dt_start = data_detail[pos[1]][6];
+		dt_stop = data_detail[pos[1]][7];
+
+		if (dt_start != "" && dt_stop != "" && (pos[0] == 6 || pos[0] == 7)) {
+			var date1 = new Date("08/05/2015 " + dt_start + ":00");
+			var date2 = new Date("08/05/2015 " + dt_stop + ":00");
+
+			var diff = date2.getTime() - date1.getTime();
+			if (diff < 0) {
+				date2 = new Date("08/06/2015 " + dt_stop + ":00");
+				diff = date2.getTime() - date1.getTime();
+			}
+
+			console.log("diff =" + diff);
+			var msec = diff;
+			var hh = Math.floor(msec / 1000 / 60 / 60);
+			console.log(hh);
+			msec -= hh * 1000 * 60 * 60;
+			var mm = Math.floor(msec / 1000 / 60);
+			console.log(mm);
+			msec -= mm * 1000 * 60;
+			var ss = Math.floor(msec / 1000);
+			msec -= ss * 1000;
+			hour = "";
+			min = "";
+
+			if (hh < 10) {
+				hour = "0" + hh.toString();
+			} else {
+				hour = hh.toString();
+			}
+			if (mm < 10) {
+				min = "0" + mm.toString();
+			} else {
+				min = mm.toString();
+			}
+
+			console.log(hour + ':' + min);
+			console.log(hh + ':' + mm);
+
+			$("#my-spreadsheet").jexcel('setValue', 'I' + (parseInt(pos[1]) + 1).toString(), hour + ':' + min);
+		}
+
+	};
+
+
+    function ambil_dari_plan(){
+        // getplan
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "projectplan/get_plan",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                d: $("#tanggal").val(),
+                m: $("#bulan").val(),
+                y: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            var data = JSON.parse(msg);
+            console.log(data);
+            if(data.length==0){
+                alert("anda tidak punya plan untuk hari ini\ntolong buat plan dahulu");
+                $('#my-spreadsheet').html("");
+            }else{
+                $('#my-spreadsheet').html("");
+                $('#my-spreadsheet').jexcel({
+                    data: data,
+                    allowInsertColumn: false,
+                    colHeaders: ['Project ID', 'PT', 'Nama Project','Activity','Keterangan','Man Power', 'Start', 'Stop', 'Total time'],
+					colWidths: [150, 100, 200, 150, 250, 150, 75, 75, 75, 100, 100, 80],
+					columns: [
+						{ type: 'text', readOnly: true },
+						{ type: 'text', readOnly: true },
+						{ type: 'text', readOnly: true },
+						{
+							type: 'dropdown',
+							source: ['marking', 'cutting', 'machining', 'assembly', 'welding', 'painting', 'balancing', 'finishing', 'install']
+						},
+						{ type: 'text' },
+						{ type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val() },
+						{ type: 'text', mask: '##:##' },
+						{ type: 'text', mask: '##:##' },
+						{ type: 'text' },
+					],
+                    onchange: handler,
+                    // onselection:selection,
+                });
+            }        
+        });
+    }
+
 	function refresh(data) {
 		var nama_pt = $("#pabrik").val();
 		var tahun = $("#tahun").val();
@@ -68,44 +167,6 @@ $(document).ready(function () {
 			}
 		}
 
-		handler = function (obj, cell, val) {
-			console.log('My table id: ' + $(obj).prop('id'));
-			console.log('Cell changed: ' + $(cell).prop('id'));
-			console.log('Value: ' + val);
-
-			// console.log(cell);
-			// console.log(col);
-			// console.log(row);
-			cll = $(cell).prop('id');
-			dd = cll.split("-");
-
-			if (dd[0] == "7" && val == "close") {
-				var roww = parseInt(dd[1]) + 1;
-				var y = tgl.getFullYear();
-				var m = tgl.getMonth() + 1;
-				if (m < 10) {
-					m = ("0" + m.toString());
-				}
-
-				var d = tgl.getDate();
-				if (d < 10) {
-					d = ("0" + d.toString());
-				}
-
-				roww = "I" + roww;
-				console.log(d + "-" + m + "-" + y);
-				// console.log(id);
-				var vv = $("#my-spreadsheet").jexcel('getValue', roww);
-				// console.log(vv);
-				if (vv == "" || vv == "00-00-0000" || vv == "0000-00-00") {
-					$("#my-spreadsheet").jexcel('setValue', roww, d + "-" + m + "-" + y);
-				}
-			}
-
-
-
-
-		};
 
 		if (data == undefined) {
 			data = [];
@@ -131,14 +192,14 @@ $(document).ready(function () {
 				},
                 { type: 'text' },
                 { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val() },
-				{ type: 'text' },
-				{ type: 'text' },
+				{ type: 'text', mask: '##:##' },
+				{ type: 'text', mask: '##:##' },
 				{ type: 'text' },
 				// { type: 'dropdown', source: ['plan', 'unplan'] },
 				// { type: 'dropdown',source: ['M', 'E'] },
-				{ type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
-                { type: 'dropdown',source: ['open', 'close'] },
-				{ type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
+				// { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
+                // { type: 'dropdown',source: ['open', 'close'] },
+				// { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
 			]
 		});
 
@@ -327,7 +388,17 @@ $(document).ready(function () {
 			console.log(msg);
 			data = JSON.parse(msg);
 			console.log(data);
-			refresh(data);
+
+			if (data.length == 0) {
+				alert("anda belum punya data");
+				if (confirm("ambil data dari plan ?")) {
+					ambil_dari_plan();
+				} else {
+
+				}
+			} else {
+				refresh(data);
+			}
 		});
 	}
 

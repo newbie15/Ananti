@@ -5,9 +5,9 @@
       <h1>
         <ul class="nav nav-tabs">
           <li class=""><a href="<?php echo base_url("project")?>">Project</a></li>
+          <li class=""><a href="<?php echo base_url("projectplan")?>">Plan</a></li>
           <li class="active"><a href="">Activity</a></li>
           <li class=""><a href="<?php echo base_url("projectmanhour")?>" aria-expanded="false">Project Man Hour</a></li>
-
         </ul>
         <!-- Activity Maintenance
         <small>Input Harian</small> -->

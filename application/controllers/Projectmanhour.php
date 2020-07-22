@@ -38,7 +38,7 @@ class Projectmanhour extends CI_Controller {
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/planvsreal.js"),
+			base_url("assets/wbs/project-mh.js"),
 		];
 		
 		$output['content'] = '';
@@ -100,75 +100,17 @@ class Projectmanhour extends CI_Controller {
 		echo json_encode($d);
 	}
 
-	public function load_default(){
+	public function load_mh(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
 
 		$query = $this->db->query(
-			"SELECT m_wo.station,m_wo.unit,m_wo.problem,m_activity.jenis_breakdown,m_activity.tipe,tindakan,mulai,selesai,keterangan
-			FROM m_breakdown_pabrik where id_pabrik = '$id_pabrik' AND tanggal = '$tanggal';
-		");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i][0] = $row->station;
-			$d[$i][1] = $row->unit;
-			$d[$i][2] = $row->problem;
-			$d[$i][3] = $row->jenis;
-			$d[$i][4] = $row->tipe;
-			$d[$i][5] = $row->tindakan;
-			$d[$i][6] = $row->mulai;
-			$d[$i][7] = $row->selesai;
-			$d[$i++][8] = $row->keterangan;
-		}
-		echo json_encode($d);
-	}
-
-	public function simpan()
-	{
-		$pabrik = $_REQUEST['pabrik'];
-		// $station = $_REQUEST['station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_planing` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
-		$data_json = $_REQUEST['data_json'];
-		$data = json_decode($data_json);
-		foreach ($data as $key => $value) {
-			// $this->db->insert
-			$eq = explode("\n",$value[1]); 
-			$data = array(
-				'tanggal' => $tanggal,
-				'id_pabrik' => $pabrik,
-				'no_wo' => $value[0],
-				'station' => $eq[0],
-				'unit' => $eq[1],
-				'sub_unit' => $eq[2],
-				'problem' => $value[2],
-				'plan' => $value[3],
-				'mpp' => $value[4],
-				'nama_mpp' => $value[5],
-				'mek_el' => $value[6],
-				'start' => $value[7],
-				'stop' => $value[8],
-				'tipe' => $value[9],
-				'ket' => $value[10]
-			);
-			// print_r($data);
-			if($value[0]!=""){
-				$this->db->insert('m_planing', $data);
-			}
-		}
-	}
-	
-	public function get_plan(){
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-
-		$query = $this->db->query(
-			"SELECT `no_wo`,concat(`station`,'-',`unit`,'\n',`sub_unit`,'\n',`problem`) as area
-			FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
+			"SELECT
+			w_project.no_wo, w_project.project_id, w_project.pt, w_project.nama, w_project.deskripsi,
+			(w_project.marking + w_project.cutting + w_project.machining + w_project.assembly + w_project.welding + w_project.painting + w_project.balancing + w_project.finishing + w_project.`install`) AS plan_mh
+			,(SUM(w_activity.total_time)/60) AS real_mh 
+			FROM w_project ,w_activity
+			WHERE w_project.project_id = w_activity.project_id
+			AND w_project.id_pabrik = '$id_pabrik' ;
 		");
 
 		$i = 0;
@@ -176,10 +118,18 @@ class Projectmanhour extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->no_wo;
-			$d[$i++][1] = $row->area;
+			$d[$i][1] = $row->project_id;
+			$d[$i][2] = $row->pt;
+			$d[$i][3] = $row->nama;
+			$d[$i][4] = $row->deskripsi;
+			$d[$i][5] = $row->plan_mh;
+			$d[$i++][6] = round($row->real_mh,2);
 		}
 		echo json_encode($d);
 	}
+
+	
+
 
 	public function download_plan_harian(){
 		$id_pabrik = $this->uri->segment(3);

@@ -47,35 +47,32 @@ $(document).ready(function () {
 		var nama_pt = $("#pabrik").val();
 		var tahun = $("#tahun").val();
 		var bulan = $("#bulan").val();
-		var tanggal = $("#tanggal").val();
+		// var tanggal = $("#tanggal").val();
 
 
-		var no_wo = nama_pt + "-" + tahun + "-" + bulan + "-" + tanggal;
+		// var no_wo = nama_pt + "-" + tahun + "-" + bulan + "-" + tanggal;
 
-		var arr_no_wo = [];
+		// var arr_no_wo = [];
 
-		var no_last_wo = 1;
-		var no_max_wo = no_last_wo + 100;
-		if (no_max_wo > 9999) {
-			no_max_wo = 9999;
-		}
-		var j = 0;
-		for (var i = no_last_wo; i < no_max_wo; i++) {
-			if (i < 10) {
-				arr_no_wo[j++] = no_wo + "-0" + i.toString();
-			} else if (i < 100) {
-				arr_no_wo[j++] = no_wo + "-" + i.toString();
-			}
-		}
+		// var no_last_wo = 1;
+		// var no_max_wo = no_last_wo + 100;
+		// if (no_max_wo > 9999) {
+		// 	no_max_wo = 9999;
+		// }
+		// var j = 0;
+		// for (var i = no_last_wo; i < no_max_wo; i++) {
+		// 	if (i < 10) {
+		// 		arr_no_wo[j++] = no_wo + "-0" + i.toString();
+		// 	} else if (i < 100) {
+		// 		arr_no_wo[j++] = no_wo + "-" + i.toString();
+		// 	}
+		// }
 
 		handler = function (obj, cell, val) {
 			console.log('My table id: ' + $(obj).prop('id'));
 			console.log('Cell changed: ' + $(cell).prop('id'));
 			console.log('Value: ' + val);
 
-			// console.log(cell);
-			// console.log(col);
-			// console.log(row);
 			cll = $(cell).prop('id');
 			dd = cll.split("-");
 
@@ -114,53 +111,51 @@ $(document).ready(function () {
 		$('#my-spreadsheet').jexcel({
 			data: data,
 			allowInsertColumn: false,
-			// tableOverflow: true,
-			// tableHeight: '400px',
+			tableOverflow: true,
+			tableHeight: '400px',
 			onchange: handler,
-			// colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-			colHeaders: ['No WO<br>(PIMS)', 'Project ID<br>(IFS)', 'PT', 'Nama Project', 'Deskripsi Project', 'Tanggal<br>Start', 'Status', 'Tanggal<br>Closing'],
-			// colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
-			colWidths: [140, 80, 100, 225, 225, 90, 75, 90],
+			colHeaders: [
+				'No WO<br>(PIMS)', 
+				'Project ID<br>(IFS)', 
+				'PT', 
+				'Nama Project', 
+				'Deskripsi Project', 
+				'Tanggal<br>Start', 
+				'Status', 
+				'Tanggal<br>Closing',
+				'Marking',
+				'Cutting',
+				'Machining',
+				'Assembly',
+				'Welding',
+				'Painting',
+				'Balancing',
+				'Finishing',
+				'Install',
+			],
+
+			colWidths: [140, 80, 100, 225, 225, 90, 75, 90, 70, 70, 70, 70, 70, 70, 70, 70, 70],
 			columns: [
                 { type: 'text', },
 				{ type: 'text', },
-				// { type: 'text', wordWrap: true },
 				{ type: 'dropdown', source: ['GSIP','GSDI','GSPP','SINP','NAL','BUMIHARJO','AAL1','SAM','TBM'] },
 				{ type: 'text', wordWrap: true },
 				{ type: 'text', wordWrap: true },
-				// { type: 'dropdown',source: ['M', 'E'] },
 				{ type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
                 {
 					type: 'dropdown',
 					source: ['open', 'in progress', 'fabrikasi', 'install', 'close']
                 },
 				{ type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI',	time: 1	} },
-			]
-		});
-
-		var data_mh = [
-			['marking', ''],
-			['cutting', ''],
-			['machining', ''],
-			['assembly', ''],
-			['welding', ''],
-			['painting', ''],
-			['balancing', ''],
-			['finishing', ''],
-		];
-		$('#my-mh').jexcel({
-			data: data_mh,
-			allowInsertColumn: false,
-			// tableOverflow: true,
-			// tableHeight: '400px',
-			onchange: handler,
-			// colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-			colHeaders: ['Activity', 'Man Hour Plan'],
-			// colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
-			colWidths: [140, 120, 100, 250, 250, 100, 100, 100, 80],
-			columns: [
+                { type: 'text', },
                 { type: 'text', },
 				{ type: 'text', },
+                { type: 'text', },
+                { type: 'text', },
+				{ type: 'text', },
+                { type: 'text', },
+                { type: 'text', },
+                { type: 'text', },
 			]
 		});
 
@@ -183,9 +178,6 @@ $(document).ready(function () {
 	$("#pabrik").change(function () {
 		ajax_refresh();
 	});
-	// $("#tahun").change(function () {
-	//     ajax_refresh();
-	// });
 	$("#bulan").change(function () {
 		ajax_refresh();
 	});
@@ -302,7 +294,7 @@ $(document).ready(function () {
 			url: BASE_URL + "project/load",
 			data: {
 				id_pabrik: $("#pabrik").val(),
-				d: $("#tanggal").val(),
+				// d: $("#tanggal").val(),
 				m: $("#bulan").val(),
 				y: $("#tahun").val(),
 			}

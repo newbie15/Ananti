@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Projectactivity extends CI_Controller {
+class Projectplan extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -26,21 +26,21 @@ class Projectactivity extends CI_Controller {
 		$output['main_title'] = "Breakdown";
 		
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
 			base_url("assets/datatables/css/jquery.dataTables.min.css"),
-
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/wbs/project-activity.js"),
+			base_url("assets/wbs/project-plan.js"),
 		];
 		
 		$query = $this->db->query("SELECT nama FROM master_pabrik;");
@@ -70,7 +70,7 @@ class Projectactivity extends CI_Controller {
 		$output['dropdown_pabrik'] .= "/<select>";
 		
 		$this->load->view('header',$header);
-		$this->load->view('content-project-activity',$output);
+		$this->load->view('content-project-plan',$output);
 		$this->load->view('footer',$footer);
 
 	}
@@ -83,28 +83,14 @@ class Projectactivity extends CI_Controller {
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
 		$query = $this->db->query("
 			SELECT *
-			FROM w_activity
-			WHERE w_activity.id_pabrik = '$id_pabrik' AND w_activity.tanggal='$tanggal' 
+			FROM w_plan
+			WHERE w_plan.id_pabrik = '$id_pabrik' AND w_plan.tanggal='$tanggal' 
 			");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-
-			$jam = intval($row->total_time / 60);
-			$menit = ($row->total_time % 60);
-
-			if($jam<10){
-				$jam = "0".$jam;
-			}
-
-			if($menit<10){
-				$menit = "0".$menit;
-			}
-
-			$realisasi = $jam.":".$menit;
-
 			$d[$i][0] = $row->project_id;
 			$d[$i][1] = $row->pt;
 			$d[$i][2] = $row->nama;
@@ -113,7 +99,7 @@ class Projectactivity extends CI_Controller {
 			$d[$i][5] = $row->mpp;
 			$d[$i][6] = $row->start;
 			$d[$i][7] = $row->stop;
-			$d[$i++][8] = $realisasi; //row->total_time;
+			$d[$i++][8] = $row->total_time;
 			// $d[$i++][3] = $row->jenis_problem;
 		}
 		echo json_encode($d);
@@ -212,44 +198,11 @@ class Projectactivity extends CI_Controller {
 		$pabrik = $_REQUEST['pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 
-		$this->db->query("DELETE FROM `w_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$this->db->query("DELETE FROM `w_plan` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
-
-			$awal = explode(":",$value[6]);
-			$akhir = explode(":",$value[7]);
-
-			$jam_aw = intval($awal[0]);
-			$jam_ak = intval($akhir[0]);
-
-			$datetime1 = null;
-			$datetime2 = null;
-
-			if ($jam_aw > $jam_ak){ // lewat hari misal start 21:00 selesai 01:00
-				$datetime1 = new DateTime('2014-02-11 '.$value[6].':00'); // awal 
-				$datetime2 = new DateTime('2014-02-12 '.$value[7].':00'); // akhir
-			}else{
-				$datetime1 = new DateTime('2014-02-11 '.$value[6].':00'); // awal 
-				$datetime2 = new DateTime('2014-02-11 '.$value[7].':00'); // akhir
-			}
-
-			$interval = $datetime1->diff($datetime2);
-
-			$jm = $interval->format('%h');
-			$mn = $interval->format('%i'); 
-
-			// if($jm<10){
-			// 	$jm = "0".$jm;
-			// }
-			
-			// if($mn<10){
-			// 	$mn = "0".$mn;
-			// }
-
-			$time = ($jm*60) + $mn;
-
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
@@ -261,13 +214,45 @@ class Projectactivity extends CI_Controller {
 				'mpp' => $value[5],
 				'start' => $value[6],
 				'stop' => $value[7],
-				'total_time' => $time, //value[8],
+				'total_time' => $value[8],
 				// 'status_perbaikan' => $value[3],
 				// 'jenis_problem' => $value[3],
 			);
 			if($value[0]!=""){
-				$this->db->insert('w_activity', $data);
+				$this->db->insert('w_plan', $data);
 			}
 		}
+	}
+
+	public function get_plan(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+
+		$query = $this->db->query(
+			"SELECT `project_id`,`pt`,`nama`,`activity`,`keterangan`,`mpp`,`start`,`stop`,`total_time`
+			FROM `w_plan` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
+		");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$m = explode(";",$row->mpp);
+
+			foreach ($m as $key => $value) {
+				# code...
+				$d[$i][0] = $row->project_id;
+				$d[$i][1] = $row->pt;
+				$d[$i][2] = $row->nama;
+				$d[$i][3] = $row->activity;
+				$d[$i][4] = $row->keterangan;
+				$d[$i][5] = $value;
+				$d[$i][6] = $row->start;
+				$d[$i][7] = $row->stop;
+				$d[$i++][8] = $row->total_time;
+			}
+		}
+		echo json_encode($d);
 	}
 }
