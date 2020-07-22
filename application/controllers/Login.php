@@ -40,7 +40,6 @@ class Login extends CI_Controller {
 		
 		if($query->num_rows() > 0){
 			if($row->user == $user AND $row->password == $pass){
-<<<<<<< HEAD
 				$this->session->user = $user;
 				$this->session->kategori = $row->kategori;
 				
@@ -66,20 +65,6 @@ class Login extends CI_Controller {
 						break;
 				}
 				redirect("main");
-=======
-				$u = explode("_",$user);
-				if(count($u)>1){
-					$this->session->user = $u[1];
-					$this->session->kategori = $row->kategori;
-					redirect("woprocess");
-				}else{
-					$this->session->user = $user;
-					$this->session->kategori = $row->kategori;
-					redirect("main");
-				}
-				// $this->session->kategori = $row->kategori;
-				// redirect("main");
->>>>>>> development
 				// echo "redirect";
 			}
 		}else{

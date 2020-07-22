@@ -116,33 +116,6 @@
     <section class="sidebar">
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-list"></i> <span>App Config</span>
-          </a>
-          <ul class="treeview-menu" style="display: none;">
-            <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
-          </ul>
-        </li> -->
-<<<<<<< HEAD
-
-=======
-<?php 
-if($this->session->kategori == 3){
-?>
->>>>>>> development
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-file"></i> <span>Process</span>
-          </a>
-          <ul class="treeview-menu" style="display: none;">
-            <li><a href="<?php echo base_url("woprocess"); ?>"><i class="fa fa-file"></i>WO Process <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
-            <!-- <li><a href="<?php echo base_url("cost"); ?>"><i class="fa fa-file"></i>Cost Harian <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li> -->
-          </ul>
-        </li>
-<?php
-}else{
-?>
           <li class="treeview">
           <a href="#">
             <i class="fa fa-list"></i> <span>Master</span>
@@ -167,19 +140,7 @@ if($this->session->kategori == 3){
           </ul>
         </li>
 
-<<<<<<< HEAD
-        <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-gear"></i> <span>Process</span>
-          </a>
-          <ul class="treeview-menu" style="display: none;">
-            <li><a href="<?php echo base_url("feedback"); ?>"><i class="fa fa-file"></i>Feedback Process <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
-            <li><a href="<?php echo base_url("cost"); ?>"><i class="fa fa-file"></i>Cost Harian <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
-          </ul>
-        </li> -->
 <?php if($this->session->tipe == "mill" || $this->session->kategori < 2){ ?>
-=======
->>>>>>> development
 
         <li class="treeview">
           <a href="#">
@@ -250,7 +211,6 @@ if($this->session->kategori == 3){
             <li><a href="<?php echo base_url("display/maintenance"); ?>"><i class="fa fa-money"></i>Potret Maintenance</a></li> -->
           </ul>
         </li>
-<<<<<<< HEAD
 
 <?php } if($this->session->tipe == "wsc" || $this->session->kategori < 2) { ?>
         
@@ -275,11 +235,6 @@ if($this->session->kategori == 3){
         </li>
         
 <?php } ?>
-=======
-<?php
-}
-?>
->>>>>>> development
 
       </ul>
     </section>
