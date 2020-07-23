@@ -456,8 +456,8 @@ class Schedule extends CI_Controller {
 			'problem' => $title,
 			'desc_masalah' => '',
 			'hm' => '',
-			'kategori' => '',
-			'tipe' => 'maintenance',
+			'kategori' => 'maintenance',
+			'tipe' => '',
 			'status' => 'open',
 			'tanggal_closing' => '0000-00-00',
 			// 'date' => 'My date'
