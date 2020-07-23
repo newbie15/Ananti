@@ -38,7 +38,15 @@
             <option>2019</option>
           </select>
           <br><br>
-          <div id='my-G'></div>
+          <div id="scrl" style="overflow:auto">
+            <div id='my-G'></div>
+          </div>
+          <p>
+            <br/>
+          Hijau  : Untuk Ampere > 75% Kapasitas (kVar) tertulis<br/>
+          Kuning : Untuk Ampere > 50% & < 75% Kapasitas (kVar) tertulis<br/>
+          Merah  : Untuk Ampere < 50% Kapasitas (kVar) tertulis<br/>
+          </p>
         </div>
       </div>
       <!-- /.row -->

@@ -22,7 +22,7 @@ class Megger extends CI_Controller {
 	{
  		header('Access-Control-Allow-Origin: *');
 		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-	    	parent::__construct();
+		parent::__construct();
 	}
 	public function index()
 	{
@@ -33,13 +33,15 @@ class Megger extends CI_Controller {
 		
 		$header['title'] = "Megger";
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
+			// base_url("assets/jexcel/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
 		];
 
 		$footer['js_files'] = [
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
+			// base_url("assets/jexcel/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
 			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
@@ -101,12 +103,18 @@ class Megger extends CI_Controller {
 		$tahun = $_REQUEST['tahun'];
 		$station = $_REQUEST['id_station'];
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
+		// $query = $this->db->query("
+		// SELECT m_megger.unit,`kabel_rs`,`kabel_st`,`kabel_tr`,`kabel_rn`,`kabel_sn`,`kabel_tn`,`motor_rs`,`motor_st`,`motor_tr`,`motor_re`,`motor_se`,`motor_te`
+		// FROM m_megger RIGHT JOIN master_unit
+		// ON master_unit.id_pabrik = m_megger.id_pabrik
+		// AND master_unit.nama = m_megger.unit
+		// where master_unit.id_pabrik = '$id_pabrik' AND m_megger.tahun = '$tahun' AND m_megger.station = '$station'
+		// ");
+
 		$query = $this->db->query("
 		SELECT m_megger.unit,`kabel_rs`,`kabel_st`,`kabel_tr`,`kabel_rn`,`kabel_sn`,`kabel_tn`,`motor_rs`,`motor_st`,`motor_tr`,`motor_re`,`motor_se`,`motor_te`
-		FROM m_megger RIGHT JOIN master_unit
-		ON master_unit.id_pabrik = m_megger.id_pabrik
-		AND master_unit.nama = m_megger.unit
-		where master_unit.id_pabrik = '$id_pabrik' AND m_megger.tahun = '$tahun' AND m_megger.station = '$station'
+		FROM m_megger
+		where m_megger.id_pabrik = '$id_pabrik' AND m_megger.tahun = '$tahun' AND m_megger.station = '$station'
 		");
 
 		$i = 0;
@@ -186,14 +194,16 @@ class Megger extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		$query = $this->db->query("SELECT id_unit,nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND electromotor_mod = 1;");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i++][0] = $row->nama; 
+			// $d[$i++][0] = $row->nama; 
+			$d[$i++][0] = $row->id_unit."\n".$row->nama; 
 		}
 		echo json_encode($d);
 	}
+
 }

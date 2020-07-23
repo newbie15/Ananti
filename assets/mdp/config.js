@@ -16,7 +16,16 @@ var BASE_URL = "";
 
 var INET_URL = "http://159.65.135.69/Ananti/";
 
+var MAX_TEMP_BEARING = 80;
+var MAX_TEMP_MOTOR = 60;
 
+var MIN_CABLE_MEGGER = 5;
+var MED_CABLE_MEGGER = 20;
+var SAFE_CABLE_MEGGER = 50;
+
+var MIN_MOTOR_MEGGER = 5;
+var MED_MOTOR_MEGGER = 20;
+var SAFE_MOTOR_MEGGER = 50;
 
 if(CUSTOM == 1) {
     var url = window.location.href;

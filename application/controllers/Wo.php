@@ -86,7 +86,7 @@ class Wo extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,tipe,status,tanggal_closing FROM m_wo where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,jenis,tipe,status,tanggal_closing FROM m_wo where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
 
 		$i = 0;
 		$d = [];
@@ -101,9 +101,10 @@ class Wo extends CI_Controller {
 			$d[$i][3] = $row->desc_masalah;
 			$d[$i][4] = $row->hm;
 			$d[$i][5] = $row->kategori;
-			$d[$i][6] = $row->tipe;
-			$d[$i][7] = $row->status;
-			$d[$i++][8] = $row->tanggal_closing;
+			$d[$i][6] = $row->jenis;
+			$d[$i][7] = $row->tipe;
+			$d[$i][8] = $row->status;
+			$d[$i++][9] = $row->tanggal_closing;
 		}
 		echo json_encode($d);
 	}
@@ -115,7 +116,7 @@ class Wo extends CI_Controller {
 		$sub_unit = $_REQUEST['id_sub_unit'];
 		
 		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,
-		problem,desc_masalah,hm,kategori,tipe,status,tanggal_closing FROM m_wo where 
+		problem,desc_masalah,hm,kategori,jenis,tipe,status,tanggal_closing FROM m_wo where 
 		id_pabrik = '$id_pabrik' AND
 		station = '$station' AND
 		unit = '$unit' AND
@@ -136,9 +137,10 @@ class Wo extends CI_Controller {
 			$d[$i][3] = $row->desc_masalah;
 			$d[$i][4] = $row->hm;
 			$d[$i][5] = $row->kategori;
-			$d[$i][6] = $row->tipe;
-			$d[$i][7] = $row->status;
-			$d[$i++][8] = $row->tanggal_closing;
+			$d[$i][6] = $row->jenis;
+			$d[$i][7] = $row->tipe;
+			$d[$i][8] = $row->status;
+			$d[$i++][9] = $row->tanggal_closing;
 		}
 		echo json_encode($d);		
 	}
@@ -155,6 +157,11 @@ class Wo extends CI_Controller {
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$eq = explode("\n",$value[1]); 
+
+			if($value[5]=="Proses"){
+				$value[7]=="Corrective"; // Kalau WO Dari Proses Jelas Corrective
+			}
+
 			@$data = array(
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
@@ -166,9 +173,10 @@ class Wo extends CI_Controller {
 				'desc_masalah' => $value[3],
 				'hm' => $value[4],
 				'kategori' => $value[5],
-				'tipe' => $value[6],
-				'status' => $value[7],
-				'tanggal_closing' => $value[8],
+				'jenis' => $value[6],
+				'tipe' => $value[7],
+				'status' => $value[8],
+				'tanggal_closing' => $value[9],
 				// 'date' => 'My date'
 			);
 			// print_r($data);
@@ -228,6 +236,12 @@ class Wo extends CI_Controller {
 	public function list_open(){
 		$pabrik = $this->uri->segment(3, 0);
 		$query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,' - ',unit,' - ',sub_unit,' - ',problem) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
+        echo(json_encode($query->result()));
+	}
+
+	public function list_open_tipe(){
+		$pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,' - ',unit,' - ',sub_unit,' - ',problem,' - ',tipe) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
         echo(json_encode($query->result()));
 	}
 

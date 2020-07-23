@@ -4,6 +4,8 @@ $(document).ready(function(){
         $(".n_success").fadeOut(3000);
     }
 
+    var tabel_wo;
+
     function group_refresh() {
         $("#group_unit").load(BASE_URL + "grouping/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
@@ -98,7 +100,7 @@ $(document).ready(function(){
 
             if(dd[0]=="5" && val == "Proses"){
                 roww = "H"+roww;
-                $("#my-spreadsheet").jexcel('setValue', roww, 'Corrective');
+                // $("#my-spreadsheet").jexcel('setValue', roww, 'Corrective');
                 // console.log("Corrective");
             }
 
@@ -118,11 +120,11 @@ $(document).ready(function(){
                 roww = "J"+roww;
                 console.log(d + "-" + m + "-" + y);
                 // console.log(id);
-                var vv = $("#my-spreadsheet").jexcel('getValue', roww);
+                // var vv = $("#my-spreadsheet").jexcel('getValue', roww);
                 // console.log(vv);
                 if (vv == "" || vv == "00-00-0000" || vv == "0000-00-00") {
                     // setTimeout(() => {
-                    $("#my-spreadsheet").jexcel('setValue', roww, d + "-" + m + "-" + y);
+                    // $("#my-spreadsheet").jexcel('setValue', roww, d + "-" + m + "-" + y);
                     // return;
                     // break table;                            
                     // }, 1000);
@@ -131,17 +133,19 @@ $(document).ready(function(){
         };
 
         if (data == undefined){
-            data = [];
+            data = ["", "", "", "", "", "", "", "", "", ""];
         }
 
-        $('#my-spreadsheet').jexcel({
+        $('#my-spreadsheet').html("");
+        
+        tabel_wo = jexcel(document.getElementById('my-spreadsheet'), {
             data: data,
             allowInsertColumn: false,
             // tableOverflow: true,
             // tableHeight: '400px',
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori','Jenis','Tipe','Status','Tanggal<br>Closing'],
+            colHeaders: ['No WO', 'Station\nUnit\nSub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori','Jenis','Tipe','Status','Tanggal\nClosing'],
             // colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
             colWidths: [140, 220, 250, 250, 100, 65, 40, 80, 80, 80],
             columns: [
@@ -164,22 +168,34 @@ $(document).ready(function(){
                 { type: 'dropdown', source: ['open', 'close'] },
                 // { type: 'text' },
                 { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
-            ]
-        });
+            ],
 
-        $('#my-spreadsheet').jexcel('updateSettings', {
-            table: function (instance, cell, col, row, val, id) {
+            updateTable: function (instance, cell, col, row, val, label, cellName) {
                 if (col == 8) {
                     if (val == "open") {
-                        $(cell).css('color', '#000000');
-                        $(cell).css('background-color', '#ff0000');
+                        cell.css('color', '#000000');
+                        cell.css('background-color', '#ff0000');
                     } else if (val == "close") {
-                        $(cell).css('color', '#000000');
-                        $(cell).css('background-color', '#00ff00');
+                        cell.css('color', '#000000');
+                        cell.css('background-color', '#00ff00');
                     }
                 }
             }
         });
+
+        // $('#my-spreadsheet').jexcel('updateSettings', {
+        //     table: function (instance, cell, col, row, val, id) {
+        //         if (col == 8) {
+        //             if (val == "open") {
+        //                 $(cell).css('color', '#000000');
+        //                 $(cell).css('background-color', '#ff0000');
+        //             } else if (val == "close") {
+        //                 $(cell).css('color', '#000000');
+        //                 $(cell).css('background-color', '#00ff00');
+        //             }
+        //         }
+        //     }
+        // });
 
     }
 
@@ -211,7 +227,8 @@ $(document).ready(function(){
     function add(no, sx, ux, su) {
         var sama = 0;
         var index = 0;
-        dx = $('#my-spreadsheet').jexcel('getData');
+        // dx = $('#my-spreadsheet').jexcel('getData');
+        dx = jexcel(document.getElementById('my-spreadsheet')).getData();
         console.log(dx);
         if (dx[0][0] == "") { // kosong
             dx[0][0] = no;
@@ -233,7 +250,9 @@ $(document).ready(function(){
     function multi_add(no, sx, ux, su) {
         var sama = 0;
         var index = 0;
-        dx = $('#my-spreadsheet').jexcel('getData');
+        // dx = $('#my-spreadsheet').jexcel('getData');
+        dx = jexcel(document.getElementById('my-spreadsheet')).getData();
+
         console.log(dx);
         if (dx[0][0] == "") { // kosong
             dx[0][0] = no;
@@ -256,7 +275,7 @@ $(document).ready(function(){
     }
 
     $("#simpan").click(function(){
-        var data_j = $('#my-spreadsheet').jexcel('getData');
+        // var data_j = $('#my-spreadsheet').jexcel('getData');
         console.log(data_j);
 
         $.ajax({
@@ -414,7 +433,7 @@ $(document).ready(function(){
 
         var no_wo = nama_pt + "-" + tahun + "-" + bulan + "-" + tanggal;
 
-        dx = $('#my-spreadsheet').jexcel('getData');
+        // dx = $('#my-spreadsheet').jexcel('getData');
         console.log(dx);
         // if (dx[0][0] == "") { // kosong
         //     dx[0][0] = no;
