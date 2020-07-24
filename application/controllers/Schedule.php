@@ -25,7 +25,7 @@ class Schedule extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Master Schedule";
 		
-		$header['title'] = "Schedule";
+		$header['title'] = "PM Schedule";
 		$header['css_files'] = [
 			// base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/daypilot/css/scheduler_traditional.css"),
@@ -457,7 +457,8 @@ class Schedule extends CI_Controller {
 			'desc_masalah' => '',
 			'hm' => '',
 			'kategori' => 'maintenance',
-			'tipe' => '',
+			'tipe' => '', // M atau E
+			'jenis' => 'preventive', // preventive atau predictive
 			'status' => 'open',
 			'tanggal_closing' => '0000-00-00',
 			// 'date' => 'My date'
