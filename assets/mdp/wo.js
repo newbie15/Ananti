@@ -141,7 +141,7 @@ $(document).ready(function(){
             // tableHeight: '400px',
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori','Jenis','Tipe','Status','Tanggal<br>Closing'],
+            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori', 'Tipe','Jenis','Status','Tanggal<br>Closing'],
             // colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
             colWidths: [140, 220, 250, 250, 100, 65, 40, 80, 80, 80],
             columns: [
@@ -160,7 +160,7 @@ $(document).ready(function(){
                 { type: 'text' },
                 { type: 'dropdown', source: ['Proses', 'Maintenance', 'Vendor' ] },
                 { type: 'dropdown', source: ['M', 'E'] },
-                { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective' ] },
+                { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective'] },
                 { type: 'dropdown', source: ['open', 'close'] },
                 // { type: 'text' },
                 { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },

@@ -137,8 +137,8 @@ class Wo extends CI_Controller {
 			$d[$i][3] = $row->desc_masalah;
 			$d[$i][4] = $row->hm;
 			$d[$i][5] = $row->kategori;
-			$d[$i][6] = $row->jenis;
-			$d[$i][7] = $row->tipe;
+			$d[$i][6] = $row->tipe;
+			$d[$i][7] = $row->jenis;
 			$d[$i][8] = $row->status;
 			$d[$i++][9] = $row->tanggal_closing;
 		}
@@ -172,9 +172,9 @@ class Wo extends CI_Controller {
 				'problem' => $value[2],
 				'desc_masalah' => $value[3],
 				'hm' => $value[4],
-				'kategori' => $value[5],
-				'jenis' => $value[6],
-				'tipe' => $value[7],
+				'kategori' => $value[5], // maintenance / proses / vendor
+				'tipe' => $value[6], // predictive / preventive / corrective
+				'jenis' => $value[7], // m atau e
 				'status' => $value[8],
 				'tanggal_closing' => $value[9],
 				// 'date' => 'My date'

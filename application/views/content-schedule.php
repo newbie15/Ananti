@@ -5,7 +5,7 @@
       <h1>
         <ul class="nav nav-tabs">
           <li class=""><a href="<?php echo base_url("schedule/monitoring_item")?>" aria-expanded="true">Monitoring Item</a></li>
-          <li class="active"><a href="#" aria-expanded="false">Schedule</a></li>
+          <li class="active"><a href="#" aria-expanded="false">PM Schedule</a></li>
           <!-- <li class=""><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li> -->
         </ul>
       </h1>
