@@ -98,8 +98,10 @@ $(document).ready(function () {
                             }
                         }
                         if (val < ((b * 1000 / (1.73 * 380)) * 0.5)) {
-                            $(cell).css('background-color', '#ff0000');
-                            $(cell).css('color', '#fff');
+                            if(val!=""){
+                                $(cell).css('background-color', '#ff0000');
+                                $(cell).css('color', '#fff');
+                            }
                         } else if (val <= ((b * 1000 / (1.73 * 380)) * 0.75)) {
                             $(cell).css('background-color', '#ffff00');
                             $(cell).css('color', '#000');

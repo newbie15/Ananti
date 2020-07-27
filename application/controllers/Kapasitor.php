@@ -137,7 +137,15 @@ class Kapasitor extends CI_Controller {
 			$d[$i][35] = $row->des_r;
 			$d[$i][36] = $row->des_s;
 			$d[$i][37] = $row->des_t;
-			$d[$i++][38] = $row->keterangan;
+			$d[$i][38] = $row->keterangan;
+
+			for($j=2;$j<=38;$j++){
+				if($d[$i][$j]==0){
+					$d[$i][$j] = "";
+				}
+			}
+			$i++;
+
 		}
 		echo json_encode($d);
 	}
