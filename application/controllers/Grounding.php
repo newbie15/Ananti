@@ -113,7 +113,14 @@ class Grounding extends CI_Controller {
 			$d[$i][11] = $row->okt;
 			$d[$i][12] = $row->nov;
 			$d[$i][13] = $row->des;
-			$d[$i++][14] = $row->keterangan;
+			$d[$i][14] = $row->keterangan;
+
+			for($j=2;$j<=13;$j++){
+				if($d[$i][$j]==0){
+					$d[$i][$j] = "";
+				}
+			}
+			$i++;
 		}
 		echo json_encode($d);
 	}
