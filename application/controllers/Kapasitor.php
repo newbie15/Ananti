@@ -139,7 +139,7 @@ class Kapasitor extends CI_Controller {
 			$d[$i][37] = $row->des_t;
 			$d[$i][38] = $row->keterangan;
 
-			for($j=2;$j<=38;$j++){
+			for($j=2;$j<=37;$j++){
 				if($d[$i][$j]==0){
 					$d[$i][$j] = "";
 				}
