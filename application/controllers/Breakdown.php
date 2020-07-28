@@ -187,17 +187,23 @@ class Breakdown extends CI_Controller {
 		
 		$header['title'] = "Summary Breakdown";
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			// base_url("assets/jexcel/css/jquery.jexcel.css"),
+			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/css/jexcel.css"),
+			base_url("assets/jexcel/css/jsuites.css"),
 		];
 
 		$footer['js_files'] = [
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			base_url("assets/jexcel/js/jquery.mask.min.js"),
-			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			// base_url("assets/jexcel/js/jquery.jexcel.js"),
+			// base_url("assets/jexcel/js/jquery.mask.min.js"),
+			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
+
+			base_url("assets/jexcel/js/jexcel.js"),
+			base_url("assets/jexcel/js/jsuites.js"),
+			
 			base_url("assets/mdp/breakdown_summary.js"),
 		];
 		
