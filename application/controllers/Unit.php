@@ -268,7 +268,7 @@ class Unit extends CI_Controller {
 	public function electromotor_default_list()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		// $id_station = $_REQUEST['id_station'];
+		$id_station = $_REQUEST['id_station'];
 		// $id_pabrik = $this->uri->segment(3, 0);
 		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND electromotor_mod=1;");
 

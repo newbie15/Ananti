@@ -7,7 +7,7 @@ $(document).ready(function(){
         if (data.length < 1){
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "unit/ajax_default_list",
+                url: BASE_URL + "motor/ajax_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),
@@ -17,6 +17,7 @@ $(document).ready(function(){
                 data = JSON.parse(msg);
                 console.log(data);
                 x = data;
+                $('#my-spreadsheet').html("");
                 $('#my-spreadsheet').jexcel({
                     data: data,
                     allowInsertColumn: false,
@@ -24,16 +25,18 @@ $(document).ready(function(){
                     tableHeight: '400px',
                     colHeaders: [
                         '<br>Unit',
-                        'Suhu Coupling<br>(pulley / gearbox)',
-                        'Suhu<br>Bearing',
-                        'Suhu<br>Body',
+                        'Ampere',
+                        'Bearing<br>Depan',
+                        'Bearing<br>Belakang',
+                        'Body',
                         'Kondisi<br>Fan',
                         'Seal<br>terminal',
                         'Kabel<br>Gland',
                     ],
 
-                    colWidths: [300, 150, 75, 75, 75, 75, 100, 100, 100],
+                    colWidths: [300, 75, 75, 75, 75, 75, 100, 100, 100],
                     columns: [
+                        { type: 'text', wordWrap: true, readOnly:true},
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
@@ -41,9 +44,51 @@ $(document).ready(function(){
                         { type: 'checkbox' },
                         { type: 'checkbox' },
                         { type: 'checkbox' },
-                        { type: 'text' },
-                        { type: 'text' },
-                    ]
+                        // { type: 'text' },
+                        // { type: 'text' },
+                    ],
+                    nestedHeaders: [
+                        [   
+                            {title: '',colspan: '1',},
+                            {title: '',colspan: '1'},
+                            {title: 'Temperature',colspan: '3'},
+                            {title: 'Checklist',colspan: '3'},
+                        ],
+                    ],
+                });
+                $('#my-spreadsheet').jexcel('updateSettings', {
+                    table: function (instance, cell, col, row, val, id) {
+                        if (col >1 && col < 4){
+                            if (val != 0 ){
+                                if(val > MAX_TEMP_BEARING){
+                                    $(cell).css('background-color', '#ff0000');
+                                    $(cell).css('color', '#fff');
+                                }else{
+                                    $(cell).css('background-color', '#1aab68');
+                                    $(cell).css('color', '#fff');
+                                }
+                            }
+                        }else if (col == 4){
+                            if (val != 0 ){
+                                if(val > MAX_TEMP_MOTOR){
+                                    $(cell).css('background-color', '#ff0000');
+                                    $(cell).css('color', '#fff');
+                                }else{
+                                    $(cell).css('background-color', '#1aab68');
+                                    $(cell).css('color', '#fff');
+                                }
+                            }
+                        }
+                        // else if (col > 4){
+                        //     if (val == 0 ){
+                        //         $(cell).css('background-color', '#ff0000');
+                        //         $(cell).css('color', '#fff');
+                        //     }else{
+                        //         $(cell).css('background-color', '#1aab68');
+                        //         $(cell).css('color', '#fff');
+                        //     }
+                        // }
+                    }
                 });
             });
         }else{
@@ -60,21 +105,27 @@ $(document).ready(function(){
                 console.log(msg);
                 data = JSON.parse(msg);
                 console.log(data);
+                $('#my-spreadsheet').html("");
                 $('#my-spreadsheet').jexcel({
                     data: data,
                     allowInsertColumn: false,
+                    tableOverflow: true,
+                    tableHeight: '400px',
                     colHeaders: [
                         '<br>Unit',
-                        'Suhu Coupling<br>(pulley / gearbox)',
-                        'Suhu<br>Bearing',
-                        'Suhu<br>Body',
+                        'Ampere',
+                        'Bearing<br>Depan',
+                        'Bearing<br>Belakang',
+                        'Body',
                         'Kondisi<br>Fan',
                         'Seal<br>terminal',
                         'Kabel<br>Gland',
                     ],
 
-                    colWidths: [300,150, 75, 75, 75, 100, 100, 100],
+                    colWidths: [300, 75, 75, 75, 75, 75, 100, 100, 100],
                     columns: [
+                        { type: 'text', wordWrap: true, readOnly:true},
+                        // { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
@@ -82,9 +133,50 @@ $(document).ready(function(){
                         { type: 'checkbox' },
                         { type: 'checkbox' },
                         { type: 'checkbox' },
-                        { type: 'text' },
-                        { type: 'text' },
-                    ]
+                    ],
+                    nestedHeaders: [
+                        [   
+                            {title: '',colspan: '1',},
+                            {title: '',colspan: '1'},
+                            {title: 'Temperature',colspan: '3'},
+                            {title: 'Checklist',colspan: '3'},
+                        ],
+                    ],
+                });
+
+                $('#my-spreadsheet').jexcel('updateSettings', {
+                    table: function (instance, cell, col, row, val, id) {
+                        if (col >1 && col < 4){
+                            if (val != 0 ){
+                                if(val > MAX_TEMP_BEARING){
+                                    $(cell).css('background-color', '#ff0000');
+                                    $(cell).css('color', '#fff');
+                                }else{
+                                    $(cell).css('background-color', '#1aab68');
+                                    $(cell).css('color', '#fff');
+                                }
+                            }
+                        }else if (col == 4){
+                            if (val != 0 ){
+                                if(val > MAX_TEMP_MOTOR){
+                                    $(cell).css('background-color', '#ff0000');
+                                    $(cell).css('color', '#fff');
+                                }else{
+                                    $(cell).css('background-color', '#1aab68');
+                                    $(cell).css('color', '#fff');
+                                }
+                            }
+                        }
+                        // else if (col>4){
+                        //     if (val == 0 ){
+                        //         $(cell).css('background-color', '#ff0000');
+                        //         $(cell).css('color', '#fff');
+                        //     }else{
+                        //         $(cell).css('background-color', '#1aab68');
+                        //         $(cell).css('color', '#fff');
+                        //     }
+                        // }
+                    }
                 });
             });
 

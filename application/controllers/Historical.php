@@ -140,6 +140,29 @@ class Historical extends CI_Controller {
 		}
 	}	
 
+	public function mini_history_csv()
+	{
+		$id_pabrik = $this->uri->segment(3);//['id_pabrik'];
+		$id_station = urldecode($this->uri->segment(4));//['id_station'];
+		$id_unit = urldecode($this->uri->segment(5));//['id_unit'];
+		$id_sub_unit = urldecode($this->uri->segment(6));//['id_sub_unit'];
+
+		$query = $this->db->query("SELECT no_wo,problem,desc_masalah FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND unit = '$id_unit' AND sub_unit = '$id_sub_unit';");
+
+		$i = 0;
+		$d = [];
+			
+		echo "No WO,problem,desc_masalah\n";
+
+		foreach ($query->result() as $row)
+		{
+			echo $row->no_wo; echo ",";
+			echo $row->problem; echo ",";
+			echo $row->desc_masalah; echo "\n";
+		}
+	}
+
+
 	public function simpan()
 	{
 		$pabrik = $_REQUEST['pabrik'];

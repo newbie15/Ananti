@@ -25,7 +25,7 @@ class Schedule extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Master Schedule";
 		
-		$header['title'] = "Schedule";
+		$header['title'] = "PM Schedule";
 		$header['css_files'] = [
 			// base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/daypilot/css/scheduler_traditional.css"),
@@ -438,6 +438,8 @@ class Schedule extends CI_Controller {
 			$i = (int) $s[4] + 1;
 			if($i < 10){
 				$no_wo = "0".$i;
+			}else{
+				$no_wo = $i;
 			}
 		}
 		// echo "=====\n";
@@ -454,8 +456,9 @@ class Schedule extends CI_Controller {
 			'problem' => $title,
 			'desc_masalah' => '',
 			'hm' => '',
-			'kategori' => '',
-			'tipe' => 'maintenance',
+			'kategori' => 'maintenance',
+			'tipe' => '', // M atau E
+			'jenis' => 'preventive', // preventive atau predictive
 			'status' => 'open',
 			'tanggal_closing' => '0000-00-00',
 			// 'date' => 'My date'

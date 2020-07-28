@@ -153,7 +153,7 @@ if($this->session->kategori == 3){
             <li><a href="<?php echo base_url("grouping"); ?>"><i class="fa fa-object-group"></i>Group Unit</a></li>
             <li><a href="<?php echo base_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
             <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-wrench"></i>Unit Mekanik</a></li>
-            <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>Schedule</a></li>
+            <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>PM Schedule</a></li>
             <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
             <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
           </ul>

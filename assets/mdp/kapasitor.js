@@ -12,11 +12,9 @@ $(document).ready(function () {
 
         $('#my-G').jexcel({
             data: data,
-            colHeaders: [
-                'Kapasitor', 'KVAR', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des', 'Keterangan'],
-            colWidths: [200, 100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 200],
+            colHeaders: ['Kapasitor', 'KVAR', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'Keterangan'],
+            colWidths: [200, 100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 200],
             columns: [
-                // { type: 'autocomplete', source: ['loading ramp', 'sterilizer', 'thresher', 'press', 'bunch press', 'kernel', 'klarifikasi', 'boiler', 'effluent', 'dispatch'] },
                 { type: 'text' },
                 { type: 'number' },
                 { type: 'number' },
@@ -31,7 +29,51 @@ $(document).ready(function () {
                 { type: 'number' },
                 { type: 'number' },
                 { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                // { type: 'number' },                
                 { type: 'text', wordWrap: true },
+            ],
+            nestedHeaders: [
+                [   
+                    {title: '',colspan: '2',},
+                    {title: 'Januari',colspan: '3'},
+                    {title: 'Februari',colspan: '3'},
+                    {title: 'Maret',colspan: '3'},
+                    {title: 'April',colspan: '3'},
+                    {title: 'Mei',colspan: '3'},
+                    {title: 'Juni',colspan: '3'},
+                    {title: 'Juli',colspan: '3'},
+                    {title: 'Agustus',colspan: '3'},
+                    {title: 'September',colspan: '3'},
+                    {title: 'Oktober',colspan: '3'},
+                    {title: 'November',colspan: '3'},
+                    {title: 'Desember',colspan: '3'},
+                    {title: 'Note',colspan: '0'},
+                ],
             ],
             // onchange: handler,
             allowInsertColumn: false,	
@@ -39,7 +81,7 @@ $(document).ready(function () {
 
         $('#my-G').jexcel('updateSettings', {
             table: function (instance, cell, col, row, val, id) {
-                if (col > 1 && col < 14) {
+                if (col > 1 && col < 38) {
                     if (val != "0") {
                         var a = 0;
                         var b = 0;
@@ -56,8 +98,10 @@ $(document).ready(function () {
                             }
                         }
                         if (val < ((b * 1000 / (1.73 * 380)) * 0.5)) {
-                            $(cell).css('background-color', '#ff0000');
-                            $(cell).css('color', '#fff');
+                            if(val!=""){
+                                $(cell).css('background-color', '#ff0000');
+                                $(cell).css('color', '#fff');
+                            }
                         } else if (val <= ((b * 1000 / (1.73 * 380)) * 0.75)) {
                             $(cell).css('background-color', '#ffff00');
                             $(cell).css('color', '#000');
@@ -80,11 +124,9 @@ $(document).ready(function () {
 
         $('#monalisa').jexcel({
             data: data,
-            colHeaders: [
-                'Kapasitor', 'KVAR', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des', 'Keterangan'],
-            colWidths: [200, 100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 200],
+            colHeaders: ['Kapasitor', 'KVAR', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'Keterangan'],
+            colWidths: [200, 100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 200],
             columns: [
-                // { type: 'autocomplete', source: ['loading ramp', 'sterilizer', 'thresher', 'press', 'bunch press', 'kernel', 'klarifikasi', 'boiler', 'effluent', 'dispatch'] },
                 { type: 'text' },
                 { type: 'number' },
                 { type: 'number' },
@@ -99,10 +141,36 @@ $(document).ready(function () {
                 { type: 'number' },
                 { type: 'number' },
                 { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                { type: 'number' },
+                // { type: 'number' },                
                 { type: 'text', wordWrap: true },
             ],
             // onchange: handler,
-            allowInsertColumn: false,	
+            allowInsertColumn: false,
         });
 
         $('#monalisa').jexcel('updateSettings', {

@@ -299,14 +299,18 @@ class Planvsreal extends CI_Controller {
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 			// echo 'This is a server using Windows!';
 			include APPPATH.'third_party\PHPExcel.php';
-		$fe = "template_planvsreal.xlsx";
-		$filex = dirname(__FILE__) .'\..\..\assets\excel\\'.$fe;
+		  // $fe = "template_planvsreal.xlsx";
+		  $fe = "template_00_planvsreal.xls";
+		  $filex = dirname(__FILE__) .'\..\..\assets\excel\\'.$fe;
 
 		} else {
 			// echo 'This is a server not using Windows!';
 			include APPPATH.'third_party/PHPExcel.php';
-		$fe = "template_planvsreal.xls";
-		$filex = dirname(__FILE__) .'/../../assets/excel/'.$fe;
+
+  		$fe = "template_00_planvsreal.xls";
+	  	// $fe = "template_planvsreal.xlsx";
+
+		  $filex = dirname(__FILE__) .'/../../assets/excel/'.$fe;
 
 		}
 		// include APPPATH.'third_party\PHPExcel.php';
@@ -331,22 +335,24 @@ class Planvsreal extends CI_Controller {
 		// $tahun = "2020";
 
 		$query_wo_list = $this->db->query(
-			"SELECT DISTINCT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status,`m_wo`.station,
-			`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem,`m_wo`.kategori as asal_wo , `m_planing`.tipe as kategori
-			FROM `m_planing`,m_wo WHERE 
-			MONTH(`m_planing`.tanggal) = $bulan AND YEAR(`m_planing`.tanggal) = $tahun
-			AND `m_planing`.no_wo = m_wo.no_wo 
-			AND m_wo.id_pabrik = '$id_pabrik'
+			"SELECT * from (
+				SELECT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status,`m_wo`.station,
+				`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem,`m_wo`.kategori as asal_wo , `m_planing`.tipe as kategori
+				FROM `m_planing`,m_wo WHERE 
+				MONTH(`m_planing`.tanggal) = $bulan AND YEAR(`m_planing`.tanggal) = $tahun
+				AND `m_planing`.no_wo = m_wo.no_wo 
+				AND m_wo.id_pabrik = '$id_pabrik'
 
-			UNION 
+				UNION 
 
-			SELECT DISTINCT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status, `m_wo`.station,
-			`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem, null as asal_wo, null as kategori
-			FROM `m_activity`,m_wo WHERE 
-			MONTH (`m_activity`.tanggal) = $bulan AND
-			YEAR (`m_activity`.tanggal) = $tahun AND
-			`m_activity`.no_wo = m_wo.no_wo 
-			AND m_wo.id_pabrik = '$id_pabrik'
+				SELECT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status, `m_wo`.station,
+				`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem, `m_wo`.kategori as asal_wo, `m_wo`.tipe as kategori
+				FROM `m_activity`,m_wo WHERE 
+				MONTH (`m_activity`.tanggal) = $bulan AND
+				YEAR (`m_activity`.tanggal) = $tahun AND
+				`m_activity`.no_wo = m_wo.no_wo 
+				AND m_wo.id_pabrik = '$id_pabrik'
+			) as tabel group by tabel.no_wo
 		");
 
 		$query_plan_list = $this->db->query(
@@ -396,10 +402,12 @@ class Planvsreal extends CI_Controller {
 		);
 
 		$phpExcel->setActiveSheetIndex(0)->setCellValue('N5', $nama_bulan[$bulan]);
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('B1', $tahun);
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('D1', (int)$bulan);
 
 		$i = 0;
 		foreach ($query_wo_list->result() as $row){
-			$numrow = $i+8;
+			$numrow = $i+9;
 			// $hour = round( $row->time / 60, 2);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $row->no_wo);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $row->tipe);

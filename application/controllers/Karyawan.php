@@ -33,7 +33,7 @@ class Karyawan extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Asset Mesin";
+		$output['main_title'] = "Data Karyawan";
 		
 		$header['title'] = "Karyawan";
 		$header['css_files'] = [

@@ -7,7 +7,7 @@ $(document).ready(function(){
         if (data.length < 1){
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "unit/ajax_default_list",
+                url: BASE_URL + "megger/ajax_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),
@@ -17,6 +17,7 @@ $(document).ready(function(){
                 data = JSON.parse(msg);
                 console.log(data);
                 x = data;
+                $('#my-spreadsheet').html("");
                 $('#my-spreadsheet').jexcel({
                     data: data,
                     allowInsertColumn: false,
@@ -39,7 +40,7 @@ $(document).ready(function(){
 
                     colWidths: [300, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60],
                     columns: [
-                        { type: 'text' },
+                        { type: 'text', wordWrap: true, readOnly:true },
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
@@ -56,8 +57,43 @@ $(document).ready(function(){
                         { type: 'text' },
                     ]
                 });
-
-
+                $('#my-spreadsheet').jexcel('updateSettings', {
+                    table: function (instance, cell, col, row, val, id) {
+                        if (col >0 && col < 4){
+                            if (val != 0 ){
+                                if(val < MIN_CABLE_MEGGER){
+                                    $(cell).css('background-color', '#ff0000');
+                                    $(cell).css('color', '#fff');
+                                } else if (val < MED_CABLE_MEGGER) {
+                                    $(cell).css('background-color', '#ffff00');
+                                    $(cell).css('color', '#000');
+                                } else if (val < SAFE_CABLE_MEGGER) {
+                                    $(cell).css('background-color', '#1aab68');
+                                    $(cell).css('color', '#fff');
+                                }
+                            }else{
+                                $(cell).css('color', '#000');
+                                $(cell).css('background-color', '#ffffff');
+                            }
+                        }else if (col > 6){
+                            if (val != 0) {
+                                if (val < MIN_MOTOR_MEGGER) {
+                                    $(cell).css('background-color', '#ff0000');
+                                    $(cell).css('color', '#fff');
+                                } else if (val < MED_MOTOR_MEGGER) {
+                                    $(cell).css('background-color', '#ffff00');
+                                    $(cell).css('color', '#000');
+                                } else if (val < SAFE_MOTOR_MEGGER) {
+                                    $(cell).css('background-color', '#1aab68');
+                                    $(cell).css('color', '#fff');
+                                }
+                            }else{
+                                $(cell).css('color', '#000');
+                                $(cell).css('background-color', '#ffffff');
+                            }
+                        }
+                    }
+                });
             });
 
         }else{
@@ -74,6 +110,7 @@ $(document).ready(function(){
                 console.log(msg);
                 data = JSON.parse(msg);
                 console.log(data);
+                $('#my-spreadsheet').html("");
                 $('#my-spreadsheet').jexcel({
                     data: data,
                     allowInsertColumn: false,
@@ -96,7 +133,7 @@ $(document).ready(function(){
 
                     colWidths: [300, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60],
                     columns: [
-                        { type: 'text' },
+                        { type: 'text', wordWrap: true, readOnly:true },
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
@@ -112,6 +149,43 @@ $(document).ready(function(){
                         { type: 'text' },
                         { type: 'text' },
                     ]
+                });
+                $('#my-spreadsheet').jexcel('updateSettings', {
+                    table: function (instance, cell, col, row, val, id) {
+                        if (col >0 && col < 4){
+                            if (val != 0 ){
+                                if(val < MIN_CABLE_MEGGER){
+                                    $(cell).css('background-color', '#ff0000');
+                                    $(cell).css('color', '#fff');
+                                } else if (val < MED_CABLE_MEGGER) {
+                                    $(cell).css('background-color', '#ffff00');
+                                    $(cell).css('color', '#000');
+                                } else if (val < SAFE_CABLE_MEGGER) {
+                                    $(cell).css('background-color', '#1aab68');
+                                    $(cell).css('color', '#fff');
+                                }
+                            }else{
+                                $(cell).css('color', '#000');
+                                $(cell).css('background-color', '#ffffff');
+                            }
+                        }else if (col > 6){
+                            if (val != 0) {
+                                if (val < MIN_MOTOR_MEGGER) {
+                                    $(cell).css('background-color', '#ff0000');
+                                    $(cell).css('color', '#fff');
+                                } else if (val < MED_MOTOR_MEGGER) {
+                                    $(cell).css('background-color', '#ffff00');
+                                    $(cell).css('color', '#000');
+                                } else if (val < SAFE_MOTOR_MEGGER) {
+                                    $(cell).css('background-color', '#1aab68');
+                                    $(cell).css('color', '#fff');
+                                }
+                            }else{
+                                $(cell).css('color', '#000');
+                                $(cell).css('background-color', '#ffffff');
+                            }
+                        }
+                    }
                 });
             });
 
