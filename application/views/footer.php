@@ -24,10 +24,5 @@
 <script src="<?php echo $file; ?>"></script>
 <?php endforeach; 
 }?>
-<?php if(isset($js_tambahan)){ ?>
-<script>
-<?php echo $js_tambahan; ?>
-</script>
-<?php } ?>
 </body>
 </html>

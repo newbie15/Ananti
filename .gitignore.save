@@ -12,10 +12,7 @@ application/logs/*
 
 composer.lock
 
-#assets/mdp/config.js
-
-application/config/config.php
-application/config/database.php
+assets/mdp
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
@@ -36,9 +33,3 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
-application/config/config.php
-assets/excel/~$template_planvsreal.xlsx
-application/config/config.php
-application/config/database.php
-assets/mdp/config.js
-python/coba.py

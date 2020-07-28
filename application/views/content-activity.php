@@ -159,6 +159,138 @@
                     <td></td>
                     <td><span class="badge bg-red">55%</span></td>
                   </tr>
+                  <tr>
+                    <td>2.</td>
+                    <td>Clean database</td>
+                    <td></td>
+                    <td><span class="badge bg-yellow">70%</span></td>
+                  </tr>
+                  <tr>
+                    <td>3.</td>
+                    <td>Cron job running</td>
+                    <td></td>
+                    <td><span class="badge bg-light-blue">30%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
+                  <tr>
+                    <td>4.</td>
+                    <td>Fix and squish bugs</td>
+                    <td></td>
+                    <td><span class="badge bg-green">90%</span></td>
+                  </tr>
 
                 </tbody></table>
               </div>

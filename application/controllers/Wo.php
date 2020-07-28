@@ -112,7 +112,7 @@ class Wo extends CI_Controller {
 	public function pick_wo(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$station = $_REQUEST['id_station'];
-        $unit = $_REQUEST['id_unit'];
+    $unit = $_REQUEST['id_unit'];
 		$sub_unit = $_REQUEST['id_sub_unit'];
 		
 		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,
@@ -149,7 +149,6 @@ class Wo extends CI_Controller {
 	{
 		$pabrik = $_REQUEST['pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->trans_start();
 		$this->db->query("DELETE FROM `m_wo` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
@@ -190,7 +189,6 @@ class Wo extends CI_Controller {
 			@$this->db->insert_batch('m_wo', $datax);
 		}
 		// print_r($datax);
-		$this->db->trans_complete();
 	}
 	
 	public function ajax()
