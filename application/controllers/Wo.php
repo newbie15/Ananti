@@ -101,8 +101,8 @@ class Wo extends CI_Controller {
 			$d[$i][3] = $row->desc_masalah;
 			$d[$i][4] = $row->hm;
 			$d[$i][5] = $row->kategori;
-			$d[$i][6] = $row->jenis;
-			$d[$i][7] = $row->tipe;
+			$d[$i][6] = $row->tipe;
+			$d[$i][7] = $row->jenis;
 			$d[$i][8] = $row->status;
 			$d[$i++][9] = $row->tanggal_closing;
 		}
