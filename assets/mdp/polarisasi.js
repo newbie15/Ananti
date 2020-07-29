@@ -3,6 +3,68 @@ $(document).ready(function(){
         $(".n_success").show();
         $(".n_success").fadeOut(3000);
     }
+
+    handler = function (obj, cell, val) {
+        console.log('My table id: ' + $(obj).prop('id'));
+        console.log('Cell changed: ' + $(cell).prop('id'));
+        console.log('Value: ' + val);
+
+        cll = $(cell).prop('id');
+        dd = cll.split("-");
+
+        if(dd[0]=="3" || dd[0] == "4"){
+            // roww = "H"+roww;
+            var d = $("#my-M").jexcel('getRowData', dd[1]);
+            console.log(d);
+            // console.log("hello "+ val);
+            var r1 = d[4]/d[3];
+            if(!isNaN(r1)){
+                $("#my-M").jexcel('setValue', "H" + dd[1] + 1, r1);
+                if (r1 < 1) {
+                    $("#my-M").jexcel('setValue', "J" + dd[1] + 1, "NOK");
+                } else if (r1 < 2) {
+                    if (d[4] > 2) {
+                        $("#my-M").jexcel('setValue', "J" + dd[1] + 1, "OK");
+                    } else {
+                        $("#my-M").jexcel('setValue', "J" + dd[1] + 1, "warning");
+                    }
+                } else {
+                    $("#my-M").jexcel('setValue', "J" + dd[1] + 1, "OK");
+                }
+            }else{
+                $("#my-M").jexcel('setValue', "J" + dd[1] + 1, "");
+                $("#my-M").jexcel('setValue', "H" + dd[1] + 1, "");
+            }
+
+        }
+
+        if(dd[0]=="5" || dd[0] == "6"){
+            // roww = "H"+roww;
+            var d = $("#my-M").jexcel('getRowData', dd[1]);
+            console.log(d);
+            // console.log("hello "+ val);
+            var r2 = d[6]/d[5];
+            if(!isNaN(r2)){
+                $("#my-M").jexcel('setValue', "I" + dd[1] + 1, r2);
+                if (r2 < 1) {
+                    $("#my-M").jexcel('setValue', "K" + dd[1] + 1, "NOK");
+                } else if (r2 < 2) {
+                    if (d[6] > 2) {
+                        $("#my-M").jexcel('setValue', "K" + dd[1] + 1, "OK");
+                    } else {
+                        $("#my-M").jexcel('setValue', "K" + dd[1] + 1, "warning");
+                    }
+                } else {
+                    $("#my-M").jexcel('setValue', "K" + dd[1] + 1, "OK");
+                }
+            }else{
+                $("#my-M").jexcel('setValue', "K" + dd[1] + 1, "");
+                $("#my-M").jexcel('setValue', "I" + dd[1] + 1, "");
+            }
+        }            
+
+    };
+
     function refresh() {
         if (data == undefined) {
             data = [];
@@ -11,6 +73,7 @@ $(document).ready(function(){
         $('#my-M').jexcel({
             data: data,
             allowInsertColumn: false,
+            onchange: handler,
 
             colHeaders: [
                 '<br>Tanggal',

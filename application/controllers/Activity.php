@@ -64,7 +64,7 @@ class Activity extends CI_Controller {
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/activity.js"),
 		];
-
+		
 		$footer['js_tambahan'] = "
 			var val_wo = '';
 			function set_wo(a){
@@ -241,7 +241,7 @@ class Activity extends CI_Controller {
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 		$detail = json_decode($_REQUEST['detail']);
 		$spare = json_decode($_REQUEST['sparepart']);
-		$this->db->trans_start();
+
 		$this->db->query("DELETE FROM `m_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
@@ -325,7 +325,7 @@ class Activity extends CI_Controller {
 			}
 		}
 		$this->db->insert_batch('m_sparepart_usage', $datax);
-		$this->db->trans_complete();
+
 	}
 
 

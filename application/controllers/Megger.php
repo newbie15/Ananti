@@ -112,7 +112,7 @@ class Megger extends CI_Controller {
 		// ");
 
 		$query = $this->db->query("
-		SELECT m_megger.unit,`kabel_rs`,`kabel_st`,`kabel_tr`,`kabel_rn`,`kabel_sn`,`kabel_tn`,`motor_rs`,`motor_st`,`motor_tr`,`motor_re`,`motor_se`,`motor_te`
+		SELECT m_megger.unit,m_megger.sub_unit,`kabel_rs`,`kabel_st`,`kabel_tr`,`kabel_rn`,`kabel_sn`,`kabel_tn`,`motor_rs`,`motor_st`,`motor_tr`,`motor_re`,`motor_se`,`motor_te`
 		FROM m_megger
 		where m_megger.id_pabrik = '$id_pabrik' AND m_megger.tahun = '$tahun' AND m_megger.station = '$station'
 		");
@@ -121,7 +121,7 @@ class Megger extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i][0] = $row->unit;
+			$d[$i][0] = $row->unit."\n".$row->sub_unit;
 			$d[$i][1] = $row->kabel_rs;
 			$d[$i][2] = $row->kabel_st;
 			$d[$i][3] = $row->kabel_tr;
@@ -148,11 +148,13 @@ class Megger extends CI_Controller {
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
+			$v = explode("\n",$value[0]);
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'tahun' => $tahun,
 				'station' => $station,
-				'unit' => $value[0],
+				'unit' => $v[0],
+				'sub_unit' => $v[1],
 				'kabel_rs' => $value[1],
 				'kabel_st' => $value[2],
 				'kabel_tr' => $value[3],

@@ -10,6 +10,7 @@ $(document).ready(function () {
             data = [];
         }
 
+        $('#my-G').html("");
         $('#my-G').jexcel({
             data: data,
             colHeaders: ['Kapasitor', 'KVAR', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'R', 'S', 'T', 'Keterangan'],
@@ -175,7 +176,7 @@ $(document).ready(function () {
 
         $('#monalisa').jexcel('updateSettings', {
             table: function (instance, cell, col, row, val, id) {
-                if (col > 1 && col < 14) {
+                if (col > 1 && col < 38) {
                     if (val != "0") {
                         var a = 0;
                         var b = 0;
@@ -192,8 +193,13 @@ $(document).ready(function () {
                             }
                         }
                         if (val < ((b * 1000 / (1.73 * 380)) * 0.5)) {
-                            $(cell).css('background-color', '#ff0000');
-                            $(cell).css('color', '#fff');
+                            if(val!=""){
+                                $(cell).css('background-color', '#ff0000');
+                                $(cell).css('color', '#fff');
+                            }else{
+                                $(cell).css('background-color', '#ffffff');
+                                $(cell).css('color', '#000');
+                            }
                         } else if (val <= ((b * 1000 / (1.73 * 380)) * 0.75)) {
                             $(cell).css('background-color', '#ffff00');
                             $(cell).css('color', '#000');
@@ -203,6 +209,7 @@ $(document).ready(function () {
                         }
                     } else {
                         $(cell).css('background-color', '#ffffff');
+                        $(cell).css('color', '#000');
                     }
                 }
             }
@@ -317,6 +324,10 @@ $(document).ready(function () {
     $("#m2a").click(function () {
         if(confirm("anda yakin untuk mengcopy ?\n\nData Kapasitor\nMonalisa ke Ananti")){
             var datam = $('#monalisa').jexcel('getData');
+            datam.forEach(element => { // remove last index from bug
+                element.pop();
+            });
+            console.log(datam);
             data = datam;
             refresh(data);
             $("#dialog").dialog('close');
