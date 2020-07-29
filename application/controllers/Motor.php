@@ -136,7 +136,15 @@ class Motor extends CI_Controller {
 			$d[$i][4] = $row->suhu_body;
 			$d[$i][5] = $row->kondisi_fan;
 			$d[$i][6] = $row->seal_terminal;
-			$d[$i++][7] = $row->kabel_gland;
+			$d[$i][7] = $row->kabel_gland;
+
+			for($j=1;$j<=4;$j++){
+				if($d[$i][$j]==0){
+					$d[$i][$j] = "";
+				}
+			}
+
+			$i++;
 		}
 		echo json_encode($d);
 	}
@@ -159,7 +167,7 @@ class Motor extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'station' => $station,
 				'unit' => $x[0],
-				'sub_unit' => $x[0],
+				'sub_unit' => $x[1],
 				'ampere' => $value[1] ,
 				'bearing_depan' => $value[2] ,
 				'bearing_belakang' => $value[3] ,
