@@ -1,7 +1,5 @@
 .DS_Store
 
-assets/mdp/config.js
-
 application/cache/*
 !application/cache/index.html
 
@@ -11,11 +9,6 @@ application/logs/*
 !application/*/.htaccess
 
 composer.lock
-
-#assets/mdp/config.js
-
-application/config/config.php
-application/config/database.php
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
@@ -36,4 +29,9 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
-python/coba.py
+
+# application/config/config.php
+# application/config/config.php
+# application/config/database.php
+# assets/mdp/config.js
+# python/coba.py
