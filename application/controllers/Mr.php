@@ -113,7 +113,7 @@ class Mr extends CI_Controller {
 		$datax = array();
 
 		foreach ($data as $key => $value) {
-			// $this->db->insert
+			
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
@@ -124,7 +124,7 @@ class Mr extends CI_Controller {
 				'spec1' => $value[2],
 				'um' => $value[3],
 				'qty' => $value[4],
-				'total_cost' => $value[5],
+				'total_cost' => floatval($value[5]),
 				'cost_center' => $value[6],
 				'kategori' => $value[7],
 				'no_wo' => $value[8],
@@ -169,6 +169,27 @@ class Mr extends CI_Controller {
 			$d[$i][6] = $row->mulai;
 			$d[$i][7] = $row->selesai;
 			$d[$i++][8] = $row->keterangan;
+		}
+		echo json_encode($d);
+	}
+
+	public function get_mr(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$no_wo = $_REQUEST['no_wo'];
+
+		$query = $this->db->query(
+			"SELECT part_desc,spec1,qty,total_cost
+			FROM m_mr where id_pabrik = '$id_pabrik' AND tanggal = '$tanggal' AND no_wo = '$no_wo';
+		");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = trim($row->part_desc." ".$row->spec1);
+			$d[$i][1] = $row->qty;
+			$d[$i++][2] = $row->total_cost;
 		}
 		echo json_encode($d);
 	}
