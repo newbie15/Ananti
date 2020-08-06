@@ -298,7 +298,8 @@ $(document).ready(function () {
             shtml += "<tr>";
             shtml += "<td>"+element[0]+"</td>";
             if(element[1]=="null"){
-                shtml += "<td><button class=\"btn btn-info\" onclick=\"create_unplan_wo()\">Create WO</button></td>";
+                shtml += "<td><button class=\"btn btn-info\" area=\"'" + element[2] + "<br>" + element[3] + "<br>" + element[4] + "'\">Pick WO</button></td>";
+                // shtml += "<td><button class=\"btn btn-info\" onclick=\"create_unplan_wo()\">Create WO</button></td>";
             }else{
                 shtml += "<td><button class=\"btn btn-success\" area=\"'" + element[2] + "<br>" + element[3] + "<br>" + element[4] + "'\">" + element[1] + "</button></td>";
                 // shtml += "<td>"+element[1]+"</td>";
