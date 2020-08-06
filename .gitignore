@@ -1,4 +1,5 @@
 .DS_Store
+.htaccess
 
 application/cache/*
 !application/cache/index.html
@@ -29,9 +30,3 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
-
-# application/config/config.php
-# application/config/config.php
-# application/config/database.php
-# assets/mdp/config.js
-# python/coba.py

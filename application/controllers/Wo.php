@@ -149,10 +149,13 @@ class Wo extends CI_Controller {
 	{
 		$pabrik = $_REQUEST['pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_wo` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		
+
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		$datax = array();
+
+		$cancel = 0;
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$eq = explode("\n",$value[1]); 
@@ -183,10 +186,18 @@ class Wo extends CI_Controller {
 				// $this->db->insert('m_wo', $data);
 				array_push($datax,$data);
 			}
+			$tglwo = explode("-",$value[0]);
+			$tgl_wo = $tglwo[1]."-".$tglwo[2]."-".$tglwo[3];
+			if($tanggal != $tgl_wo){
+				$cancel++;
+			}
 		}
 
-		if(count($datax)>0){
-			@$this->db->insert_batch('m_wo', $datax);
+		if($cancel == 0 ){ // tidak ada tanggal yang beda
+			$this->db->query("DELETE FROM `m_wo` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+			if(count($datax)>0){
+				@$this->db->insert_batch('m_wo', $datax);
+			}
 		}
 		// print_r($datax);
 	}
