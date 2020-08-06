@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once BASEPATH . 'dotenv/autoloader.php';
+$dotenv = new Dotenv\Dotenv(FCPATH);
+$dotenv->load();
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -23,9 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-// $config['base_url'] = 'http://159.65.135.69/Ananti/';
-$config['base_url'] = 'http://localhost/ananti/';
-// $config['base_url'] = 'http://192.168.0.6/MDP/';
+$config['base_url'] = getenv('ENV_BASE_URL');
 
 /*
 |--------------------------------------------------------------------------
