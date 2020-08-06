@@ -110,6 +110,7 @@ $(document).ready(function () {
                 alert("anda tidak punya plan untuk hari ini\ntolong buat plan dahulu");
                 $('#my-spreadsheet').html("");
             }else{
+                $('#my-spreadsheet').html("");
                 $('#my-spreadsheet').jexcel({
                     data: data,
                     allowInsertColumn: false,
@@ -476,6 +477,44 @@ $(document).ready(function () {
         });
         detail_refresh();
     }
+
+    $("#sync_mr").click(function(){
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "mr/get_mr/",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                d: $("#tanggal").val(),
+                m: $("#bulan").val(),
+                y: $("#tahun").val(),
+                no_wo: no_wo_aktif,
+            }
+        }).done(function (msg) {
+            // console.log(msg);
+            dx = JSON.parse(msg);
+            console.log(dx);
+            // louhan_ui_refresh(dx);
+            $('#my-spare').html("");
+            $('#my-spare').jexcel({
+                allowInsertColumn: false,
+                data: dx,
+                allowInsertColumn: false,
+                onchange: handlers,
+                colHeaders: [
+                    'Nama Sparepart / Material',
+                    'Qty',
+                    'Rupiah',
+                ],
+                colWidths: [200, 50, 110, 50, 53, 100, 75, 80, 80],
+                columns: [
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                ]
+            });
+            data_sparepart[no_wo_aktif] = $('#my-spare').jexcel('getData');
+        });        
+    });
 
     $("#dialog").click(function(e){
     // $(".modal-dialog").click(function (e) {

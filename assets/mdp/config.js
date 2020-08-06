@@ -1,11 +1,8 @@
 /*
-
     setting untuk konfigurasi javascript
-
     DEBUG = 1 untuk localhost
     DEBUG = 0 untuk Hosting di HO
     
-
 */
 
 var CUSTOM = 1;
