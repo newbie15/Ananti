@@ -22,7 +22,7 @@ class Attachment extends CI_Controller {
 	{
  		header('Access-Control-Allow-Origin: *');
 		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-    	parent::__construct();
+		parent::__construct();
 		$this->load->database();
 
 		$this->load->helper('url');
