@@ -4,69 +4,27 @@ $(document).ready(function () {
         $(".n_success").fadeOut(3000);
     }
 
-    var type_screw = 0;
-    var type_bunch = 0;
-    var type_hydro = 0;
-    var type_kcp = 0;
-
-
     data = [];
     data_detail = [];
     keterangan_detail = [];
     data_detailnya = "";
 
     function refresh(data) {
-        // var x;
-        // alert(data.length);
-        if (data.length<1) {
-            console.log("yes");
-            $.ajax({
-                method: "POST",
-                url: BASE_URL + "sub_unit/hm_default_list",
-                data: {
-                    id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
-                }
-            }).done(function (msg) {
-                console.log(msg);
-                data = JSON.parse(msg);
-                console.log(data);
-                x = data;
-                $('#my-spreadsheet').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Unit',
-                        'Sub Unit',
-                        'Hour Meter',
-                    ],
-                    colWidths: [300, 360, 100, 95, 90, 50, 100, 60, 100, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'numeric', wordWrap: true },
-                    ],
-                });
-
-            });
-
-        }else{
-            $('#my-spreadsheet').jexcel({
-                data: data,
-                allowInsertColumn: false,
-                colHeaders: [
-                    'Unit',
-                    'Sub Unit',
-                    'Hour Meter',
-                ],
-                colWidths: [300, 360, 100, 95, 90, 50, 100, 60, 100, 100],
-                columns: [
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'numeric', wordWrap: true },
-                ],
-            });
-        }
+        $('#my-spreadsheet').jexcel({
+            data: data,
+            allowInsertColumn: false,
+            colHeaders: [
+                'Unit',
+                'Sub Unit',
+                'Hour Meter',
+            ],
+            colWidths: [300, 360, 100, 95, 90, 50, 100, 60, 100, 100],
+            columns: [
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'numeric', wordWrap: true },
+            ],
+        });
     }
 
     $("#pabrik").change(function () {
@@ -85,6 +43,10 @@ $(document).ready(function () {
         ajax_refresh();
     });
 
+    $("#download_excel").click(function(){
+        window.open(BASE_URL + "index.php/recordhm/download_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+    });
+
     $("#simpan").click(function () {
         var data_j = $('#my-spreadsheet').jexcel('getData');
         console.log(data_j);
@@ -100,12 +62,6 @@ $(document).ready(function () {
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
                 data_json: JSON.stringify(data_j),
-
-                // screwpress : type_screw,
-                // bunchpress : type_bunch,
-                // hydrocyclone : type_hydro,
-                // kcp: type_kcp,
-
             }
         }).done(function (msg) {
             console.log(msg);
@@ -141,46 +97,6 @@ $(document).ready(function () {
             console.log(data);
             refresh(data);
         });
-
-        // $.ajax({
-        //     method: "POST",
-        //     url: BASE_URL + "recordhm/load_type_monitoring",
-        //     data: {
-        //         id_pabrik: $("#pabrik").val(),
-        //         id_station: $("#station").val(),
-        //     }
-        // }).done(function (msg) {
-        //     // console.log(msg);
-        //     data = JSON.parse(msg);
-        //     // console.log(data);
-        //     // console.log(data.screwpress);
-
-        //     if(data.screwpress == 1){
-        //         type_screw = 1;
-        //     }else{
-        //         type_screw = 0;
-        //     }
-
-        //     if (data.bunchpress == 1) {
-        //         type_bunch = 1;
-        //     } else {
-        //         type_bunch = 0;
-        //     }
-
-        //     if (data.hydrocyclone == 1) {
-        //         type_hydro = 1;
-        //     } else {
-        //         type_hydro = 0;
-        //     }
-
-        //     if (data.kcp == 1) {
-        //         type_kcp = 1;
-        //         // alert("kcp");
-        //     } else {
-        //         type_kcp = 0;
-        //     }
-        //     // refresh(data);
-        // });
     }
 
     $("#tahun").change(function () {
@@ -227,6 +143,5 @@ $(document).ready(function () {
     }
 
     station_refresh();
-    ajax_refresh();
-
+    // ajax_refresh();
 });
