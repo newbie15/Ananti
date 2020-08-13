@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Attachment extends CI_Controller {
+class Part extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -47,7 +47,7 @@ class Attachment extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Sub Unit";
 		
-		$header['title'] = "Attachment";
+		$header['title'] = "Part";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -59,7 +59,7 @@ class Attachment extends CI_Controller {
 			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/attachment.js"),
+			base_url("assets/mdp/part.js"),
 		];
 		
 		$output['content'] = '';
@@ -87,11 +87,12 @@ class Attachment extends CI_Controller {
 		$output['dropdown_pabrik'] .= "/<select>";
 		$output['dropdown_station'] = "<select id=\"station\"></select>";		
 		$output['dropdown_unit'] = "<select id=\"unit\"></select>";		
-		$output['dropdown_sub_unit'] = "<select id=\"sub_unit\"></select>";		
+		$output['dropdown_sub_unit'] = "<select id=\"sub_unit\"></select>";
+		$output['dropdown_attachment'] = "<select id=\"attachment\"></select>";		
 
 
 		$this->load->view('header',$header);
-		$this->load->view('content-attachment',$output);
+		$this->load->view('content-part',$output);
 		$this->load->view('footer',$footer);
 	}
 
@@ -101,8 +102,9 @@ class Attachment extends CI_Controller {
 		$station = $_REQUEST['station'];
 		$unit = $_REQUEST['unit'];
 		$sub_unit = $_REQUEST['sub_unit'];
+		$attachment = $_REQUEST['attachment'];
 
-		$this->db->query("DELETE FROM `master_attachment` where id_pabrik = '$pabrik' AND id_station = '$station' AND id_unit = '$unit'");
+		$this->db->query("DELETE FROM `master_part` where id_pabrik = '$pabrik' AND id_station = '$station' AND id_unit = '$unit' AND id_sub_unit = '$sub_unit' AND id_attachment = '$attachment'");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
@@ -112,13 +114,15 @@ class Attachment extends CI_Controller {
 				'id_station' => $station,
 				'id_unit' => $unit,
 				'id_sub_unit' => $sub_unit,
-				'attachment' => ucwords($value[0]),
-				'kategori' => $value[1],
+				'id_attachment' => $attachment,
+				'part' => ucwords($value[0]),
+				'spesifikasi' => ucwords($value[1]),
+				'lifetime' => $value[2],
 
 				// 'date' => 'My date'
 			);
 			// print_r($data);
-			$this->db->insert('master_attachment', $data);
+			$this->db->insert('master_part', $data);
 		}
 	}
 	
@@ -128,16 +132,18 @@ class Attachment extends CI_Controller {
 		$id_station = $_REQUEST['id_station'];
 		$id_unit = $_REQUEST['id_unit'];
 		$id_sub_unit = $_REQUEST['id_sub_unit'];
+		$id_attachment = $_REQUEST['id_attachment'];
 
-		$query = $this->db->query("SELECT attachment,kategori FROM master_attachment where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit';");
+		$query = $this->db->query("SELECT part,spesifikasi,`lifetime` FROM master_part where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit' AND id_attachment = '$id_attachment';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 				// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->attachment; // or methods defined on the 'User' class
-			$d[$i++][1] = $row->kategori; // or methods defined on the 'User' class
+			$d[$i][0] = $row->part; // or methods defined on the 'User' class
+			$d[$i][1] = $row->spesifikasi; // or methods defined on the 'User' class
+			$d[$i++][2] = $row->lifetime; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 	}
@@ -164,13 +170,19 @@ class Attachment extends CI_Controller {
 		$id_pabrik = $this->uri->segment(3, 0);
 		$id_station = urldecode($this->uri->segment(4, 0));
 		$id_unit = urldecode($this->uri->segment(5, 0));
-		$id_sub_unit = urldecode($this->uri->segment(6, 0));
 
-		$query = $this->db->query("SELECT attachment FROM master_attachment where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit' ;");
+		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
+		// $i = 0;
+		// $d = [];
 		foreach ($query->result() as $row)
 		{
-			echo "<option>".$row->attachment."</option>";
+				// $d[$i][0] = $row->nama; // access attributes
+				// $a['name'] = $row->nama;
+				// $a['id'] = $row->nama;
+				// $d[$i++] = $a;
+				echo "<option>".$row->nama."</option>";
 		}
+		// echo json_encode($d);
 	}
 
 	public function dhtmlx(){
