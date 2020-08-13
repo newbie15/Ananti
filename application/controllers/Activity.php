@@ -242,7 +242,6 @@ class Activity extends CI_Controller {
 		$detail = json_decode($_REQUEST['detail']);
 		$spare = json_decode($_REQUEST['sparepart']);
 		$this->db->trans_start();
-		$this->db->query("DELETE FROM `m_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		$datax = array();
@@ -275,10 +274,10 @@ class Activity extends CI_Controller {
 				}
 			}
 		}
+		$this->db->query("DELETE FROM `m_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$this->db->insert_batch('m_activity', $datax);
 
 
-		$this->db->query("DELETE FROM `m_activity_detail` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$datax = array();
 		foreach ($detail as $key => $value) {
 			if($key!="_empty_" && $key!="undefined"){
@@ -303,10 +302,10 @@ class Activity extends CI_Controller {
 				}
 			}
 		}
+		$this->db->query("DELETE FROM `m_activity_detail` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$this->db->insert_batch('m_activity_detail', $datax);
 
 
-		$this->db->query("DELETE FROM `m_sparepart_usage` where no_wo LIKE '$pabrik%' AND tanggal = '$tanggal' ");
 		$datax = array();
 		foreach ($spare as $key => $value) {
 			if($key!="_empty_" && $key!="undefined"){
@@ -324,6 +323,7 @@ class Activity extends CI_Controller {
 				}
 			}
 		}
+		$this->db->query("DELETE FROM `m_sparepart_usage` where no_wo LIKE '$pabrik%' AND tanggal = '$tanggal' ");
 		$this->db->insert_batch('m_sparepart_usage', $datax);
 		$this->db->trans_complete();
 	}
