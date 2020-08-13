@@ -30,10 +30,10 @@ class Woprocess extends CI_Controller {
 	
 	public function index()
 	{
-		$output['content'] = "Work Order";
-		$output['main_title'] = "Work Order";
+		$output['content'] = "Laporan Kerusakan";
+		$output['main_title'] = "Laporana Kerusakan";
 		
-		$header['title'] = "Work Order";
+		$header['title'] = "Laporan Kerusakan";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -77,7 +77,7 @@ class Woprocess extends CI_Controller {
 		$output['dropdown_pabrik'] .= "/<select>";
 
 		$this->load->view('header',$header);
-		$this->load->view('content-wo',$output);
+		$this->load->view('content-laporan_kerusakan',$output);
 		$this->load->view('footer',$footer);
 
 	}

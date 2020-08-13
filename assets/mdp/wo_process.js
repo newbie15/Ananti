@@ -135,7 +135,7 @@ $(document).ready(function(){
             // tableHeight: '400px',
             onchange :handler,
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
-            colHeaders: ['No WO', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori','Tipe','Status','Tanggal<br>Closing'],
+            colHeaders: ['No Laporan', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori','Tipe','Status','Tanggal<br>Closing'],
             // colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
             colWidths: [140, 220, 250, 250, 100, 65, 40, 80, 80],
             columns: [

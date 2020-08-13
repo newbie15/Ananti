@@ -4,10 +4,11 @@
     <section class="content-header">
       <h1>
         <ul class="nav nav-tabs">
-          <li class=""><a href="<?php echo base_url("station")?>" aria-expanded="true">Station</a></li>
+          <li class=""><a href="<?php echo base_url("station") ?>" aria-expanded="true">Station</a></li>
           <li class="active"><a href="" aria-expanded="false">Unit</a></li>
-          <li class=""><a href="<?php echo base_url("sub_unit")?>" aria-expanded="false">Sub Unit</a></li>
-          <li class=""><a href="<?php echo base_url("attachment")?>" aria-expanded="false">Attachment</a></li>
+          <li class=""><a href="<?php echo base_url("sub_unit") ?>" aria-expanded="false">Sub Unit</a></li>
+          <li class=""><a href="<?php echo base_url("attachment") ?>" aria-expanded="false">Attachment</a></li>
+          <li class=""><a href="<?php echo base_url("part") ?>" aria-expanded="false">Part</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
@@ -22,9 +23,10 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-          <?php //echo $content; ?>
+        <?php //echo $content; 
+        ?>
         <div class="col-xs-12">
-          Pabrik : 
+          Pabrik :
           <?php echo $dropdown_pabrik ?>
           Station :
           <?php echo $dropdown_station; ?>
@@ -35,7 +37,7 @@
 						width: 100%;
 						overflow: auto;
 					"> -->
-            <div id='my-spreadsheet'></div>              
+          <div id='my-spreadsheet'></div>
         </div>
       </div>
       <!-- /.row -->
