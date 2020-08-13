@@ -142,8 +142,7 @@
                 <i class="fa fa-file"></i> <span>Process</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="<?php echo base_url("woprocess"); ?>"><i class="fa fa-file"></i>WO Process <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
-                <!-- <li><a href="<?php echo base_url("cost"); ?>"><i class="fa fa-file"></i>Cost Harian <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li> -->
+                <li><a href="<?php echo base_url("woprocess"); ?>"><i class="fa fa-file"></i>Laporan Kerusakan <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
               </ul>
             </li>
           <?php

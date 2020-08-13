@@ -4,6 +4,7 @@
     <section class="content-header">
       <h1>
         <ul class="nav nav-tabs">
+          <li class=""><a href="<?php echo base_url("woprocess")?>" aria-expanded="true">Laporan Kerusakan</a></li>
           <li class=""><a href="<?php echo base_url("wo")?>" aria-expanded="true">Work Order</a></li>
           <li class="active"><a href="#" aria-expanded="false">Unfinished WO</a></li>
           <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li>
