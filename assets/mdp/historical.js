@@ -23,8 +23,20 @@ $(document).ready(function(){
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
-                    // ajax_refresh();
-                    refresh();
+                    sub_unit_refresh();
+                } else {
+                    // alert("gaagal");
+                }
+            }
+        );
+    }
+
+    function sub_unit_refresh() {
+        $("#sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()),
+            function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    // alert("success");
+                    ajax_refresh();
                 } else {
                     // alert("gaagal");
                 }
@@ -33,24 +45,6 @@ $(document).ready(function(){
     }
 
     function ajax_refresh() {
-        // $.ajax({
-        //     method: "POST",
-        //     url: BASE_URL + "unit/load",
-        //     data: {
-        //         id_pabrik: $("#pabrik").val(),
-        //         id_station: $("#station").val(),
-        //         id_unit: $("#unit").val(),
-
-        //         // d: $("#tanggal").val(),
-        //         // m: $("#bulan").val(),
-        //         // y: $("#tahun").val(),
-        //     }
-        // }).done(function (msg) {
-        //     console.log(msg);
-        //     data = JSON.parse(msg);
-        //     console.log(data);
-        //     refresh(data);
-        // });
         refresh();
     }
 
@@ -59,12 +53,13 @@ $(document).ready(function(){
         var id_pabrik = $("#pabrik").val();
         var id_station = $("#station").val();
         var id_unit = $("#unit").val();
+        var id_sub_unit = $("#sub_unit").val();
         console.log(BASE_URL + 'index.php/historical/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit));
 
         // jexcel(document.getElementById('#my-spreadsheet'), {
         $("#my-spreadsheet").html("");
         jexcel(document.getElementById('my-spreadsheet'), {
-            csv: BASE_URL + 'index.php/historical/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit),
+            csv: BASE_URL + 'index.php/historical/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit) + "/" + encodeURI(id_sub_unit),
             csvHeaders: true,
             search: true,
             pagination: 10,
@@ -75,9 +70,6 @@ $(document).ready(function(){
                 { type: 'text', width: 100 },
                 { type: 'text', width: 100 },
                 { type: 'text', width: 75 },
-                // { type: 'text', width: 50 },
-                // { type: 'text', width: 25 },
-                // { type: 'text', width: 75 },
             ]
         }); 
 
@@ -124,23 +116,27 @@ $(document).ready(function(){
         // });
     }
 
-    $("#simpan").click(function () {
-        var data_j = $('#my-spreadsheet').jexcel('getData');
-        console.log(data_j);
+    // $("#simpan").click(function () {
+    //     var data_j = $('#my-spreadsheet').jexcel('getData');
+    //     console.log(data_j);
 
-        $.ajax({
-            method: "POST",
-            url: BASE_URL+"unit/simpan",
-            success: sukses,
-            data: {
-                pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
+    //     $.ajax({
+    //         method: "POST",
+    //         url: BASE_URL+"unit/simpan",
+    //         success: sukses,
+    //         data: {
+    //             pabrik: $("#pabrik").val(),
+    //             station: $("#station").val(),
 
-                data_json: JSON.stringify(data_j),
-            }
-        }).done(function (msg) {
-            console.log(msg);
-        });
+    //             data_json: JSON.stringify(data_j),
+    //         }
+    //     }).done(function (msg) {
+    //         console.log(msg);
+    //     });
+    // });
+
+    $("#download").click(function(){
+        window.open(BASE_URL + "index.php/historical/download_excel/" + $("#pabrik").val() + "/" + $("#station").val() + "/" + $("#unit").val() + "/" + $("#sub_unit").val());
     });
 
     $("#pabrik").change(function () {
@@ -152,12 +148,12 @@ $(document).ready(function(){
     });
 
     $("#unit").change(function () {
+        sub_unit_refresh();
+    });
+
+    $("#sub_unit").change(function () {
         ajax_refresh();
     });
 
     station_refresh();
-
-    
-
-
 });
