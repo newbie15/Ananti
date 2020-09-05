@@ -244,15 +244,15 @@ class Historical extends CI_Controller {
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 			// echo 'This is a server using Windows!';
 			include APPPATH . 'third_party\PHPExcel.php';
-			// $fe = "template_planvsreal.xlsx";
+
 			$fe = "template_00_historycard.xls";
+
 			$filex = dirname(__FILE__) . '\..\..\assets\excel\\' . $fe;
 		} else {
 			// echo 'This is a server not using Windows!';
 			include APPPATH . 'third_party/PHPExcel.php';
 
 			$fe = "template_00_historycard.xls";
-			// $fe = "template_planvsreal.xlsx";
 
 			$filex = dirname(__FILE__) . '/../../assets/excel/' . $fe;
 		}
@@ -273,10 +273,6 @@ class Historical extends CI_Controller {
 		$unit = urldecode($this->uri->segment(5));
 		$sub_unit = urldecode($this->uri->segment(6));
 
-		// $id_pabrik = "SDI1";
-		// $bulan = "04";
-		// $tahun = "2020";
-
 		$query_wo_list = $this->db->query(
 			"	SELECT `m_activity`.tanggal,`m_activity`.no_wo, `m_wo`.problem,`m_activity`.perbaikan
 				FROM `m_activity`,m_wo WHERE 
@@ -290,7 +286,7 @@ class Historical extends CI_Controller {
 		);
 
 		$labour_list = $this->db->query(
-			"SELECT `m_activity_detail`.no_wo, `m_activity_detail`.nama_teknisi, `m_activity_detail`.realisasi 
+			"SELECT `m_activity_detail`.tanggal,`m_activity_detail`.no_wo, `m_activity_detail`.nama_teknisi, `m_activity_detail`.realisasi 
 			FROM `m_activity_detail`,m_wo WHERE 
 			m_wo.no_wo = m_activity_detail.no_wo
 			AND m_wo.id_pabrik = '$id_pabrik'
@@ -301,7 +297,7 @@ class Historical extends CI_Controller {
 		);
 
 		$part_list = $this->db->query(
-			"SELECT `m_sparepart_usage`.no_wo,`m_sparepart_usage`.material, `m_sparepart_usage`.qty, `m_sparepart_usage`.cost
+			"SELECT `m_sparepart_usage`.tanggal,`m_sparepart_usage`.no_wo,`m_sparepart_usage`.material, `m_sparepart_usage`.qty, `m_sparepart_usage`.cost
 			FROM `m_sparepart_usage`,`m_wo` WHERE
 			m_wo.no_wo = m_sparepart_usage.no_wo
 			AND m_wo.id_pabrik = '$id_pabrik'
@@ -318,12 +314,11 @@ class Historical extends CI_Controller {
 			if ($prev_no_wo != $row->no_wo) {
 				$prev_no_wo = $row->no_wo;
 				$inc = 0;
-			}else{
-				$labour[$row->no_wo][$inc]['mpp'] = 1;
-				$labour[$row->no_wo][$inc]['mh'] = $row->realisasi;
-				$labour[$row->no_wo][$inc]['name'] = $row->nama_teknisi;
-				$inc++;
-			}
+			}		
+			$labour[$row->no_wo][$row->tanggal][$inc]['mpp'] = 1;
+			$labour[$row->no_wo][$row->tanggal][$inc]['mh'] = $row->realisasi;
+			$labour[$row->no_wo][$row->tanggal][$inc]['name'] = $row->nama_teknisi;
+			$inc++;
 		}
 
 		$part = array();
@@ -334,9 +329,9 @@ class Historical extends CI_Controller {
 				$prev_no_wo = $row->no_wo;
 				$inc = 0;
 			}
-			$part[$row->no_wo][$inc]['spec'] = $row->material;
-			$part[$row->no_wo][$inc]['qty'] = $row->qty;
-			$part[$row->no_wo][$inc]['cost'] = $row->cost;
+			$part[$row->no_wo][$row->tanggal][$inc]['spec'] = $row->material;
+			$part[$row->no_wo][$row->tanggal][$inc]['qty'] = $row->qty;
+			$part[$row->no_wo][$row->tanggal][$inc]['cost'] = $row->cost;
 			$inc++;
 		}
 
@@ -350,9 +345,11 @@ class Historical extends CI_Controller {
 		$phpExcel->setActiveSheetIndex(0)->setCellValue('B3', $station);
 		$phpExcel->setActiveSheetIndex(0)->setCellValue('B4', $unit);
 		$phpExcel->setActiveSheetIndex(0)->setCellValue('B5', $sub_unit);
-		$phpExcel->setActiveSheetIndex(0)->setCellValue('K1', "PABRIK ".$id_pabrik);
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('L1', "PABRIK ".$id_pabrik);
 
 		$i = 0;
+		$incp = 0;
+		$incl = 0;
 		foreach ($query_wo_list->result() as $row) {
 			$numrow = $i + 11;
 			// $hour = round( $row->time / 60, 2);
@@ -363,7 +360,7 @@ class Historical extends CI_Controller {
 
 			if (isset($part[$row->no_wo])) {
 				$incp = 0;
-				foreach ($part[$row->no_wo] as $value) {
+				foreach (@$part[$row->no_wo][$row->tanggal] as $value) {
 					$phpExcel->setActiveSheetIndex(0)->setCellValue('E' . ($numrow + $incp), $value['spec'] );//$value[$incp]['spec'] );
 					$phpExcel->setActiveSheetIndex(0)->setCellValue('F' . ($numrow + $incp), $value['qty'] );//$value[$incp]['qty'] );
 					$phpExcel->setActiveSheetIndex(0)->setCellValue('G' . ($numrow + $incp), $value['cost'] );//$value[$incp]['cost'] );
@@ -371,9 +368,10 @@ class Historical extends CI_Controller {
 				}
 			}
 
+
 			if (isset($labour[$row->no_wo])) {
 				$incl = 0;
-				foreach ($labour[$row->no_wo] as $value) {
+				foreach (@$labour[$row->no_wo][$row->tanggal] as $value) {
 					$phpExcel->setActiveSheetIndex(0)->setCellValue('J' . ($numrow + $incl), $value['mpp']); //$value[$incp]['spec'] );
 					$phpExcel->setActiveSheetIndex(0)->setCellValue('K' . ($numrow + $incl), $value['mh']); //$value[$incp]['qty'] );
 					$phpExcel->setActiveSheetIndex(0)->setCellValue('L' . ($numrow + $incl), $value['name']); //$value[$incp]['cost'] );
@@ -392,5 +390,5 @@ class Historical extends CI_Controller {
 		ob_end_clean();
 		// $write = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel5');
 		$write->save('php://output');
-	}
+	}	
 }
