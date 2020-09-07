@@ -3,11 +3,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <?=$main_title?>
+        <?= $main_title ?>
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-success" id="download_excel">
+          <i class="fa fa-file-excel-o"></i> Download
+        </a>
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -19,18 +22,19 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-xs-12">
-          <?php //echo $content; ?>
-          Pabrik : 
+          <?php //echo $content; 
+          ?>
+          Pabrik :
           <?php echo $dropdown_pabrik ?>
           Station :
           <?php echo $dropdown_station; ?>
-          Tahun : 
+          Tahun :
           <select id="tahun">
             <option>2017</option>
             <option>2018</option>
             <option>2019</option>
           </select>
-          Bulan : 
+          Bulan :
           <select id="bulan">
             <option value="01">januari</option>
             <option value="02">februari</option>
@@ -45,7 +49,7 @@
             <option value="11">november</option>
             <option value="12">desember</option>
           </select>
-          Tanggal : 
+          Tanggal :
           <select id="tanggal">
             <option>01</option>
             <option>02</option>
@@ -83,14 +87,9 @@
           <div class="row">
             <div class="col-xs-12">
               <div style="height: 500px; width: 100%; overflow: auto;">
-                <div id='my-spreadsheet'></div>              
+                <div id='my-spreadsheet'></div>
               </div>
             </div>
-            <!-- <div class="col-xs-6">
-              <div style="height: 500px; width: 100%; overflow: auto;">
-                <div id='my-spreadsheet2'></div>              
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
