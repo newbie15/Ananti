@@ -166,6 +166,7 @@
                 <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-wrench"></i>Unit Mekanik</a></li>
                 <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>PM Schedule</a></li>
                 <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
+                <li><a href="<?php echo base_url("vendor"); ?>"><i class="fa fa-group"></i>Vendor</a></li>
                 <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
               </ul>
             </li>
