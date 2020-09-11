@@ -227,6 +227,19 @@
 
             <li class="treeview">
               <a href="#">
+                <i class="fa fa-book"></i> <span>Dokumen</span>
+              </a>
+              <ul class="treeview-menu" style="display: none;">
+                <li><a href="<?php echo base_url("sop"); ?>"><i class="fa fa-file-pdf-o"></i>SOP<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo base_url("ik"); ?>"><i class="fa fa-file-pdf-o"></i>Instruksi Kerja<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo base_url("drawing"); ?>"><i class="fa fa-file-pdf-o"></i>Drawing<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo base_url("datasheet"); ?>"><i class="fa fa-file-pdf-o"></i>Datasheet<span class="pull-right-container"></span> </a></li>
+              </ul>
+            </li>
+
+
+            <li class="treeview">
+              <a href="#">
                 <i class="fa fa-newspaper-o"></i> <span>Report</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
