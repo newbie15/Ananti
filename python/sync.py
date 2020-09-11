@@ -558,7 +558,7 @@ def m_sparepart_usage():
         if tanggal == "None":
           tanggal = "0000-00-00"
 
-        sql_select_Query = "select no_wo,material,qty from m_sparepart_usage where id_pabrik = '" + \
+        sql_select_Query = "select no_wo,material,spek,satuan,qty,cost from m_sparepart_usage where id_pabrik = '" + \
             id_pabrik + "' and tanggal = '"+tanggal+"';"
         cursor = connection.cursor()
         # cursor = server.cursor()
