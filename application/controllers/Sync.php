@@ -78,10 +78,9 @@ class Sync extends CI_Controller {
 		$pabrik = $this->uri->segment(3, 0);
 		$station = $this->uri->segment(4, 0);
 
-
 		$data_json = $_REQUEST['data'];
 		$data = json_decode($data_json);
-		print_r($data);
+		// print_r($data);
 		if(!empty($data)){
 			$this->db->trans_start();
 
@@ -113,7 +112,7 @@ class Sync extends CI_Controller {
 
 		$data_json = $_REQUEST['data'];
 		$data = json_decode($data_json);
-		print_r($data);
+		// print_r($data);
 		if(!empty($data)){
 			$this->db->trans_start();
 
