@@ -229,7 +229,7 @@ def master_sub_unit():
 
         myobj = {'data': json.dumps(records)}
         print(url+"/master_sub_unit/"+id_pabrik+"/"+id_station+"/"+id_unit)
-        x = requests.post(url+"/master_unit/"+id_pabrik +
+        x = requests.post(url+"/master_sub_unit/"+id_pabrik +
                           "/"+id_station+"/"+id_unit, data=myobj)
 
         print(x.text)
@@ -661,7 +661,7 @@ if __name__ == '__main__':
   get_plant_name()
   # master_station()
   master_unit()
-  # master_sub_unit()
+  master_sub_unit()
   # m_wo()
   # m_planing()
   # m_activity()

@@ -75,8 +75,8 @@ class Sync extends CI_Controller {
 	}
 	
 	public function master_unit(){
-		$pabrik = $this->uri->segment(3, 0);
-		$station = $this->uri->segment(4, 0);
+		$pabrik = str_replace("%20", " ", $this->uri->segment(3, 0));
+		$station = str_replace("%20"," ", $this->uri->segment(4, 0));
 
 		$data_json = $_REQUEST['data'];
 		$data = json_decode($data_json);
@@ -107,8 +107,8 @@ class Sync extends CI_Controller {
 
 	public function master_sub_unit(){
 		$pabrik = $this->uri->segment(3, 0);
-		$station = $this->uri->segment(4, 0);
-		$unit = $this->uri->segment(5, 0);
+		$station = str_replace("%20", " ", $this->uri->segment(4, 0));
+		$unit = str_replace("%20", " ", $this->uri->segment(5, 0));
 
 		$data_json = $_REQUEST['data'];
 		$data = json_decode($data_json);
