@@ -85,7 +85,7 @@ class Sync extends CI_Controller {
 		if(!empty($data)){
 			$this->db->trans_start();
 
-			$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' and id_station = '$station' sync=0 ");
+			$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' and id_station = '$station' and sync=0 ");
 			$data_json = $_REQUEST['data_json'];
 			$data = json_decode($data_json);
 			foreach ($data as $key => $value) {
