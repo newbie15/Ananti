@@ -166,6 +166,7 @@
                 <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-wrench"></i>Unit Mekanik</a></li>
                 <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>PM Schedule</a></li>
                 <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
+                <li><a href="<?php echo base_url("vendor"); ?>"><i class="fa fa-group"></i>Vendor</a></li>
                 <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
               </ul>
             </li>
@@ -223,6 +224,19 @@
                 <li><a href="<?php echo base_url("mr"); ?>"><i class="fa fa-file"></i>Material Requisition<span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
               </ul>
             </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-book"></i> <span>Dokumen</span>
+              </a>
+              <ul class="treeview-menu" style="display: none;">
+                <li><a href="<?php echo base_url("sop"); ?>"><i class="fa fa-file-pdf-o"></i>SOP<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo base_url("ik"); ?>"><i class="fa fa-file-pdf-o"></i>Instruksi Kerja<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo base_url("drawing"); ?>"><i class="fa fa-file-pdf-o"></i>Drawing<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo base_url("datasheet"); ?>"><i class="fa fa-file-pdf-o"></i>Datasheet<span class="pull-right-container"></span> </a></li>
+              </ul>
+            </li>
+
 
             <li class="treeview">
               <a href="#">
