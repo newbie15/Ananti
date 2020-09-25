@@ -659,11 +659,12 @@ def main():
 
 if __name__ == '__main__':
   get_plant_name()
-  # master_station()
+  master_station()
   master_unit()
   master_sub_unit()
-  # m_wo()
-  # m_planing()
-  # m_activity()
-  # m_activity_detail()
-  # m_sparepart_usage()
+
+  m_wo()
+  m_planing()
+  m_activity()
+  m_activity_detail()
+  m_sparepart_usage()

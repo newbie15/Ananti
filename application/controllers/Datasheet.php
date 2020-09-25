@@ -60,36 +60,9 @@ class Datasheet extends CI_Controller {
 
 	public function load()
 	{
-		$query = $this->db->query("SELECT nama,kapasitas,area FROM master_pabrik;");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i][0] = $row->nama; // access attributes
-			$d[$i][1] = $row->kapasitas; // or methods defined on the 'User' class
-			$d[$i++][2] = $row->area; // or methods defined on the 'User' class
-		}
-		echo json_encode($d);
-
-
 	}
 
 	public function simpan()
 	{
-		$this->db->query("TRUNCATE TABLE `master_pabrik`");
-		$data_json = $_REQUEST['data_json'];
-		$data = json_decode($data_json);
-		foreach ($data as $key => $value) {
-			// $this->db->insert
-			$data = array(
-				'nama' => $value[0],
-				'kapasitas' => $value[1],
-				'area' => $value[2],
-				// 'date' => 'My date'
-			);
-			// print_r($data);
-			$this->db->insert('master_pabrik', $data);
-		}
 	}
 }
