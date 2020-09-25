@@ -320,7 +320,7 @@ class Activity extends CI_Controller {
 						'spek' => $val[1],
 						'satuan' => $val[2],
 						'qty' => $val[3],
-						'cost' => $val[4],
+						'cost' => str_replace(",",".", $val[4]) ,
 					);
 					// $this->db->insert('m_sparepart_usage', $data);
 					array_push($datax,$data);

@@ -14,13 +14,14 @@ id_pabrik = ""
 
 # get plant_name clear
 def get_plant_name():
+  global id_pabrik
   path = os.getcwd()
-  print("Current Directory", path)
-  print()
+  # print("Current Directory", path)
+  # print()
 
   # parent directory
   parent = os.path.dirname(path)
-  print("Parent directory", parent)
+  # print("Parent directory", parent)
 
   f = open(path+"\\.htaccess", "r")
   i = 0
@@ -45,6 +46,7 @@ def get_plant_name():
       # print(x.split("="))
       # print(y[1].replace("\n", ""))
       id_pabrik = y[1].replace("\n", "")
+      print(id_pabrik)
       pass
 
   pass
@@ -86,12 +88,16 @@ def master_pabrik():
 
   pass
 
+#ok clear
 def master_station():
+  global id_pabrik
   unsync_data = 0
   try:
     connection = mysql.connector.connect(host='localhost',database='ananti',user='root',password='')
 
     sql_select_Query = "select * from master_station where id_pabrik = '"+ id_pabrik +"' and sync = '0'"
+    # print("select * from master_station where id_pabrik = '" + id_pabrik + "' and sync = '0'")
+
     cursor = connection.cursor()
     # cursor = server.cursor()
     cursor.execute(sql_select_Query)
@@ -122,6 +128,8 @@ def master_station():
         cursor = connection.cursor()
         # cursor = server.cursor()
         cursor.execute(sql_select_Query)
+        connection.commit()
+        print("local data updated !!!")
 
         pass
       pass
@@ -132,81 +140,120 @@ def master_station():
       connection.close()
       cursor.close()
       print("MySQL connection is closed")
-
-
   pass
 
 def master_unit():
-  unsync_data = 0
-  try:
-    connection = mysql.connector.connect(host='localhost', database='ananti', user='root', password='')
+  global id_pabrik
+  unsync_data = -1
+  while unsync_data != 0:
+    try:
+      connection = mysql.connector.connect(host='localhost', database='ananti', user='root', password='')
 
-    sql_select_Query = "select * from master_unit where sync = '0'"
-    cursor = connection.cursor()
-    # cursor = server.cursor()
-    cursor.execute(sql_select_Query)
-    records = cursor.fetchall()
-    print("Total unsync data is: ", cursor.rowcount)
-    unsync_data = cursor.rowcount
-
-    if unsync_data > 0:
-      sql_select_Query = "select * from master_unit where sync = '0'"
+      sql_select_Query = "select distinct id_station from master_unit where id_pabrik = '" + id_pabrik + "' and sync = '0'"
       cursor = connection.cursor()
       # cursor = server.cursor()
       cursor.execute(sql_select_Query)
       records = cursor.fetchall()
+      print("Total unsync data is: ", cursor.rowcount)
+      unsync_data = cursor.rowcount
 
-      myobj = {'data': json.dumps(records)}
-      print(url+"/master_unit")
-      x = requests.post(url+"/master_unit/"+id_pabrik+"/", data=myobj)
+      if unsync_data > 0:
+        id_station = list(records)[0][0]
 
-      print(x.text)
+        sql_select_Query = "select * from master_unit where id_pabrik = '" + \
+            id_pabrik+"' AND id_station = '" + id_station + "' AND sync = '0'"
 
-      pass
-  except Error as e:
-    print("Error reading data from MySQL table", e)
-  finally:
-    if (connection.is_connected()):
-      connection.close()
-      cursor.close()
-      print("MySQL connection is closed")
+        cursor = connection.cursor()
+        # cursor = server.cursor()
+        cursor.execute(sql_select_Query)
+        records = cursor.fetchall()
+
+        myobj = {'data': json.dumps(records)}
+        print(url+"/master_unit/"+id_pabrik+"/"+id_station+"/")
+        x = requests.post(url+"/master_unit/"+id_pabrik+"/"+id_station+"/", data=myobj)
+
+        print(x.text)
+
+        if(x.text == "ok"):
+          sql = "UPDATE `ananti`.`master_unit` SET `sync` = '2' WHERE `master_unit`.`id_station` = '"+ id_station +"';"
+          # print(sql)
+          print("#", end='')
+          cursor = connection.cursor()
+          cursor.execute(sql)
+          connection.commit()
+          # print("set status sync = 2")
+
+        pass
+    except Error as e:
+      print("Error reading data from MySQL table", e)
+    finally:
+      if (connection.is_connected()):
+        connection.close()
+        cursor.close()
+        print("MySQL connection is closed")
+
+    pass
+
 
   pass
 
 def master_sub_unit():
-  unsync_data = 0
-  try:
-    connection = mysql.connector.connect(host='localhost', database='ananti', user='root', password='')
+  global id_pabrik
+  unsync_data = -1
+  while unsync_data != 0:
+    try:
+      connection = mysql.connector.connect(
+          host='localhost', database='ananti', user='root', password='')
 
-    sql_select_Query = "select * from master_sub_unit where sync = '0'"
-    cursor = connection.cursor()
-    # cursor = server.cursor()
-    cursor.execute(sql_select_Query)
-    records = cursor.fetchall()
-    print("Total unsync data is: ", cursor.rowcount)
-    unsync_data = cursor.rowcount
-
-    if unsync_data > 0:
-      sql_select_Query = "select * from master_sub_unit where sync = '0'"
+      sql_select_Query = "select distinct id_station, id_unit from master_sub_unit where id_pabrik = '" + \
+          id_pabrik + "' and sync = '0'"
       cursor = connection.cursor()
       # cursor = server.cursor()
       cursor.execute(sql_select_Query)
       records = cursor.fetchall()
+      print("Total unsync data is: ", cursor.rowcount)
+      unsync_data = cursor.rowcount
 
-      myobj = {'data': json.dumps(records)}
-      print(url+"/master_sub_unit")
-      x = requests.post(url+"/master_sub_unit/"+id_pabrik+"/", data=myobj)
+      if unsync_data > 0:
+        id_station = list(records)[0][0]
+        id_unit = list(records)[0][1]
 
-      print(x.text)
+        sql_select_Query = "select * from master_sub_unit where id_pabrik = '" + \
+            id_pabrik+"' AND id_station = '" + id_station + \
+            "' AND id_unit = '" + id_unit + "' AND sync = '0'"
 
-      pass
-  except Error as e:
-    print("Error reading data from MySQL table", e)
-  finally:
-    if (connection.is_connected()):
-      connection.close()
-      cursor.close()
-      print("MySQL connection is closed")
+        cursor = connection.cursor()
+        # cursor = server.cursor()
+        cursor.execute(sql_select_Query)
+        records = cursor.fetchall()
+
+        myobj = {'data': json.dumps(records)}
+        print(url+"/master_sub_unit/"+id_pabrik+"/"+id_station+"/"+id_unit)
+        x = requests.post(url+"/master_sub_unit/"+id_pabrik +
+                          "/"+id_station+"/"+id_unit, data=myobj)
+
+        print(x.text)
+
+        if(x.text == "ok"):
+          sql = "UPDATE `ananti`.`master_sub_unit` SET `sync` = '2' WHERE `master_sub_unit`.`id_station` = '" + id_station + "' AND `master_sub_unit`.`id_unit` = '" + id_unit + "';"
+          # print(sql)
+          print("#", end='')
+          cursor = connection.cursor()
+          cursor.execute(sql)
+          connection.commit()
+          # print("set status sync = 2")
+
+        pass
+    except Error as e:
+      print("Error reading data from MySQL table", e)
+    finally:
+      if (connection.is_connected()):
+        connection.close()
+        cursor.close()
+        print("MySQL connection is closed")
+
+    pass
+
   pass
 
 def master_user():
@@ -612,6 +659,10 @@ def main():
 
 if __name__ == '__main__':
   get_plant_name()
+  master_station()
+  master_unit()
+  master_sub_unit()
+
   m_wo()
   m_planing()
   m_activity()

@@ -75,63 +75,77 @@ class Sync extends CI_Controller {
 	}
 	
 	public function master_unit(){
-		$pabrik = $this->uri->segment(3, 0);
+		$pabrik = str_replace("%20", " ", $this->uri->segment(3, 0));
+		$station = str_replace("%20"," ", $this->uri->segment(4, 0));
 
 		$data_json = $_REQUEST['data'];
 		$data = json_decode($data_json);
-		print_r($data);
+		// print_r($data);
 		if(!empty($data)){
-			$this->db->transStart();
+			$this->db->trans_start();
 
-			$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' and sync=0 ");
-			$data_json = $_REQUEST['data_json'];
+			$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' and id_station = '$station' and sync=0 ");
+			$data_json = $_REQUEST['data'];
 			$data = json_decode($data_json);
 			foreach ($data as $key => $value) {
 				// $this->db->insert
 				$data = array(
 					'id_pabrik' => $pabrik,
-					'nama' => ucwords($value[0]),
+					'id_station' => $station,
+					'kode_asset' => $value[3],
+					'nama' => ucwords($value[4]),
 					'sync' => 2,
 				);
 				// print_r($data);
 				$this->db->insert('master_unit', $data);
 			}
 			
-			$this->db->transComplete();
+			$this->db->trans_complete();
 		}
 		echo "ok";		
 	}
 
 	public function master_sub_unit(){
 		$pabrik = $this->uri->segment(3, 0);
+		$station = str_replace("%20", " ", $this->uri->segment(4, 0));
+		$unit = str_replace("%20", " ", $this->uri->segment(5, 0));
 
 		$data_json = $_REQUEST['data'];
 		$data = json_decode($data_json);
-		print_r($data);
+		// print_r($data);
 		if(!empty($data)){
-			$this->db->transStart();
+			$this->db->trans_start();
 
-			$this->db->query("DELETE FROM `master_sub_unit` where id_pabrik = '$pabrik' and sync=0 ");
-			$data_json = $_REQUEST['data_json'];
+			$this->db->query("DELETE FROM `master_sub_unit` where id_pabrik = '$pabrik' and id_station = '$station' and id_unit = '$unit' and sync=0 ");
+			$data_json = $_REQUEST['data'];
 			$data = json_decode($data_json);
 			foreach ($data as $key => $value) {
 				// $this->db->insert
 				$data = array(
 					'id_pabrik' => $pabrik,
-					'nama' => ucwords($value[0]),
-					'sync' => 2,
+					'id_station' => $station,
+					'id_unit' => $unit,
+					'nama' => ucwords($value[3]),
+					'klasifikasi' => $value[4],
+					'critical_unit' => $value[5],
+					'hourmeter_mod' => $value[6],
+					'vibration_mod' => $value[7],
+					'temperature_mod' => $value[8],
+					'oiling_mod' => $value[9],
+					'electromotor_mod' => $value[10],
 				);
 				// print_r($data);
 				$this->db->insert('master_sub_unit', $data);
 			}
 			
-			$this->db->transComplete();
+			$this->db->trans_complete();
 		}
 		echo "ok";
 
 	}
 	
 	public function master_user(){}
+
 	public function master_karyawan(){
 		$pabrik = $this->uri->segment(3, 0);
 
