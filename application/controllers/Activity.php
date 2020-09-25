@@ -312,15 +312,19 @@ class Activity extends CI_Controller {
 		foreach ($spare as $key => $value) {
 			if($key!="_empty_" && $key!="undefined"){
 				foreach ($value as $ky => $val) {
+					$cst = str_replace(".","",$val[4]);
+					$cost = str_replace(",",".",$cst);
+
+
 					$data = array(
 						'id_pabrik' => $pabrik,
 						'no_wo' => $key,
 						'tanggal' =>$tanggal,
 						'material' => $val[0],
-						'spek' => $val[1],
+						'spek' => addslashes($val[1]),
 						'satuan' => $val[2],
 						'qty' => $val[3],
-						'cost' => str_replace(",",".", $val[4]) ,
+						'cost' => $cost ,
 					);
 					// $this->db->insert('m_sparepart_usage', $data);
 					array_push($datax,$data);
