@@ -368,7 +368,10 @@ class Sync extends CI_Controller {
 					'tanggal' => $tanggal,
 					'no_wo' => $value[0],
 					'material' => $value[1],
-					'qty' => $value[2],
+					'spek' => $value[2],
+					'satuan' => $value[3],
+					'qty' => $value[3],
+					'cost' => $value[5],
 					'sync' => 2,
 				);
 				if($value[0]!=""){

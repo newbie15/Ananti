@@ -79,7 +79,8 @@ class Historical extends CI_Controller {
 		}
 		$output['dropdown_pabrik'] .= "/<select>";
 		$output['dropdown_station'] = "<select id=\"station\"></select>";		
-		$output['dropdown_unit'] = "<select id=\"unit\"></select>";		
+		$output['dropdown_unit'] = "<select id=\"unit\"></select>";
+		$output['dropdown_sub_unit'] = "<select id=\"sub_unit\"></select>";		
 
 		$this->load->view('header',$header);
 		$this->load->view('report-historical',$output);
@@ -92,6 +93,7 @@ class Historical extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 		$id_unit = $_REQUEST['id_unit'];
+		$id_sub_unit = $_REQUEST['id_sub_unit'];
 
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 		$query = $this->db->query("SELECT no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND unit = '$id_unit';");
@@ -115,11 +117,12 @@ class Historical extends CI_Controller {
 	{
 		$id_pabrik = $this->uri->segment(3);//['id_pabrik'];
 		$id_station = urldecode($this->uri->segment(4));//['id_station'];
-		$id_unit = urldecode($this->uri->segment(5));//['id_unit'];
+		$id_unit = urldecode($this->uri->segment(5)); //['id_unit'];
+		$id_sub_unit = urldecode($this->uri->segment(6));//['id_unit'];
 		// echo("SELECT no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND unit = '$id_unit';");
 
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$query = $this->db->query("SELECT no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND unit = '$id_unit';");
+		$query = $this->db->query("SELECT no_wo,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND unit = '$id_unit' AND sub_unit = '$id_sub_unit';");
 
 		$i = 0;
 		$d = [];
@@ -134,9 +137,6 @@ class Historical extends CI_Controller {
 			echo $row->hm; echo ",";
 			echo $row->kategori; echo ",";
 			echo $row->status; echo "\n";
-			// echo $row->harga; echo ",";
-			// echo $row->qty; echo ",";
-			// echo $row->jumlah; echo "\n";
 		}
 	}	
 
@@ -234,12 +234,165 @@ class Historical extends CI_Controller {
 	}
 
 	public function list_open(){
-		// $this->db->select('concat(nama,"-",barcode) as produk');
-		// $this->db->from('m_wo');
-		// $this->db->where('status = "open"');
-		// $query = $this->db->get();
 		$pabrik = $this->uri->segment(3, 0);
 		$query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,'-',unit,'-',problem) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
         echo(json_encode($query->result()));
 	}
+
+	public function download_excel()
+	{
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			// echo 'This is a server using Windows!';
+			include APPPATH . 'third_party\PHPExcel.php';
+
+			$fe = "template_00_historycard.xls";
+
+			$filex = dirname(__FILE__) . '\..\..\assets\excel\\' . $fe;
+		} else {
+			// echo 'This is a server not using Windows!';
+			include APPPATH . 'third_party/PHPExcel.php';
+
+			$fe = "template_00_historycard.xls";
+
+			$filex = dirname(__FILE__) . '/../../assets/excel/' . $fe;
+		}
+		// include APPPATH.'third_party\PHPExcel.php';
+
+		// $fe = "template_planvsreal.xlsx";
+		// $filex = dirname(__FILE__) .'\..\..\assets\excel\\'.$fe;
+
+		// Panggil class PHPExcel nya
+		$phpExcel = PHPExcel_IOFactory::load($filex);
+
+		$cell_collection = $phpExcel->getActiveSheet()->getCellCollection();
+
+		// $excel = new PHPExcel();
+		// Settingan awal file excel
+		$id_pabrik = $this->uri->segment(3);
+		$station = urldecode($this->uri->segment(4));
+		$unit = urldecode($this->uri->segment(5));
+		$sub_unit = urldecode($this->uri->segment(6));
+
+		$query_wo_list = $this->db->query(
+			"	SELECT `m_activity`.tanggal,`m_activity`.no_wo, `m_wo`.problem,`m_activity`.perbaikan
+				FROM `m_activity`,m_wo WHERE 
+				`m_activity`.no_wo = m_wo.no_wo 
+				AND m_wo.id_pabrik = '$id_pabrik'
+				AND m_wo.station = '$station'
+				AND m_wo.unit = '$unit'
+				AND m_wo.sub_unit = '$sub_unit'
+				ORDER BY `m_activity`.tanggal ASC
+			"
+		);
+
+		$labour_list = $this->db->query(
+			"SELECT `m_activity_detail`.tanggal,`m_activity_detail`.no_wo, `m_activity_detail`.nama_teknisi, `m_activity_detail`.realisasi 
+			FROM `m_activity_detail`,m_wo WHERE 
+			m_wo.no_wo = m_activity_detail.no_wo
+			AND m_wo.id_pabrik = '$id_pabrik'
+			AND m_wo.station = '$station'
+			AND m_wo.unit = '$unit'
+			AND m_wo.sub_unit = '$sub_unit'
+		"
+		);
+
+		$part_list = $this->db->query(
+			"SELECT `m_sparepart_usage`.tanggal,`m_sparepart_usage`.no_wo,`m_sparepart_usage`.material,`m_sparepart_usage`.spek, `m_sparepart_usage`.satuan, `m_sparepart_usage`.qty, `m_sparepart_usage`.cost
+			FROM `m_sparepart_usage`,`m_wo` WHERE
+			m_wo.no_wo = m_sparepart_usage.no_wo
+			AND m_wo.id_pabrik = '$id_pabrik'
+			AND m_wo.station = '$station'
+			AND m_wo.unit = '$unit'
+			AND m_wo.sub_unit = '$sub_unit'
+		"
+		);
+
+		$labour = array();
+		$inc = 0;
+		$prev_no_wo = "";
+		foreach($labour_list->result() as $row) {
+			if ($prev_no_wo != $row->no_wo) {
+				$prev_no_wo = $row->no_wo;
+				$inc = 0;
+			}		
+			$labour[$row->no_wo][$row->tanggal][$inc]['mpp'] = 1;
+			$labour[$row->no_wo][$row->tanggal][$inc]['mh'] = $row->realisasi;
+			$labour[$row->no_wo][$row->tanggal][$inc]['name'] = $row->nama_teknisi;
+			$inc++;
+		}
+
+		$part = array();
+		$inc = 0;
+		$prev_no_wo = "";
+		foreach ($part_list->result() as $row) {
+			if($prev_no_wo!= $row->no_wo){
+				$prev_no_wo = $row->no_wo;
+				$inc = 0;
+			}
+			$part[$row->no_wo][$row->tanggal][$inc]['material'] = $row->material;
+			$part[$row->no_wo][$row->tanggal][$inc]['spek'] = $row->spek;
+			$part[$row->no_wo][$row->tanggal][$inc]['um'] = $row->satuan;
+			$part[$row->no_wo][$row->tanggal][$inc]['qty'] = $row->qty;
+			$part[$row->no_wo][$row->tanggal][$inc]['cost'] = $row->cost;
+			$inc++;
+		}
+
+		$phpExcel->getProperties()->setCreator('ANANTI')
+			->setLastModifiedBy('ANANTI')
+			->setTitle("HISTORYCARD-" . $id_pabrik . "-" . $station . "-" .$unit . "-" . $sub_unit)
+			->setSubject("History Card")
+			->setDescription("History Machineries Card")
+			->setKeywords("History Card");
+
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('B3', $station);
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('B4', $unit);
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('B5', $sub_unit);
+		$phpExcel->setActiveSheetIndex(0)->setCellValue('E1', "PABRIK ".$id_pabrik);
+
+		$i = 0;
+		$incp = 0;
+		$incl = 0;
+		foreach ($query_wo_list->result() as $row) {
+			$numrow = $i + 11;
+			// $hour = round( $row->time / 60, 2);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('A' . $numrow, $row->tanggal);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('B' . $numrow, $row->no_wo);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('C' . $numrow, $row->problem);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('D' . $numrow, $row->perbaikan);
+
+			if (isset($part[$row->no_wo])) {
+				$incp = 0;
+				foreach (@$part[$row->no_wo][$row->tanggal] as $value) {
+					$phpExcel->setActiveSheetIndex(0)->setCellValue('E' . ($numrow + $incp), $value['material'] );//$value[$incp]['spec'] );
+					$phpExcel->setActiveSheetIndex(0)->setCellValue('F' . ($numrow + $incp), $value['spek'] );//$value[$incp]['spec'] );
+					$phpExcel->setActiveSheetIndex(0)->setCellValue('G' . ($numrow + $incp), $value['um'] );//$value[$incp]['spec'] );
+					$phpExcel->setActiveSheetIndex(0)->setCellValue('H' . ($numrow + $incp), $value['qty'] );//$value[$incp]['qty'] );
+					$phpExcel->setActiveSheetIndex(0)->setCellValue('I' . ($numrow + $incp), $value['cost'] );//$value[$incp]['cost'] );
+					$incp++;
+				}
+			}
+
+
+			if (isset($labour[$row->no_wo])) {
+				$incl = 0;
+				foreach (@$labour[$row->no_wo][$row->tanggal] as $value) {
+					$phpExcel->setActiveSheetIndex(0)->setCellValue('L' . ($numrow + $incl), $value['mpp']); //$value[$incp]['spec'] );
+					$phpExcel->setActiveSheetIndex(0)->setCellValue('M' . ($numrow + $incl), $value['mh']); //$value[$incp]['qty'] );
+					$phpExcel->setActiveSheetIndex(0)->setCellValue('N' . ($numrow + $incl), $value['name']); //$value[$incp]['cost'] );
+					$incl++;
+				}
+			}
+
+			$i+=max($incp,$incl);
+		}
+
+		// Proses file excel
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="HISTORYCARD_'. $id_pabrik . "_" . $station . "_" . $unit . "_" . $sub_unit . '.xlsx"'); // Set nama file excel nya
+		header('Cache-Control: max-age=0');
+		$write = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel2007');
+		ob_end_clean();
+		// $write = PHPExcel_IOFactory::createWriter($phpExcel, 'Excel5');
+		$write->save('php://output');
+	}	
 }

@@ -148,29 +148,7 @@ class Mr extends CI_Controller {
 
 
 	public function load_default(){
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
 
-		$query = $this->db->query(
-			"SELECT m_wo.station,m_wo.unit,m_wo.problem,m_activity.jenis_breakdown,m_activity.tipe,tindakan,mulai,selesai,keterangan
-			FROM m_breakdown_pabrik where id_pabrik = '$id_pabrik' AND tanggal = '$tanggal';
-		");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i][0] = $row->station;
-			$d[$i][1] = $row->unit;
-			$d[$i][2] = $row->problem;
-			$d[$i][3] = $row->jenis;
-			$d[$i][4] = $row->tipe;
-			$d[$i][5] = $row->tindakan;
-			$d[$i][6] = $row->mulai;
-			$d[$i][7] = $row->selesai;
-			$d[$i++][8] = $row->keterangan;
-		}
-		echo json_encode($d);
 	}
 
 	public function get_mr(){
@@ -179,7 +157,7 @@ class Mr extends CI_Controller {
 		$no_wo = $_REQUEST['no_wo'];
 
 		$query = $this->db->query(
-			"SELECT part_desc,spec1,qty,total_cost
+			"SELECT part_desc,spec1,um,qty,total_cost
 			FROM m_mr where id_pabrik = '$id_pabrik' AND tanggal = '$tanggal' AND no_wo = '$no_wo';
 		");
 
@@ -187,9 +165,11 @@ class Mr extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i][0] = trim($row->part_desc." ".$row->spec1);
-			$d[$i][1] = $row->qty;
-			$d[$i++][2] = $row->total_cost;
+			$d[$i][0] = $row->part_desc;
+			$d[$i][1] = $row->spec1;
+			$d[$i][2] = $row->um;
+			$d[$i][3] = $row->qty;
+			$d[$i++][4] = $row->total_cost;
 		}
 		echo json_encode($d);
 	}

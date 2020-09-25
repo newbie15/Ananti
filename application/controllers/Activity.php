@@ -217,7 +217,7 @@ class Activity extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,material,qty,cost FROM m_sparepart_usage where no_wo LIKE '$id_pabrik%' AND tanggal='$tanggal';");
+		$query = $this->db->query("SELECT no_wo,material,spek,satuan,qty,cost FROM m_sparepart_usage where no_wo LIKE '$id_pabrik%' AND tanggal='$tanggal';");
 
 		$i = 0;
 		$d = [];
@@ -229,8 +229,10 @@ class Activity extends CI_Controller {
 				$no_wo = $row->no_wo;
 			}
 			$d[$row->no_wo][$i][0] = $row->material;
-			$d[$row->no_wo][$i][1] = $row->qty;
-			$d[$row->no_wo][$i++][2] = $row->cost;
+			$d[$row->no_wo][$i][1] = $row->spek;
+			$d[$row->no_wo][$i][2] = $row->satuan;
+			$d[$row->no_wo][$i][3] = $row->qty;
+			$d[$row->no_wo][$i++][4] = $row->cost;
 		}
 		echo json_encode($d);
 	}
@@ -315,8 +317,10 @@ class Activity extends CI_Controller {
 						'no_wo' => $key,
 						'tanggal' =>$tanggal,
 						'material' => $val[0],
-						'qty' => $val[1],
-						'cost' => $val[2],
+						'spek' => $val[1],
+						'satuan' => $val[2],
+						'qty' => $val[3],
+						'cost' => $val[4],
 					);
 					// $this->db->insert('m_sparepart_usage', $data);
 					array_push($datax,$data);
