@@ -260,7 +260,7 @@ class Activity extends CI_Controller {
 				// $this->db->insert('m_activity', $data);
 				array_push($datax,$data);
 				
-				if($value[3] == "Selesai"){
+				if(strtolower( $value[3] ) == "selesai"){
 					$sql = "UPDATE
 						m_wo
 						SET 
@@ -314,7 +314,6 @@ class Activity extends CI_Controller {
 				foreach ($value as $ky => $val) {
 					$cst = str_replace(".","",$val[4]);
 					$cost = str_replace(",",".",$cst);
-
 
 					$data = array(
 						'id_pabrik' => $pabrik,
