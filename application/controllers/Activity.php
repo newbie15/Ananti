@@ -398,7 +398,7 @@ class Activity extends CI_Controller {
 		echo "STATION\t";
 		echo "UNIT\t";
 		echo "SUB UNIT\t";
-		echo "PROBLEM";
+		echo "PROBLEM\t";
 		echo "KATEGORI\t";
 		echo "JAM START\t";
 		echo "JAM STOP\t";
