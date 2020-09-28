@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $.ajax({
         method: "POST",
-        url: BASE_URL + "datasheet/list_datasheet/" + $("#pabrik").val(),
+        url: BASE_URL + "sop/list_sop/" + $("#pabrik").val(),
         data: {
             id_pabrik: $("#pabrik").val(),
         }
@@ -21,7 +21,7 @@ $(document).ready(function(){
             destroy: true,
             data: y,
             columns: [{
-                title: "Daftar Datasheet"
+                title: "Daftar SOP"
             }, ]
         });
 
@@ -30,7 +30,7 @@ $(document).ready(function(){
                 console.log('API row values : ', table.row(this).data());
                 var sp = table.row(this).data();
                 // window.open(BASE_URL + 'assets/uploads/datasheet/' + sp, '_blank', 'fullscreen=yes');
-                window.open(BASE_URL + 'datasheet/load/' + sp, '_blank', 'fullscreen=yes');
+                window.open(BASE_URL + 'sop/load/' + sp, '_blank', 'fullscreen=yes');
                 // return false;
             }
         });
