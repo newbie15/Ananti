@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Datasheet extends CI_Controller {
+class Drawing extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -31,9 +31,9 @@ class Datasheet extends CI_Controller {
 	public function index()
 	{
 		$output['content'] = "test";
-		$output['main_title'] = "Datasheet";
+		$output['main_title'] = "Drawing";
 		
-		$header['title'] = "Datasheet";
+		$header['title'] = "Drawing";
 		$header['css_files'] = [
 			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 			base_url("assets/dropzonejs/dropzone.min.css"),
@@ -44,13 +44,13 @@ class Datasheet extends CI_Controller {
 			base_url("assets/dropzonejs/dropzone.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/datasheet.js"),
+			base_url("assets/mdp/drawing.js"),
 		];
 		
 		$output['content'] = '';
 		
 		$this->load->view('header',$header);
-		$this->load->view('content-datasheet',$output);
+		$this->load->view('content-drawing',$output);
 		$this->load->view('footer',$footer);
 	}
 
@@ -60,7 +60,7 @@ class Datasheet extends CI_Controller {
 		$output['config'] = base_url("assets/mdp/config.js");
 		$output['global'] = base_url("assets/mdp/global.js");
 		$output['js'] = base_url("assets/pdfobject/pdfobject.min.js");
-		$output['dokumen'] = "datasheet";
+		$output['dokumen'] = "drawing";
 		$output['filename'] = $filename;
 
 		$this->load->view('pdf-viewer', $output);
@@ -70,7 +70,7 @@ class Datasheet extends CI_Controller {
 		if (!empty($_FILES['file']['name'])) {
 
 			// Set preference
-			$config['upload_path'] = 'assets/uploads/datasheet/';
+			$config['upload_path'] = 'assets/uploads/drawing/';
 			$config['allowed_types'] = 'pdf';
 			// $config['max_size'] = '1024'; // max_size in kb
 			$config['file_name'] = $_FILES['file']['name'];
@@ -86,13 +86,13 @@ class Datasheet extends CI_Controller {
 		}
 	}
 
-	public function list_datasheet(){
+	public function list_drawing(){
 		$f = getcwd();
 
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			$dir = $f . "\assets\uploads\datasheet";
+			$dir = $f . "\assets\uploads\drawing";
 		}else{
-			$dir = $f . "/assets/uploads/datasheet";
+			$dir = $f . "/assets/uploads/drawing";
 		}
 
 		// Sort in ascending order - this is default

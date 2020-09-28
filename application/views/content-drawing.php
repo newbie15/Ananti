@@ -6,8 +6,8 @@
             <ul class="nav nav-tabs">
                 <li class=""><a href="<?php echo base_url("sop") ?>" aria-expanded="true">SOP</a></li>
                 <li class=""><a href="<?php echo base_url("ik") ?>" aria-expanded="false">Instruksi Kerja</a></li>
-                <li class=""><a href="<?php echo base_url("drawing") ?>" aria-expanded="false">Drawing</a></li>
-                <li class="active"><a href="<?php echo base_url("datasheet") ?>" aria-expanded="false">Datasheet</a></li>
+                <li class="active"><a href="<?php echo base_url("drawing") ?>" aria-expanded="false">Drawing</a></li>
+                <li class=""><a href="<?php echo base_url("datasheet") ?>" aria-expanded="false">Datasheet</a></li>
             </ul>
         </h1>
         <ol class="breadcrumb">
@@ -29,10 +29,10 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">Upload Datasheet</h4>
+                        <h4 class="modal-title">Upload Drawing</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="<?= base_url("datasheet/upload") ?>" class="dropzone needsclick dz-clickable" id="dropzones">
+                        <form action="<?= base_url("drawing/upload") ?>" class="dropzone needsclick dz-clickable" id="dropzones">
                             <div class="dz-message needsclick">
                                 <button type="button" class="dz-button">Drop files here or click to upload.</button><br>
                                 (Please Refresh page. After upload complete to see your file on the list.)
