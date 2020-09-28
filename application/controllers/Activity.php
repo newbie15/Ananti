@@ -371,11 +371,12 @@ class Activity extends CI_Controller {
 			m_wo.station,
 			m_wo.unit,
 			m_wo.sub_unit,
+			m_wo.problem
 			m_wo.kategori,
 			m_activity_detail.r_mulai,
 			m_activity_detail.r_selesai,
 			m_activity_detail.realisasi,
-			m_activity.perbaikan
+			m_activity.perbaikan,
 			FROM
 			m_activity_detail
 			RIGHT JOIN m_activity 
@@ -397,6 +398,7 @@ class Activity extends CI_Controller {
 		echo "STATION\t";
 		echo "UNIT\t";
 		echo "SUB UNIT\t";
+		echo "PROBLEM";
 		echo "KATEGORI\t";
 		echo "JAM START\t";
 		echo "JAM STOP\t";
@@ -418,6 +420,7 @@ class Activity extends CI_Controller {
 			echo $row->station; echo "\t";
 			echo $row->unit; echo "\t";
 			echo $row->sub_unit; echo "\t";
+			echo $row->problem; echo "\t";
 			echo $row->kategori; echo "\t";
 			echo $row->r_mulai; echo "\t";
 			echo $row->r_selesai; echo "\t";
@@ -491,6 +494,7 @@ class Activity extends CI_Controller {
 			m_wo.unit,
 			m_wo.sub_unit,
 			m_wo.kategori,
+			m_wo.problem,
 			m_activity_detail.r_mulai,
 			m_activity_detail.r_selesai,
 			m_activity_detail.realisasi,
@@ -516,6 +520,7 @@ class Activity extends CI_Controller {
 		echo "STATION\t";
 		echo "UNIT\t";
 		echo "SUB UNIT\t";
+		echo "PROBLEM\t";
 		echo "KATEGORI\t";
 		echo "JAM START\t";
 		echo "JAM STOP\t";
@@ -537,6 +542,7 @@ class Activity extends CI_Controller {
 			echo $row->station; echo "\t";
 			echo $row->unit; echo "\t";
 			echo $row->sub_unit; echo "\t";
+			echo $row->problem; echo "\t";
 			echo $row->kategori; echo "\t";
 			echo $row->r_mulai; echo "\t";
 			echo $row->r_selesai; echo "\t";
