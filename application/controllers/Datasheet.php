@@ -24,30 +24,26 @@ class Datasheet extends CI_Controller {
 
 		$this->load->database();
 		$this->load->helper('url');
+		// $this->load->helper('download');
 
-		// $this->load->library('grocery_CRUD');
 	}
 	
 	public function index()
 	{
-				// $this->load->view('welcome_message');
-
 		$output['content'] = "test";
 		$output['main_title'] = "Datasheet";
 		
 		$header['title'] = "Datasheet";
 		$header['css_files'] = [
-			// base_url("assets/jexcel/css/jquery.jexcel.css"),
-			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+			base_url("assets/dropzonejs/dropzone.min.css"),
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			// base_url("assets/jexcel/js/jquery.jexcel.js"),
-			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/dropzonejs/dropzone.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-
 			base_url("assets/mdp/datasheet.js"),
 		];
 		
@@ -58,11 +54,50 @@ class Datasheet extends CI_Controller {
 		$this->load->view('footer',$footer);
 	}
 
-	public function load()
-	{
+	public function load(){
+		$filename = $this->uri->segment(3, 0);
+
+		$output['config'] = base_url("assets/mdp/config.js");
+		$output['global'] = base_url("assets/mdp/global.js");
+		$output['js'] = base_url("assets/pdfobject/pdfobject.min.js");
+		$output['dokumen'] = "datasheet";
+		$output['filename'] = $filename;
+
+		$this->load->view('pdf-viewer', $output);
 	}
 
-	public function simpan()
-	{
+	public function upload(){
+		if (!empty($_FILES['file']['name'])) {
+
+			// Set preference
+			$config['upload_path'] = 'assets/uploads/datasheet/';
+			$config['allowed_types'] = 'pdf';
+			// $config['max_size'] = '1024'; // max_size in kb
+			$config['file_name'] = $_FILES['file']['name'];
+
+			//Load upload library
+			$this->load->library('upload', $config);
+
+			// File upload
+			if ($this->upload->do_upload('file')) {
+				// Get data about the file
+				$uploadData = $this->upload->data();
+			}
+		}
+	}
+
+	public function list_datasheet(){
+		$f = getcwd();
+
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			$dir = $f . "\assets\uploads\datasheet";
+		}else{
+			$dir = $f . "/assets/uploads/datasheet";
+		}
+
+		// Sort in ascending order - this is default
+		$a = scandir($dir);
+		array_splice($a,0,2);
+		echo (json_encode($a));
 	}
 }
