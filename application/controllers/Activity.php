@@ -371,12 +371,12 @@ class Activity extends CI_Controller {
 			m_wo.station,
 			m_wo.unit,
 			m_wo.sub_unit,
-			m_wo.problem
+			m_wo.problem,
 			m_wo.kategori,
 			m_activity_detail.r_mulai,
 			m_activity_detail.r_selesai,
 			m_activity_detail.realisasi,
-			m_activity.perbaikan,
+			m_activity.perbaikan
 			FROM
 			m_activity_detail
 			RIGHT JOIN m_activity 
