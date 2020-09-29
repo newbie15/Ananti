@@ -274,7 +274,7 @@ class Historical extends CI_Controller {
 		$sub_unit = urldecode($this->uri->segment(6));
 
 		$query_wo_list = $this->db->query(
-			"	SELECT `m_activity`.tanggal,`m_activity`.no_wo, `m_wo`.problem,`m_activity`.perbaikan
+			"	SELECT `m_activity`.tanggal,`m_activity`.no_wo, `m_wo`.problem,`m_activity`.perbaikan, `m_wo`.hm
 				FROM `m_activity`,m_wo WHERE 
 				`m_activity`.no_wo = m_wo.no_wo 
 				AND m_wo.id_pabrik = '$id_pabrik'
@@ -359,6 +359,7 @@ class Historical extends CI_Controller {
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('B' . $numrow, $row->no_wo);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('C' . $numrow, $row->problem);
 			$phpExcel->setActiveSheetIndex(0)->setCellValue('D' . $numrow, $row->perbaikan);
+			$phpExcel->setActiveSheetIndex(0)->setCellValue('J' . $numrow, $row->hm);
 
 			if (isset($part[$row->no_wo])) {
 				$incp = 0;

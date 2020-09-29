@@ -260,7 +260,7 @@ class Activity extends CI_Controller {
 				// $this->db->insert('m_activity', $data);
 				array_push($datax,$data);
 				
-				if($value[3] == "Selesai"){
+				if(strtolower( $value[3] ) == "selesai"){
 					$sql = "UPDATE
 						m_wo
 						SET 
@@ -312,15 +312,18 @@ class Activity extends CI_Controller {
 		foreach ($spare as $key => $value) {
 			if($key!="_empty_" && $key!="undefined"){
 				foreach ($value as $ky => $val) {
+					$cst = str_replace(".","",$val[4]);
+					$cost = str_replace(",",".",$cst);
+
 					$data = array(
 						'id_pabrik' => $pabrik,
 						'no_wo' => $key,
 						'tanggal' =>$tanggal,
 						'material' => $val[0],
-						'spek' => $val[1],
+						'spek' => addslashes($val[1]),
 						'satuan' => $val[2],
 						'qty' => $val[3],
-						'cost' => str_replace(",",".", $val[4]) ,
+						'cost' => $cost ,
 					);
 					// $this->db->insert('m_sparepart_usage', $data);
 					array_push($datax,$data);
@@ -368,6 +371,7 @@ class Activity extends CI_Controller {
 			m_wo.station,
 			m_wo.unit,
 			m_wo.sub_unit,
+			m_wo.problem,
 			m_wo.kategori,
 			m_activity_detail.r_mulai,
 			m_activity_detail.r_selesai,
@@ -394,6 +398,7 @@ class Activity extends CI_Controller {
 		echo "STATION\t";
 		echo "UNIT\t";
 		echo "SUB UNIT\t";
+		echo "PROBLEM\t";
 		echo "KATEGORI\t";
 		echo "JAM START\t";
 		echo "JAM STOP\t";
@@ -415,6 +420,7 @@ class Activity extends CI_Controller {
 			echo $row->station; echo "\t";
 			echo $row->unit; echo "\t";
 			echo $row->sub_unit; echo "\t";
+			echo $row->problem; echo "\t";
 			echo $row->kategori; echo "\t";
 			echo $row->r_mulai; echo "\t";
 			echo $row->r_selesai; echo "\t";
@@ -488,6 +494,7 @@ class Activity extends CI_Controller {
 			m_wo.unit,
 			m_wo.sub_unit,
 			m_wo.kategori,
+			m_wo.problem,
 			m_activity_detail.r_mulai,
 			m_activity_detail.r_selesai,
 			m_activity_detail.realisasi,
@@ -513,6 +520,7 @@ class Activity extends CI_Controller {
 		echo "STATION\t";
 		echo "UNIT\t";
 		echo "SUB UNIT\t";
+		echo "PROBLEM\t";
 		echo "KATEGORI\t";
 		echo "JAM START\t";
 		echo "JAM STOP\t";
@@ -534,6 +542,7 @@ class Activity extends CI_Controller {
 			echo $row->station; echo "\t";
 			echo $row->unit; echo "\t";
 			echo $row->sub_unit; echo "\t";
+			echo $row->problem; echo "\t";
 			echo $row->kategori; echo "\t";
 			echo $row->r_mulai; echo "\t";
 			echo $row->r_selesai; echo "\t";
