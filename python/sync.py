@@ -16,6 +16,7 @@ id_pabrik = ""
 def get_plant_name():
   global id_pabrik
   path = os.getcwd()
+  path = path.replace("\\python","")
   # print("Current Directory", path)
   # print()
 
