@@ -66,6 +66,15 @@ class Datasheet extends CI_Controller {
 		$this->load->view('pdf-viewer', $output);
 	}
 
+	public function delete(){
+		$filename = $this->uri->segment(3, 0);
+
+		$path = "assets/uploads/datasheet/".$filename;
+		unlink($path);
+
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 	public function upload(){
 		if (!empty($_FILES['file']['name'])) {
 

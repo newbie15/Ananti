@@ -86,6 +86,15 @@ class SOP extends CI_Controller {
 		}
 	}
 
+	public function delete(){
+		$filename = $this->uri->segment(3, 0);
+
+		$path = "assets/uploads/sop/".$filename;
+		unlink($path);
+
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 	public function list_sop(){
 		$f = getcwd();
 

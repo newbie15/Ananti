@@ -86,6 +86,15 @@ class Drawing extends CI_Controller {
 		}
 	}
 
+	public function delete(){
+		$filename = $this->uri->segment(3, 0);
+
+		$path = "assets/uploads/drawing/".$filename;
+		unlink($path);
+
+		redirect($_SERVER['HTTP_REFERER']);
+	}	
+
 	public function list_drawing(){
 		$f = getcwd();
 
