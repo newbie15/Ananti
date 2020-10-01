@@ -50,12 +50,12 @@ class Sync extends CI_Controller {
 		$data = json_decode($data_json);
 		// print_r($data);
 
-		$clone = $this->load->database('clone', TRUE);
+		// $clone = $this->load->database('clone', TRUE);
 
 		if(!empty($data)){
-			// $clone->transStart();
+			$this->db->trans_start();
 
-			$clone->query("DELETE FROM `master_station` where id_pabrik = '$pabrik' and sync=0");
+			$this->db->query("DELETE FROM `master_station` where id_pabrik = '$pabrik' and sync=0");
 			$data_json = $_REQUEST['data'];
 			$data = json_decode($data_json);
 			foreach ($data as $key => $value) {
@@ -66,10 +66,10 @@ class Sync extends CI_Controller {
 					'sync' => 2,
 				);
 				// print_r($data);
-				$clone->insert('master_station', $data);
+				$this->db->insert('master_station', $data);
 			}
-			
-			// $clone->transComplete();
+
+			$this->db->trans_complete();
 		}
 		echo "ok";		
 	}

@@ -235,7 +235,7 @@ class Act extends CI_Controller {
 			// 	$d[$i++][5] = ""; //$row->stop;
 			// }
 
-			// echo json_encode($d);
+			echo json_encode($d);
 		}
 	}
 
