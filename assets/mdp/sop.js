@@ -30,7 +30,7 @@ $(document).ready(function(){
                     render: function (data, type, row, meta) {
                         if (type === 'display') {
                             var link = BASE_URL + "sop/load/" + encodeURIComponent(data);
-                            data = '<a target="_blank" href="' + link + '">' + data + '</a > ';
+                            data = '<a href="' + link + '" onclick="window.open(\'' + link + '\', \'_blank\', \'fullscreen=yes\');return false;">' + data + '</a > ';
                         }
                         return data;
                     }
