@@ -63,15 +63,44 @@ class SOP extends CI_Controller {
 		$output['dokumen'] = "sop";
 		$output['filename'] = $filename;
 
-		$this->load->view('pdf-viewer', $output);
+		$ext = explode(".", $filename);
+		if (strtolower($ext[1]) == "pdf") {
+			$this->load->view('pdf-viewer', $output);
+		} else if (strtolower($ext[1]) == "jpeg" | strtolower($ext[1]) == "jpg" | strtolower($ext[1]) == "png" | strtolower($ext[1]) == "bmp") {
+			$this->load->view('img-viewer', $output);
+		} else {
+			$this->load->view('file-downloader', $output);
+		}
 	}
 
+	public function download()
+	{
+		$filename = $this->uri->segment(3, 0);
+
+		$output['config'] = base_url("assets/mdp/config.js");
+		$output['global'] = base_url("assets/mdp/global.js");
+		$output['js'] = base_url("assets/pdfobject/pdfobject.min.js");
+		$output['dokumen'] = "sop";
+		$output['filename'] = $filename;
+
+		$this->load->helper('download');
+
+		$f = getcwd();
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			$dir = $f . "\assets\uploads\sop\\" . $filename;
+		} else {
+			$dir = $f . "/assets/uploads/sop/" . $filename;
+		}
+
+		force_download($dir, NULL);
+	}
+	
 	public function upload(){
 		if (!empty($_FILES['file']['name'])) {
 
 			// Set preference
 			$config['upload_path'] = 'assets/uploads/sop/';
-			$config['allowed_types'] = 'pdf';
+			$config['allowed_types'] = 'pdf|jpeg|jpg|bmp|png|docx|xlsx|doc|xls|ppt|pptx';
 			// $config['max_size'] = '1024'; // max_size in kb
 			$config['file_name'] = $_FILES['file']['name'];
 
