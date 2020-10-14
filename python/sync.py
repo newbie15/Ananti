@@ -670,17 +670,3 @@ if __name__ == '__main__':
   m_activity_detail()
   m_sparepart_usage()
 
-
-  global url
-  url = "http://10.23.0.93/scada/ananti/sync"
-
-  get_plant_name()
-  master_station()
-  master_unit()
-  master_sub_unit()
-
-  m_wo()
-  m_planing()
-  m_activity()
-  m_activity_detail()
-  m_sparepart_usage()
