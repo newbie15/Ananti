@@ -274,10 +274,10 @@ class Historical extends CI_Controller {
 		$sub_unit = urldecode($this->uri->segment(6));
 
 		$query_wo_list = $this->db->query(
-			"	SELECT `m_activity`.tanggal,`m_activity`.no_wo, `m_wo`.problem,`m_activity`.perbaikan, `m_wo`.hm
-				FROM `m_activity`,m_wo WHERE 
-				`m_activity`.no_wo = m_wo.no_wo 
-				AND m_wo.id_pabrik = '$id_pabrik'
+			"	SELECT `m_activity`.tanggal,`m_wo`.no_wo, `m_wo`.problem,`m_activity`.perbaikan, `m_wo`.hm
+				FROM m_wo LEFT JOIN `m_activity` 
+				on `m_activity`.no_wo = m_wo.no_wo 
+				WHERE m_wo.id_pabrik = '$id_pabrik'
 				AND m_wo.station = '$station'
 				AND m_wo.unit = '$unit'
 				AND m_wo.sub_unit = '$sub_unit'
@@ -286,10 +286,10 @@ class Historical extends CI_Controller {
 		);
 
 		$labour_list = $this->db->query(
-			"SELECT `m_activity_detail`.tanggal,`m_activity_detail`.no_wo, `m_activity_detail`.nama_teknisi, `m_activity_detail`.realisasi 
-			FROM `m_activity_detail`,m_wo WHERE 
-			m_wo.no_wo = m_activity_detail.no_wo
-			AND m_wo.id_pabrik = '$id_pabrik'
+			"SELECT `m_activity_detail`.tanggal,`m_wo`.no_wo, `m_activity_detail`.nama_teknisi, `m_activity_detail`.realisasi 
+			FROM m_wo LEFT JOIN `m_activity_detail` 
+			ON m_wo.no_wo = m_activity_detail.no_wo
+			WHERE m_wo.id_pabrik = '$id_pabrik'
 			AND m_wo.station = '$station'
 			AND m_wo.unit = '$unit'
 			AND m_wo.sub_unit = '$sub_unit'
@@ -297,10 +297,10 @@ class Historical extends CI_Controller {
 		);
 
 		$part_list = $this->db->query(
-			"SELECT `m_sparepart_usage`.tanggal,`m_sparepart_usage`.no_wo,`m_sparepart_usage`.material,`m_sparepart_usage`.spek, `m_sparepart_usage`.satuan, `m_sparepart_usage`.qty, `m_sparepart_usage`.cost
-			FROM `m_sparepart_usage`,`m_wo` WHERE
-			m_wo.no_wo = m_sparepart_usage.no_wo
-			AND m_wo.id_pabrik = '$id_pabrik'
+			"SELECT `m_sparepart_usage`.tanggal,`m_wo`.no_wo,`m_sparepart_usage`.material,`m_sparepart_usage`.spek, `m_sparepart_usage`.satuan, `m_sparepart_usage`.qty, `m_sparepart_usage`.cost
+			FROM `m_wo` LEFT JOIN `m_sparepart_usage`
+			ON m_wo.no_wo = m_sparepart_usage.no_wo
+			WHERE m_wo.id_pabrik = '$id_pabrik'
 			AND m_wo.station = '$station'
 			AND m_wo.unit = '$unit'
 			AND m_wo.sub_unit = '$sub_unit'
