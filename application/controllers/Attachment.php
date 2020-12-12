@@ -102,7 +102,7 @@ class Attachment extends CI_Controller {
 		$unit = $_REQUEST['unit'];
 		$sub_unit = $_REQUEST['sub_unit'];
 
-		$this->db->query("DELETE FROM `master_attachment` where id_pabrik = '$pabrik' AND id_station = '$station' AND id_unit = '$unit'");
+		$this->db->query("DELETE FROM `master_attachment` where id_pabrik = '$pabrik' AND id_station = '$station' AND id_unit = '$unit' AND id_sub_unit = '$sub_unit'");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
