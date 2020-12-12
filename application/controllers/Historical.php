@@ -363,16 +363,17 @@ class Historical extends CI_Controller {
 
 			if (isset($part[$row->no_wo])) {
 				$incp = 0;
-				foreach (@$part[$row->no_wo][$row->tanggal] as $value) {
-					$phpExcel->setActiveSheetIndex(0)->setCellValue('E' . ($numrow + $incp), $value['material'] );//$value[$incp]['spec'] );
-					$phpExcel->setActiveSheetIndex(0)->setCellValue('F' . ($numrow + $incp), $value['spek'] );//$value[$incp]['spec'] );
-					$phpExcel->setActiveSheetIndex(0)->setCellValue('G' . ($numrow + $incp), $value['um'] );//$value[$incp]['spec'] );
-					$phpExcel->setActiveSheetIndex(0)->setCellValue('H' . ($numrow + $incp), $value['qty'] );//$value[$incp]['qty'] );
-					$phpExcel->setActiveSheetIndex(0)->setCellValue('I' . ($numrow + $incp), $value['cost'] );//$value[$incp]['cost'] );
-					$incp++;
+				if (isset($part[$row->no_wo][$row->tanggal])) {
+					foreach (@$part[$row->no_wo][$row->tanggal] as $value) {
+						$phpExcel->setActiveSheetIndex(0)->setCellValue('E' . ($numrow + $incp), $value['material'] );//$value[$incp]['spec'] );
+						$phpExcel->setActiveSheetIndex(0)->setCellValue('F' . ($numrow + $incp), $value['spek'] );//$value[$incp]['spec'] );
+						$phpExcel->setActiveSheetIndex(0)->setCellValue('G' . ($numrow + $incp), $value['um'] );//$value[$incp]['spec'] );
+						$phpExcel->setActiveSheetIndex(0)->setCellValue('H' . ($numrow + $incp), $value['qty'] );//$value[$incp]['qty'] );
+						$phpExcel->setActiveSheetIndex(0)->setCellValue('I' . ($numrow + $incp), $value['cost'] );//$value[$incp]['cost'] );
+						$incp++;
+					}
 				}
 			}
-
 
 			if (isset($labour[$row->no_wo])) {
 				$incl = 0;
