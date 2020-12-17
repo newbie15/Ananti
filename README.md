@@ -13,3 +13,5 @@ marilah ikut membantu pengembangan software ini untuk mempermudah pekerjaan main
 
 anda bisa menghubungi saya di fajar.rukmo@gmail.com atau fork dan memberikan kontribusi untuk pengembangan aplikasi CMMS
 agar sistem maintenance di Indonesia semakin baik.
+
+Nama ANANTI terinspirasi oleh https://www.instagram.com/yoanzahra/
