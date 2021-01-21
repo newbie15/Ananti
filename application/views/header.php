@@ -107,6 +107,9 @@
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
             <li>
+              <a href="https://www.youtube.com/playlist?list=PL03CFJjwWWtY9a5ymqlvFw3zQg2V_dCSr" target="_blank"><i class="fa fa-youtube-play"></i> Watch Tutorial</a>
+            </li>
+            <li>
               <a href="<?php echo base_url("login/signout"); ?>">
                 <span class="hidden-xs">
                   <?php

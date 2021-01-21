@@ -439,6 +439,10 @@ $(document).ready(function(){
 
         no_wo += "-" + auto_number;
 
-        $("#no_wo_auto").val(no_wo);
+        if(no_wo.includes('null')){
+            alert("no wo otomatis bermasalah tolong cek dan ulangi lagi prosesnya");
+        }else{
+            $("#no_wo_auto").val(no_wo);
+        }
     }
 });
