@@ -335,6 +335,18 @@ class Activity extends CI_Controller {
 		$this->db->trans_complete();
 	}
 
+	function reset_realisasi(){
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['y'] . "-" . $_REQUEST['m'] . "-" . $_REQUEST['d'];
+
+		$this->db->trans_start();
+		$this->db->query("DELETE FROM `m_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$this->db->query("DELETE FROM `m_activity_detail` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$this->db->query("DELETE FROM `m_sparepart_usage` where no_wo LIKE '$pabrik%' AND tanggal = '$tanggal' ");
+		$this->db->trans_complete();
+		echo "reseted";
+	}
+
 
 	public function download_activity_harian(){
 		$id_pabrik = $this->uri->segment(3);
