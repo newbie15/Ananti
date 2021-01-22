@@ -682,7 +682,8 @@ $(document).ready(function () {
                     console.log(msg);
                     if(msg=="reseted"){
                         alert("data realisasi sukses dihapus");
-                        location.reload();
+                        ajax_refresh();
+                        $("#side-note").hide();
                     }else{
                         alert("ada masalah saat menghapus realisasi");
                     }
