@@ -4,16 +4,19 @@
     <section class="content-header">
       <h1>
         <ul class="nav nav-tabs">
-          <li class=""><a href="<?php echo base_url("schedule_maintenance")?>" aria-expanded="false">Schedule</a></li>
-          <li class=""><a href="<?php echo base_url("planing")?>">Plan</a></li>
+          <li class=""><a href="<?php echo base_url("schedule_maintenance") ?>" aria-expanded="false">Schedule</a></li>
+          <li class=""><a href="<?php echo base_url("planing") ?>">Plan</a></li>
           <li class="active"><a href="">Realisasi</a></li>
-          <li class=""><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li>
+          <li class=""><a href="<?php echo base_url("planvsreal") ?>" aria-expanded="false">Plan VS Real</a></li>
         </ul>
         <!-- Activity Maintenance
         <small>Input Harian</small> -->
       </h1>
       <ol class="breadcrumb">
         <!-- <a class="btn btn-app btn-warning" id="sync_activity" href="#modal-sync" role="button" data-toggle="modal" data-backdrop="false"> -->
+        <a class="btn btn-app btn-danger" id="reset" href="#" role="button">
+          <i class="fa fa-trash-o"></i> Reset
+        </a>
         <a class="btn btn-app btn-success" id="sharewa" href="#modal-wa" data-toggle="modal">
           <i class="fa fa-whatsapp"></i> Share
         </a>
@@ -36,7 +39,7 @@
             <li class="divider"></li>
             <li><a href="#">Separated link</a></li> -->
           </ul>
-        </div>       
+        </div>
         <!-- <a class="btn btn-app btn-success" id="download_activity" href="#" role="button">
           <i class="fa fa-file-excel-o"></i> Download
         </a> -->
@@ -110,8 +113,9 @@
             width: 100%;
             overflow: auto;
           "> -->
-            <table class="table table-striped" id="ui-louhan">
-              <tbody><tr>
+          <table class="table table-striped" id="ui-louhan">
+            <tbody>
+              <tr>
                 <th>No WO</th>
                 <th>Area</th>
                 <th>Perbaikan</th>
@@ -124,26 +128,27 @@
                 <td><span class="badge bg-red">55%</span></td>
               </tr>
 
-            </tbody></table>
+            </tbody>
+          </table>
           <!-- </div> -->
         </div>
         <div data-role="footer">
 
         </div>
-      </div>      
+      </div>
 
       <div class="row">
         <?php  ?>
         <div class="col-xs-12">
-          Pabrik : 
+          Pabrik :
           <?php echo $dropdown_pabrik ?>
-          Tahun : 
+          Tahun :
           <select id="tahun">
             <option>2017</option>
             <option>2018</option>
             <option>2019</option>
           </select>
-          Bulan : 
+          Bulan :
           <select id="bulan">
             <option value="01">januari</option>
             <option value="02">februari</option>
@@ -158,7 +163,7 @@
             <option value="11">november</option>
             <option value="12">desember</option>
           </select>
-          Tanggal : 
+          Tanggal :
           <select id="tanggal">
             <option>01</option>
             <option>02</option>
@@ -193,7 +198,7 @@
             <option>31</option>
           </select>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          Filter by MPP : 
+          Filter by MPP :
           <select id="mpp"></select>
           <br><br>
         </div>
@@ -203,7 +208,7 @@
 						width: 100%;
 						overflow: auto;
 					">
-            <div id='my-spreadsheet'></div>      
+            <div id='my-spreadsheet'></div>
           </div>
         </div>
         <div class="col-xs-4" id="side-note">
@@ -216,7 +221,7 @@
               Station<br>
               Unit<br>
               Problem<br>
-              Desc masalah 
+              Desc masalah
             </div><br>
             <div id='my-spreadsheet2'></div><br>
             <div id='my-spare'></div>

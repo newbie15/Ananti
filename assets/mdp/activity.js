@@ -653,6 +653,49 @@ $(document).ready(function () {
         share_wa();
     });
 
+    $("#reset").click(function () {
+        reset_realisasi();
+    });
+
+    function reset_realisasi(){
+        var aa = Math.floor(Math.random() * 10); 
+        var bb = Math.floor(Math.random() * 10); 
+
+        var cc = aa + bb;
+        xd = $("#tanggal").val();
+        xm = $("#bulan").val();
+        xy = $("#tahun").val();
+
+        if(confirm("apakah anda yakin menghapus realisasi hari ini")){
+            var yy = prompt("masukkan hasil penjumlahan\n\n"+aa+" + "+bb+"\n\nuntuk mengkonfirmasi perintah penghapusan realisasi tanggal "+ xd +"-"+xm+"-"+xy);
+            if(yy==cc){
+                $.ajax({
+                    method: "POST",
+                    url: BASE_URL+"activity/reset_realisasi",
+                    data: {
+                        pabrik: $("#pabrik").val(),
+                        d: $("#tanggal").val(),
+                        m: $("#bulan").val(),
+                        y: $("#tahun").val(),
+                    }
+                }).done(function (msg) {
+                    console.log(msg);
+                    if(msg=="reseted"){
+                        alert("data realisasi sukses dihapus");
+                        ajax_refresh();
+                        $("#side-note").hide();
+                    }else{
+                        alert("ada masalah saat menghapus realisasi");
+                    }
+                });
+
+            }else{
+                alert("maaf perintah penghapusan tidak dilaksanakan");
+            }
+        }
+    }
+
+
     function share_wa() {
 
         // $('#my-spreadsheet').jexcel('orderBy', 5);
