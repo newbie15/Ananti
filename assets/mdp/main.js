@@ -83,6 +83,9 @@ $(function () {
     }
 
     function pabrik_refresh(){
+        $("#per-site").show();
+        $("#all-site").hide();
+
         $.ajax({
             method: "POST",
             url: BASE_URL + "main/statistik",
@@ -98,13 +101,142 @@ $(function () {
         });
     }
 
+    function wo_all_site_refresh(){
+        w = [];
+
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "main/wo_statistik_all",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                tanggal: $("#tgl_job").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            dataw = JSON.parse(msg);
+            // console.log(data);
+            // refresh(data);
+
+            $('#wo-all-site').jexcel({
+                data: dataw,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Site / Pabrik',
+                    'Total WO',
+                    'WO Open',
+                    'WO Close',
+                    'WO Unknown',
+                ],
+                colWidths: [100, 100, 100, 100, 100],
+                columns: [
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                ],
+            });
+        });
+
+    }
+
+    function bdt_all_site_refresh(){
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "main/bd_statistik_all",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                tanggal: $("#tgl_job").val(),
+                jenis : "total"
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            bdt = JSON.parse(msg);
+
+            $('#bdt-all-site').jexcel({
+                data: bdt,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Site / Pabrik',
+                    'Total BD',
+                    'BD PROSES<br>POGEN',
+                    'BD PROSES<br>NON POGEN',
+                    'BD MTC<br>POGEN',
+                    'BD MTC<br>NON POGEN',
+                ],
+                colWidths: [100, 100, 100, 100, 100, 100],
+                columns: [
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                ],
+            });
+        });
+    }
+
+    function bdl_all_site_refresh(){
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "main/bd_statistik_all",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                tanggal: $("#tgl_job").val(),
+                jenis : "line"
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            bdl = JSON.parse(msg);
+
+            $('#bdl-all-site').jexcel({
+                data: bdl,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Site / Pabrik',
+                    'Total BD',
+                    'BD PROSES<br>POGEN',
+                    'BD PROSES<br>NON POGEN',
+                    'BD MTC<br>POGEN',
+                    'BD MTC<br>NON POGEN',
+                ],
+                colWidths: [100, 100, 100, 100, 100, 100],
+                columns: [
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                ],
+            });
+        });
+    }
+
+    function ho_stat_refresh(){
+        $("#per-site").hide();
+        $("#all-site").show();
+        wo_all_site_refresh();
+        bdt_all_site_refresh();
+        bdl_all_site_refresh();
+        // bdu_all_site_refresh();
+    }
+
     $("#pabrik").change(function(){
         document.querySelector("#tgl_job").valueAsDate = new Date();
-        pabrik_refresh();
+        if($("#pabrik").val()!=="ALL SITE"){
+            pabrik_refresh();
+        }else{
+            ho_stat_refresh();
+        }
     });
 
     document.querySelector("#tgl_job").valueAsDate = new Date();
 
-    pabrik_refresh();
-
+    if($("#pabrik").val()!=="ALL SITE"){
+        pabrik_refresh();
+    }else{
+        ho_stat_refresh();
+    }
 });
