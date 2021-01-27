@@ -349,7 +349,6 @@ class Main extends CI_Controller {
 
 		$query = $this->db->query("SELECT * FROM `m_inventory` WHERE id_pabrik = '$nama_pabrik' AND tahun = '$y' AND bulan = '$m'");
 		$row = $query->row();
-
 		// print_r($row);
 
 		if($row){
@@ -358,13 +357,9 @@ class Main extends CI_Controller {
 			$stok = $row->nilai_stok;
 
 			echo "Min :".$min."<br>Max : ".$max."<br>Stok : ".$stok;
-
 		}else{
 			echo "data bulan ".$m." belum diisi";
 		}
-
-
-
 	}
 
 	public function wo_unfinished(){
