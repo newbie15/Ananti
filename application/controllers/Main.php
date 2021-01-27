@@ -72,6 +72,7 @@ class Main extends CI_Controller {
 		$output['dropdown_pabrik']= "";
 		if($kategori<2){
 			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+			$output['dropdown_pabrik'] .= "<option>" . "ALL SITE" . "</option>";
 		}else{
 			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
 		}
@@ -369,4 +370,69 @@ class Main extends CI_Controller {
 	public function wo_unfinished(){
 
 	}
+
+	public function wo_statistik_all(){
+
+		$sql = "Select a.id_pabrik,a.total_wo,b.open_wo,c.close_wo,d.unknow_wo from
+		(SELECT id_pabrik,COUNT(no_wo) as total_wo FROM `m_wo` group by id_pabrik) as a
+		LEFT JOIN
+		(SELECT id_pabrik,COUNT(no_wo) as open_wo FROM `m_wo` WHERE m_wo.status = 'open' group by id_pabrik) as b
+		on a.id_pabrik = b.id_pabrik
+		LEFT JOIN
+		(SELECT id_pabrik,COUNT(no_wo) as close_wo FROM `m_wo` WHERE m_wo.status = 'close' group by id_pabrik) as c
+		on a.id_pabrik = c.id_pabrik
+		LEFT JOIN
+		(SELECT id_pabrik,COUNT(no_wo) as unknow_wo FROM `m_wo` WHERE m_wo.status != 'close' AND m_wo.status != 'open' group by id_pabrik) as d
+		on a.id_pabrik = d.id_pabrik";
+
+		$query = $this->db->query($sql);
+		
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row) {
+			$d[$i][0] = $row->id_pabrik;
+			$d[$i][1] = $row->total_wo;
+			$d[$i][2] = $row->open_wo;
+			$d[$i][3] = $row->close_wo;
+			$d[$i++][4] = $row->unknow_wo;
+		}
+		echo json_encode($d);
+	}
+
+
+	public function bd_statistik_all()
+	{
+		$jenis = $_REQUEST['jenis'];
+
+		$sql = "
+		SELECT a.id_pabrik,a.total,b.pp,c.pnp,d.mp,e.mnp from 
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as total FROM `m_breakdown_pabrik` where jenis='$jenis' group by id_pabrik) as a
+		LEFT JOIN
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as pp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Operation Pogen' group by id_pabrik) as b
+		on a.id_pabrik = b.id_pabrik
+		LEFT JOIN
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as pnp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Operation Non Pogen' group by id_pabrik) as c
+		on a.id_pabrik = c.id_pabrik
+		LEFT JOIN
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as mp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Maintenance Pogen' group by id_pabrik) as d
+		on a.id_pabrik = d.id_pabrik
+		LEFT JOIN
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as mnp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Maintenance Non Pogen' group by id_pabrik) as e
+		on a.id_pabrik = e.id_pabrik";
+
+		$query = $this->db->query($sql);
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row) {
+			$d[$i][0] = $row->id_pabrik;
+			$d[$i][1] = $row->total;
+			$d[$i][2] = $row->pp;
+			$d[$i][3] = $row->pnp;
+			$d[$i][4] = $row->mp;
+			$d[$i++][5] = $row->mnp;
+		}
+		echo json_encode($d);
+	}
+
 }
