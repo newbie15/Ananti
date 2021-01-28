@@ -15,8 +15,8 @@ $(document).ready(function(){
     }, 500);
 
     function station_refresh() {
-        $("#inp_station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val());
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#inp_station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val());
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success" && first == 1) {
                     unit_refresh();
@@ -27,8 +27,8 @@ $(document).ready(function(){
     }
 
     function unit_refresh() {
-        $("#inp_unit").load(BASE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()));
-        $("#unit").load(BASE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
+        $("#inp_unit").load(SITE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()));
+        $("#unit").load(SITE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success" && first == 1) {
                     sub_unit_refresh();
@@ -39,8 +39,8 @@ $(document).ready(function(){
     }
 
     function sub_unit_refresh() {
-        $("#inp_sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()));
-        $("#sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()),
+        $("#inp_sub_unit").load(SITE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()));
+        $("#sub_unit").load(SITE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success" && first == 1) {
                     ajax_refresh();
@@ -86,7 +86,7 @@ $(document).ready(function(){
     function ajax_refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL+"wo/pick_wo",
+            url: SITE_URL+"wo/pick_wo",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
@@ -108,7 +108,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "wo/simpan_single",
+            url: SITE_URL + "wo/simpan_single",
             // success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -142,7 +142,7 @@ $(document).ready(function(){
 
     //     $.ajax({
     //         method: "POST",
-    //         url: BASE_URL+"wo/simpan_single",
+    //         url: SITE_URL+"wo/simpan_single",
     //         // success: sukses,
     //         data: {
     //             pabrik : $("#pabrik").val(),
@@ -228,7 +228,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "wo/generate_no_wo",
+            url: SITE_URL + "wo/generate_no_wo",
             // success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),

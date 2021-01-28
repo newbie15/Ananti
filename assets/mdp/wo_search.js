@@ -8,12 +8,12 @@ $(document).ready(function(){
         var id_pabrik = $("#pabrik").val();
         var tahun = $("#tahun").val();
         var id_unit = $("#unit").val();
-        console.log(BASE_URL + 'index.php/wo/loadcsv/' + id_pabrik + "/" + tahun, );
+        console.log(SITE_URL + 'wo/loadcsv/' + id_pabrik + "/" + tahun, );
 
         // jexcel(document.getElementById('#my-spreadsheet'), {
         $("#my-spreadsheet").html("");
         jexcel(document.getElementById('my-spreadsheet'), {
-            csv: BASE_URL + 'index.php/wo/loadcsv/' + id_pabrik + "/" + tahun,
+            csv: SITE_URL + 'wo/loadcsv/' + id_pabrik + "/" + tahun,
             csvHeaders: true,
             search: true,
             lazyLoading: true,
@@ -37,7 +37,7 @@ $(document).ready(function(){
     }
 
     $("#downloadcsv").click(function () {
-        window.open(BASE_URL + "index.php/wo/download/" + $("#pabrik").val() + "/" + $("#tahun").val());
+        window.open(SITE_URL + "wo/download/" + $("#pabrik").val() + "/" + $("#tahun").val());
     });
 
     $("#pabrik").change(function () {

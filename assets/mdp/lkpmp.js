@@ -16,8 +16,8 @@ $(document).ready(function () {
                 'Station', 'Unit', 'Kondisi', 'Status', 'Identifikasi<br>Problem', 'Perbaikan<br>Yang Diperlukan', 'PIC', 'Status<br>Sparepart', 'Keterangan'],
             colWidths: [100, 100, 250, 70, 200, 250, 80, 100, 100, 100],
             columns: [
-                { type: 'autocomplete', url: BASE_URL + 'station/ajax/' + $("#pabrik").val() },
-                { type: 'autocomplete', url: BASE_URL + 'unit/ajax/' + $("#pabrik").val() },
+                { type: 'autocomplete', url: SITE_URL + 'station/ajax/' + $("#pabrik").val() },
+                { type: 'autocomplete', url: SITE_URL + 'unit/ajax/' + $("#pabrik").val() },
                 { type: 'text', wordWrap: true },
                 { type: 'dropdown', source: ['Hijau', 'Kuning', 'Merah'] },
                 { type: 'text', wordWrap: true },
@@ -49,7 +49,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "lkpmp/simpan",
+            url: SITE_URL + "lkpmp/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -82,7 +82,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "lkpmp/load",
+            url: SITE_URL + "lkpmp/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 bulan: $("#bulan").val(),

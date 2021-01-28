@@ -16,8 +16,8 @@ $(document).ready(function () {
                 'Station', 'Unit', 'Problem', 'Corrective<br>Action', 'Due<br>Date', 'PIC', 'Account', 'Status', 'Penyelesaian'],
             colWidths: [100, 100, 250, 200, 200, 80, 80, 100, 100, 100],
             columns: [
-                { type: 'autocomplete', url: BASE_URL + 'station/ajax/' + $("#pabrik").val() },
-                { type: 'autocomplete', url: BASE_URL + 'unit/ajax/' + $("#pabrik").val() },
+                { type: 'autocomplete', url: SITE_URL + 'station/ajax/' + $("#pabrik").val() },
+                { type: 'autocomplete', url: SITE_URL + 'unit/ajax/' + $("#pabrik").val() },
                 { type: 'text', wordWrap: true },
                 { type: 'text' },
                 { type: 'text', wordWrap: true },
@@ -49,7 +49,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "highlight/simpan",
+            url: SITE_URL + "highlight/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -82,7 +82,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "highlight/load",
+            url: SITE_URL + "highlight/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 bulan: $("#bulan").val(),

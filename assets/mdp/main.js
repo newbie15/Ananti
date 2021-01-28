@@ -88,7 +88,7 @@ $(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "main/statistik",
+            url: SITE_URL + "main/statistik",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
@@ -106,7 +106,7 @@ $(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "main/wo_statistik_all",
+            url: SITE_URL + "main/wo_statistik_all",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
@@ -143,7 +143,7 @@ $(function () {
     function bdt_all_site_refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL + "main/bd_statistik_all",
+            url: SITE_URL + "main/bd_statistik_all",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
@@ -180,7 +180,7 @@ $(function () {
     function bdl_all_site_refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL + "main/bd_statistik_all",
+            url: SITE_URL + "main/bd_statistik_all",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),

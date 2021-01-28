@@ -13,7 +13,7 @@ console.log(url);
 var x = url.split("/");
 console.log(x);
 
-var GOTO = x[0] + "//" + x[2] + "/" + x[3] + "/"; // "http://10.23.3.101/MDP/";
+var GOTO = SITE_URL;
 // console.log(BASE_URL);
 
 $.ajax({

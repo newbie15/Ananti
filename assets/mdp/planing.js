@@ -48,7 +48,7 @@ $(document).ready(function () {
     };
     
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     unit_refresh();
@@ -59,7 +59,7 @@ $(document).ready(function () {
     }
 
     function unit_refresh() {
-        $("#unit").load(BASE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
+        $("#unit").load(SITE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                 } else {
@@ -107,7 +107,7 @@ $(document).ready(function () {
                     { type: 'text' },
                     { type: 'text' },
                     // { type: 'text' },
-                    { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
+                    { type: 'autocomplete', url: SITE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
@@ -144,7 +144,7 @@ $(document).ready(function () {
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
-                    { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
+                    { type: 'autocomplete', url: SITE_URL + 'karyawan/ajax/' + $("#pabrik").val(),autocomplete:true, multiple:true},
                     { type: 'dropdown', source: ['M', 'E'] },
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
@@ -211,7 +211,7 @@ $(document).ready(function () {
         console.log(data_j);
         $.ajax({
             method: "POST",
-            url: BASE_URL+"planing/simpan",
+            url: SITE_URL+"planing/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -228,7 +228,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "planing/load",
+            url: SITE_URL + "planing/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),
@@ -288,12 +288,12 @@ $(document).ready(function () {
 
     $("#download_plan").click(function () {
         // station_refresh();
-        window.open(BASE_URL + "index.php/planing/download_plan_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "index.php/planing/download_plan_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
     $("#download_plan_bulanan").click(function () {
     	// station_refresh();
-        window.open(BASE_URL + "index.php/planing/download_plan_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "index.php/planing/download_plan_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
     $("#tambahwo").click(function () {
@@ -311,7 +311,7 @@ $(document).ready(function () {
     function refresh_modal() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "wo/list_open_tipe/" + $("#pabrik").val(),
+            url: SITE_URL + "wo/list_open_tipe/" + $("#pabrik").val(),
             data: {
                 id_pabrik: $("#pabrik").val(),
             }

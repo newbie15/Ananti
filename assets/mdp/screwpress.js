@@ -16,7 +16,7 @@ $(document).ready(function () {
             console.log("yes");
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "unit/screwpress_default_list",
+                url: SITE_URL + "unit/screwpress_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                 }
@@ -40,7 +40,7 @@ $(document).ready(function () {
                     ],
                     colWidths: [300, 100, 100, 100, 100, 100, 100, 150, 150],
                     columns: [
-                        // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                        // { type: 'autocomplete', url: SITE_URL+'wo/ajax/open/' + $("#pabrik").val() },
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
@@ -82,7 +82,7 @@ $(document).ready(function () {
     }
 
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -118,7 +118,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"screwpress/simpan",
+            url: SITE_URL+"screwpress/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -134,7 +134,7 @@ $(document).ready(function () {
     });
 
     function station_refresh(){
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function(responseTxt,statusTxt,xhr){
                 if(statusTxt == "success"){
                     // alert("success");
@@ -149,7 +149,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "screwpress/load",
+            url: SITE_URL + "screwpress/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 // id_station: $("#station").val(),

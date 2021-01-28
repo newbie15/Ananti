@@ -5,7 +5,7 @@ $(document).ready(function(){
     }
 
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -20,7 +20,7 @@ $(document).ready(function(){
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "unit/load",
+            url: SITE_URL + "unit/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
@@ -36,7 +36,7 @@ $(document).ready(function(){
     function refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL+"unit/load",
+            url: SITE_URL+"unit/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
@@ -64,7 +64,7 @@ $(document).ready(function(){
 
                 colWidths: [150, 350, 100, 100, 100, 100, 100, 100],
                 columns: [
-                    // { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
+                    // { type: 'autocomplete', url: SITE_URL+'station/ajax/' + $("#pabrik").val() },
                     { type: 'text' },
                     { type: 'text' },
                     // { type: 'checkbox' },
@@ -84,7 +84,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"unit/simpan",
+            url: SITE_URL+"unit/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),

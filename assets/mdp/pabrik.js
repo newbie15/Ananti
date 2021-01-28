@@ -14,7 +14,7 @@ $(document).ready(function(){
 
     $.ajax({
         method: "GET",
-        url: BASE_URL+"pabrik/load",
+        url: SITE_URL+"pabrik/load",
         // data: {
         //     data_json: JSON.stringify(data_j),
         // }
@@ -79,7 +79,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"pabrik/simpan",
+            url: SITE_URL+"pabrik/simpan",
             success: sukses,
             data: {
                 data_json: JSON.stringify(data_j),

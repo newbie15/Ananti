@@ -155,7 +155,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "planvsreal/load",
+            url: SITE_URL + "planvsreal/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),
@@ -215,6 +215,6 @@ $(document).ready(function () {
 
     $("#download_excel").click(function () {
         // station_refresh();
-        window.open(BASE_URL + "index.php/planvsreal/download_excel/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "index.php/planvsreal/download_excel/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 });

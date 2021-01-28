@@ -7,7 +7,7 @@ $(document).ready(function(){
     var tabel_wo;
 
     function group_refresh() {
-        $("#group_unit").load(BASE_URL + "grouping/ajax_dropdown/" + $("#pabrik").val(),
+        $("#group_unit").load(SITE_URL + "grouping/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -20,11 +20,11 @@ $(document).ready(function(){
     }
 
     function group_unit_refresh(){
-        $("#dt-table").load(BASE_URL + "grouping_unit/ajax_table/" + $("#pabrik").val() + "/" + encodeURI($("#group_unit").val()));
+        $("#dt-table").load(SITE_URL + "grouping_unit/ajax_table/" + $("#pabrik").val() + "/" + encodeURI($("#group_unit").val()));
     }
 
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -37,7 +37,7 @@ $(document).ready(function(){
     }
 
     function unit_refresh() {
-        $("#unit").load(BASE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
+        $("#unit").load(SITE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -50,7 +50,7 @@ $(document).ready(function(){
     }
 
     function sub_unit_refresh() {
-        $("#sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()) + "/" + encodeURI($("#unit").val()),
+        $("#sub_unit").load(SITE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()) + "/" + encodeURI($("#unit").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -156,8 +156,8 @@ $(document).ready(function(){
                 // { type: 'calendar', option: { format: 'DD/MM/YYYY' } },                { type: 'text', readOnly: true },
 
                 // { type: 'autocomplete', source: arr_no_wo },
-                // { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
-                // { type: 'autocomplete', url: BASE_URL+'unit/ajax/' + $("#pabrik").val() },
+                // { type: 'autocomplete', url: SITE_URL+'station/ajax/' + $("#pabrik").val() },
+                // { type: 'autocomplete', url: SITE_URL+'unit/ajax/' + $("#pabrik").val() },
                 // { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
@@ -280,7 +280,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"wo/simpan",
+            url: SITE_URL+"wo/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -345,7 +345,7 @@ $(document).ready(function(){
     function ajax_refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL+"wo/load",
+            url: SITE_URL+"wo/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),
@@ -372,7 +372,7 @@ $(document).ready(function(){
         },500);
 
         var list = {
-            url: BASE_URL+"index.php/sub_unit/listing/"+$("#pabrik").val(),
+            url: SITE_URL+"index.php/sub_unit/listing/"+$("#pabrik").val(),
             getValue: "list",
             requestDelay: 500,
             ajaxSettings: {
@@ -407,7 +407,7 @@ $(document).ready(function(){
     $("#tplusx").click(function(){
         $.ajax({
             method: "POST",
-            url: BASE_URL + "grouping_unit/ajax_load",
+            url: SITE_URL + "grouping_unit/ajax_load",
             // success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),

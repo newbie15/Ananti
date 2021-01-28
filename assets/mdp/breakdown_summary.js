@@ -57,7 +57,7 @@ $(document).ready(function () {
 
         $("#my-history").html("");
         t_history = jexcel(document.getElementById('my-history'), {
-            csv: BASE_URL + 'index.php/historical/mini_history_csv/' + x_id_pabrik + "/" + encodeURI(x_station) + "/" + encodeURI(x_unit) + "/" + encodeURI(x_sub_unit),
+            csv: SITE_URL + 'index.php/historical/mini_history_csv/' + x_id_pabrik + "/" + encodeURI(x_station) + "/" + encodeURI(x_unit) + "/" + encodeURI(x_sub_unit),
             csvHeaders: true,
             search: true,
             pagination: 10,
@@ -96,7 +96,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "breakdown/load_summary",
+            url: SITE_URL + "breakdown/load_summary",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 bulan: $("#bulan").val(),

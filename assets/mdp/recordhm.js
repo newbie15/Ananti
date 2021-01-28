@@ -44,7 +44,7 @@ $(document).ready(function () {
     });
 
     $("#download_excel").click(function(){
-        window.open(BASE_URL + "index.php/recordhm/download_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "index.php/recordhm/download_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
     $("#simpan").click(function () {
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"recordhm/simpan",
+            url: SITE_URL+"recordhm/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -69,7 +69,7 @@ $(document).ready(function () {
     });
 
     function station_refresh(){
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function(responseTxt,statusTxt,xhr){
                 if(statusTxt == "success"){
                     ajax_refresh();
@@ -83,7 +83,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "recordhm/load",
+            url: SITE_URL + "recordhm/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),

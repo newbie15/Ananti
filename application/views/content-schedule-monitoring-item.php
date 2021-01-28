@@ -5,8 +5,8 @@
     <h1>
         <ul class="nav nav-tabs">
         <li class="active"><a href="#" aria-expanded="true">Monitoring Item</a></li>
-        <li class=""><a href="<?php echo base_url("schedule")?>" aria-expanded="false">Schedule</a></li>
-        <!-- <li class=""><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li> -->
+        <li class=""><a href="<?php echo site_url("schedule")?>" aria-expanded="false">Schedule</a></li>
+        <!-- <li class=""><a href="<?php echo site_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li> -->
         </ul>
     </h1>
     <ol class="breadcrumb">

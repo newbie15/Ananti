@@ -6,7 +6,7 @@ $(document).ready(function(){
     function refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL+"grouping/load",
+            url: SITE_URL+"grouping/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
@@ -51,7 +51,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"grouping/simpan",
+            url: SITE_URL+"grouping/simpan",
             success: sukses,
             data: {
                 pabrik : $("#pabrik").val(),

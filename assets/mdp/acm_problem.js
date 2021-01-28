@@ -33,7 +33,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "acm/load_problem",
+            url: SITE_URL + "acm/load_problem",
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
