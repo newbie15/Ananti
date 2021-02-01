@@ -17,13 +17,15 @@ $(document).ready(function(){
             $('#my-spreadsheet').jexcel({
                 data: data,
                 colHeaders: [
+                    'Station Numbering',
                     'Station',
                 ],
                 allowInsertColumn: false,
                 tableOverflow: true,
                 tableHeight: '400px',
-                colWidths: [300, 150, 150, 100, 250, 250, 75, 75],
+                colWidths: [200,400, 150, 150, 100, 250, 250, 75, 75],
                 columns: [
+                    { type: 'text' },
                     { type: 'text' },
                 ]
             });
@@ -34,12 +36,13 @@ $(document).ready(function(){
 
     $('#my-spreadsheet').jexcel({
         colHeaders: [
+            'Station Numbering',
             'Station',
         ],
         allowInsertColumn: false,
         tableOverflow: true,
         tableHeight: '400px',
-        colWidths: [150,150,150,100,250,250,75,75],
+        colWidths: [200,400,150,100,250,250,75,75],
         columns: [
             { type: 'text' },
         ]

@@ -26,8 +26,6 @@ class Station extends CI_Controller {
 		$this->load->database();
 
 		$this->load->helper('url');
-		// $this->load->library('grocery_CRUD');
-
 	}
 
 	// public function __construct()
@@ -45,7 +43,7 @@ class Station extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Station";
+		$output['main_title'] = "Data Station / Area";
 		
 		$header['title'] = "Station";
 		$header['css_files'] = [
@@ -101,7 +99,8 @@ class Station extends CI_Controller {
 			// $this->db->insert
 			$data = array(
 				'id_pabrik' => $pabrik,
-				'nama' => ucwords($value[0]),
+				'nomor' => $value[0],
+				'nama' => ucwords($value[1]),
 				// 'tipe' => $value[1],
 				// 'date' => 'My date'
 			);
@@ -113,14 +112,14 @@ class Station extends CI_Controller {
 	public function load()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
+		$query = $this->db->query("SELECT nomor,nama FROM master_station where id_pabrik = '$id_pabrik';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				// $d[$i][0] = $row->nama; // access attributes
-				$d[$i++][0] = $row->nama; // or methods defined on the 'User' class
+				$d[$i][0] = $row->nomor; // access attributes
+				$d[$i++][1] = $row->nama; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 	}
@@ -145,7 +144,7 @@ class Station extends CI_Controller {
 
 	public function ajax_dropdown(){
 		$id_pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
+		$query = $this->db->query("SELECT nomor,nama FROM master_station where id_pabrik = '$id_pabrik';");
 		// $i = 0;
 		// $d = [];
 		foreach ($query->result() as $row)
@@ -154,7 +153,7 @@ class Station extends CI_Controller {
 				// $a['name'] = $row->nama;
 				// $a['id'] = $row->nama;
 				// $d[$i++] = $a;
-				echo "<option>".$row->nama."</option>";
+				echo "<option value=\"$row->nomor\">".$row->nama."</option>";
 		}
 		// echo json_encode($d);
 	}

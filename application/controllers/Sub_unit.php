@@ -26,8 +26,6 @@ class Sub_unit extends CI_Controller {
 		$this->load->database();
 
 		$this->load->helper('url');
-		// $this->load->library('grocery_CRUD');
-
 	}
 
 	// public function __construct()
@@ -108,14 +106,15 @@ class Sub_unit extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
 				'id_unit' => $unit,
-				'nama' => ucwords($value[0]),
-				'klasifikasi' => $value[1],
-				'critical_unit' => $value[2],
-				'hourmeter_mod' => $value[3],
-				'vibration_mod' => $value[4],
-				'temperature_mod' => $value[5],
-				'oiling_mod' => $value[6],
-				'electromotor_mod' => $value[7],
+				'nomor' => $value[0],
+				'nama' => ucwords($value[1]),
+				'klasifikasi' => $value[2],
+				'critical_unit' => $value[3],
+				'hourmeter_mod' => $value[4],
+				'vibration_mod' => $value[5],
+				'temperature_mod' => $value[6],
+				'oiling_mod' => $value[7],
+				'electromotor_mod' => $value[8],
 
 				// 'date' => 'My date'
 			);
@@ -129,21 +128,22 @@ class Sub_unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 		$id_unit = $_REQUEST['id_unit'];
-		$query = $this->db->query("SELECT nama,klasifikasi,critical_unit,hourmeter_mod,vibration_mod,temperature_mod,oiling_mod,electromotor_mod FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
+		$query = $this->db->query("SELECT nomor,nama,klasifikasi,critical_unit,hourmeter_mod,vibration_mod,temperature_mod,oiling_mod,electromotor_mod FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 				// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->nama; // or methods defined on the 'User' class
-			$d[$i][1] = $row->klasifikasi; // or methods defined on the 'User' class
-			$d[$i][2] = $row->critical_unit;
-			$d[$i][3] = $row->hourmeter_mod;
-			$d[$i][4] = $row->vibration_mod;
-			$d[$i][5] = $row->temperature_mod;
-			$d[$i][6] = $row->oiling_mod;
-			$d[$i++][7] = $row->electromotor_mod;
+			$d[$i][0] = $row->nomor; // or methods defined on the 'User' class
+			$d[$i][1] = $row->nama; // or methods defined on the 'User' class
+			$d[$i][2] = $row->klasifikasi; // or methods defined on the 'User' class
+			$d[$i][3] = $row->critical_unit;
+			$d[$i][4] = $row->hourmeter_mod;
+			$d[$i][5] = $row->vibration_mod;
+			$d[$i][6] = $row->temperature_mod;
+			$d[$i][7] = $row->oiling_mod;
+			$d[$i++][8] = $row->electromotor_mod;
 
 		}
 		echo json_encode($d);
@@ -183,12 +183,12 @@ class Sub_unit extends CI_Controller {
 		$id_station = urldecode($this->uri->segment(4, 0));
 		$id_unit = urldecode($this->uri->segment(5, 0));
 
-		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
+		$query = $this->db->query("SELECT nomor,nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
 		// $i = 0;
 		// $d = [];
 		foreach ($query->result() as $row)
 		{
-			echo "<option>".$row->nama."</option>";
+			echo "<option value=\"$row->nomor\">".$row->nama."</option>";
 		}
 		// echo json_encode($d);
 	}
@@ -198,13 +198,13 @@ class Sub_unit extends CI_Controller {
 		$id_station = urldecode($this->uri->segment(4, 0));
 		$id_unit = urldecode($this->uri->segment(5, 0));
 
-		$query = $this->db->query("SELECT nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
+		$query = $this->db->query("SELECT nomor,nama FROM master_sub_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit';");
 
 		echo "<option>-- ALL --</option>";
 
 		foreach ($query->result() as $row)
 		{
-			echo "<option>".$row->nama."</option>";
+			echo "<option value=\"$row->nomor\">".$row->nama."</option>";
 		}
 		// echo json_encode($d);
 	}

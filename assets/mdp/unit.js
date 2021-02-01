@@ -51,28 +51,18 @@ $(document).ready(function(){
                 tableOverflow: true,
                 tableHeight: '400px',
                 colHeaders: [
-                    // 'Station',
-                    'Kode Asset',
-                    'Unit',
-                    // 'Critical<br>Unit',
-                    // 'Hourmeter<br>Monitoring',
-                    // 'Vibration<br>Monitoring',
-                    // 'Temperature<br>Monitoring',
-                    // 'Oiling<br>Monitoring',
-                    // 'Electromotor<br>Monitoring'
+                    'Unit Numbering',
+                    'Unit Name',
+                    'Unit Type',
                 ],
 
-                colWidths: [150, 350, 100, 100, 100, 100, 100, 100],
+                colWidths: [200, 400, 300, 100, 100, 100, 100, 100],
                 columns: [
-                    // { type: 'autocomplete', url: SITE_URL+'station/ajax/' + $("#pabrik").val() },
                     { type: 'text' },
                     { type: 'text' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
+                    // { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective', 'Unplan'] },
+                    { type: 'autocomplete', url: SITE_URL + 'unittype/ajax/',autocomplete:true, multiple:true},
+                    { type: 'text' },
                 ]
             });
         });

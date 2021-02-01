@@ -100,4 +100,20 @@ class Workexecution extends CI_Controller {
 			$this->db->insert('aux_work_execution', $data);
 		}
 	}
+
+	public function ajax()
+	{
+		$query = $this->db->query("SELECT `nama`,`mode`,`nomor` FROM aux_work_execution;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				$a['name'] = $row->nomor." - [".$row->mode."] ".$row->nama;
+				$a['id'] = $row->nomor;
+				$d[$i++] = $a;
+		}
+		echo json_encode($d);
+	}		
 }

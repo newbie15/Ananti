@@ -45,7 +45,7 @@ class Part extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Sub Unit";
+		$output['main_title'] = "Data Part";
 		
 		$header['title'] = "Part";
 		$header['css_files'] = [

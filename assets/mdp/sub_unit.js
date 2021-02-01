@@ -46,8 +46,9 @@ $(document).ready(function(){
             $('#my-spreadsheet').jexcel({
                 data: data,
                 colHeaders: [
+                    'Sub Unit Numbering',
                     'Sub Unit',
-                    'Klasifikasi',
+                    'Unit / Equipment Number',
                     'Critical<br>Unit',
                     'Hourmeter<br>Monitoring',
                     'Vibration<br>Monitoring',
@@ -59,8 +60,9 @@ $(document).ready(function(){
                 allowInsertColumn: false,
                 tableOverflow: true,
                 tableHeight: '400px',
-                colWidths: [250, 250, 100, 100, 100, 100, 100, 100],
+                colWidths: [200, 250, 250, 100, 100, 100, 100, 100, 100],
                 columns: [
+                    { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'checkbox' },
@@ -81,30 +83,30 @@ $(document).ready(function(){
     $('#my-spreadsheet').jexcel({
         data: data,
         colHeaders: [
+            'Sub Unit Numbering',
             'Sub Unit',
-            'Klasifikasi',
+            'Unit / Equipment Number',
             'Critical<br>Unit',
             'Hourmeter<br>Monitoring',
             'Vibration<br>Monitoring',
             'Temperature<br>Monitoring',
             'Oiling<br>Monitoring',
             'Electromotor<br>Monitoring'
-
         ],
         allowInsertColumn: false,
         tableOverflow: true,
         tableHeight: '400px',
-        colWidths: [250, 250, 100, 100, 100, 100, 100, 100],
+        colWidths: [200, 250, 250, 100, 100, 100, 100, 100, 100],
         columns: [
             { type: 'text' },
             { type: 'text' },
+            { type: 'text' },
             { type: 'checkbox' },
             { type: 'checkbox' },
             { type: 'checkbox' },
             { type: 'checkbox' },
             { type: 'checkbox' },
             { type: 'checkbox' },
-
         ]
     });
 

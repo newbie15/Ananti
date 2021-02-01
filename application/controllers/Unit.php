@@ -83,21 +83,14 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 
-		$query = $this->db->query("SELECT kode_asset,nama,critical_unit,hourmeter_mod,vibration_mod,temperature_mod,oiling_mod,electromotor_mod FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		$query = $this->db->query("SELECT nomor,nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i][0] = $row->kode_asset;
+			$d[$i][0] = $row->nomor;
 			$d[$i++][1] = $row->nama;
-			// $d[$i][2] = $row->critical_unit;
-			// $d[$i][3] = $row->hourmeter_mod;
-			// $d[$i][4] = $row->vibration_mod;
-			// $d[$i][5] = $row->temperature_mod;
-			// $d[$i][6] = $row->oiling_mod;
-			// $d[$i++][7] = $row->electromotor_mod;
-
 		}
 		echo json_encode($d);
 	}
@@ -116,16 +109,8 @@ class Unit extends CI_Controller {
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
-				'kode_asset' => $value[0],
+				'nomor' => $value[0],
 				'nama' => ucwords($value[1]),
-				// 'critical_unit' => $value[2],
-				// 'hourmeter_mod' => $value[3],
-				// 'vibration_mod' => $value[4],
-				// 'temperature_mod' => $value[5],
-				// 'oiling_mod' => $value[6],
-				// 'electromotor_mod' => $value[7],
-
-				// 'date' => 'My date'
 			);
 			// print_r($data);
 			// $this->db->insert('master_unit', $data);
@@ -157,16 +142,12 @@ class Unit extends CI_Controller {
 	public function ajax_dropdown_sub(){
 		$id_pabrik = $this->uri->segment(3, 0);
 		$id_station = urldecode( $this->uri->segment(4, 0) );
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		$query = $this->db->query("SELECT nomor,nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 		// $i = 0;
 		// $d = [];
 		foreach ($query->result() as $row)
 		{
-				// $d[$i][0] = $row->nama; // access attributes
-				// $a['name'] = $row->nama;
-				// $a['id'] = $row->nama;
-				// $d[$i++] = $a;
-				echo "<option>".$row->nama."</option>";
+			echo "<option value=\"$row->nomor\">".$row->nama."</option>";
 		}
 		// echo json_encode($d);
 		// echo "SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';";

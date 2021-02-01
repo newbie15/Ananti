@@ -32,8 +32,12 @@ if(CUSTOM == 1) {
     var x = url.split("/");
     console.log(x);
 
-    var BASE_URL = x[0]+"//"+x[2]+"/"+x[3]+"/"; // "http://localhost/ananti/";
-    var SITE_URL = x[0]+"//"+x[2]+"/"+x[3]+"/index.php/"; // "http://localhost/ananti/index.php";
+    BASE_URL = x[0]+"//"+x[2]+"/"+x[3]+"/"; // "http://localhost/ananti/";
+    if(x[4]=="index.php"){
+        SITE_URL = x[0]+"//"+x[2]+"/"+x[3]+"/index.php/"; // "http://localhost/ananti/index.php";
+    }else{
+        SITE_URL = x[0]+"//"+x[2]+"/"+x[3]+"/"; // "http://localhost/ananti/";
+    }
 
     console.log(BASE_URL);
     console.log(SITE_URL);

@@ -112,8 +112,9 @@ class Attachment extends CI_Controller {
 				'id_station' => $station,
 				'id_unit' => $unit,
 				'id_sub_unit' => $sub_unit,
-				'attachment' => ucwords($value[0]),
-				'kategori' => $value[1],
+				'nomor' => $value[0],
+				'attachment' => ucwords($value[1]),
+				// 'kategori' => $value[1],
 
 				// 'date' => 'My date'
 			);
@@ -129,15 +130,18 @@ class Attachment extends CI_Controller {
 		$id_unit = $_REQUEST['id_unit'];
 		$id_sub_unit = $_REQUEST['id_sub_unit'];
 
-		$query = $this->db->query("SELECT attachment,kategori FROM master_attachment where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit';");
+		$query = $this->db->query("SELECT nomor,attachment,cm,job_aid,work_exec FROM master_attachment where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 				// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->attachment; // or methods defined on the 'User' class
-			$d[$i++][1] = $row->kategori; // or methods defined on the 'User' class
+			$d[$i][0] = $row->nomor; // or methods defined on the 'User' class
+			$d[$i][1] = $row->attachment; // or methods defined on the 'User' class
+			$d[$i][2] = $row->cm; // or methods defined on the 'User' class
+			$d[$i][3] = $row->job_aid; // or methods defined on the 'User' class
+			$d[$i++][4] = $row->work_exec; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 	}

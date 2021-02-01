@@ -61,29 +61,22 @@ $(document).ready(function(){
             $('#my-spreadsheet').jexcel({
                 data: data,
                 colHeaders: [
+                    'Attachment Numbering',
                     'Attachment',
-                    'Kategori',
-                    // 'Critical<br>Unit',
-                    // 'Hourmeter<br>Monitoring',
-                    // 'Vibration<br>Monitoring',
-                    // 'Temperature<br>Monitoring',
-                    // 'Oiling<br>Monitoring',
-                    // 'Electromotor<br>Monitoring'
-
+                    'Condition Monitoring',
+                    'Job Aid',
+                    'Work Execution',
                 ],
                 allowInsertColumn: false,
                 tableOverflow: true,
                 tableHeight: '400px',
-                colWidths: [250, 250, 100, 100, 100, 100, 100, 100],
+                colWidths: [250, 250, 250, 300, 300, 100, 100, 100],
                 columns: [
                     { type: 'text' },
                     { type: 'text' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
-                    // { type: 'checkbox' },
+                    { type: 'text' },
+                    { type: 'autocomplete', url: SITE_URL + 'jobaid/ajax/',autocomplete:true, multiple:true},
+                    { type: 'autocomplete', url: SITE_URL + 'workexecution/ajax/',autocomplete:true, multiple:true},
                 ]
             });
         });
@@ -95,30 +88,22 @@ $(document).ready(function(){
     $('#my-spreadsheet').jexcel({
         data: data,
         colHeaders: [
+            'Attachment Numbering',
             'Attachment',
-            'Kategori',
-            // 'Critical<br>Unit',
-            // 'Hourmeter<br>Monitoring',
-            // 'Vibration<br>Monitoring',
-            // 'Temperature<br>Monitoring',
-            // 'Oiling<br>Monitoring',
-            // 'Electromotor<br>Monitoring'
-
+            'Condition Monitoring',
+            'Job Aid',
+            'Work Execution',
         ],
         allowInsertColumn: false,
         tableOverflow: true,
         tableHeight: '400px',
-        colWidths: [250, 250, 100, 100, 100, 100, 100, 100],
+        colWidths: [250, 250, 250, 300, 300, 100, 100, 100],
         columns: [
             { type: 'text' },
             { type: 'text' },
-            // { type: 'checkbox' },
-            // { type: 'checkbox' },
-            // { type: 'checkbox' },
-            // { type: 'checkbox' },
-            // { type: 'checkbox' },
-            // { type: 'checkbox' },
-
+            { type: 'text' },
+            { type: 'autocomplete', url: SITE_URL + 'jobaid/ajax/',autocomplete:true, multiple:true},
+            { type: 'autocomplete', url: SITE_URL + 'workexecution/ajax/',autocomplete:true, multiple:true},
         ]
     });
 

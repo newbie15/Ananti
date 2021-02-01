@@ -101,4 +101,20 @@ class Jobaid extends CI_Controller {
 			$this->db->insert('master_pabrik', $data);
 		}
 	}
+
+	public function ajax()
+	{
+		$query = $this->db->query("SELECT `nama`,`kategori`,`nomor` FROM aux_job_aid;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				$a['name'] = $row->nomor." - [".$row->kategori."] ".$row->nama;
+				$a['id'] = $row->nomor;
+				$d[$i++] = $a;
+		}
+		echo json_encode($d);
+	}		
 }

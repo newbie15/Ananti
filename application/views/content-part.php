@@ -13,6 +13,9 @@
             </h1>
             <ol class="breadcrumb">
                 <!-- <button id="simpan">Simpan</button> -->
+                <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
+                    <i class="fa fa-plus"></i> Tambah
+                </a>
                 <a class="btn btn-app btn-primary" id="simpan">
                     <i class="fa fa-save"></i> Simpan
                 </a>
