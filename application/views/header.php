@@ -18,6 +18,12 @@
   <?php endforeach;
   } ?>
 
+<?php if (isset($crud)) { ?>
+<?php foreach($crud as $file): ?>
+	<link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+<?php endforeach;
+} ?>
+
   <style>
     .n_success {
       position: fixed;
@@ -157,13 +163,18 @@
               </a>
               <ul class="treeview-menu" style="display: none;">
                 <?php if ($this->session->kategori <= 1) { ?>
+                  <li><a><i class="fa fa-circle-o text-red"></i>Prerequisite</a></li>
                   <li><a href="<?php echo site_url("pabrik"); ?>"><i class="fa fa-industry"></i>Pabrik</a></li>
+                  <li><a href="<?php echo site_url("jobaid"); ?>"><i class="fa fa-list-ol"></i>Job Aid</a></li>
+                  <li><a href="<?php echo site_url("workexecution"); ?>"><i class="fa fa-list-ol"></i>Work Execution</a></li>
+                  <li><a><i class="fa fa-circle-o text-green"></i>Preset</a></li>
                 <?php } ?>
                 <li><a href="<?php echo site_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
                 <li><a href="<?php echo site_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
                 <li><a href="<?php echo site_url("sub_unit"); ?>"><i class="fa fa-calendar-check-o"></i>Sub Unit</a></li>
                 <li><a href="<?php echo site_url("attachment"); ?>"><i class="fa fa-calendar-check-o"></i>Attachment</a></li>
                 <li><a href="<?php echo site_url("part"); ?>"><i class="fa fa-calendar-check-o"></i>Part</a></li>
+                <li><a href="<?php echo site_url("partcatalog"); ?>"><i class="fa fa-calendar-check-o"></i>Part Catalog</a></li>
                 <li><a href="<?php echo site_url("grouping"); ?>"><i class="fa fa-object-group"></i>Group Unit</a></li>
                 <li><a href="<?php echo site_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
                 <li><a href="<?php echo site_url("umekanik"); ?>"><i class="fa fa-wrench"></i>Unit Mekanik</a></li>
