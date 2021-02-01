@@ -16,7 +16,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <div class="row" id="all-site">
+      <div class="row" id="all-site" style="display:none">
         <div class="col-lg-6 col-xs-6">
           <b>Breakdown Total</b>
           <div id="bdt-all-site">table breakdown ada disini</div>
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div id="per-site">
+      <div id="per-site" style="display:none">
         <div class="row">
           <div class="col-lg-2 col-xs-6">
             <!-- small box -->

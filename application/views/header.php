@@ -159,6 +159,7 @@
                 <?php if ($this->session->kategori <= 1) { ?>
                   <li><a href="<?php echo site_url("pabrik"); ?>"><i class="fa fa-industry"></i>Pabrik</a></li>
                 <?php } ?>
+<<<<<<< Updated upstream
                 <li><a href="<?php echo site_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
                 <li><a href="<?php echo site_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
                 <li><a href="<?php echo site_url("sub_unit"); ?>"><i class="fa fa-calendar-check-o"></i>Sub Unit</a></li>
@@ -171,6 +172,21 @@
                 <li><a href="<?php echo site_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
                 <li><a href="<?php echo site_url("vendor"); ?>"><i class="fa fa-group"></i>Vendor</a></li>
                 <li><a href="<?php echo site_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
+=======
+                <li><a href="<?php echo base_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
+                <li><a href="<?php echo base_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
+                <li><a href="<?php echo base_url("sub_unit"); ?>"><i class="fa fa-calendar-check-o"></i>Sub Unit</a></li>
+                <li><a href="<?php echo base_url("attachment"); ?>"><i class="fa fa-calendar-check-o"></i>Attachment</a></li>
+                <li><a href="<?php echo base_url("part"); ?>"><i class="fa fa-calendar-check-o"></i>Part</a></li>
+                <li><a href="<?php echo base_url("grouping"); ?>"><i class="fa fa-object-group"></i>Group Unit</a></li>
+                <li><a href="<?php echo base_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
+                <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-wrench"></i>Unit Mekanik</a></li>
+                <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>PM Schedule</a></li>
+                <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
+                <li><a href="<?php echo base_url("vendor"); ?>"><i class="fa fa-group"></i>Vendor</a></li>
+                <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
+                <li><a href="<?php echo base_url("report"); ?>"><i class="fa fa-newspaper-o"></i>Report</a></li>
+>>>>>>> Stashed changes
               </ul>
             </li>
 
@@ -246,6 +262,7 @@
                 <i class="fa fa-newspaper-o"></i> <span>Report</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
+<<<<<<< Updated upstream
                 <li><a href="<?php echo site_url("historical"); ?>"><i class="fa fa-thumbs-o-down"></i>Historycal Machineries Card</a></li>
                 <li><a href="<?php echo site_url("high_maintenance"); ?>"><i class="fa fa-thumbs-o-down"></i>High Maintenance Unit</a></li>
                 <!-- <li><a href="<?php echo site_url("costrm"); ?>"><i class="fa fa-money"></i>Cost RM Pabrik</a></li>
@@ -255,6 +272,18 @@
             <li><a href="<?php echo site_url("costrm"); ?>"><i class="fa fa-money"></i>Potret Pabrik</a></li>
             <li><a href="<?php echo site_url("display/proses"); ?>"><i class="fa fa-money"></i>Potret Proses</a></li>
             <li><a href="<?php echo site_url("display/maintenance"); ?>"><i class="fa fa-money"></i>Potret Maintenance</a></li> -->
+=======
+                <li><a href="<?php echo base_url("historical"); ?>"><i class="fa fa-thumbs-o-down"></i>Historycal Machineries Card</a></li>
+                <li><a href="<?php echo base_url("high_maintenance"); ?>"><i class="fa fa-thumbs-o-down"></i>High Maintenance Unit</a></li>
+                <li><a href="<?php echo base_url("kpi"); ?>"><i class="fa fa-user"></i>Key Performance Index</a></li>
+                <!-- <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Cost RM Pabrik</a></li>
+            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Distribusi Man Hour</a></li>
+            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Plan vs Real (CM MM)</a></li>
+            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Inventory</a></li>
+            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Potret Pabrik</a></li>
+            <li><a href="<?php echo base_url("display/proses"); ?>"><i class="fa fa-money"></i>Potret Proses</a></li>
+            <li><a href="<?php echo base_url("display/maintenance"); ?>"><i class="fa fa-money"></i>Potret Maintenance</a></li> -->
+>>>>>>> Stashed changes
               </ul>
             </li>
           <?php
