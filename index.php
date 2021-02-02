@@ -58,7 +58,7 @@
 
 	if(SITE=='development'){
 		define('ENVIRONMENT','development');
-	}else if(SITE=='devdel'){
+	}else if(SITE=='devdel' || SITE == 'devthink'){
 		define('ENVIRONMENT','development');
 	}else{
 		define('ENVIRONMENT','production');

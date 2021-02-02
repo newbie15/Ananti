@@ -58,6 +58,7 @@ $(document).ready(function(){
             console.log(msg);
             data = JSON.parse(msg);
             console.log(data);
+            $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data,
                 colHeaders: [
@@ -85,6 +86,7 @@ $(document).ready(function(){
     // refresh();
     var data = [];
 
+    $('#my-spreadsheet').html("");
     $('#my-spreadsheet').jexcel({
         data: data,
         colHeaders: [

@@ -13,7 +13,7 @@
             </h1>
             <ol class="breadcrumb">
                 <!-- <button id="simpan">Simpan</button> -->
-                <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
+                <a class="btn btn-app btn-danger" id="tambahpart" href="#modal-part-katalog" role="button" data-toggle="modal">
                     <i class="fa fa-plus"></i> Tambah
                 </a>
                 <a class="btn btn-app btn-primary" id="simpan">
@@ -24,6 +24,22 @@
 
         <!-- Main content -->
         <section class="content">
+
+            <div class="modal fade in" id="modal-part-katalog" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Daftar Part</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table id="dt-table-part" class="display" width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-xs-12">

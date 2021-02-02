@@ -158,7 +158,10 @@ class Wo extends CI_Controller {
 		$cancel = 0;
 		foreach ($data as $key => $value) {
 			// $this->db->insert
-			$eq = explode("\n",$value[1]); 
+			$eq = explode("\n",$value[1]);
+			$scode = explode("_", $eq[0]);
+			$ucode = explode("_", $eq[1]);
+			$uscode = explode("_", $eq[2]);
 
 			if($value[5]=="Proses"){
 				$value[7]=="Corrective"; // Kalau WO Dari Proses Jelas Corrective
@@ -168,9 +171,9 @@ class Wo extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
 				'no_wo' => $value[0],
-				'station' => $eq[0],
-				'unit' => $eq[1],
-				'sub_unit' => $eq[2],
+				'station' => $scode,
+				'unit' => $ucode,
+				'sub_unit' => $uscode,
 				'problem' => $value[2],
 				'desc_masalah' => $value[3],
 				'hm' => $value[4],

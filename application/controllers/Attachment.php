@@ -49,14 +49,19 @@ class Attachment extends CI_Controller {
 		
 		$header['title'] = "Attachment";
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/attachment.js"),
@@ -114,9 +119,9 @@ class Attachment extends CI_Controller {
 				'id_sub_unit' => $sub_unit,
 				'nomor' => $value[0],
 				'attachment' => ucwords($value[1]),
-				// 'kategori' => $value[1],
-
-				// 'date' => 'My date'
+				'cm' => ucwords($value[2]),
+				'job_aid' => $value[3],
+				'work_exec' => $value[4],
 			);
 			// print_r($data);
 			$this->db->insert('master_attachment', $data);
@@ -170,10 +175,10 @@ class Attachment extends CI_Controller {
 		$id_unit = urldecode($this->uri->segment(5, 0));
 		$id_sub_unit = urldecode($this->uri->segment(6, 0));
 
-		$query = $this->db->query("SELECT attachment FROM master_attachment where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit' ;");
+		$query = $this->db->query("SELECT nomor,attachment FROM master_attachment where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit' ;");
 		foreach ($query->result() as $row)
 		{
-			echo "<option>".$row->attachment."</option>";
+			echo "<option value=\"$row->nomor\">".$row->attachment."</option>";
 		}
 	}
 

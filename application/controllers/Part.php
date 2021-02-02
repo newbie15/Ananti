@@ -49,14 +49,19 @@ class Part extends CI_Controller {
 		
 		$header['title'] = "Part";
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/part.js"),
@@ -115,11 +120,9 @@ class Part extends CI_Controller {
 				'id_unit' => $unit,
 				'id_sub_unit' => $sub_unit,
 				'id_attachment' => $attachment,
-				'part' => ucwords($value[0]),
-				'spesifikasi' => ucwords($value[1]),
-				'lifetime' => $value[2],
-
-				// 'date' => 'My date'
+				'nomor' => $value[0],
+				'id_part' => $value[1],
+				'instrument_label' => $value[4],
 			);
 			// print_r($data);
 			$this->db->insert('master_part', $data);
@@ -134,16 +137,23 @@ class Part extends CI_Controller {
 		$id_sub_unit = $_REQUEST['id_sub_unit'];
 		$id_attachment = $_REQUEST['id_attachment'];
 
-		$query = $this->db->query("SELECT part,spesifikasi,`lifetime` FROM master_part where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit' AND id_attachment = '$id_attachment';");
+		$query = $this->db->query("
+		SELECT a.nomor,a.id_part,a.instrument_label,b.nama,b.spec FROM 
+		(SELECT nomor,id_part,instrument_label from master_part where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND id_unit = '$id_unit' AND id_sub_unit = '$id_sub_unit' AND id_attachment = '$id_attachment') as a
+		LEFT JOIN
+		(SELECT nomor,nama,spec from master_part_catalog) as b
+		ON a.id_part = b.nomor
+		");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->part; // or methods defined on the 'User' class
-			$d[$i][1] = $row->spesifikasi; // or methods defined on the 'User' class
-			$d[$i++][2] = $row->lifetime; // or methods defined on the 'User' class
+			$d[$i][0] = $row->nomor; // or methods defined on the 'User' class
+			$d[$i][1] = $row->id_part; // or methods defined on the 'User' class
+			$d[$i][2] = $row->nama; // or methods defined on the 'User' class
+			$d[$i][3] = $row->spec; // or methods defined on the 'User' class
+			$d[$i++][4] = $row->instrument_label; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 	}

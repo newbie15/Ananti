@@ -159,6 +159,14 @@ class Partcatalog extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function list_part()
+	{
+		// $pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT CONCAT(nomor,' - ',nama,' - ',spec) as daftar FROM master_part_catalog");
+		echo (json_encode($query->result()));
+	}
+
+
 	public function ajax()
 	{
 		// $id_pabrik = $_REQUEST['id_pabrik'];

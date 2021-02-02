@@ -208,18 +208,16 @@ $(document).ready(function(){
         group_unit_refresh();
     });
 
-    function add(no, sx, ux, su) {
+    function add(no, sx, ux, su,st,ut,sut) {
         var sama = 0;
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
         console.log(dx);
         if (dx[0][0] == "") { // kosong
             dx[0][0] = no;
-            dx[0][1] = sx+"\n"+ux+"\n"+su;
-            // dx[0][2] = ux;
-            // dx[0][3] = su;
+            dx[0][1] = sx+"_"+st+"\n"+ux+"_"+ut+"\n"+su+"_"+sut;
         } else { // isi satu
-            dx.push([no, sx+"\n"+ux+"\n"+su, "", "", "", "", "", "", "", "", ""]);
+            dx.push([no, sx+"_"+st+"\n"+ux+"_"+ut+"\n"+su+"_"+sut, "", "", "", "", "", "", "", "", ""]);
         }
 
         refresh(dx);
@@ -382,7 +380,7 @@ $(document).ready(function(){
     });
 
     $("#tplus").click(function () {
-        add($("#no_wo_auto").val(), $("#station").val(), $("#unit").val(), $("#sub_unit").val());
+        add($("#no_wo_auto").val(), $("#station").val(), $("#unit").val(), $("#sub_unit").val(),$("#station option:selected").text(),$("#unit option:selected").text(),$("#sub_unit option:selected").text());
     });
 
     $("#tplusx").click(function(){
