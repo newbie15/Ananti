@@ -228,6 +228,26 @@ $(document).ready(function(){
         updatescroll();
     }
 
+    function addz(no, sx, ux, su) {
+        var sama = 0;
+        var index = 0;
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+        if (dx[0][0] == "") { // kosong
+            dx[0][0] = no;
+            dx[0][1] = sx+"\n"+ux+"\n"+su;
+        } else { // isi satu
+            dx.push([no, sx+"\n"+ux+"\n"+su, "", "", "", "", "", "", "", "", ""]);
+        }
+
+        refresh(dx);
+
+        // $("#wo").val("");
+        $("#modal-default").modal("hide");
+        
+        updatescroll();
+    }
+
     function multi_add(no, sx, ux, su) {
         var sama = 0;
         var index = 0;
@@ -351,7 +371,7 @@ $(document).ready(function(){
         },500);
 
         var list = {
-            url: SITE_URL+"index.php/sub_unit/listing/"+$("#pabrik").val(),
+            url: SITE_URL+"sub_unit/listing/"+$("#pabrik").val(),
             getValue: "list",
             requestDelay: 500,
             ajaxSettings: {
@@ -372,11 +392,17 @@ $(document).ready(function(){
             if (e.which == 13 && $(this).val() != "") {
                 var txt = $(this).val();
                 var item = txt.split("-");
-                add($("#no_wo_auto").val(), item[0], item[1], item[2]);
+                addz($("#no_wo_auto").val(), item[0], item[1], item[2]);
             }
             console.log(e);
         });
 
+    });
+
+    $("#tplussearch").click(function(){
+        var txt = $("#search").val();
+        var item = txt.split("-");
+        addz($("#no_wo_auto").val(), item[0], item[1], item[2]);
     });
 
     $("#tplus").click(function () {

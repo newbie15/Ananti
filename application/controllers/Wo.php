@@ -86,17 +86,37 @@ class Wo extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,jenis,tipe,status,tanggal_closing FROM m_wo where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$query = $this->db->query("
+		SELECT m_wo.no_wo,
+		CONCAT(m_wo.station,'_',master_station.nama) AS station,
+		CONCAT(m_wo.unit,'_',master_unit.nama) AS unit,
+		CONCAT(m_wo.sub_unit,'_',master_sub_unit.nama) AS sub_unit,
+		m_wo.problem,m_wo.desc_masalah,m_wo.hm,m_wo.kategori,m_wo.jenis,m_wo.tipe,m_wo.status,m_wo.tanggal_closing		
+		
+		FROM m_wo,master_station,master_unit,master_sub_unit where 
+
+		m_wo.id_pabrik = '$id_pabrik' AND
+		tanggal='$tanggal' AND
+
+		master_station.nomor = m_wo.station AND
+		master_station.id_pabrik = m_wo.id_pabrik AND
+		
+		master_unit.nomor = m_wo.unit AND
+		master_unit.id_pabrik = m_wo.id_pabrik AND
+		master_unit.id_station = m_wo.station AND
+		
+		master_sub_unit.nomor = m_wo.sub_unit AND
+		master_sub_unit.id_pabrik = m_wo.id_pabrik AND
+		master_sub_unit.id_station = m_wo.station AND
+		master_sub_unit.id_unit = m_wo.unit		
+		;");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->no_wo;
-			// $d[$i][1] = $row->station;
 			$d[$i][1] = $row->station ."\n". $row->unit . "\n" . $row->sub_unit;
-			// $d[$i][2] = $row->unit;
-			// $d[$i][3] = $row->sub_unit;
 			$d[$i][2] = $row->problem;
 			$d[$i][3] = $row->desc_masalah;
 			$d[$i][4] = $row->hm;
@@ -112,7 +132,7 @@ class Wo extends CI_Controller {
 	public function pick_wo(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$station = $_REQUEST['id_station'];
-    $unit = $_REQUEST['id_unit'];
+		$unit = $_REQUEST['id_unit'];
 		$sub_unit = $_REQUEST['id_sub_unit'];
 		
 		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,
@@ -171,9 +191,9 @@ class Wo extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
 				'no_wo' => $value[0],
-				'station' => $scode,
-				'unit' => $ucode,
-				'sub_unit' => $uscode,
+				'station' => $scode[0],
+				'unit' => $ucode[0],
+				'sub_unit' => $uscode[0],
 				'problem' => $value[2],
 				'desc_masalah' => $value[3],
 				'hm' => $value[4],
@@ -337,7 +357,30 @@ class Wo extends CI_Controller {
 	public function load_unfinished(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open';");
+		$query = $this->db->query("
+		SELECT m_wo.no_wo,
+		CONCAT(m_wo.station,'_',master_station.nama) AS station,
+		CONCAT(m_wo.unit,'_',master_unit.nama) AS unit,
+		CONCAT(m_wo.sub_unit,'_',master_sub_unit.nama) AS sub_unit,
+		m_wo.problem,m_wo.desc_masalah,m_wo.hm,m_wo.kategori,m_wo.jenis,m_wo.tipe,m_wo.status,m_wo.tanggal_closing		
+		
+		FROM m_wo,master_station,master_unit,master_sub_unit where 
+
+		m_wo.id_pabrik = '$id_pabrik' AND
+		status='open' AND
+
+		master_station.nomor = m_wo.station AND
+		master_station.id_pabrik = m_wo.id_pabrik AND
+		
+		master_unit.nomor = m_wo.unit AND
+		master_unit.id_pabrik = m_wo.id_pabrik AND
+		master_unit.id_station = m_wo.station AND
+		
+		master_sub_unit.nomor = m_wo.sub_unit AND
+		master_sub_unit.id_pabrik = m_wo.id_pabrik AND
+		master_sub_unit.id_station = m_wo.station AND
+		master_sub_unit.id_unit = m_wo.unit		
+		;");
 
 		$i = 0;
 		$d = [];
@@ -422,7 +465,31 @@ class Wo extends CI_Controller {
 
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 		$like = $id_pabrik."-".$tahun;
-		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,hm,kategori,tipe,status FROM m_wo where no_wo LIKE '%$like%';");
+		$query = $this->db->query("
+
+		SELECT m_wo.no_wo,
+		CONCAT(m_wo.station,'_',master_station.nama) AS station,
+		CONCAT(m_wo.unit,'_',master_unit.nama) AS unit,
+		CONCAT(m_wo.sub_unit,'_',master_sub_unit.nama) AS sub_unit,
+		m_wo.problem,m_wo.desc_masalah,m_wo.hm,m_wo.kategori,m_wo.jenis,m_wo.tipe,m_wo.status,m_wo.tanggal_closing
+		
+		FROM m_wo,master_station,master_unit,master_sub_unit where 
+
+		m_wo.id_pabrik = '$id_pabrik' AND
+		YEAR(m_wo.tanggal) = '$tahun' AND
+
+		master_station.nomor = m_wo.station AND
+		master_station.id_pabrik = m_wo.id_pabrik AND
+		
+		master_unit.nomor = m_wo.unit AND
+		master_unit.id_pabrik = m_wo.id_pabrik AND
+		master_unit.id_station = m_wo.station AND
+		
+		master_sub_unit.nomor = m_wo.sub_unit AND
+		master_sub_unit.id_pabrik = m_wo.id_pabrik AND
+		master_sub_unit.id_station = m_wo.station AND
+		master_sub_unit.id_unit = m_wo.unit				
+		;");
 
 		$i = 0;
 		$d = [];

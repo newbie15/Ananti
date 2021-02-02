@@ -86,7 +86,30 @@ class Woprocess extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,station,unit,sub_unit,problem,desc_masalah,hm,kategori,tipe,status,tanggal_closing FROM m_wo_process where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$query = $this->db->query("
+		SELECT m_wo_process.no_wo,
+		CONCAT(m_wo_process.station,'_',master_station.nama) AS station,
+		CONCAT(m_wo_process.unit,'_',master_unit.nama) AS unit,
+		CONCAT(m_wo_process.sub_unit,'_',master_sub_unit.nama) AS sub_unit,
+		m_wo_process.problem,m_wo_process.desc_masalah,m_wo_process.hm,m_wo_process.kategori,m_wo_process.tipe,m_wo_process.status,m_wo_process.tanggal_closing		
+		
+		FROM m_wo_process,master_station,master_unit,master_sub_unit where 
+
+		m_wo_process.id_pabrik = '$id_pabrik' AND
+		tanggal='$tanggal' AND
+
+		master_station.nomor = m_wo_process.station AND
+		master_station.id_pabrik = m_wo_process.id_pabrik AND
+		
+		master_unit.nomor = m_wo_process.unit AND
+		master_unit.id_pabrik = m_wo_process.id_pabrik AND
+		master_unit.id_station = m_wo_process.station AND
+		
+		master_sub_unit.nomor = m_wo_process.sub_unit AND
+		master_sub_unit.id_pabrik = m_wo_process.id_pabrik AND
+		master_sub_unit.id_station = m_wo_process.station AND
+		master_sub_unit.id_unit = m_wo_process.unit	
+		;");
 
 		$i = 0;
 		$d = [];
@@ -154,14 +177,17 @@ class Woprocess extends CI_Controller {
 		$datax = array();
 		foreach ($data as $key => $value) {
 			// $this->db->insert
-			$eq = explode("\n",$value[1]); 
+			$eq = explode("\n",$value[1]);
+			$scode = explode("_", $eq[0]);
+			$ucode = explode("_", $eq[1]);
+			$uscode = explode("_", $eq[2]);
 			@$data = array(
 				'id_pabrik' => $pabrik,
 				'tanggal' => $tanggal,
 				'no_wo' => $value[0],
-				'station' => $eq[0],
-				'unit' => $eq[1],
-				'sub_unit' => $eq[2],
+				'station' => $scode[0],
+				'unit' => $ucode[0],
+				'sub_unit' => $uscode[0],
 				'problem' => $value[2],
 				'desc_masalah' => $value[3],
 				'hm' => $value[4],

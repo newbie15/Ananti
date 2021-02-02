@@ -48,6 +48,15 @@ if($this->session->kategori != 3){
                 <input class="form-control w-100" id="search" autocomplete="off" placeholder="cari item disini"/>            
               </div>
               <br/>
+                <span style="float:right;">
+                  <button id="tplussearch">Tambah Melalui Pencarian</button>
+                </span>              
+              <br/>
+              <br/>
+              <div style="width:100%; text-align:center;">
+                <strong>-- Atau --</strong>
+              </div>              
+              <br/>
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Single Item</a></li>

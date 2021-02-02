@@ -5,9 +5,9 @@
       <h1>
         <!-- Create Work Order | Unfinished WO | Search WO -->
         <ul class="nav nav-tabs">
-          <li class=""><a href="<?php echo base_url("woprocess")?>" aria-expanded="true">Laporan Kerusakan</a></li>
-          <li class=""><a href="<?php echo base_url("wo")?>" aria-expanded="true">Work Order</a></li>
-          <li class=""><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
+          <li class=""><a href="<?php echo site_url("woprocess")?>" aria-expanded="true">Laporan Kerusakan</a></li>
+          <li class=""><a href="<?php echo site_url("wo")?>" aria-expanded="true">Work Order</a></li>
+          <li class=""><a href="<?php echo site_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
           <li class="active"><a href="#" aria-expanded="false">Search WO</a></li>
         </ul>
       </h1>

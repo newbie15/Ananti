@@ -37,16 +37,25 @@
                 <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Tambah Work Order</h4>
+                <h4 class="modal-title">Tambah Laporan Kerusakan</h4>
                 </div>
                 <div class="modal-body">
                 <!-- <input type="text" id="search" class=""> -->
                 <h3 id="dpabrik"></h3>
-                No WO  &nbsp;&nbsp; : <input type="text" id="no_wo_auto"/>
+                No Laporan Kerusakan  &nbsp;&nbsp; : <input type="text" id="no_wo_auto"/>
                 <br/><br/>
                 <div style="width:100%;">
                     <input class="form-control w-100" id="search" autocomplete="off" placeholder="cari item disini"/>            
                 </div>
+                <br/>
+                <span style="float:right;">
+                  <button id="tplussearch">Tambah Melalui Pencarian</button>
+                </span>
+                <br/>
+                <br/>
+                <div style="width:100%; text-align:center;">
+                    <strong>-- Atau --</strong>
+                </div>              
                 <br/>
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">

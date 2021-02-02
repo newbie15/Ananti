@@ -67,7 +67,7 @@ $(document).ready(function(){
         var tanggal = $("#tanggal").val();
 
 
-        var no_wo = nama_pt+"-"+tahun+"-"+bulan+"-"+tanggal;
+        var no_wo = "L-"+nama_pt+"-"+tahun+"-"+bulan+"-"+tanggal;
 
         var arr_no_wo = [];
 
@@ -137,7 +137,7 @@ $(document).ready(function(){
             // colHeaders: ['Tanggal', 'No WO', 'Station', 'Equipment', 'Problem', 'Penjelasan<br>Masalah', 'HM', 'Kategori', 'status'],
             colHeaders: ['No Laporan', 'Station<br>Unit<br>Sub Unit', 'Problem', 'Keterangan', 'HM', 'Kategori','Tipe','Status','Tanggal<br>Closing'],
             // colWidths: [140, 140, 140, 140, 250, 250, 100, 75, 80, 80],
-            colWidths: [140, 220, 250, 250, 100, 65, 40, 80, 80],
+            colWidths: [150, 220, 250, 250, 100, 65, 40, 80, 80],
             columns: [
                 { type: 'text', readOnly: true },
                 { type: 'text', readOnly: true, wordWrap: true },
@@ -201,7 +201,27 @@ $(document).ready(function(){
         group_unit_refresh();
     });
 
-    function add(no, sx, ux, su) {
+    function add(no, sx, ux, su,st,ut,sut) {
+        var sama = 0;
+        var index = 0;
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+        if (dx[0][0] == "") { // kosong
+            dx[0][0] = no;
+            dx[0][1] = sx+"_"+st+"\n"+ux+"_"+ut+"\n"+su+"_"+sut;
+        } else { // isi satu
+            dx.push([no, sx+"_"+st+"\n"+ux+"_"+ut+"\n"+su+"_"+sut, "", "", "", "", "", "", "", "", ""]);
+        }
+
+        refresh(dx);
+
+        // $("#wo").val("");
+        $("#modal-default").modal("hide");
+        
+        updatescroll();
+    }
+
+    function addz(no, sx, ux, su) {
         var sama = 0;
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
@@ -209,8 +229,6 @@ $(document).ready(function(){
         if (dx[0][0] == "") { // kosong
             dx[0][0] = no;
             dx[0][1] = sx+"\n"+ux+"\n"+su;
-            // dx[0][2] = ux;
-            // dx[0][3] = su;
         } else { // isi satu
             dx.push([no, sx+"\n"+ux+"\n"+su, "", "", "", "", "", "", "", "", ""]);
         }
@@ -346,7 +364,7 @@ $(document).ready(function(){
         },500);
 
         var list = {
-            url: SITE_URL+"index.php/sub_unit/listing/"+$("#pabrik").val(),
+            url: SITE_URL+"sub_unit/listing/"+$("#pabrik").val(),
             getValue: "list",
             requestDelay: 500,
             ajaxSettings: {
@@ -367,15 +385,22 @@ $(document).ready(function(){
             if (e.which == 13 && $(this).val() != "") {
                 var txt = $(this).val();
                 var item = txt.split("-");
-                add($("#no_wo_auto").val(), item[0], item[1], item[2]);
+                addz($("#no_wo_auto").val(), item[0], item[1], item[2]);
             }
             console.log(e);
         });
 
     });
 
+    $("#tplussearch").click(function(){
+        var txt = $("#search").val();
+        var item = txt.split("-");
+        addz($("#no_wo_auto").val(), item[0], item[1], item[2]);
+    });
+
     $("#tplus").click(function () {
-        add($("#no_wo_auto").val(), $("#station").val(), $("#unit").val(), $("#sub_unit").val());
+        // add($("#no_wo_auto").val(), $("#station").val(), $("#unit").val(), $("#sub_unit").val());
+        add($("#no_wo_auto").val(), $("#station").val(), $("#unit").val(), $("#sub_unit").val(),$("#station option:selected").text(),$("#unit option:selected").text(),$("#sub_unit option:selected").text());
     });
 
     $("#tplusx").click(function(){
@@ -405,7 +430,7 @@ $(document).ready(function(){
         var bulan = $("#bulan").val();
         var tanggal = $("#tanggal").val();
 
-        var no_wo = nama_pt + "-" + tahun + "-" + bulan + "-" + tanggal;
+        var no_wo = "L-"+nama_pt + "-" + tahun + "-" + bulan + "-" + tanggal;
 
         dx = $('#my-spreadsheet').jexcel('getData');
         console.log(dx);
@@ -423,13 +448,12 @@ $(document).ready(function(){
             auto_number = 1;
         }else if(last != ""){
             d = last.split("-");
-            last_number = parseInt(d[4]);
+            last_number = parseInt(d[5]);
             auto_number = last_number + 1;
         }
         if (auto_number < 10) {
             auto_number = "0" + auto_number;
         }
-
         no_wo += "-" + auto_number;
 
         $("#no_wo_auto").val(no_wo);
