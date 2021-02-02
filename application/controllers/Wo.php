@@ -108,7 +108,7 @@ class Wo extends CI_Controller {
 		master_sub_unit.nomor = m_wo.sub_unit AND
 		master_sub_unit.id_pabrik = m_wo.id_pabrik AND
 		master_sub_unit.id_station = m_wo.station AND
-		master_sub_unit.id_unit = m_wo.unit		
+		master_sub_unit.id_unit = m_wo.unit
 		;");
 
 		$i = 0;
@@ -250,15 +250,38 @@ class Wo extends CI_Controller {
 		$no_wo = $this->uri->segment(3, 0);
 		// $id_pabrik = $this->uri->segment(4, 0);
 		// $no_wo = $_REQUEST['no_wo'];
-		$query = $this->db->query("SELECT * FROM m_wo where no_wo='$no_wo';");
+		$query = $this->db->query(
+			"SELECT 
+				m_wo.station,
+				m_wo.unit,
+				m_wo.sub_unit,
+				m_wo.problem,
+				master_station.nama as snama,
+				master_unit.nama as unama,
+				master_sub_unit.nama as sunama
+			FROM m_wo,master_station,master_unit,master_sub_unit 
+			where
+			m_wo.no_wo = '$no_wo' AND
+			master_station.nomor = m_wo.station AND
+			master_station.id_pabrik = m_wo.id_pabrik AND
+			
+			master_unit.nomor = m_wo.unit AND
+			master_unit.id_pabrik = m_wo.id_pabrik AND
+			master_unit.id_station = m_wo.station AND
+			
+			master_sub_unit.nomor = m_wo.sub_unit AND
+			master_sub_unit.id_pabrik = m_wo.id_pabrik AND
+			master_sub_unit.id_station = m_wo.station AND
+			master_sub_unit.id_unit = m_wo.unit 
+			;");
 
 		$i = 0;
 		$a = [];
 		foreach ($query->result() as $row)
 		{
-				$a['station'] = $row->station;
-				$a['unit'] = $row->unit;
-				$a['sub_unit'] = $row->sub_unit;
+				$a['station'] = $row->station."_".$row->snama;
+				$a['unit'] = $row->unit."_".$row->unama;
+				$a['sub_unit'] = $row->sub_unit."_".$row->sunama;
 				$a['problem'] = $row->problem;
 				// $a['desc_masalah'] = $row->desc_masalah;
 		}
@@ -272,9 +295,18 @@ class Wo extends CI_Controller {
 	}
 
 	public function list_open_tipe(){
-		$pabrik = $this->uri->segment(3, 0);
-		$query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,' - ',unit,' - ',sub_unit,' - ',problem,' - ',tipe) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
-        echo(json_encode($query->result()));
+		$id_pabrik = $this->uri->segment(3, 0);
+		// $query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,' - ',unit,' - ',sub_unit,' - ',problem,' - ',tipe) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
+        $this->db->select("CONCAT(m_wo.no_wo,' - ',master_sub_unit.id_station,'_',master_station.nama,' - ',id_unit,'_',master_unit.nama,' - ',master_sub_unit.nomor,'_',master_sub_unit.nama,' - ',m_wo.problem,' - ',m_wo.tipe,' - ',m_wo.jenis) as daftar");
+		$this->db->from('m_wo, master_sub_unit, master_unit, master_station');
+		$this->db->where("m_wo.id_pabrik",$id_pabrik);
+		$this->db->where("m_wo.status",'open');
+		$this->db->where("m_wo.station = master_station.nomor");
+		$this->db->where("m_wo.unit = master_unit.nomor");
+		$this->db->where("m_wo.sub_unit = master_sub_unit.nomor");
+
+		$query = $this->db->get();
+		echo(json_encode($query->result()));
 	}
 
 	public function close_wo_unfinished(){

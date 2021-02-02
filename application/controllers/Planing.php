@@ -78,8 +78,28 @@ class Planing extends CI_Controller {
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`plan`,`mpp`,`nama_mpp`,`mek_el`,`start`,`stop`,`istirahat`,`tipe`,`ket`
-			FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
+		"SELECT m_planing.no_wo,
+		CONCAT(m_planing.station,'_',master_station.nama) AS station,
+		CONCAT(m_planing.unit,'_',master_unit.nama) AS unit,
+		CONCAT(m_planing.sub_unit,'_',master_sub_unit.nama) AS sub_unit,
+		m_planing.problem,m_planing.plan,m_planing.mpp,m_planing.nama_mpp,m_planing.mek_el,m_planing.start,m_planing.stop,m_planing.istirahat,m_planing.tipe,m_planing.ket	
+		
+		FROM m_planing,master_station,master_unit,master_sub_unit where 
+
+		m_planing.id_pabrik = '$id_pabrik' AND
+		m_planing.tanggal = '$tanggal' AND
+
+		master_station.nomor = m_planing.station AND
+		master_station.id_pabrik = m_planing.id_pabrik AND
+		
+		master_unit.nomor = m_planing.unit AND
+		master_unit.id_pabrik = m_planing.id_pabrik AND
+		master_unit.id_station = m_planing.station AND
+		
+		master_sub_unit.nomor = m_planing.sub_unit AND
+		master_sub_unit.id_pabrik = m_planing.id_pabrik AND
+		master_sub_unit.id_station = m_planing.station AND
+		master_sub_unit.id_unit = m_planing.unit
 		");
 
 		$i = 0;
@@ -142,6 +162,9 @@ class Planing extends CI_Controller {
 			foreach ($data as $key => $value) {
 				// $this->db->insert
 				@$eq = explode("\n",$value[1]); 
+				$scode = explode("_", $eq[0]);
+				$ucode = explode("_", $eq[1]);
+				$uscode = explode("_", $eq[2]);
 
 				$value[7] == "" ? $value[7] = "00:00" : null;
 				$value[8] == "" ? $value[8] = "00:00" : null;
@@ -185,9 +208,9 @@ class Planing extends CI_Controller {
 					'tanggal' => $tanggal,
 					'id_pabrik' => $pabrik,
 					'no_wo' => $value[0],
-					'station' => $eq[0],
-					'unit' => $eq[1],
-					'sub_unit' => $eq[2],
+					'station' => $scode[0],
+					'unit' => $ucode[0],
+					'sub_unit' => $uscode[0],
 					'problem' => $value[2],
 					'plan' => $value[3],
 					'mpp' => $value[4],
@@ -306,8 +329,28 @@ class Planing extends CI_Controller {
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,concat(`station`,'-',`unit`,'\n',`sub_unit`,'\n',`problem`) as area
-			FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND`tanggal` = '$tanggal'
+			"SELECT no_wo,CONCAT(
+				m_planing.station,'_',master_station.nama,'\n',
+				m_planing.unit,'_',master_unit.nama,'\n',
+				m_planing.sub_unit,'_',master_sub_unit.nama,'\n',
+				m_planing.problem
+			) as area
+			FROM m_planing,master_station,master_unit,master_sub_unit
+			WHERE 
+			m_planing.id_pabrik = '$id_pabrik' AND
+			m_planing.tanggal = '$tanggal' AND
+			
+			master_station.nomor = m_planing.station AND
+			master_station.id_pabrik = m_planing.id_pabrik AND
+			
+			master_unit.nomor = m_planing.unit AND
+			master_unit.id_pabrik = m_planing.id_pabrik AND
+			master_unit.id_station = m_planing.station AND
+			
+			master_sub_unit.nomor = m_planing.sub_unit AND
+			master_sub_unit.id_pabrik = m_planing.id_pabrik AND
+			master_sub_unit.id_station = m_planing.station AND
+			master_sub_unit.id_unit = m_planing.unit
 		");
 
 		$i = 0;

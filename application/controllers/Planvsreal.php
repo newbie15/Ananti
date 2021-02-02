@@ -102,9 +102,28 @@ class Planvsreal extends CI_Controller {
 		");
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`,`kategori`
-			FROM `m_wo` WHERE 
-			no_wo LIKE '%$id_pabrik-$tanggal%'
+			"SELECT 
+				`no_wo`,
+				CONCAT(m_wo.`station`,'_',master_station.nama) as station,
+				CONCAT(m_wo.`unit`,'_',master_unit.nama) as unit,
+				CONCAT(m_wo.`sub_unit`,'_',master_sub_unit.nama) as sub_unit,
+				`problem`,`status`,`tanggal_closing`,`kategori`
+			FROM `m_wo`,master_station,master_unit,master_sub_unit 
+			WHERE 
+			`m_wo`.no_wo LIKE '%$id_pabrik-$tanggal%' AND
+
+			master_station.nomor = m_wo.station AND
+			master_station.id_pabrik = m_wo.id_pabrik AND
+			
+			master_unit.nomor = m_wo.unit AND
+			master_unit.id_pabrik = m_wo.id_pabrik AND
+			master_unit.id_station = m_wo.station AND
+			
+			master_sub_unit.nomor = m_wo.sub_unit AND
+			master_sub_unit.id_pabrik = m_wo.id_pabrik AND
+			master_sub_unit.id_station = m_wo.station AND
+			master_sub_unit.id_unit = m_wo.unit
+			
 			ORDER BY no_wo ASC
 		");
 
@@ -201,9 +220,28 @@ class Planvsreal extends CI_Controller {
 		");
 
 		$query = $this->db->query(
-			"SELECT `no_wo`,`station`,`unit`,`sub_unit`,`problem`,`status`,`tanggal_closing`,`kategori`
-			FROM `m_wo` WHERE 
-			no_wo LIKE '%$id_pabrik-$tanggal%'
+			"SELECT 
+				`no_wo`,
+				CONCAT(m_wo.`station`,'_',master_station.nama) as station,
+				CONCAT(m_wo.`unit`,'_',master_unit.nama) as unit,
+				CONCAT(m_wo.`sub_unit`,'_',master_sub_unit.nama) as sub_unit,
+				`problem`,`status`,`tanggal_closing`,`kategori`
+			FROM `m_wo`,master_station,master_unit,master_sub_unit 
+			WHERE 
+			`m_wo`.no_wo LIKE '%$id_pabrik-$tanggal%' AND
+
+			master_station.nomor = m_wo.station AND
+			master_station.id_pabrik = m_wo.id_pabrik AND
+			
+			master_unit.nomor = m_wo.unit AND
+			master_unit.id_pabrik = m_wo.id_pabrik AND
+			master_unit.id_station = m_wo.station AND
+			
+			master_sub_unit.nomor = m_wo.sub_unit AND
+			master_sub_unit.id_pabrik = m_wo.id_pabrik AND
+			master_sub_unit.id_station = m_wo.station AND
+			master_sub_unit.id_unit = m_wo.unit
+			
 			ORDER BY no_wo ASC
 		");
 
@@ -299,18 +337,18 @@ class Planvsreal extends CI_Controller {
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 			// echo 'This is a server using Windows!';
 			include APPPATH.'third_party\PHPExcel.php';
-		  // $fe = "template_planvsreal.xlsx";
-		  $fe = "template_00_planvsreal.xls";
-		  $filex = dirname(__FILE__) .'\..\..\assets\excel\\'.$fe;
+		  	// $fe = "template_planvsreal.xlsx";
+		  	$fe = "template_00_planvsreal.xls";
+		  	$filex = dirname(__FILE__) .'\..\..\assets\excel\\'.$fe;
 
 		} else {
 			// echo 'This is a server not using Windows!';
 			include APPPATH.'third_party/PHPExcel.php';
 
-  		$fe = "template_00_planvsreal.xls";
-	  	// $fe = "template_planvsreal.xlsx";
+			$fe = "template_00_planvsreal.xls";
+			// $fe = "template_planvsreal.xlsx";
 
-		  $filex = dirname(__FILE__) .'/../../assets/excel/'.$fe;
+			$filex = dirname(__FILE__) .'/../../assets/excel/'.$fe;
 
 		}
 		// include APPPATH.'third_party\PHPExcel.php';
@@ -336,22 +374,56 @@ class Planvsreal extends CI_Controller {
 
 		$query_wo_list = $this->db->query(
 			"SELECT * from (
-				SELECT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status,`m_wo`.station,
-				`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem,`m_wo`.kategori as asal_wo , `m_planing`.tipe as kategori
-				FROM `m_planing`,m_wo WHERE 
-				MONTH(`m_planing`.tanggal) = $bulan AND YEAR(`m_planing`.tanggal) = $tahun
-				AND `m_planing`.no_wo = m_wo.no_wo 
-				AND m_wo.id_pabrik = '$id_pabrik'
+				SELECT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status,
+				CONCAT(m_wo.`station`,'_',master_station.nama) as station,
+				CONCAT(m_wo.`unit`,'_',master_unit.nama) as unit,
+				CONCAT(m_wo.`sub_unit`,'_',master_sub_unit.nama) as sub_unit,
+				`m_wo`.problem,`m_wo`.kategori as asal_wo , `m_planing`.tipe as kategori
+				FROM `m_planing`,m_wo,master_station,master_unit,master_sub_unit
+				WHERE 
+				MONTH(`m_planing`.tanggal) = $bulan AND 
+				YEAR(`m_planing`.tanggal) = $tahun AND
+				`m_planing`.no_wo = m_wo.no_wo AND 
+				m_wo.id_pabrik = '$id_pabrik' AND
+				
+				master_station.nomor = m_wo.station AND
+				master_station.id_pabrik = m_wo.id_pabrik AND
+				
+				master_unit.nomor = m_wo.unit AND
+				master_unit.id_pabrik = m_wo.id_pabrik AND
+				master_unit.id_station = m_wo.station AND
+				
+				master_sub_unit.nomor = m_wo.sub_unit AND
+				master_sub_unit.id_pabrik = m_wo.id_pabrik AND
+				master_sub_unit.id_station = m_wo.station AND
+				master_sub_unit.id_unit = m_wo.unit
+
 
 				UNION 
 
-				SELECT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status, `m_wo`.station,
-				`m_wo`.unit,`m_wo`.sub_unit,`m_wo`.problem, `m_wo`.kategori as asal_wo, `m_wo`.tipe as kategori
-				FROM `m_activity`,m_wo WHERE 
+				SELECT `m_wo`.no_wo,`m_wo`.tipe, m_wo.status,
+				CONCAT(m_wo.`station`,'_',master_station.nama) as station,
+				CONCAT(m_wo.`unit`,'_',master_unit.nama) as unit,
+				CONCAT(m_wo.`sub_unit`,'_',master_sub_unit.nama) as sub_unit,
+				`m_wo`.problem, `m_wo`.kategori as asal_wo, `m_wo`.tipe as kategori
+				FROM `m_activity`,m_wo,master_station,master_unit,master_sub_unit 
+				WHERE 
 				MONTH (`m_activity`.tanggal) = $bulan AND
 				YEAR (`m_activity`.tanggal) = $tahun AND
-				`m_activity`.no_wo = m_wo.no_wo 
-				AND m_wo.id_pabrik = '$id_pabrik'
+				`m_activity`.no_wo = m_wo.no_wo AND 
+				m_wo.id_pabrik = '$id_pabrik' AND
+
+				master_station.nomor = m_wo.station AND
+				master_station.id_pabrik = m_wo.id_pabrik AND
+				
+				master_unit.nomor = m_wo.unit AND
+				master_unit.id_pabrik = m_wo.id_pabrik AND
+				master_unit.id_station = m_wo.station AND
+				
+				master_sub_unit.nomor = m_wo.sub_unit AND
+				master_sub_unit.id_pabrik = m_wo.id_pabrik AND
+				master_sub_unit.id_station = m_wo.station AND
+				master_sub_unit.id_unit = m_wo.unit
 			) as tabel group by tabel.no_wo
 		");
 

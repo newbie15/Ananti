@@ -112,7 +112,7 @@ $(document).ready(function () {
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
                     { type: 'number' },
-                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective', 'Unplan'] },
+                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective', 'Modify', 'Other'] },
                     { type: 'text' },
                 ],
             });
@@ -149,7 +149,7 @@ $(document).ready(function () {
                     { type: 'text', mask: '##:##' },
                     { type: 'text', mask: '##:##' },
                     { type: 'number'},
-                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective','Unplan'] },
+                    { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective', 'Modify', 'Other'] },
                     { type: 'text' },
                 ],
             });
@@ -174,7 +174,7 @@ $(document).ready(function () {
         unit_refresh();
     });
 
-    function add(nw, sx, ux, su, pb, tp) {
+    function add(nw, sx, ux, su, pb, tp, js) {
         var sama = 0;
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
@@ -185,10 +185,11 @@ $(document).ready(function () {
             // dx[0][2] = ux;
             // dx[0][3] = su;
             dx[0][2] = pb;
-            dx[0][10] = tp;
+            dx[0][6] = tp;
+            dx[0][10] = js;
 
         } else { // isi satu
-            dx.push([nw, sx+"\n"+ux+"\n"+su, pb, "", "", "", "", "", "", "", tp,""]);
+            dx.push([nw, sx+"\n"+ux+"\n"+su, pb, "", "", "", tp, "", "", "", js,""]);
         }
 
         refresh(dx);
@@ -288,12 +289,12 @@ $(document).ready(function () {
 
     $("#download_plan").click(function () {
         // station_refresh();
-        window.open(SITE_URL + "index.php/planing/download_plan_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "planing/download_plan_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
     $("#download_plan_bulanan").click(function () {
     	// station_refresh();
-        window.open(SITE_URL + "index.php/planing/download_plan_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "planing/download_plan_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
     $("#tambahwo").click(function () {
@@ -340,7 +341,7 @@ $(document).ready(function () {
                     console.log('API row values : ', table.row(this).data());
                     var sp = table.row(this).data();
                     sp = sp[0].split(" - ");
-                    add(sp[0],sp[1],sp[2],sp[3],sp[4],sp[5]);
+                    add(sp[0],sp[1],sp[2],sp[3],sp[4],sp[5],sp[6]);
                     $('#modal-wo').modal('toggle');
                 }
             });

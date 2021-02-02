@@ -160,7 +160,7 @@ $(document).ready(function(){
                 { type: 'text' },
                 { type: 'dropdown', source: ['Proses', 'Maintenance', 'Vendor' ] },
                 { type: 'dropdown', source: ['M', 'E'] },
-                { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective'] },
+                { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective','Modify','Other'] },
                 { type: 'dropdown', source: ['open', 'close'] },
                 // { type: 'text' },
                 { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },

@@ -110,15 +110,35 @@ class Activity extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("
-			SELECT m_activity.no_wo,
-				CONCAT(station,'\n',unit,'\n',sub_unit,'\n',problem) as daftar,
+		$query = $this->db->query(
+			"SELECT m_activity.no_wo,
+				CONCAT(
+					m_wo.station,'_',master_station.nama,'\n',
+					m_wo.unit,'_',master_unit.nama,'\n',
+					m_wo.sub_unit,'_',master_sub_unit.nama,'\n',
+					m_wo.problem) 
+				as daftar,
 				m_activity.perbaikan,
 				m_activity.status_perbaikan
-			FROM m_activity,m_wo
-			WHERE m_activity.id_pabrik = '$id_pabrik' AND m_activity.tanggal='$tanggal' 
-			AND m_activity.no_wo = m_wo.no_wo ;
-			");
+			FROM m_activity,m_wo,master_station,master_unit,master_sub_unit
+			WHERE 
+			m_activity.id_pabrik = '$id_pabrik' AND 
+			m_activity.tanggal = '$tanggal' AND 
+			m_activity.no_wo = m_wo.no_wo AND
+			
+			master_station.nomor = m_wo.station AND
+			master_station.id_pabrik = m_wo.id_pabrik AND
+			
+			master_unit.nomor = m_wo.unit AND
+			master_unit.id_pabrik = m_wo.id_pabrik AND
+			master_unit.id_station = m_wo.station AND
+			
+			master_sub_unit.nomor = m_wo.sub_unit AND
+			master_sub_unit.id_pabrik = m_wo.id_pabrik AND
+			master_sub_unit.id_station = m_wo.station AND
+			master_sub_unit.id_unit = m_wo.unit
+			
+			;");
 
 		$i = 0;
 		$d = [];
@@ -375,28 +395,43 @@ class Activity extends CI_Controller {
 		// print_r($statistik);
 
 		$query = $this->db->query(
-			"SELECT 
-			m_activity_detail.id_pabrik,
-			m_activity_detail.tanggal,
-			m_activity_detail.nama_teknisi,
-			m_activity_detail.no_wo,
-			m_wo.station,
-			m_wo.unit,
-			m_wo.sub_unit,
-			m_wo.problem,
-			m_wo.kategori,
-			m_activity_detail.r_mulai,
-			m_activity_detail.r_selesai,
-			m_activity_detail.realisasi,
-			m_activity.perbaikan
-			FROM
-			m_activity_detail
+			"SELECT m_activity_detail.id_pabrik, 
+			m_activity_detail.tanggal, 
+			m_activity_detail.nama_teknisi, 
+			m_activity_detail.no_wo, 
+			Concat(m_wo.`station`, '_', master_station.nama)   AS station, 
+			Concat(m_wo.`unit`, '_', master_unit.nama)         AS unit, 
+			Concat(m_wo.`sub_unit`, '_', master_sub_unit.nama) AS sub_unit, 
+			m_wo.problem, 
+			m_wo.kategori, 
+			m_wo.jenis, 
+			m_activity_detail.r_mulai, 
+			m_activity_detail.r_selesai, 
+			m_activity_detail.realisasi, 
+			m_activity.perbaikan 
+			FROM m_activity_detail 
 			RIGHT JOIN m_activity 
-			ON m_activity_detail.no_wo = m_activity.no_wo
-			AND m_activity_detail.tanggal = m_activity.tanggal
-			LEFT JOIN m_wo
-			ON m_activity.no_wo = m_wo.no_wo
-			WHERE m_activity.`id_pabrik` = '$id_pabrik' AND m_activity.`tanggal` = '$tanggal'
+				ON m_activity_detail.no_wo = m_activity.no_wo 
+				AND m_activity_detail.tanggal = m_activity.tanggal 
+			LEFT JOIN m_wo 
+				ON m_activity.no_wo = m_wo.no_wo 
+			  
+			RIGHT JOIN master_station
+				ON master_station.nomor = m_wo.station 
+				AND master_station.id_pabrik = m_wo.id_pabrik 
+			
+			RIGHT JOIN master_unit 
+				ON master_unit.nomor = m_wo.unit 
+				AND master_unit.id_pabrik = m_wo.id_pabrik 
+				AND master_unit.id_station = m_wo.station 
+			
+			RIGHT JOIN master_sub_unit 
+				ON master_sub_unit.nomor = m_wo.sub_unit 
+				AND master_sub_unit.id_pabrik = m_wo.id_pabrik 
+				AND master_sub_unit.id_station = m_wo.station 
+				AND master_sub_unit.id_unit = m_wo.unit 	
+
+			WHERE m_activity.`id_pabrik` = '$id_pabrik' AND m_activity.`tanggal` = '$tanggal'	
 			"
 		);
 
@@ -412,6 +447,7 @@ class Activity extends CI_Controller {
 		echo "SUB UNIT\t";
 		echo "PROBLEM\t";
 		echo "KATEGORI\t";
+		echo "JENIS\t";
 		echo "JAM START\t";
 		echo "JAM STOP\t";
 		echo "MAN HOUR\t";
@@ -434,6 +470,7 @@ class Activity extends CI_Controller {
 			echo $row->sub_unit; echo "\t";
 			echo $row->problem; echo "\t";
 			echo $row->kategori; echo "\t";
+			echo $row->jenis; echo "\t";
 			echo $row->r_mulai; echo "\t";
 			echo $row->r_selesai; echo "\t";
 			echo number_format($realisasi,2,",",""); echo "\t";
@@ -497,28 +534,43 @@ class Activity extends CI_Controller {
 		// print_r($statistik);
 
 		$query = $this->db->query(
-			"SELECT 
-			m_activity_detail.id_pabrik,
-			m_activity_detail.tanggal,
-			m_activity_detail.nama_teknisi,
-			m_activity_detail.no_wo,
-			m_wo.station,
-			m_wo.unit,
-			m_wo.sub_unit,
-			m_wo.kategori,
-			m_wo.problem,
-			m_activity_detail.r_mulai,
-			m_activity_detail.r_selesai,
-			m_activity_detail.realisasi,
-			m_activity.perbaikan
-			FROM
-			m_activity_detail
+			"SELECT m_activity_detail.id_pabrik, 
+			m_activity_detail.tanggal, 
+			m_activity_detail.nama_teknisi, 
+			m_activity_detail.no_wo, 
+			Concat(m_wo.`station`, '_', master_station.nama)   AS station, 
+			Concat(m_wo.`unit`, '_', master_unit.nama)         AS unit, 
+			Concat(m_wo.`sub_unit`, '_', master_sub_unit.nama) AS sub_unit, 
+			m_wo.problem, 
+			m_wo.kategori, 
+			m_wo.jenis, 
+			m_activity_detail.r_mulai, 
+			m_activity_detail.r_selesai, 
+			m_activity_detail.realisasi, 
+			m_activity.perbaikan 
+			FROM m_activity_detail 
 			RIGHT JOIN m_activity 
-			ON m_activity_detail.no_wo = m_activity.no_wo
-			AND m_activity_detail.tanggal = m_activity.tanggal
-			LEFT JOIN m_wo
-			ON m_activity.no_wo = m_wo.no_wo
-			WHERE m_activity.`id_pabrik` = '$id_pabrik' AND m_activity.`tanggal` LIKE '%$tanggal%'
+				ON m_activity_detail.no_wo = m_activity.no_wo 
+				AND m_activity_detail.tanggal = m_activity.tanggal 
+			LEFT JOIN m_wo 
+				ON m_activity.no_wo = m_wo.no_wo 
+			  
+			RIGHT JOIN master_station
+				ON master_station.nomor = m_wo.station 
+				AND master_station.id_pabrik = m_wo.id_pabrik 
+			
+			RIGHT JOIN master_unit 
+				ON master_unit.nomor = m_wo.unit 
+				AND master_unit.id_pabrik = m_wo.id_pabrik 
+				AND master_unit.id_station = m_wo.station 
+			
+			RIGHT JOIN master_sub_unit 
+				ON master_sub_unit.nomor = m_wo.sub_unit 
+				AND master_sub_unit.id_pabrik = m_wo.id_pabrik 
+				AND master_sub_unit.id_station = m_wo.station 
+				AND master_sub_unit.id_unit = m_wo.unit 	
+
+			WHERE m_activity.`id_pabrik` = '$id_pabrik' AND m_activity.`tanggal` LIKE '%$tanggal%'			
 			"
 		);
 
@@ -534,6 +586,7 @@ class Activity extends CI_Controller {
 		echo "SUB UNIT\t";
 		echo "PROBLEM\t";
 		echo "KATEGORI\t";
+		echo "JENIS\t";
 		echo "JAM START\t";
 		echo "JAM STOP\t";
 		echo "MAN HOUR\t";
@@ -556,6 +609,7 @@ class Activity extends CI_Controller {
 			echo $row->sub_unit; echo "\t";
 			echo $row->problem; echo "\t";
 			echo $row->kategori; echo "\t";
+			echo $row->jenis; echo "\t";
 			echo $row->r_mulai; echo "\t";
 			echo $row->r_selesai; echo "\t";
 			echo number_format($realisasi,2,",",""); echo "\t";

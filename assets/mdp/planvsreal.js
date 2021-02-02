@@ -60,11 +60,11 @@ $(document).ready(function () {
                     'Status',
                     'Kategori',
                     'Tanggal<br>Closing',
-                    'Plan',
-                    'Real',
+                    'Plan<br>MH',
+                    'Real<br>MH',
                 ],
                 // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
-                colWidths: [140, 250, 250, 100, 100, 60, 60, 75, 75, 75, 100],
+                colWidths: [140, 250, 250, 100, 100, 100, 60, 75, 75, 75, 100],
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true, wordWrap: true },
@@ -105,11 +105,11 @@ $(document).ready(function () {
                     'Status',
                     'Kategori',
                     'Tanggal<br>Closing',
-                    'Plan',
-                    'Real',
+                    'Plan<br>MH',
+                    'Real<br>MH',
                 ],
                 // colWidths: [150, 150, 150, 150, 200, 200, 40, 100, 60, 75, 75, 75, 100],
-                colWidths: [140, 250, 250, 100, 100, 60, 60, 75, 75, 75, 100],
+                colWidths: [140, 250, 250, 100, 100, 100, 60, 75, 75, 75, 100],
                 columns: [
                     { type: 'text', readOnly: true },
                     { type: 'text', readOnly: true ,wordWrap: true},
@@ -215,6 +215,6 @@ $(document).ready(function () {
 
     $("#download_excel").click(function () {
         // station_refresh();
-        window.open(SITE_URL + "index.php/planvsreal/download_excel/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "planvsreal/download_excel/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 });
