@@ -30,5 +30,13 @@
   <script src="<?php echo $file; ?>"></script>
 <?php endforeach;
 }?>
+
+<?php if (isset($pdf)) { ?>
+<script src="<?php echo $js; ?>"></script>
+<script>
+    PDFObject.embed(BASE_URL + "/assets/uploads/" + "<?php echo $dokumen; ?>" + "/" + "<?php echo $filename; ?>", "#viewer");
+</script>
+<?php } ?>
+
 </body>
 </html>
