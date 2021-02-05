@@ -69,8 +69,8 @@ $(document).ready(function(){
                     'Work Execution',
                 ],
                 allowInsertColumn: false,
-                tableOverflow: true,
-                tableHeight: '400px',
+                // tableOverflow: true,
+                // tableHeight: '400px',
                 colWidths: [250, 250, 250, 300, 300, 100, 100, 100],
                 columns: [
                     { type: 'text' },
@@ -97,8 +97,8 @@ $(document).ready(function(){
             'Work Execution',
         ],
         allowInsertColumn: false,
-        tableOverflow: true,
-        tableHeight: '400px',
+        // tableOverflow: true,
+        // tableHeight: '400px',
         colWidths: [250, 250, 250, 300, 300, 100, 100, 100],
         columns: [
             { type: 'text' },
