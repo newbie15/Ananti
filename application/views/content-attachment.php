@@ -36,7 +36,13 @@
           <?php echo $dropdown_sub_unit; ?>
           <br><br>
           <!-- <button id="simpan">Simpan</button> -->
-          <div id='my-spreadsheet'></div>
+          <div id="scrll" style="
+						height: 450px;
+						width: 100%;
+            overflow: auto;
+					">
+            <div id='my-spreadsheet'></div>
+          </div>
         </div>
       </div>
       <!-- /.row -->
