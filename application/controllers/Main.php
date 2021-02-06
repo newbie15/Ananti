@@ -491,4 +491,31 @@ class Main extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function wo_planing(){
+		$tahun = $_REQUEST['tahun'];
+		$bulan = $_REQUEST['bulan'];
+
+		$sql = "
+		SELECT id_pabrik,COUNT(no_wo) total_wo, DAY(tanggal) AS d  FROM `m_planing`
+		WHERE YEAR(tanggal)=$tahun 
+		AND MONTH(tanggal)=$bulan
+		group by id_pabrik,d
+		order by id_pabrik asc
+		";
+
+		$query = $this->db->query($sql);
+
+		$i = -1;
+		$d = [];
+		$lastpabrik = "";
+		foreach ($query->result() as $row) {
+			if($lastpabrik!=$row->id_pabrik){
+				$i++;
+			}
+			$d[$i][0] = $row->id_pabrik; 
+			$d[$i][$row->d] = $row->total_wo;
+			$lastpabrik = $row->id_pabrik;
+		}
+		echo json_encode($d);
+	}
 }

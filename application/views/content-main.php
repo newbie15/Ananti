@@ -37,6 +37,11 @@
           <b>Work Order</b>
           <div id="wo-all-site">table wo ada disini</div>
         </div>
+        <div class="col-lg-12 col-xs-12">
+          <br />
+          <b>Pembuatan WO Planing Di ANANTI</b>
+          <div id="wo_planing"></div>
+        </div>
       </div>
 
       <div id="per-site" style="display:none">

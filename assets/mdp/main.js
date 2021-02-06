@@ -239,12 +239,48 @@ $(function () {
         });
     }
 
+    function wo_planing_refresh(){
+        $.ajax({
+            method: "POST",
+            url: SITE_URL + "main/wo_planing",
+            data: {
+                tahun: $("#tahun").val(),
+                bulan: $("#bulan").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            dtwp = JSON.parse(msg);
+
+            $('#wo_planing').jexcel({
+                data: dtwp,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Site / Pabrik',
+                    "1","2","3","4","5","6","7","8","9","10",
+                    "11","12","13","14","15","16","17","18","19","20",
+                    "21","22","23","24","25","26","27","28","29","30","31",            
+                ],
+                colWidths: [100, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, ],
+                columns: [
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' }
+                ]
+            });
+        });
+    }
+
     function ho_stat_refresh(){
         $("#per-site").hide();
         $("#all-site").show();
         wo_all_site_refresh();
         bdt_all_site_refresh();
         bdl_all_site_refresh();
+        wo_planing_refresh();
         // bdu_all_site_refresh();
     }
 
