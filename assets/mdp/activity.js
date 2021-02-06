@@ -617,12 +617,12 @@ $(document).ready(function () {
 
     $("#download_activity").click(function () {
     	// station_refresh();
-        window.open(SITE_URL + "index.php/activity/download_activity_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "activity/download_activity_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
     $("#download_activity_bulanan").click(function () {
     	// station_refresh();
-        window.open(SITE_URL + "index.php/activity/download_activity_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val());
+        window.open(SITE_URL + "activity/download_activity_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val());
     });
 
 
