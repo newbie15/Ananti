@@ -256,11 +256,12 @@ $(function () {
                 allowInsertColumn: false,
                 colHeaders: [
                     'Site / Pabrik',
+                    'Total WO Plan',
                     "1","2","3","4","5","6","7","8","9","10",
                     "11","12","13","14","15","16","17","18","19","20",
                     "21","22","23","24","25","26","27","28","29","30","31",            
                 ],
-                colWidths: [100, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, ],
+                colWidths: [100, 100, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, ],
                 columns: [
                     { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
                     { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
@@ -268,9 +269,23 @@ $(function () {
                     { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
                     { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
                     { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
-                    { type: 'text' },{ type: 'text' }
+                    { type: 'text' },{ type: 'text' },{ type: 'text' }
                 ]
             });
+
+            $('#wo_planing').jexcel('updateSettings', {
+                table: function (instance, cell, col, row, val, id) {
+                    if (col > 1 ) {
+                        var nilai = parseFloat(val);
+                        if (!isNaN(nilai)) {
+                            $(cell).css('background-color', '#00ff00');
+                        } else {
+                            $(cell).css('background-color', '#ff0000');
+                        }
+                    }
+                }
+            });
+
         });
     }
 

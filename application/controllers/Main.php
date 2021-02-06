@@ -508,12 +508,16 @@ class Main extends CI_Controller {
 		$i = -1;
 		$d = [];
 		$lastpabrik = "";
+		$total = 0;
 		foreach ($query->result() as $row) {
 			if($lastpabrik!=$row->id_pabrik){
 				$i++;
+				$total = 0;
 			}
-			$d[$i][0] = $row->id_pabrik; 
-			$d[$i][$row->d] = $row->total_wo;
+			$total += $row->total_wo; 
+			$d[$i][0] = $row->id_pabrik;
+			$d[$i][1] = $total;
+			$d[$i][($row->d)+1] = $row->total_wo;
 			$lastpabrik = $row->id_pabrik;
 		}
 		echo json_encode($d);
