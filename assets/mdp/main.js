@@ -82,6 +82,25 @@ $(function () {
 
     }
 
+    $("#tahun").change(function () {
+        var syear = parseInt($("#tahun").val());
+        var shtml = null; //"<option>"++"</option>"
+        var start_year = syear - 2;
+        var stop_year = syear + 2;
+        for (var i = start_year; i <= stop_year; i++) {
+            shtml += "<option>" + i + "</option>";
+        }
+        $("#tahun").html(shtml);
+        $("#tahun").val(syear.toString());
+
+        // ajax_refresh();
+        ho_stat_refresh();
+    });
+
+    $("#bulan").change(function () {
+        ho_stat_refresh();
+    });
+
     function pabrik_refresh(){
         $("#per-site").show();
         $("#all-site").hide();
@@ -110,6 +129,8 @@ $(function () {
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
+                tahun: $("#tahun").val(),
+                bulan: $("#bulan").val(),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -147,6 +168,8 @@ $(function () {
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
+                tahun: $("#tahun").val(),
+                bulan: $("#bulan").val(),
                 jenis : "total"
             }
         }).done(function (msg) {
@@ -184,6 +207,8 @@ $(function () {
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
+                tahun: $("#tahun").val(),
+                bulan: $("#bulan").val(),
                 jenis : "line"
             }
         }).done(function (msg) {
@@ -239,4 +264,18 @@ $(function () {
     }else{
         ho_stat_refresh();
     }
+
+    var tgl = new Date();
+    var y = tgl.getFullYear();
+
+    var shtml = null; //"<option>"++"</option>"
+    var start_year = y - 2;
+    var stop_year = y + 2;
+    for (var i = start_year; i <= stop_year; i++) {
+        shtml += "<option>" + i + "</option>";
+    }
+    $("#tahun").html(shtml);
+
+    $("#tahun").val(y.toString());
+
 });

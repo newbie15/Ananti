@@ -5,6 +5,12 @@
       <h1>
         Dashboard
         Pabrik : <?php echo $dropdown_pabrik ?>
+        <?php if (isset($dropdown_tahun)) { ?>
+          Tahun : <?php echo $dropdown_tahun ?>
+        <?php } ?>
+        <?php if (isset($dropdown_bulan)) { ?>
+          Bulan : <?php echo $dropdown_bulan ?>
+        <?php } ?>
 
       </h1>
       <ol class="breadcrumb">

@@ -73,6 +73,27 @@ class Main extends CI_Controller {
 		if($kategori<2){
 			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
 			$output['dropdown_pabrik'] .= "<option>" . "ALL SITE" . "</option>";
+
+			$output['dropdown_tahun'] = "<select id=\"tahun\">
+			<option>2017</option>
+            <option>2018</option>
+			<option>2019</option>
+			</select>";
+			$output['dropdown_bulan'] = "<select id=\"bulan\">
+			<option value=\"00\">YTD</option>
+			<option value=\"01\">januari</option>
+            <option value=\"02\">februari</option>
+            <option value=\"03\">maret</option>
+            <option value=\"04\">april</option>
+            <option value=\"05\">mei</option>
+            <option value=\"06\">juni</option>
+            <option value=\"07\">juli</option>
+            <option value=\"08\">agustus</option>
+            <option value=\"09\">september</option>
+            <option value=\"10\">oktober</option>
+            <option value=\"11\">november</option>
+            <option value=\"12\">desember</option>
+			</select>";
 		}else{
 			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
 		}
@@ -367,18 +388,38 @@ class Main extends CI_Controller {
 	}
 
 	public function wo_statistik_all(){
+		$tahun = $_REQUEST['tahun'];
+		$bulan = $_REQUEST['bulan'];
 
-		$sql = "Select a.id_pabrik,a.total_wo,b.open_wo,c.close_wo,d.unknow_wo from
-		(SELECT id_pabrik,COUNT(no_wo) as total_wo FROM `m_wo` group by id_pabrik) as a
-		LEFT JOIN
-		(SELECT id_pabrik,COUNT(no_wo) as open_wo FROM `m_wo` WHERE m_wo.status = 'open' group by id_pabrik) as b
-		on a.id_pabrik = b.id_pabrik
-		LEFT JOIN
-		(SELECT id_pabrik,COUNT(no_wo) as close_wo FROM `m_wo` WHERE m_wo.status = 'close' group by id_pabrik) as c
-		on a.id_pabrik = c.id_pabrik
-		LEFT JOIN
-		(SELECT id_pabrik,COUNT(no_wo) as unknow_wo FROM `m_wo` WHERE m_wo.status != 'close' AND m_wo.status != 'open' group by id_pabrik) as d
-		on a.id_pabrik = d.id_pabrik";
+		if($bulan=="00"){
+			$sql = "
+			Select a.id_pabrik,a.total_wo,b.open_wo,c.close_wo,d.unknow_wo from
+			(SELECT id_pabrik,COUNT(no_wo) as total_wo FROM `m_wo` WHERE YEAR(tanggal)=$tahun group by id_pabrik) as a
+			LEFT JOIN
+			(SELECT id_pabrik,COUNT(no_wo) as open_wo FROM `m_wo` WHERE m_wo.status = 'open' AND YEAR(tanggal)=$tahun group by id_pabrik) as b
+			on a.id_pabrik = b.id_pabrik
+			LEFT JOIN
+			(SELECT id_pabrik,COUNT(no_wo) as close_wo FROM `m_wo` WHERE m_wo.status = 'close' AND YEAR(tanggal)=$tahun group by id_pabrik) as c
+			on a.id_pabrik = c.id_pabrik
+			LEFT JOIN
+			(SELECT id_pabrik,COUNT(no_wo) as unknow_wo FROM `m_wo` WHERE m_wo.status != 'close' AND m_wo.status != 'open' AND YEAR(tanggal)=$tahun group by id_pabrik) as d
+			on a.id_pabrik = d.id_pabrik;
+			";
+		}else{
+			$sql = "
+			Select a.id_pabrik,a.total_wo,b.open_wo,c.close_wo,d.unknow_wo from
+			(SELECT id_pabrik,COUNT(no_wo) as total_wo FROM `m_wo` WHERE YEAR(tanggal)=$tahun AND MONTH(tanggal)=$bulan group by id_pabrik) as a
+			LEFT JOIN
+			(SELECT id_pabrik,COUNT(no_wo) as open_wo FROM `m_wo` WHERE m_wo.status = 'open' AND YEAR(tanggal)=$tahun AND MONTH(tanggal)=$bulan group by id_pabrik) as b
+			on a.id_pabrik = b.id_pabrik
+			LEFT JOIN
+			(SELECT id_pabrik,COUNT(no_wo) as close_wo FROM `m_wo` WHERE m_wo.status = 'close' AND YEAR(tanggal)=$tahun AND MONTH(tanggal)=$bulan group by id_pabrik) as c
+			on a.id_pabrik = c.id_pabrik
+			LEFT JOIN
+			(SELECT id_pabrik,COUNT(no_wo) as unknow_wo FROM `m_wo` WHERE m_wo.status != 'close' AND m_wo.status != 'open' AND YEAR(tanggal)=$tahun AND MONTH(tanggal)=$bulan group by id_pabrik) as d
+			on a.id_pabrik = d.id_pabrik;
+			";
+		}
 
 		$query = $this->db->query($sql);
 		
@@ -397,24 +438,44 @@ class Main extends CI_Controller {
 
 	public function bd_statistik_all()
 	{
-		$jenis = $_REQUEST['jenis'];
+		$tahun = $_REQUEST['tahun'];
+		$bulan = $_REQUEST['bulan'];
 
+		$jenis = $_REQUEST['jenis'];
+		if ($bulan == "00") {
 		$sql = "
 		SELECT a.id_pabrik,a.total,b.pp,c.pnp,d.mp,e.mnp from 
-		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as total FROM `m_breakdown_pabrik` where jenis='$jenis' group by id_pabrik) as a
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as total FROM `m_breakdown_pabrik` where jenis='$jenis' AND YEAR(tanggal)=$tahun group by id_pabrik) as a
 		LEFT JOIN
-		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as pp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Operation Pogen' group by id_pabrik) as b
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as pp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Operation Pogen' AND YEAR(tanggal)=$tahun group by id_pabrik) as b
 		on a.id_pabrik = b.id_pabrik
 		LEFT JOIN
-		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as pnp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Operation Non Pogen' group by id_pabrik) as c
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as pnp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Operation Non Pogen' AND YEAR(tanggal)=$tahun group by id_pabrik) as c
 		on a.id_pabrik = c.id_pabrik
 		LEFT JOIN
-		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as mp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Maintenance Pogen' group by id_pabrik) as d
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as mp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Maintenance Pogen' AND YEAR(tanggal)=$tahun group by id_pabrik) as d
 		on a.id_pabrik = d.id_pabrik
 		LEFT JOIN
-		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as mnp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Maintenance Non Pogen' group by id_pabrik) as e
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as mnp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Maintenance Non Pogen' AND YEAR(tanggal)=$tahun group by id_pabrik) as e
+		on a.id_pabrik = e.id_pabrik";
+		}else{
+			$sql = "
+		SELECT a.id_pabrik,a.total,b.pp,c.pnp,d.mp,e.mnp from 
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as total FROM `m_breakdown_pabrik` where jenis='$jenis' AND YEAR(tanggal)=$tahun AND MONTH(tanggal)=$bulan group by id_pabrik) as a
+		LEFT JOIN
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as pp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Operation Pogen' AND YEAR(tanggal)=$tahun AND MONTH(tanggal)=$bulan group by id_pabrik) as b
+		on a.id_pabrik = b.id_pabrik
+		LEFT JOIN
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as pnp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Operation Non Pogen' AND YEAR(tanggal)=$tahun AND MONTH(tanggal)=$bulan group by id_pabrik) as c
+		on a.id_pabrik = c.id_pabrik
+		LEFT JOIN
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as mp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Maintenance Pogen' AND YEAR(tanggal)=$tahun AND MONTH(tanggal)=$bulan group by id_pabrik) as d
+		on a.id_pabrik = d.id_pabrik
+		LEFT JOIN
+		(SELECT id_pabrik,ROUND(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))/3600.0,2) as mnp FROM `m_breakdown_pabrik` where jenis='$jenis' AND tipe = 'Maintenance Non Pogen' AND YEAR(tanggal)=$tahun AND MONTH(tanggal)=$bulan group by id_pabrik) as e
 		on a.id_pabrik = e.id_pabrik";
 
+		}
 		$query = $this->db->query($sql);
 
 		$i = 0;
