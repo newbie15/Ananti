@@ -38,7 +38,7 @@ $config['base_url'] = getenv('ENV_BASE_URL');
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
+$config['index_page'] = getenv('ENV_INDEX');
 
 /*
 |--------------------------------------------------------------------------

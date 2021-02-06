@@ -88,14 +88,14 @@ $(document).ready(function () {
     }
 
     function mpp_update(){
-        $("#mpp").load(BASE_URL + "karyawan/ajax_dropdown/"+$("#pabrik").val());
+        $("#mpp").load(SITE_URL + "karyawan/ajax_dropdown/"+$("#pabrik").val());
     }
 
     function ambil_dari_plan(){
         // getplan
         $.ajax({
             method: "POST",
-            url: BASE_URL + "planing/get_plan",
+            url: SITE_URL + "planing/get_plan",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),
@@ -123,7 +123,7 @@ $(document).ready(function () {
                     ],
                     colWidths: [160, 230, 235, 160, 80, 100, 60, 100, 100],
                     columns: [
-                        // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                        // { type: 'autocomplete', url: SITE_URL+'wo/ajax/open/' + $("#pabrik").val() },
                         { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
                         { type: 'text', wordWrap: true },
@@ -225,7 +225,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "act/put_wo/",
+            url: SITE_URL + "act/put_wo/",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),
@@ -268,7 +268,7 @@ $(document).ready(function () {
     function louhan_refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL + "act/ajax_load/",
+            url: SITE_URL + "act/ajax_load/",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),
@@ -330,7 +330,7 @@ $(document).ready(function () {
     function refresh_modal(){
         $.ajax({
             method: "POST",
-            url: BASE_URL + "wo/list_open/" + $("#pabrik").val(),
+            url: SITE_URL + "wo/list_open/" + $("#pabrik").val(),
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
@@ -371,7 +371,7 @@ $(document).ready(function () {
             console.log("g ada");
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "wo/detail_wo/" + no,
+                url: SITE_URL + "wo/detail_wo/" + no,
             }).done(function (msg) {
                 console.log(msg);
                 data = JSON.parse(msg);
@@ -421,7 +421,7 @@ $(document).ready(function () {
             ],
             colWidths: [149, 58, 58, 95, 53, 100, 75, 80, 80],
             columns: [
-                { type: 'autocomplete', url: BASE_URL + 'karyawan/ajax/' + $("#pabrik").val() },
+                { type: 'autocomplete', url: SITE_URL + 'karyawan/ajax/' + $("#pabrik").val() },
                 { type: 'text', mask: '##:##' },
                 { type: 'text', mask: '##:##' },
                 // { type: 'text', mask: '##:##' },
@@ -471,7 +471,7 @@ $(document).ready(function () {
             ],
             colWidths: [160, 230, 235, 160, 80, 100, 60, 100, 100],
             columns: [
-                // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
+                // { type: 'autocomplete', url: SITE_URL+'wo/ajax/open/' + $("#pabrik").val() },
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
                 { type: 'text', wordWrap: true },
@@ -486,7 +486,7 @@ $(document).ready(function () {
     $("#sync_mr").click(function(){
         $.ajax({
             method: "POST",
-            url: BASE_URL + "mr/get_mr/",
+            url: SITE_URL + "mr/get_mr/",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),
@@ -547,7 +547,7 @@ $(document).ready(function () {
 
             if (ar[0] != '' && ar[0] != ' '){
 
-                var newWindow = window.open(BASE_URL + "popup/pick_wo", 'targetWindow', 'toolbar=no,location = no,status = no, menubar = no, scrollbars = yes, resizable = yes, width = 1024, height = 600');
+                var newWindow = window.open(SITE_URL + "popup/pick_wo", 'targetWindow', 'toolbar=no,location = no,status = no, menubar = no, scrollbars = yes, resizable = yes, width = 1024, height = 600');
 
                 newWindow.passdata = ar;
                 newWindow.onbeforeunload = function (e) {
@@ -617,12 +617,12 @@ $(document).ready(function () {
 
     $("#download_activity").click(function () {
     	// station_refresh();
-        window.open(BASE_URL + "index.php/activity/download_activity_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "activity/download_activity_harian/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 
     $("#download_activity_bulanan").click(function () {
     	// station_refresh();
-        window.open(BASE_URL + "index.php/activity/download_activity_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val());
+        window.open(SITE_URL + "activity/download_activity_bulanan/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val());
     });
 
 
@@ -634,7 +634,7 @@ $(document).ready(function () {
         $.ajax({
             method: "POST",
             success: sukses,
-            url: BASE_URL+"activity/simpan",
+            url: SITE_URL+"activity/simpan",
             data: {
                 pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),
@@ -671,7 +671,7 @@ $(document).ready(function () {
             if(yy==cc){
                 $.ajax({
                     method: "POST",
-                    url: BASE_URL+"activity/reset_realisasi",
+                    url: SITE_URL+"activity/reset_realisasi",
                     data: {
                         pabrik: $("#pabrik").val(),
                         d: $("#tanggal").val(),
@@ -790,7 +790,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "activity/load",
+            url: SITE_URL + "activity/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),
@@ -808,7 +808,7 @@ $(document).ready(function () {
 
                     $.ajax({
                         method: "POST",
-                        url: BASE_URL + "activity/load_detail",
+                        url: SITE_URL + "activity/load_detail",
                         data: {
                             id_pabrik: $("#pabrik").val(),
                             d: $("#tanggal").val(),
@@ -833,7 +833,7 @@ $(document).ready(function () {
 
                 $.ajax({
                     method: "POST",
-                    url: BASE_URL + "activity/load_detail",
+                    url: SITE_URL + "activity/load_detail",
                     data: {
                         id_pabrik: $("#pabrik").val(),
                         d: $("#tanggal").val(),
@@ -850,7 +850,7 @@ $(document).ready(function () {
 
                 $.ajax({
                     method: "POST",
-                    url: BASE_URL + "activity/load_sparepart",
+                    url: SITE_URL + "activity/load_sparepart",
                     data: {
                         id_pabrik: $("#pabrik").val(),
                         d: $("#tanggal").val(),

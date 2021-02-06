@@ -184,7 +184,7 @@ $(document).ready(function(){
         if (data.length < 1){
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "uelektrik/ajax_default_list",
+                url: SITE_URL + "uelektrik/ajax_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),
@@ -218,7 +218,7 @@ $(document).ready(function(){
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
-                        // { type: 'autocomplete', url: BASE_URL + 'station/ajax/' + $("#pabrik").val() },
+                        // { type: 'autocomplete', url: SITE_URL + 'station/ajax/' + $("#pabrik").val() },
                         { type: 'dropdown', source: ['0.25', '0.37', '0.56', '0.75', '1.1', '1.5', '1.85', '2.2', '3', '3.7', '4', '5.5', '7.5', '9.3', '10', '11', '15', '18', '22', '30', '37', '45', '55', '75', '90', '110', '132', '160', '200', '220', '250', '315'] },
                         { type: 'dropdown', source: ['A', 'B', 'C'] },
                         { type: 'dropdown', source: ['DOL', 'Star-Delta', 'Autotrafo', 'Softstarter', 'Inverter'] },
@@ -276,7 +276,7 @@ $(document).ready(function(){
         }else{
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "uelektrik/load",
+                url: SITE_URL + "uelektrik/load",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),
@@ -312,7 +312,7 @@ $(document).ready(function(){
                         { type: 'text' },
                         { type: 'text' },
                         { type: 'text' },
-                        // { type: 'autocomplete', url: BASE_URL + 'station/ajax/' + $("#pabrik").val() },
+                        // { type: 'autocomplete', url: SITE_URL + 'station/ajax/' + $("#pabrik").val() },
                         { type: 'dropdown', source: ['0.25', '0.37', '0.56', '0.75', '1.1', '1.5', '1.85', '2.2', '3', '3.7', '4', '5.5', '7.5', '9.3', '10', '11', '15', '18', '22', '30', '37', '45', '55', '75', '90', '110', '132', '160', '200', '220', '250', '315'] },
                         { type: 'dropdown', source: ['A', 'B', 'C'] },
                         { type: 'dropdown', source: ['DOL', 'Star-Delta', 'Autotrafo', 'Softstarter', 'Inverter'] },
@@ -645,7 +645,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"uelektrik/simpan",
+            url: SITE_URL+"uelektrik/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -661,7 +661,7 @@ $(document).ready(function(){
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "uelektrik/load",
+            url: SITE_URL + "uelektrik/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
@@ -676,7 +676,7 @@ $(document).ready(function(){
 
 
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");

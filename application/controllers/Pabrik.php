@@ -33,7 +33,7 @@ class Pabrik extends CI_Controller {
 				// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Pabrik Astra Agro Lestari";
+		$output['main_title'] = "Data Pabrik";
 		
 		$header['title'] = "Pabrik";
 		$header['css_files'] = [

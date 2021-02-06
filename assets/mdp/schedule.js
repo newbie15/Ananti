@@ -5,7 +5,7 @@ $(document).ready(function () {
 	}
 
 	function station_refresh() {
-		$("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+		$("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
 			function (responseTxt, statusTxt, xhr) {
 				if (statusTxt == "success") {
 					unit_refresh();
@@ -15,7 +15,7 @@ $(document).ready(function () {
 	}
 
 	function unit_refresh() {
-		$("#unit").load(BASE_URL + "unit/ajax_dropdown_all/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
+		$("#unit").load(SITE_URL + "unit/ajax_dropdown_all/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
 			function (responseTxt, statusTxt, xhr) {
 				if (statusTxt == "success") {
 					sub_unit_refresh();
@@ -25,7 +25,7 @@ $(document).ready(function () {
 	}
 
 	function sub_unit_refresh() {
-		$("#sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown_all/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()),
+		$("#sub_unit").load(SITE_URL + "sub_unit/ajax_dropdown_all/" + $("#pabrik").val() + "/" + encodeURI($("#station").val() + "/" + $("#unit").val()),
 			function (responseTxt, statusTxt, xhr) {
 				if (statusTxt == "success") {
 					ajax_refresh();
@@ -37,7 +37,7 @@ $(document).ready(function () {
 	function ajax_refresh() {
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "schedule/load",
+			url: SITE_URL + "schedule/load",
 			data: {
 				id_pabrik: $("#pabrik").val(),
 				id_station: $("#station").val(),
@@ -64,7 +64,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "schedule/add_monitoring_schedule",
+			url: SITE_URL + "schedule/add_monitoring_schedule",
 			data: {
 				id_pabrik: xx[0],
 				id_station: xx[1],
@@ -91,7 +91,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "schedule/delete_monitoring_schedule",
+			url: SITE_URL + "schedule/delete_monitoring_schedule",
 			data: {
 				id_pabrik: xx[0],
 				id_station: xx[1],
@@ -110,7 +110,7 @@ $(document).ready(function () {
 	// function refresh() {
 	//     $.ajax({
 	//         method: "POST",
-	//         url: BASE_URL+"schedule/load",
+	//         url: SITE_URL+"schedule/load",
 	//         data: {
 	//             id_pabrik: $("#pabrik").val(),
 	//             id_station: $("#station").val(),
@@ -131,7 +131,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "schedule/simpan",
+			url: SITE_URL + "schedule/simpan",
 			success: sukses,
 			data: {
 				pabrik: $("#pabrik").val(),
@@ -205,7 +205,7 @@ $(document).ready(function () {
 		console.log(data_r);
 		$.ajax({
 			method: "POST",
-			url: BASE_URL + "schedule/get_monitoring_list",
+			url: SITE_URL + "schedule/get_monitoring_list",
 			data: {
 				id_pabrik: $("#pabrik").val(),
 				id_station: $("#station").val(),
@@ -246,7 +246,7 @@ $(document).ready(function () {
 					// ],
 
 					eventSources: [{
-						url: BASE_URL + 'schedule/item_schedule_monitoring/' + $("#pabrik").val() + "/" + $("#tahun").val(), // use the `url` property
+						url: SITE_URL + 'schedule/item_schedule_monitoring/' + $("#pabrik").val() + "/" + $("#tahun").val(), // use the `url` property
 						color: 'yellow', // an option!
 						textColor: 'black' // an option!
 					}],

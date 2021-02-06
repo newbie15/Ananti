@@ -56,10 +56,10 @@
 	// define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 	define('SITE', isset($_SERVER['PLANT_SITE']) ? $_SERVER['PLANT_SITE'] : 'development');
 
-	if(file_exists(".env.development")){
+	if(SITE=='development'){
 		define('ENVIRONMENT','development');
 	}else{
-		define('ENVIRONMENT', 'production');
+		define('ENVIRONMENT','production');
 	}
 
 /*

@@ -110,7 +110,7 @@
               <a href="https://www.youtube.com/playlist?list=PL03CFJjwWWtY9a5ymqlvFw3zQg2V_dCSr" target="_blank"><i class="fa fa-youtube-play"></i> Watch Tutorial</a>
             </li>
             <li>
-              <a href="<?php echo base_url("login/signout"); ?>">
+              <a href="<?php echo site_url("login/signout"); ?>">
                 <span class="hidden-xs">
                   <?php
                   if ($this->session->kategori == 3) {
@@ -134,7 +134,7 @@
             <i class="fa fa-list"></i> <span>App Config</span>
           </a>
           <ul class="treeview-menu" style="display: none;">
-            <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
+            <li><a href="<?php echo site_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
           </ul>
         </li> -->
           <?php
@@ -145,7 +145,7 @@
                 <i class="fa fa-file"></i> <span>Process</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="<?php echo base_url("woprocess"); ?>"><i class="fa fa-file"></i>Laporan Kerusakan <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
+                <li><a href="<?php echo site_url("woprocess"); ?>"><i class="fa fa-file"></i>Laporan Kerusakan <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
               </ul>
             </li>
           <?php
@@ -157,20 +157,20 @@
               </a>
               <ul class="treeview-menu" style="display: none;">
                 <?php if ($this->session->kategori <= 1) { ?>
-                  <li><a href="<?php echo base_url("pabrik"); ?>"><i class="fa fa-industry"></i>Pabrik</a></li>
+                  <li><a href="<?php echo site_url("pabrik"); ?>"><i class="fa fa-industry"></i>Pabrik</a></li>
                 <?php } ?>
-                <li><a href="<?php echo base_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
-                <li><a href="<?php echo base_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
-                <li><a href="<?php echo base_url("sub_unit"); ?>"><i class="fa fa-calendar-check-o"></i>Sub Unit</a></li>
-                <li><a href="<?php echo base_url("attachment"); ?>"><i class="fa fa-calendar-check-o"></i>Attachment</a></li>
-                <li><a href="<?php echo base_url("part"); ?>"><i class="fa fa-calendar-check-o"></i>Part</a></li>
-                <li><a href="<?php echo base_url("grouping"); ?>"><i class="fa fa-object-group"></i>Group Unit</a></li>
-                <li><a href="<?php echo base_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
-                <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-wrench"></i>Unit Mekanik</a></li>
-                <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>PM Schedule</a></li>
-                <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
-                <li><a href="<?php echo base_url("vendor"); ?>"><i class="fa fa-group"></i>Vendor</a></li>
-                <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
+                <li><a href="<?php echo site_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
+                <li><a href="<?php echo site_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
+                <li><a href="<?php echo site_url("sub_unit"); ?>"><i class="fa fa-calendar-check-o"></i>Sub Unit</a></li>
+                <li><a href="<?php echo site_url("attachment"); ?>"><i class="fa fa-calendar-check-o"></i>Attachment</a></li>
+                <li><a href="<?php echo site_url("part"); ?>"><i class="fa fa-calendar-check-o"></i>Part</a></li>
+                <li><a href="<?php echo site_url("grouping"); ?>"><i class="fa fa-object-group"></i>Group Unit</a></li>
+                <li><a href="<?php echo site_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
+                <li><a href="<?php echo site_url("umekanik"); ?>"><i class="fa fa-wrench"></i>Unit Mekanik</a></li>
+                <li><a href="<?php echo site_url("schedule"); ?>"><i class="fa fa-calendar"></i>PM Schedule</a></li>
+                <li><a href="<?php echo site_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
+                <li><a href="<?php echo site_url("vendor"); ?>"><i class="fa fa-group"></i>Vendor</a></li>
+                <li><a href="<?php echo site_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
               </ul>
             </li>
 
@@ -180,18 +180,18 @@
                 <i class="fa fa-gears"></i> <span>Maintenance</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="<?php echo base_url("wo"); ?>"><i class="fa fa-industry"></i>Work Order <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-                <li><a href="<?php echo base_url("schedule_maintenance"); ?>"><i class="fa fa-calendar"></i>Schedule Maintenance<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-                <li><a href="<?php echo base_url("planing"); ?>"><i class="fa fa-calendar-plus-o"></i>Planning MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-                <li><a href="<?php echo base_url("activity"); ?>"><i class="fa fa-calendar-check-o"></i>Activity / Realisasi MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-                <li><a href="<?php echo base_url("breakdown"); ?>"><i class="fa fa-industry"></i>Breakdown Pabrik & Downtime Unit <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-                <!-- <li><a href="<?php echo base_url("monitoring"); ?>"><i class="fa fa-calendar"></i>Monitoring MTC <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
-                <li><a href="<?php echo base_url("acm"); ?>"><i class="fa fa-warning"></i>Avaibility Critical Machine <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-                <li><a href="<?php echo base_url("recordhm"); ?>"><i class="fa fa-line-chart"></i>Hour Meter Alat <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
-                <!-- <li><a href="<?php echo base_url("highlight"); ?>"><i class="fa fa-thumbs-o-down"></i>Highlight Problem <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
-                <!-- <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>LKPMP <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
-                <!-- <li><a href="<?php echo base_url("capex"); ?>"><i class="fa fa-file"></i>CAPEX <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
-                <!-- <li><a href="<?php echo base_url("inventory"); ?>"><i class="fa fa-file"></i>Inventory <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li> -->
+                <li><a href="<?php echo site_url("wo"); ?>"><i class="fa fa-industry"></i>Work Order <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
+                <li><a href="<?php echo site_url("schedule_maintenance"); ?>"><i class="fa fa-calendar"></i>Schedule Maintenance<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
+                <li><a href="<?php echo site_url("planing"); ?>"><i class="fa fa-calendar-plus-o"></i>Planning MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
+                <li><a href="<?php echo site_url("activity"); ?>"><i class="fa fa-calendar-check-o"></i>Activity / Realisasi MTC<span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
+                <li><a href="<?php echo site_url("breakdown"); ?>"><i class="fa fa-industry"></i>Breakdown Pabrik & Downtime Unit <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
+                <!-- <li><a href="<?php echo site_url("monitoring"); ?>"><i class="fa fa-calendar"></i>Monitoring MTC <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
+                <li><a href="<?php echo site_url("acm"); ?>"><i class="fa fa-warning"></i>Avaibility Critical Machine <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
+                <li><a href="<?php echo site_url("recordhm"); ?>"><i class="fa fa-line-chart"></i>Hour Meter Alat <span class="pull-right-container"><small class="label pull-right bg-red">Harian</small></span> </a></li>
+                <!-- <li><a href="<?php echo site_url("highlight"); ?>"><i class="fa fa-thumbs-o-down"></i>Highlight Problem <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
+                <!-- <li><a href="<?php echo site_url("lkpmp"); ?>"><i class="fa fa-file"></i>LKPMP <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
+                <!-- <li><a href="<?php echo site_url("capex"); ?>"><i class="fa fa-file"></i>CAPEX <span class="pull-right-container"><small class="label pull-right bg-green">Mingguan</small></span> </a></li> -->
+                <!-- <li><a href="<?php echo site_url("inventory"); ?>"><i class="fa fa-file"></i>Inventory <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li> -->
               </ul>
             </li>
             <li class="treeview">
@@ -199,11 +199,11 @@
                 <i class="fa fa-bolt"></i> <span>Monitoring Elektrik</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="<?php echo base_url("grounding"); ?>"><i class="fa fa-file"></i>Grounding <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-                <li><a href="<?php echo base_url("kapasitor"); ?>"><i class="fa fa-file"></i>Kapasitor <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-                <li><a href="<?php echo base_url("motor"); ?>"><i class="fa fa-file"></i>Motor Inspection <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-                <li><a href="<?php echo base_url("megger"); ?>"><i class="fa fa-file"></i>Megger <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-                <li><a href="<?php echo base_url("polarisasi"); ?>"><i class="fa fa-file"></i>Indeks Polarisasi <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+                <li><a href="<?php echo site_url("grounding"); ?>"><i class="fa fa-file"></i>Grounding <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+                <li><a href="<?php echo site_url("kapasitor"); ?>"><i class="fa fa-file"></i>Kapasitor <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+                <li><a href="<?php echo site_url("motor"); ?>"><i class="fa fa-file"></i>Motor Inspection <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+                <li><a href="<?php echo site_url("megger"); ?>"><i class="fa fa-file"></i>Megger <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+                <li><a href="<?php echo site_url("polarisasi"); ?>"><i class="fa fa-file"></i>Indeks Polarisasi <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
               </ul>
             </li>
 
@@ -212,11 +212,11 @@
                 <i class="fa fa-wrench"></i> <span>Monitoring Mekanik</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="<?php echo base_url("vibration"); ?>"><i class="fa fa-file"></i>Vibration<span class="pull-right-container"><small class="label pull-right label-primary">Mingguan</small></span> </a></li>
-                <li><a href="<?php echo base_url("temperature"); ?>"><i class="fa fa-file"></i>Temperature<span class="pull-right-container"><small class="label pull-right label-primary">Mingguan</small></span> </a></li>
-                <li><a href="<?php echo base_url("oiling"); ?>"><i class="fa fa-file"></i>Oiling<span class="pull-right-container"><small class="label pull-right label-primary">Mingguan</small></span> </a></li>
-                <!-- <li><a href="<?php echo base_url("hydrocyclone"); ?>"><i class="fa fa-file"></i>Hydrocyclone<span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-            <li><a href="<?php echo base_url("kcp"); ?>"><i class="fa fa-file"></i>KCP <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li> -->
+                <li><a href="<?php echo site_url("vibration"); ?>"><i class="fa fa-file"></i>Vibration<span class="pull-right-container"><small class="label pull-right label-primary">Mingguan</small></span> </a></li>
+                <li><a href="<?php echo site_url("temperature"); ?>"><i class="fa fa-file"></i>Temperature<span class="pull-right-container"><small class="label pull-right label-primary">Mingguan</small></span> </a></li>
+                <li><a href="<?php echo site_url("oiling"); ?>"><i class="fa fa-file"></i>Oiling<span class="pull-right-container"><small class="label pull-right label-primary">Mingguan</small></span> </a></li>
+                <!-- <li><a href="<?php echo site_url("hydrocyclone"); ?>"><i class="fa fa-file"></i>Hydrocyclone<span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo site_url("kcp"); ?>"><i class="fa fa-file"></i>KCP <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li> -->
               </ul>
             </li>
             <li class="treeview">
@@ -224,7 +224,7 @@
                 <i class="fa fa-database"></i> <span>Gudang</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="<?php echo base_url("mr"); ?>"><i class="fa fa-file"></i>Material Requisition<span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
+                <li><a href="<?php echo site_url("mr"); ?>"><i class="fa fa-file"></i>Material Requisition<span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
               </ul>
             </li>
 
@@ -233,10 +233,10 @@
                 <i class="fa fa-book"></i> <span>Dokumen</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="<?php echo base_url("sop"); ?>"><i class="fa fa-file-pdf-o"></i>SOP<span class="pull-right-container"></span> </a></li>
-                <li><a href="<?php echo base_url("ik"); ?>"><i class="fa fa-file-pdf-o"></i>Instruksi Kerja<span class="pull-right-container"></span> </a></li>
-                <li><a href="<?php echo base_url("drawing"); ?>"><i class="fa fa-file-pdf-o"></i>Drawing<span class="pull-right-container"></span> </a></li>
-                <li><a href="<?php echo base_url("datasheet"); ?>"><i class="fa fa-file-pdf-o"></i>Datasheet<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo site_url("sop"); ?>"><i class="fa fa-file-pdf-o"></i>SOP<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo site_url("ik"); ?>"><i class="fa fa-file-pdf-o"></i>Instruksi Kerja<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo site_url("drawing"); ?>"><i class="fa fa-file-pdf-o"></i>Drawing<span class="pull-right-container"></span> </a></li>
+                <li><a href="<?php echo site_url("datasheet"); ?>"><i class="fa fa-file-pdf-o"></i>Datasheet<span class="pull-right-container"></span> </a></li>
               </ul>
             </li>
 
@@ -246,15 +246,15 @@
                 <i class="fa fa-newspaper-o"></i> <span>Report</span>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="<?php echo base_url("historical"); ?>"><i class="fa fa-thumbs-o-down"></i>Historycal Machineries Card</a></li>
-                <li><a href="<?php echo base_url("high_maintenance"); ?>"><i class="fa fa-thumbs-o-down"></i>High Maintenance Unit</a></li>
-                <!-- <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Cost RM Pabrik</a></li>
-            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Distribusi Man Hour</a></li>
-            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Plan vs Real (CM MM)</a></li>
-            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Inventory</a></li>
-            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Potret Pabrik</a></li>
-            <li><a href="<?php echo base_url("display/proses"); ?>"><i class="fa fa-money"></i>Potret Proses</a></li>
-            <li><a href="<?php echo base_url("display/maintenance"); ?>"><i class="fa fa-money"></i>Potret Maintenance</a></li> -->
+                <li><a href="<?php echo site_url("historical"); ?>"><i class="fa fa-thumbs-o-down"></i>Historycal Machineries Card</a></li>
+                <li><a href="<?php echo site_url("high_maintenance"); ?>"><i class="fa fa-thumbs-o-down"></i>High Maintenance Unit</a></li>
+                <!-- <li><a href="<?php echo site_url("costrm"); ?>"><i class="fa fa-money"></i>Cost RM Pabrik</a></li>
+            <li><a href="<?php echo site_url("costrm"); ?>"><i class="fa fa-money"></i>Distribusi Man Hour</a></li>
+            <li><a href="<?php echo site_url("costrm"); ?>"><i class="fa fa-money"></i>Plan vs Real (CM MM)</a></li>
+            <li><a href="<?php echo site_url("costrm"); ?>"><i class="fa fa-money"></i>Inventory</a></li>
+            <li><a href="<?php echo site_url("costrm"); ?>"><i class="fa fa-money"></i>Potret Pabrik</a></li>
+            <li><a href="<?php echo site_url("display/proses"); ?>"><i class="fa fa-money"></i>Potret Proses</a></li>
+            <li><a href="<?php echo site_url("display/maintenance"); ?>"><i class="fa fa-money"></i>Potret Maintenance</a></li> -->
               </ul>
             </li>
           <?php

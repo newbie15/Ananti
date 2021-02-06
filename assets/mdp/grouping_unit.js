@@ -5,7 +5,7 @@ $(document).ready(function(){
     }
 
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     unit_refresh();
@@ -16,7 +16,7 @@ $(document).ready(function(){
     }
 
     function unit_refresh() {
-        $("#unit").load(BASE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
+        $("#unit").load(SITE_URL + "unit/ajax_dropdown_sub/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     sub_unit_refresh();
@@ -27,7 +27,7 @@ $(document).ready(function(){
     }
 
     function sub_unit_refresh() {
-        $("#sub_unit").load(BASE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()) + "/" + encodeURI($("#unit").val()),
+        $("#sub_unit").load(SITE_URL + "sub_unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()) + "/" + encodeURI($("#unit").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                 } else {
@@ -39,7 +39,7 @@ $(document).ready(function(){
 
 
     function group_unit_refresh() {
-        $("#group_unit").load(BASE_URL + "grouping/ajax_dropdown/" + $("#pabrik").val(),
+        $("#group_unit").load(SITE_URL + "grouping/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -84,7 +84,7 @@ $(document).ready(function(){
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "grouping_unit/load",
+            url: SITE_URL + "grouping_unit/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 grouping: $("#group_unit").val(),
@@ -100,7 +100,7 @@ $(document).ready(function(){
     function refresh(data) {
         // $.ajax({
         //     method: "POST",
-        //     url: BASE_URL+"grouping_unit/load",
+        //     url: SITE_URL+"grouping_unit/load",
         //     data: {
         //         id_pabrik: $("#pabrik").val(),
         //         grouping: $("#group_unit").val(),
@@ -123,7 +123,7 @@ $(document).ready(function(){
 
                 colWidths: [200, 250, 250, 100, 100, 100, 100, 100],
                 columns: [
-                    // { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
+                    // { type: 'autocomplete', url: SITE_URL+'station/ajax/' + $("#pabrik").val() },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
@@ -138,7 +138,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"grouping_unit/simpan",
+            url: SITE_URL+"grouping_unit/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),

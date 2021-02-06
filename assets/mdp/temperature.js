@@ -16,7 +16,7 @@ $(document).ready(function () {
             console.log("yes");
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "unit/temperature_default_list",
+                url: SITE_URL + "unit/temperature_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),
@@ -85,7 +85,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"temperature/simpan",
+            url: SITE_URL+"temperature/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -108,7 +108,7 @@ $(document).ready(function () {
     });
 
     function station_refresh(){
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function(responseTxt,statusTxt,xhr){
                 if(statusTxt == "success"){
                     ajax_refresh();
@@ -122,7 +122,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "temperature/load",
+            url: SITE_URL + "temperature/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),

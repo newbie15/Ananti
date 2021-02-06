@@ -108,7 +108,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "inventory/simpan",
+            url: SITE_URL + "inventory/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -124,7 +124,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "inventory/load",
+            url: SITE_URL + "inventory/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tahun: $("#tahun").val(),

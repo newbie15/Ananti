@@ -82,13 +82,32 @@ $(function () {
 
     }
 
+    $("#tahun").change(function () {
+        var syear = parseInt($("#tahun").val());
+        var shtml = null; //"<option>"++"</option>"
+        var start_year = syear - 2;
+        var stop_year = syear + 2;
+        for (var i = start_year; i <= stop_year; i++) {
+            shtml += "<option>" + i + "</option>";
+        }
+        $("#tahun").html(shtml);
+        $("#tahun").val(syear.toString());
+
+        // ajax_refresh();
+        ho_stat_refresh();
+    });
+
+    $("#bulan").change(function () {
+        ho_stat_refresh();
+    });
+
     function pabrik_refresh(){
         $("#per-site").show();
         $("#all-site").hide();
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "main/statistik",
+            url: SITE_URL + "main/statistik",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
@@ -106,10 +125,12 @@ $(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "main/wo_statistik_all",
+            url: SITE_URL + "main/wo_statistik_all",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
+                tahun: $("#tahun").val(),
+                bulan: $("#bulan").val(),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -143,10 +164,12 @@ $(function () {
     function bdt_all_site_refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL + "main/bd_statistik_all",
+            url: SITE_URL + "main/bd_statistik_all",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
+                tahun: $("#tahun").val(),
+                bulan: $("#bulan").val(),
                 jenis : "total"
             }
         }).done(function (msg) {
@@ -180,10 +203,12 @@ $(function () {
     function bdl_all_site_refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL + "main/bd_statistik_all",
+            url: SITE_URL + "main/bd_statistik_all",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tanggal: $("#tgl_job").val(),
+                tahun: $("#tahun").val(),
+                bulan: $("#bulan").val(),
                 jenis : "line"
             }
         }).done(function (msg) {
@@ -214,12 +239,63 @@ $(function () {
         });
     }
 
+    function wo_planing_refresh(){
+        $.ajax({
+            method: "POST",
+            url: SITE_URL + "main/wo_planing",
+            data: {
+                tahun: $("#tahun").val(),
+                bulan: $("#bulan").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            dtwp = JSON.parse(msg);
+
+            $('#wo_planing').jexcel({
+                data: dtwp,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Site / Pabrik',
+                    'Total WO Plan',
+                    "1","2","3","4","5","6","7","8","9","10",
+                    "11","12","13","14","15","16","17","18","19","20",
+                    "21","22","23","24","25","26","27","28","29","30","31",            
+                ],
+                colWidths: [100, 100, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, ],
+                columns: [
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                    { type: 'text' },{ type: 'text' },{ type: 'text' }
+                ]
+            });
+
+            $('#wo_planing').jexcel('updateSettings', {
+                table: function (instance, cell, col, row, val, id) {
+                    if (col > 1 ) {
+                        var nilai = parseFloat(val);
+                        if (!isNaN(nilai)) {
+                            $(cell).css('background-color', '#00ff00');
+                        } else {
+                            $(cell).css('background-color', '#ff0000');
+                        }
+                    }
+                }
+            });
+
+        });
+    }
+
     function ho_stat_refresh(){
         $("#per-site").hide();
         $("#all-site").show();
         wo_all_site_refresh();
         bdt_all_site_refresh();
         bdl_all_site_refresh();
+        wo_planing_refresh();
         // bdu_all_site_refresh();
     }
 
@@ -239,4 +315,18 @@ $(function () {
     }else{
         ho_stat_refresh();
     }
+
+    var tgl = new Date();
+    var y = tgl.getFullYear();
+
+    var shtml = null; //"<option>"++"</option>"
+    var start_year = y - 2;
+    var stop_year = y + 2;
+    for (var i = start_year; i <= stop_year; i++) {
+        shtml += "<option>" + i + "</option>";
+    }
+    $("#tahun").html(shtml);
+
+    $("#tahun").val(y.toString());
+
 });

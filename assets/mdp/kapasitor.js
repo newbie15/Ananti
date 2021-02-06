@@ -254,7 +254,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "kapasitor/simpan",
+            url: SITE_URL + "kapasitor/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -269,7 +269,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "kapasitor/load",
+            url: SITE_URL + "kapasitor/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tahun: $("#tahun").val(),

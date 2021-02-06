@@ -6,7 +6,7 @@ $(document).ready(function () {
     function refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL+"vendor/load",
+            url: SITE_URL+"vendor/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
@@ -38,7 +38,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"vendor/simpan",
+            url: SITE_URL+"vendor/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),

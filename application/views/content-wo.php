@@ -5,13 +5,13 @@
       <h1>
         <!-- Create Work Order | Unfinished WO | Search WO -->
         <ul class="nav nav-tabs">
-          <li class=""><a href="<?php echo base_url("woprocess")?>" aria-expanded="true">Laporan Kerusakan</a></li>
+          <li class=""><a href="<?php echo site_url("woprocess")?>" aria-expanded="true">Laporan Kerusakan</a></li>
           <li class="active"><a href="#" aria-expanded="true">Work Order</a></li>
 <?php 
 if($this->session->kategori != 3){
 ?>
-          <li class=""><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
-          <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li>
+          <li class=""><a href="<?php echo site_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
+          <li class=""><a href="<?php echo site_url("wo/search")?>" aria-expanded="false">Search WO</a></li>
 <?php 
 }
 ?>

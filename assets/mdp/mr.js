@@ -128,7 +128,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "mr/load",
+            url: SITE_URL + "mr/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 bulan: $("#bulan").val(),
@@ -242,7 +242,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "mr/simpan",
+            url: SITE_URL + "mr/simpan",
             success: sukses,
             data: {
                 id_pabrik: $("#pabrik").val(),

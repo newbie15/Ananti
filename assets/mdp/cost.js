@@ -49,7 +49,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"cost/simpan",
+            url: SITE_URL+"cost/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -67,7 +67,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "cost/load",
+            url: SITE_URL + "cost/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),

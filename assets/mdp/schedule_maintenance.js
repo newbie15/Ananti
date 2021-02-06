@@ -209,10 +209,10 @@ $(document).ready(function(){
 
             eventLimit: true, // allow "more" link when too many events
             events: {
-                url: BASE_URL + '/calendar/plan_schedule/' + $("#pabrik").val(), // use the `url` property
+                url: SITE_URL + '/calendar/plan_schedule/' + $("#pabrik").val(), // use the `url` property
                 color: 'yellow', // an option!
                 textColor: 'black' // an option!
-                // url: BASE_URL + 'schedule_maintenance/event/' + $("#pabrik").val() + "/" + $("#tahun").val(),
+                // url: SITE_URL + 'schedule_maintenance/event/' + $("#pabrik").val() + "/" + $("#tahun").val(),
                 // type: 'POST', // Send post data
                 // error: function () {
                 //     alert('There was an error while fetching events.');
@@ -223,7 +223,7 @@ $(document).ready(function(){
 
 
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown_sch/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown_sch/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // ajax_refresh();
@@ -235,7 +235,7 @@ $(document).ready(function(){
     }
 
     function unit_refresh() {
-        $("#unit").load(BASE_URL + "unit/ajax_dropdown_sub_sch/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
+        $("#unit").load(SITE_URL + "unit/ajax_dropdown_sub_sch/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     ajax_refresh();
@@ -249,7 +249,7 @@ $(document).ready(function(){
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "schedule_maintenance/load_wo_unfinished",
+            url: SITE_URL + "schedule_maintenance/load_wo_unfinished",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
@@ -324,7 +324,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "planing/update",
+            url: SITE_URL + "planing/update",
             data: {
                 no_wo: no_wo,
                 tanggal: date_old,
@@ -344,7 +344,7 @@ $(document).ready(function(){
         
         $.ajax({
             method: "POST",
-            url: BASE_URL + "planing/hapus",
+            url: SITE_URL + "planing/hapus",
             data: {
                 no_wo: no_wo,
                 tanggal: date,
@@ -390,11 +390,11 @@ $(document).ready(function(){
 
         dt[2]==null ? sub_unit = dt[1].trim() : sub_unit = dt[2].trim();
 
-        console.log(BASE_URL + "planing/tambah");
+        console.log(SITE_URL + "planing/tambah");
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"planing/tambah",
+            url: SITE_URL+"planing/tambah",
             data: {
                 no_wo: no_wo,
                 tanggal: tanggal,
@@ -417,7 +417,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"schedule/simpan",
+            url: SITE_URL+"schedule/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),

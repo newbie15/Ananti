@@ -9,9 +9,9 @@
     <?php 
     if($this->session->kategori != 3){
     ?>
-            <li class=""><a href="<?php echo base_url("wo")?>" aria-expanded="false">Work Order</a></li>
-            <li class=""><a href="<?php echo base_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
-            <li class=""><a href="<?php echo base_url("wo/search")?>" aria-expanded="false">Search WO</a></li>
+            <li class=""><a href="<?php echo site_url("wo")?>" aria-expanded="false">Work Order</a></li>
+            <li class=""><a href="<?php echo site_url("wo/unfinished")?>" aria-expanded="false">Unfinished WO</a></li>
+            <li class=""><a href="<?php echo site_url("wo/search")?>" aria-expanded="false">Search WO</a></li>
     <?php 
     }
     ?>

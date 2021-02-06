@@ -154,7 +154,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "grounding/simpan",
+            url: SITE_URL + "grounding/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -169,7 +169,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "grounding/load",
+            url: SITE_URL + "grounding/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tahun: $("#tahun").val(),

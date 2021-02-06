@@ -98,7 +98,7 @@ $(document).ready(function(){
     function pabrik_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "station/dhtmlx/" + $("#pabrik").val(),
+            url: SITE_URL + "station/dhtmlx/" + $("#pabrik").val(),
             data: {}
         }).done(function (msg) {
             // console.log(msg);
@@ -111,7 +111,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "unit/dhtmlx/" + $("#pabrik").val(),
+            url: SITE_URL + "unit/dhtmlx/" + $("#pabrik").val(),
             data: {}
         }).done(function (msg) {
             // console.log(msg);

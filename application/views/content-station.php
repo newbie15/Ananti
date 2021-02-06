@@ -5,10 +5,10 @@
       <h1>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#" aria-expanded="true">Station</a></li>
-          <li class=""><a href="<?php echo base_url("unit") ?>" aria-expanded="false">Unit</a></li>
-          <li class=""><a href="<?php echo base_url("sub_unit") ?>" aria-expanded="false">Sub Unit</a></li>
-          <li class=""><a href="<?php echo base_url("attachment") ?>" aria-expanded="false">Attachment</a></li>
-          <li class=""><a href="<?php echo base_url("part") ?>" aria-expanded="false">Part</a></li>
+          <li class=""><a href="<?php echo site_url("unit") ?>" aria-expanded="false">Unit</a></li>
+          <li class=""><a href="<?php echo site_url("sub_unit") ?>" aria-expanded="false">Sub Unit</a></li>
+          <li class=""><a href="<?php echo site_url("attachment") ?>" aria-expanded="false">Attachment</a></li>
+          <li class=""><a href="<?php echo site_url("part") ?>" aria-expanded="false">Part</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">

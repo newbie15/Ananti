@@ -10,6 +10,7 @@ var CUSTOM = 1;
 var DEBUG = 1;
 
 var BASE_URL = "";
+var SITE_URL = "";
 
 var INET_URL = "http://159.65.135.69/Ananti/";
 
@@ -31,9 +32,11 @@ if(CUSTOM == 1) {
     var x = url.split("/");
     console.log(x);
 
-    var BASE_URL = x[0]+"//"+x[2]+"/"+x[3]+"/"; // "http://10.23.3.101/MDP/";
-    console.log(BASE_URL);
+    var BASE_URL = x[0]+"//"+x[2]+"/"+x[3]+"/"; // "http://localhost/ananti/";
+    var SITE_URL = x[0]+"//"+x[2]+"/"+x[3]+"/index.php/"; // "http://localhost/ananti/index.php";
 
+    console.log(BASE_URL);
+    console.log(SITE_URL);
 }else{
     if (DEBUG == 2) {
         var BASE_URL = "http://167.99.64.44/Ananti/";

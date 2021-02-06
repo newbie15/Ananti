@@ -4,10 +4,10 @@
     <section class="content-header">
       <h1>
         <ul class="nav nav-tabs">
-          <li class=""><a href="<?php echo base_url("schedule_maintenance")?>" aria-expanded="false">Schedule</a></li>
-          <li class=""><a href="<?php echo base_url("planing")?>" aria-expanded="true">Plan</a></li>
-          <li class=""><a href="<?php echo base_url("activity")?>" aria-expanded="false">Realisasi</a></li>
-          <li class="active"><a href="<?php echo base_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li>
+          <li class=""><a href="<?php echo site_url("schedule_maintenance")?>" aria-expanded="false">Schedule</a></li>
+          <li class=""><a href="<?php echo site_url("planing")?>" aria-expanded="true">Plan</a></li>
+          <li class=""><a href="<?php echo site_url("activity")?>" aria-expanded="false">Realisasi</a></li>
+          <li class="active"><a href="<?php echo site_url("planvsreal")?>" aria-expanded="false">Plan VS Real</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">

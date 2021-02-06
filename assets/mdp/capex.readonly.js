@@ -100,7 +100,7 @@ $(document).ready(function () {
                 'Project ID', 'No PR', 'Nominal<br>PR', 'Status', 'No<br>PO', 'Nominal<br>PO', 'Vendor/<br>Supplier', 'Keterangan'],
             colWidths: [100, 100, 100, 130, 100, 100, 200, 350],
             columns: [
-                { type: 'autocomplete', url: BASE_URL + 'capex/ajaxPI/' + $("#pabrik").val() +'/'+ $("#tahun").val() },
+                { type: 'autocomplete', url: SITE_URL + 'capex/ajaxPI/' + $("#pabrik").val() +'/'+ $("#tahun").val() },
                 { type: 'text' },
                 { type: 'text' },
                 { type: 'dropdown', source: ['Planned', 'Released', 'Partially Authorized', 'Authorized'] },
@@ -142,7 +142,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "capex/simpanPI",
+            url: SITE_URL + "capex/simpanPI",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -159,7 +159,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "capex/simpanPRPO",
+            url: SITE_URL + "capex/simpanPRPO",
             data: {
                 pabrik: $("#pabrik").val(),
                 tahun: $("#tahun").val(),
@@ -173,7 +173,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "capex/loadPI",
+            url: SITE_URL + "capex/loadPI",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tahun: $("#tahun").val(),
@@ -187,7 +187,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL + "capex/loadPRPO",
+            url: SITE_URL + "capex/loadPRPO",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 tahun: $("#tahun").val(),

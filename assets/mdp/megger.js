@@ -7,7 +7,7 @@ $(document).ready(function(){
         if (data.length < 1){
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "megger/ajax_default_list",
+                url: SITE_URL + "megger/ajax_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),
@@ -99,7 +99,7 @@ $(document).ready(function(){
         }else{
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "megger/load",
+                url: SITE_URL + "megger/load",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),
@@ -198,7 +198,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"megger/simpan",
+            url: SITE_URL+"megger/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -215,7 +215,7 @@ $(document).ready(function(){
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "megger/load",
+            url: SITE_URL + "megger/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
@@ -234,7 +234,7 @@ $(document).ready(function(){
 
 
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");

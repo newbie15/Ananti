@@ -5,7 +5,7 @@ $(document).ready(function(){
     }
 
     function station_refresh() {
-        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -18,8 +18,8 @@ $(document).ready(function(){
     }
 
     function unit_refresh(){
-        // console.log(BASE_URL + "unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()));
-        $("#unit").load(BASE_URL + "unit/ajax_dropdown_all/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
+        // console.log(SITE_URL + "unit/ajax_dropdown/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()));
+        $("#unit").load(SITE_URL + "unit/ajax_dropdown_all/" + $("#pabrik").val() + "/" + encodeURI($("#station").val()),
             function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
                     // alert("success");
@@ -44,12 +44,12 @@ $(document).ready(function(){
         var tahun = $("#tahun").val();
         var bulan = $("#bulan").val();
 
-        console.log(BASE_URL + 'index.php/high_maintenance/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit) + "/" + tahun + "/" + bulan);
+        console.log(SITE_URL + 'high_maintenance/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit) + "/" + tahun + "/" + bulan);
 
         // jexcel(document.getElementById('#my-spreadsheet'), {
         $("#my-spreadsheet").html("");
         jexcel(document.getElementById('my-spreadsheet'), {
-            csv: BASE_URL + 'index.php/high_maintenance/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit) + "/" + tahun + "/" + bulan,
+            csv: SITE_URL + 'high_maintenance/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit) + "/" + tahun + "/" + bulan,
             csvHeaders: true,
             search: true,
             pagination: 10,
@@ -70,7 +70,7 @@ $(document).ready(function(){
     function graph_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "high_maintenance/statistik",
+            url: SITE_URL + "high_maintenance/statistik",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
@@ -136,7 +136,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"unit/simpan",
+            url: SITE_URL+"unit/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),

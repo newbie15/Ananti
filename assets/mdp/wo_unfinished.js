@@ -80,7 +80,7 @@ $(document).ready(function(){
         if (confirm("anda yakin untuk close "+closed_wo.length+" WO ini ?")) {
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "wo/close_wo_unfinished",
+                url: SITE_URL + "wo/close_wo_unfinished",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     wo: closed_wo
@@ -98,7 +98,7 @@ $(document).ready(function(){
     function ajax_refresh(){
         $.ajax({
             method: "POST",
-            url: BASE_URL+"wo/load_unfinished",
+            url: SITE_URL+"wo/load_unfinished",
             data: {
                 id_pabrik: $("#pabrik").val(),
             }

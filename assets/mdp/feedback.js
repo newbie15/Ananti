@@ -598,7 +598,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"feedback/simpan",
+            url: SITE_URL+"feedback/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -621,7 +621,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "feedback/load",
+            url: SITE_URL + "feedback/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 // id_station: $("#station").val(),
