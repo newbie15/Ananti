@@ -353,7 +353,7 @@ $(document).ready(function(){
         },500);
 
         var list = {
-            url: SITE_URL+"index.php/sub_unit/listing/"+$("#pabrik").val(),
+            url: SITE_URL+"sub_unit/listing/"+$("#pabrik").val(),
             getValue: "list",
             requestDelay: 500,
             ajaxSettings: {

@@ -215,6 +215,6 @@ $(document).ready(function () {
 
     $("#download_excel").click(function () {
         // station_refresh();
-        window.open(SITE_URL + "index.php/planvsreal/download_excel/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
+        window.open(SITE_URL + "planvsreal/download_excel/" + $("#pabrik").val() + "/" + $("#tahun").val() + "/" + $("#bulan").val() + "/" + $("#tanggal").val());
     });
 });
