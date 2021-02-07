@@ -54,12 +54,12 @@ $(document).ready(function(){
         var id_station = $("#station").val();
         var id_unit = $("#unit").val();
         var id_sub_unit = $("#sub_unit").val();
-        console.log(SITE_URL + 'index.php/historical/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit));
+        console.log(SITE_URL + 'historical/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit));
 
         // jexcel(document.getElementById('#my-spreadsheet'), {
         $("#my-spreadsheet").html("");
         jexcel(document.getElementById('my-spreadsheet'), {
-            csv: SITE_URL + 'index.php/historical/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit) + "/" + encodeURI(id_sub_unit),
+            csv: SITE_URL + 'historical/loadcsv/' + id_pabrik + "/" + encodeURI(id_station) + "/" + encodeURI(id_unit) + "/" + encodeURI(id_sub_unit),
             csvHeaders: true,
             search: true,
             pagination: 10,
@@ -136,7 +136,7 @@ $(document).ready(function(){
     // });
 
     $("#download").click(function(){
-        window.open(SITE_URL + "index.php/historical/download_excel/" + $("#pabrik").val() + "/" + $("#station").val() + "/" + $("#unit").val() + "/" + $("#sub_unit").val());
+        window.open(SITE_URL + "historical/download_excel/" + $("#pabrik").val() + "/" + $("#station").val() + "/" + $("#unit").val() + "/" + $("#sub_unit").val());
     });
 
     $("#pabrik").change(function () {
