@@ -236,54 +236,54 @@
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Transformer<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j4"); ?>"><i class="fa fa-circle-o"></i>J4</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j5"); ?>"><i class="fa fa-circle-o"></i>J5</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j6"); ?>"><i class="fa fa-circle-o"></i>J6</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j7"); ?>"><i class="fa fa-circle-o"></i>J7</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j4"); ?>"><i class="fa fa-circle-o"></i>J4 <?php echo job_name('J4');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j5"); ?>"><i class="fa fa-circle-o"></i>J5 <?php echo job_name('J5');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j6"); ?>"><i class="fa fa-circle-o"></i>J6 <?php echo job_name('J6');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j7"); ?>"><i class="fa fa-circle-o"></i>J7 <?php echo job_name('J7');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Switches<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j16"); ?>"><i class="fa fa-circle-o"></i>J16</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j17"); ?>"><i class="fa fa-circle-o"></i>J17</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j16"); ?>"><i class="fa fa-circle-o"></i>J16 <?php echo job_name('J16');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j17"); ?>"><i class="fa fa-circle-o"></i>J17 <?php echo job_name('J17');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Switchgear/-board<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j18"); ?>"><i class="fa fa-circle-o"></i>J18</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j45"); ?>"><i class="fa fa-circle-o"></i>J45</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j41"); ?>"><i class="fa fa-circle-o"></i>J41</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j44"); ?>"><i class="fa fa-circle-o"></i>J44</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j43"); ?>"><i class="fa fa-circle-o"></i>J43</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j18"); ?>"><i class="fa fa-circle-o"></i>J18 <?php echo job_name('J18');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j45"); ?>"><i class="fa fa-circle-o"></i>J45 <?php echo job_name('J45');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j41"); ?>"><i class="fa fa-circle-o"></i>J41 <?php echo job_name('J41');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j44"); ?>"><i class="fa fa-circle-o"></i>J44 <?php echo job_name('J44');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j43"); ?>"><i class="fa fa-circle-o"></i>J43 <?php echo job_name('J43');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Cables<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j60"); ?>"><i class="fa fa-circle-o"></i>J60</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j62"); ?>"><i class="fa fa-circle-o"></i>J62</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j60"); ?>"><i class="fa fa-circle-o"></i>J60 <?php echo job_name('J60');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j62"); ?>"><i class="fa fa-circle-o"></i>J62 <?php echo job_name('J62');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Motor Starter<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j42"); ?>"><i class="fa fa-circle-o"></i>J46</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j47"); ?>"><i class="fa fa-circle-o"></i>J47</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j48"); ?>"><i class="fa fa-circle-o"></i>J48</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j42"); ?>"><i class="fa fa-circle-o"></i>J46 <?php echo job_name('J46');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j47"); ?>"><i class="fa fa-circle-o"></i>J47 <?php echo job_name('J47');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j48"); ?>"><i class="fa fa-circle-o"></i>J48 <?php echo job_name('J48');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Rotating Machine<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j50"); ?>"><i class="fa fa-circle-o"></i>J50</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j51"); ?>"><i class="fa fa-circle-o"></i>J51</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j50"); ?>"><i class="fa fa-circle-o"></i>J50 <?php echo job_name('J50');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j51"); ?>"><i class="fa fa-circle-o"></i>J51 <?php echo job_name('J51');?></a></li>
                       </ul>
                     </li>
                   </ul>
@@ -298,99 +298,99 @@
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Switches<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j8"); ?>"><i class="fa fa-circle-o"></i>J8</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j9"); ?>"><i class="fa fa-circle-o"></i>J9</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j10"); ?>"><i class="fa fa-circle-o"></i>J10</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j11"); ?>"><i class="fa fa-circle-o"></i>J11</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j8"); ?>"><i class="fa fa-circle-o"></i>J8 <?php echo job_name('J8');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j9"); ?>"><i class="fa fa-circle-o"></i>J9 <?php echo job_name('J9');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j10"); ?>"><i class="fa fa-circle-o"></i>J10 <?php echo job_name('J10');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j11"); ?>"><i class="fa fa-circle-o"></i>J11 <?php echo job_name('J11');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Switchgear/-board<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j19"); ?>"><i class="fa fa-circle-o"></i>J19</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j40"); ?>"><i class="fa fa-circle-o"></i>J40</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j42"); ?>"><i class="fa fa-circle-o"></i>J42</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j19"); ?>"><i class="fa fa-circle-o"></i>J19 <?php echo job_name('J19');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j40"); ?>"><i class="fa fa-circle-o"></i>J40 <?php echo job_name('J40');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j42"); ?>"><i class="fa fa-circle-o"></i>J42 <?php echo job_name('J42');?></a></li>
                       </ul>
                     </li>
                   
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Motor starters<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j20"); ?>"><i class="fa fa-circle-o"></i>J20</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j21"); ?>"><i class="fa fa-circle-o"></i>J21</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j24"); ?>"><i class="fa fa-circle-o"></i>J24</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j25"); ?>"><i class="fa fa-circle-o"></i>J25</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j20"); ?>"><i class="fa fa-circle-o"></i>J20 <?php echo job_name('J20');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j21"); ?>"><i class="fa fa-circle-o"></i>J21 <?php echo job_name('J21');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j24"); ?>"><i class="fa fa-circle-o"></i>J24 <?php echo job_name('J24');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j25"); ?>"><i class="fa fa-circle-o"></i>J25 <?php echo job_name('J25');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Cables<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j61"); ?>"><i class="fa fa-circle-o"></i>J61</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j62"); ?>"><i class="fa fa-circle-o"></i>J62</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j61"); ?>"><i class="fa fa-circle-o"></i>J61 <?php echo job_name('J61');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j62"); ?>"><i class="fa fa-circle-o"></i>J62 <?php echo job_name('J62');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Back-up Power<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j12"); ?>"><i class="fa fa-circle-o"></i>J12</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j13"); ?>"><i class="fa fa-circle-o"></i>J13</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j14"); ?>"><i class="fa fa-circle-o"></i>J14</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j15"); ?>"><i class="fa fa-circle-o"></i>J15</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j12"); ?>"><i class="fa fa-circle-o"></i>J12 <?php echo job_name('J12');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j13"); ?>"><i class="fa fa-circle-o"></i>J13 <?php echo job_name('J13');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j14"); ?>"><i class="fa fa-circle-o"></i>J14 <?php echo job_name('J14');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j15"); ?>"><i class="fa fa-circle-o"></i>J15 <?php echo job_name('J15');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Grounding / Earthing System<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j29"); ?>"><i class="fa fa-circle-o"></i>J29</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j30"); ?>"><i class="fa fa-circle-o"></i>J30</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j31"); ?>"><i class="fa fa-circle-o"></i>J31</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j29"); ?>"><i class="fa fa-circle-o"></i>J29 <?php echo job_name('J29');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j30"); ?>"><i class="fa fa-circle-o"></i>J30 <?php echo job_name('J30');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j31"); ?>"><i class="fa fa-circle-o"></i>J31 <?php echo job_name('J31');?></a></li>
                       </ul>
                     </li>                                
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Field Installation<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j1");?>"><i class="fa fa-circle-o"></i>J1</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j22"); ?>"><i class="fa fa-circle-o"></i>J22</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j32"); ?>"><i class="fa fa-circle-o"></i>J32</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j34"); ?>"><i class="fa fa-circle-o"></i>J34</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j35"); ?>"><i class="fa fa-circle-o"></i>J35</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j36"); ?>"><i class="fa fa-circle-o"></i>J36</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j1");?>"><i class="fa fa-circle-o"></i>J1 RCDs /GFCIs</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j22"); ?>"><i class="fa fa-circle-o"></i>J22 <?php echo job_name('J22');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j32"); ?>"><i class="fa fa-circle-o"></i>J32 <?php echo job_name('J32');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j34"); ?>"><i class="fa fa-circle-o"></i>J34 <?php echo job_name('J34');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j35"); ?>"><i class="fa fa-circle-o"></i>J35 <?php echo job_name('J35');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j36"); ?>"><i class="fa fa-circle-o"></i>J36 <?php echo job_name('J36');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Heating<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j70"); ?>"><i class="fa fa-circle-o"></i>J70</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j71"); ?>"><i class="fa fa-circle-o"></i>J71</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j70"); ?>"><i class="fa fa-circle-o"></i>J70 <?php echo job_name('J70');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j71"); ?>"><i class="fa fa-circle-o"></i>J71 <?php echo job_name('J71');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Portable/Temporary Devices<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j2"); ?>"><i class="fa fa-circle-o"></i>J2</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j3"); ?>"><i class="fa fa-circle-o"></i>J3</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j2"); ?>"><i class="fa fa-circle-o"></i>J2 <?php echo job_name('J2');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j3"); ?>"><i class="fa fa-circle-o"></i>J3 <?php echo job_name('J3');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Electrical Rooms<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j23"); ?>"><i class="fa fa-circle-o"></i>J23</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j23"); ?>"><i class="fa fa-circle-o"></i>J23 <?php echo job_name('J23');?></a></li>
                       </ul>
                     </li>
 
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Lighting<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j33"); ?>"><i class="fa fa-circle-o"></i>J33</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j37"); ?>"><i class="fa fa-circle-o"></i>J37</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j33"); ?>"><i class="fa fa-circle-o"></i>J33 <?php echo job_name('J33');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j37"); ?>"><i class="fa fa-circle-o"></i>J37 <?php echo job_name('J37');?></a></li>
                       </ul>
                     </li>
 
@@ -404,8 +404,8 @@
                     <li class="treeview" style="height: auto;">
                       <a href="#"><i class="fa fa-circle-o"></i>Rotating machines<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                       <ul class="treeview-menu" style="display: none;">
-                        <li><a href="<?php echo site_url("job_aid/j52"); ?>"><i class="fa fa-circle-o"></i>J52</a></li>
-                        <li><a href="<?php echo site_url("job_aid/j53"); ?>"><i class="fa fa-circle-o"></i>J53</a></li>
+                        <li><a href="<?php echo site_url("job_aid/j52"); ?>"><i class="fa fa-circle-o"></i>J52 <?php echo job_name('J52');?></a></li>
+                        <li><a href="<?php echo site_url("job_aid/j53"); ?>"><i class="fa fa-circle-o"></i>J53 <?php echo job_name('J53');?></a></li>
                       </ul>
                     </li>
 
