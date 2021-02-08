@@ -22,7 +22,7 @@ $(document).ready(function () {
         
         eventSources: [
             {
-                url: SITE_URL+'/calendar/plan_schedule/'+$("#pabrik").val(), // use the `url` property
+                url: SITE_URL+'calendar/plan_schedule/'+$("#pabrik").val(), // use the `url` property
                 color: 'yellow', // an option!
                 textColor: 'black' // an option!
             }

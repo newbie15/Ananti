@@ -156,12 +156,12 @@ class Unit extends CI_Controller {
 	public function ajax_dropdown_sub_sch(){
 		$id_pabrik = $this->uri->segment(3, 0);
 		$id_station = urldecode( $this->uri->segment(4, 0) );
-		$query = $this->db->query("SELECT DISTINCT unit as nama FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND status = 'open' ORDER BY unit ASC;");
+		$query = $this->db->query("SELECT DISTINCT unit as nama,nomor FROM m_wo where id_pabrik = '$id_pabrik' AND station = '$id_station' AND status = 'open' ORDER BY unit ASC;");
 
 		echo "<option>=== ALL ===</option>";
 		foreach ($query->result() as $row)
 		{
-			echo "<option>".$row->nama."</option>";
+			echo "<option value=\"$row->nomor\">".$row->nama."</option>";
 		}
 	}	
 
@@ -266,23 +266,23 @@ class Unit extends CI_Controller {
 	public function ajax_dropdown(){
 		$id_pabrik = $this->uri->segment(3, 0);
 		$id_station = urldecode($this->uri->segment(4, 0));
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		$query = $this->db->query("SELECT nomor,nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
 		foreach ($query->result() as $row)
 		{
-			echo "<option>".$row->nama."</option>";
+			echo "<option value=\"$row->nomor\">".$row->nama."</option>";
 		}
 	}
 
 	public function ajax_dropdown_all(){
 		$id_pabrik = $this->uri->segment(3, 0);
 		$id_station = urldecode($this->uri->segment(4, 0));
-		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		$query = $this->db->query("SELECT nomor,nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
 		echo "<option>-- ALL --</option>";
 		foreach ($query->result() as $row)
 		{
-			echo "<option>".$row->nama."</option>";
+			echo "<option value=\"$row->nomor\">".$row->nama."</option>";
 		}
 	}
 

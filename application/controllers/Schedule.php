@@ -217,17 +217,45 @@ class Schedule extends CI_Controller {
 		$id_unit = $_REQUEST['id_unit'];
 		$id_sub_unit = $_REQUEST['id_sub_unit'];
 
-		$sql = "SELECT * FROM master_schedule WHERE
-		id_pabrik = '$id_pabrik' AND
-		id_station = '$id_station' 
+		$sql = "SELECT
+		master_schedule.id_pabrik,
+		CONCAT(master_schedule.id_station,'@',master_station.nama) AS id_station,
+		CONCAT(master_schedule.id_unit,'@',master_unit.nama) AS id_unit,
+		CONCAT(master_schedule.id_sub_unit,'@',master_sub_unit.nama) AS id_sub_unit,
+		master_schedule.monitoring_item		
+		FROM master_schedule,master_station,master_unit,master_sub_unit WHERE
+		master_schedule.id_pabrik = '$id_pabrik' AND
+		master_schedule.id_station = '$id_station' AND
+		master_station.nomor = master_schedule.id_station AND
+		master_station.id_pabrik = master_schedule.id_pabrik
 		";
 
 		if($id_unit != "-- ALL --"){
-			$sql = $sql ." AND id_unit = '$id_unit'";
+			$sql = $sql ." AND master_schedule.id_unit = '$id_unit'
+			AND master_unit.nomor = master_schedule.id_unit 
+			AND	master_unit.id_pabrik = master_schedule.id_pabrik
+			AND master_unit.id_station = master_schedule.id_station
+			";
+		}else{
+			$sql = $sql ." AND master_unit.nomor = master_schedule.id_unit 
+			AND	master_unit.id_pabrik = master_schedule.id_pabrik
+			AND master_unit.id_station = master_schedule.id_station
+			";
 		}
 
 		if($id_sub_unit != "-- ALL --"){
-			$sql = $sql ." AND id_sub_unit = '$id_sub_unit'";
+			$sql = $sql ." AND master_schedule.id_sub_unit = '$id_sub_unit'
+			AND	master_sub_unit.nomor = master_schedule.id_sub_unit
+			AND	master_sub_unit.id_unit = master_schedule.id_unit
+			AND	master_sub_unit.id_station = master_schedule.id_station
+			AND	master_sub_unit.id_pabrik = master_schedule.id_pabrik
+			";
+		}else{
+			$sql = $sql ." AND master_sub_unit.nomor = master_schedule.id_sub_unit
+			AND	master_sub_unit.id_unit = master_schedule.id_unit
+			AND	master_sub_unit.id_station = master_schedule.id_station
+			AND	master_sub_unit.id_pabrik = master_schedule.id_pabrik
+			";
 		}
 
 		$query = $this->db->query($sql);
@@ -276,9 +304,30 @@ class Schedule extends CI_Controller {
 
 		// $tanggal = date("Y-m-");
 
-		$sql = "SELECT * FROM `master_schedule_monitoring` 
-			WHERE `id_pabrik` = '$id_pabrik'
-			AND `tahun` = $tahun;
+		$sql = "SELECT
+		master_schedule_monitoring.id_pabrik,
+		CONCAT(master_schedule_monitoring.id_station,'@',master_station.nama) AS id_station,
+		CONCAT(master_schedule_monitoring.id_unit,'@',master_unit.nama) AS id_unit,
+		CONCAT(master_schedule_monitoring.id_sub_unit,'@',master_sub_unit.nama) AS id_sub_unit,
+		master_schedule_monitoring.item,				
+		master_schedule_monitoring.start,				
+		master_schedule_monitoring.stop				
+		
+		FROM `master_schedule_monitoring`,master_station,master_unit,master_sub_unit 
+		WHERE  `master_schedule_monitoring`.`id_pabrik` = '$id_pabrik'
+		AND  `master_schedule_monitoring`.`tahun` = $tahun
+		AND
+		master_station.nomor = master_schedule_monitoring.id_station AND
+		master_station.id_pabrik = master_schedule_monitoring.id_pabrik AND
+		
+		master_unit.nomor = master_schedule_monitoring.id_unit AND
+		master_unit.id_pabrik = master_schedule_monitoring.id_pabrik AND
+		master_unit.id_station = master_schedule_monitoring.id_station AND
+		
+		master_sub_unit.nomor = master_schedule_monitoring.id_sub_unit AND
+		master_sub_unit.id_pabrik = master_schedule_monitoring.id_pabrik AND
+		master_sub_unit.id_station = master_schedule_monitoring.id_station AND
+		master_sub_unit.id_unit = master_schedule_monitoring.id_unit
 		";
 
 		$query = $this->db->query($sql);
@@ -338,9 +387,9 @@ class Schedule extends CI_Controller {
 	public function delete_monitoring_schedule()
 	{
 		$pabrik = $_REQUEST['id_pabrik'];
-		$station = str_replace('_',' ',$_REQUEST['id_station']);
-		$unit = str_replace('_',' ',$_REQUEST['id_unit']);
-		$sub_unit = str_replace('_',' ',$_REQUEST['id_sub_unit']);
+		$station = current(explode('@',$_REQUEST['id_station']));
+		$unit = current(explode('@',$_REQUEST['id_unit']));
+		$sub_unit = current(explode('@',$_REQUEST['id_sub_unit']));
 		$title = $_REQUEST['title'];
 		$start = $_REQUEST['start'];
 		$stop = $_REQUEST['start'];
@@ -382,9 +431,9 @@ class Schedule extends CI_Controller {
 	public function add_monitoring_schedule()
 	{
 		$pabrik = $_REQUEST['id_pabrik'];
-		$station = str_replace('_',' ',$_REQUEST['id_station']);
-		$unit = str_replace('_',' ',$_REQUEST['id_unit']);
-		$sub_unit = str_replace('_',' ',$_REQUEST['id_sub_unit']);
+		$station = current(explode('@',$_REQUEST['id_station']));
+		$unit = current(explode('@',$_REQUEST['id_unit']));
+		$sub_unit = current(explode('@',$_REQUEST['id_sub_unit']));
 		$title = $_REQUEST['title'];
 		$start = $_REQUEST['start'];
 		$stop = $_REQUEST['start'];

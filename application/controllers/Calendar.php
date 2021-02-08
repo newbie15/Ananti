@@ -36,8 +36,26 @@ class Calendar extends CI_Controller {
 		$tanggal = date("Y-m-");
 
 		$query = $this->db->query(
-			"SELECT `tanggal`,`no_wo`,`station`,`unit`,`sub_unit`,`problem`,`plan`,`start`,`stop`
-			FROM `m_planing` WHERE `id_pabrik` = '$id_pabrik' AND `tanggal` LIKE '%$tanggal%'
+			"SELECT `tanggal`,`no_wo`,
+			-- `station`,`unit`,`sub_unit`,
+			CONCAT(m_planing.station,'@',master_station.nama) AS station,
+			CONCAT(m_planing.unit,'@',master_unit.nama) AS unit,
+			CONCAT(m_planing.sub_unit,'@',master_sub_unit.nama) AS sub_unit,
+			`problem`,`plan`,`start`,`stop`
+			FROM `m_planing`,master_station,master_unit,master_sub_unit 
+			WHERE m_planing.`id_pabrik` = '$id_pabrik' AND m_planing.`tanggal` LIKE '%$tanggal%'
+			AND 		
+			master_station.nomor = m_planing.station AND
+			master_station.id_pabrik = m_planing.id_pabrik AND
+			
+			master_unit.nomor = m_planing.unit AND
+			master_unit.id_pabrik = m_planing.id_pabrik AND
+			master_unit.id_station = m_planing.station AND
+			
+			master_sub_unit.nomor = m_planing.sub_unit AND
+			master_sub_unit.id_pabrik = m_planing.id_pabrik AND
+			master_sub_unit.id_station = m_planing.station AND
+			master_sub_unit.id_unit = m_planing.unit
 		");
 
 		$i = 0;
