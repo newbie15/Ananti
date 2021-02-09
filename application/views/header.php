@@ -168,7 +168,6 @@
                   <li><a href="<?php echo site_url("jobaid"); ?>"><i class="fa fa-list-ol"></i>Job Aid</a></li>
                   <li><a href="<?php echo site_url("workexecution"); ?>"><i class="fa fa-list-ol"></i>Work Execution</a></li>
                   <li><a href="<?php echo site_url("unittype"); ?>"><i class="fa fa-list-ol"></i>Unit Type</a></li>
-                  <li><a href="<?php echo site_url("unittype"); ?>"><i class="fa fa-list-ol"></i>Unit Type</a></li>
                   <li><a><i class="fa fa-circle-o text-green"></i>Preset</a></li>
                 <?php } ?>
                 <li><a href="<?php echo site_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
