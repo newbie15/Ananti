@@ -83,14 +83,17 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 
-		$query = $this->db->query("SELECT nomor,nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		$query = $this->db->query("SELECT type,nomor,nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i][0] = $row->nomor;
-			$d[$i++][1] = $row->nama;
+			@$n = end(explode("-",$row->nomor));
+			$d[$i][0] = $row->type;
+			$d[$i][1] = $n;
+			$d[$i][2] = $row->type.".".$id_station.".".$n;
+			$d[$i++][3] = $row->nama;
 		}
 		echo json_encode($d);
 	}
@@ -109,8 +112,9 @@ class Unit extends CI_Controller {
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
-				'nomor' => $value[0],
-				'nama' => ucwords($value[1]),
+				'type' => $value[0],
+				'nomor' => @end(explode(".",$value[2])),
+				'nama' => ucwords($value[3]),
 			);
 			// print_r($data);
 			// $this->db->insert('master_unit', $data);
