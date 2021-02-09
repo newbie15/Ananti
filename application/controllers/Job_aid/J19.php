@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class J199 extends CI_Controller {
+class J19 extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -30,11 +30,11 @@ class J199 extends CI_Controller {
 	
 	public function index()
 	{
-		$query = $this->db->query("SELECT nama,comment FROM aux_job_aid WHERE nomor = 'J199';");
+		$query = $this->db->query("SELECT nama,comment FROM aux_job_aid WHERE nomor = 'J19';");
 		foreach ($query->result() as $row)
 		{
 			$output['comment'] = $row->comment;
-			$header['title'] = "J199 - ".$row->nama;
+			$header['title'] = "J19 - ".$row->nama;
 		}
 
 		$output['content'] = "test";
@@ -55,6 +55,11 @@ class J199 extends CI_Controller {
 		];
 		
 		$output['content'] = '';
+
+		$output['pdf'] = "yes";
+		$output['js'] = base_url("assets/pdfobject/pdfobject.min.js");
+		$output['dokumen'] = "emp";
+		$output['filename'] = "J19.pdf";
 		
 		$nama_pabrik = $this->session->user;
 		$kategori = $this->session->kategori;
@@ -85,132 +90,13 @@ class J199 extends CI_Controller {
 		$this->load->view('footer',$footer);
 	}
 
-	public function load()
-	{
-		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT unit,acm,keterangan FROM m_acm where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tanggal='$tanggal';");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->unit; // or methods defined on the 'User' class
-			$d[$i][1] = $row->acm; // or methods defined on the 'User' class
-			$d[$i++][2] = $row->keterangan; // or methods defined on the 'User' class
-			// $d[$i][2] = $row->jenis_breakdown; // or methods defined on the 'User' class
-			// $d[$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
-		}
-		echo json_encode($d);
-	}
-
-	public function simpan()
-	{
-		$pabrik = $_REQUEST['pabrik'];
-		$station = $_REQUEST['station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_acm` where id_pabrik = '$pabrik' AND id_station = '$station' AND tanggal = '$tanggal' ");
-		$data_json = $_REQUEST['data_json'];
-		$data = json_decode($data_json);
-		foreach ($data as $key => $value) {
-			// $this->db->insert
-			$data = array(
-				'tanggal' => $tanggal,
-				'id_pabrik' => $pabrik,
-				'id_station' => $station,
-				'unit' => $value[0],
-				'acm' => $value[1],
-				'keterangan' => $value[2],
-
-				// 'jenis_problem' => $value[2],
-				// 'jenis_breakdown' => $value[3],
-				// 'date' => 'My date'
-			);
-			// print_r($data);
-			if($value[0]!=""){
-				$this->db->insert('m_acm', $data);
-			}
-		}
-	}
-
-	public function load_problem(){
-		// SELECT max(tanggal) as tanggal,id_station,unit,acm FROM `m_acm` where acm = 1 GROUP by unit
-		$id_pabrik = $_REQUEST['id_pabrik'];
-
-		$query = $this->db->query("SELECT max(tanggal) as tanggal,id_station,unit,acm,keterangan FROM `m_acm` where acm = 0 AND id_pabrik = '$id_pabrik' GROUP by unit");
-
-		$i = 0;
-		$d = [];
-		foreach ($query->result() as $row)
-		{
-			$d[$i][0] = $row->tanggal; 
-			$d[$i][1] = $row->id_station; 
-			$d[$i][2] = $row->unit;
-			$d[$i][3] = $row->acm;
-			$d[$i++][4] = $row->keterangan;
-		}
-		echo json_encode($d);
-	}
-
-	public function problem()
-	{
-		$output['content'] = "test";
-		$output['main_title'] = "Data Avaibility Cricital Machine";
-		
-		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
-		];
-
-		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
-			base_url("assets/mdp/config.js"),
-			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/acm_problem.js"),
-		];
-		
-		$output['content'] = '';
-		
-		$nama_pabrik = $this->session->user;
-		$kategori = $this->session->kategori;
-
-		$query = $this->db->query("SELECT nama FROM master_pabrik;");
-
-		$output['dropdown_pabrik']= "";
-		if($kategori<2){
-			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
-		}else{
-			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
-		}
-		
-		foreach ($query->result() as $row)
-		{
-			if($nama_pabrik==$row->nama){
-				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
-			}else{
-				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
-			}
-		}
-		$output['dropdown_pabrik'] .= "/<select>";		
-
-		$output['dropdown_station'] = "<select id=\"station\"></select>";
-
-		$this->load->view('header',$header);
-		$this->load->view('content-acm-problem',$output);
-		$this->load->view('footer',$footer);
-	}
-
 	public function a0()
 	{
 
 		$output['content'] = "test";
 		$output['main_title'] = "Data Avaibility Cricital Machine";
 		
-		$header['title'] = "ACM";
+		$header['title'] = "J19 - A0 Visual Inspection";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
@@ -256,24 +142,83 @@ class J199 extends CI_Controller {
 		$this->load->view('footer',$footer);		
 	}
 
-	public function a14()
+	public function a3()
 	{
 		$output['content'] = "test";
 		$output['main_title'] = "Data Avaibility Cricital Machine";
 		
-		$header['title'] = "ACM";
+		$header['title'] = "J19 - A3 Infrared Inspection";
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/job_aid/j19-a14.js"),
+			base_url("assets/job_aid/j19-a3.js"),
+		];
+		
+		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
+
+		$output['dropdown_station'] = "<select id=\"station\"></select>";
+
+		$this->load->view('header',$header);
+		$this->load->view('job_aid/content-j19-a3',$output);
+		$this->load->view('footer',$footer);
+	}	
+
+	public function a8()
+	{
+		$output['content'] = "test";
+		$output['main_title'] = "Data Avaibility Cricital Machine";
+		
+		$header['title'] = "J19 - A8 Insulation Resistance";
+		$header['css_files'] = [
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+		];
+
+		$footer['js_files'] = [
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
+			base_url("assets/job_aid/j19-a8.js"),
 		];
 		
 		$output['content'] = '';
@@ -303,28 +248,32 @@ class J199 extends CI_Controller {
 		$output['dropdown_station'] = "<select id=\"station\"></select>";
 
 		$this->load->view('header',$header);
-		$this->load->view('job_aid/content-j19-a14',$output);
+		$this->load->view('job_aid/content-j19-a8',$output);
 		$this->load->view('footer',$footer);		
 	}
 	
-	public function a15()
+	public function a9()
 	{
 		$output['content'] = "test";
 		$output['main_title'] = "Data Avaibility Cricital Machine";
 		
-		$header['title'] = "ACM";
+		$header['title'] = "J19 - A3 Contact Connection Resistance";
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/job_aid/j19-a15.js"),
+			base_url("assets/job_aid/j19-a9.js"),
 		];
 		
 		$output['content'] = '';
@@ -355,8 +304,65 @@ class J199 extends CI_Controller {
 
 
 		$this->load->view('header',$header);
-		$this->load->view('job_aid/content-j19-a15',$output);
+		$this->load->view('job_aid/content-j19-a9',$output);
 		$this->load->view('footer',$footer);		
 	}	
+
+	public function a18()
+	{
+		$output['content'] = "test";
+		$output['main_title'] = "Data Avaibility Cricital Machine";
+		
+		$header['title'] = "J19 - A18 Grounding Continuity";
+		$header['css_files'] = [
+			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
+			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+		];
+
+		$footer['js_files'] = [
+			base_url("assets/jexcel/v2.1.0/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
+			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
+			base_url("assets/job_aid/j19-a18.js"),
+		];
+		
+		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";		
+
+		$output['dropdown_station'] = "<select id=\"station\"></select>";
+
+
+		$this->load->view('header',$header);
+		$this->load->view('job_aid/content-j19-a18',$output);
+		$this->load->view('footer',$footer);		
+	}	
+
 
 }
