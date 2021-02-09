@@ -34,18 +34,21 @@ $(document).ready(function(){
     }
 
     handler = function (obj, cell, val) {
-        console.log('My table id: ' + $(obj).prop('id'));
-        console.log('Cell changed: ' + $(cell).prop('id'));
-        console.log('Value: ' + val);
+        // console.log('My table id: ' + $(obj).prop('id'));
+        // console.log('Cell changed: ' + $(cell).prop('id'));
+        // console.log('Value: ' + val);
 
         cll = $(cell).prop('id');
         dd = cll.split("-");
+        kolom = dd[0];
+        baris = dd[1];
 
         var d = $("#my-spreadsheet").jexcel('getRowData', dd[1]);
         console.log(d);
         var e_number = d[0]+"."+$("#station").val()+"."+d[1];
         if( dd[0]==0 || dd[0]==1 ){
-            $("#my-spreadsheet").jexcel('setValue', "C" + dd[1] + 1, e_number);
+            console.log("set value "+"C"+dd[1] + 1+" "+e_number);
+            $("#my-spreadsheet").jexcel('setValue', "C" + (parseInt(dd[1]) + 1), e_number);
         }
     };    
 
