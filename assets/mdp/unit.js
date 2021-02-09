@@ -33,6 +33,22 @@ $(document).ready(function(){
         });
     }
 
+    handler = function (obj, cell, val) {
+        console.log('My table id: ' + $(obj).prop('id'));
+        console.log('Cell changed: ' + $(cell).prop('id'));
+        console.log('Value: ' + val);
+
+        cll = $(cell).prop('id');
+        dd = cll.split("-");
+
+        var d = $("#my-spreadsheet").jexcel('getRowData', dd[1]);
+        console.log(d);
+        var e_number = d[0]+"."+$("#station").val()+"."+d[1];
+        if( dd[0]==0 || dd[0]==1 ){
+            $("#my-spreadsheet").jexcel('setValue', "C" + dd[1] + 1, e_number);
+        }
+    };    
+
     function refresh() {
         $.ajax({
             method: "POST",
@@ -48,20 +64,21 @@ $(document).ready(function(){
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
+                onchange: handler,
                 tableOverflow: true,
                 tableHeight: '400px',
                 colHeaders: [
-                    'Unit Numbering',
-                    'Unit Name',
                     'Unit Type',
+                    'Unit Numbering',
+                    'Unit Number<br>Auto Generated',
+                    'Unit Name',
                 ],
 
-                colWidths: [200, 400, 300, 100, 100, 100, 100, 100],
+                colWidths: [350, 150, 150, 300, 100, 100, 100, 100],
                 columns: [
+                    { type: 'autocomplete', url: SITE_URL + 'unittype/ajax/',autocomplete:true},
                     { type: 'text' },
                     { type: 'text' },
-                    // { type: 'dropdown', source: ['Preventive', 'Predictive', 'Corrective', 'Unplan'] },
-                    { type: 'autocomplete', url: SITE_URL + 'unittype/ajax/',autocomplete:true, multiple:true},
                     { type: 'text' },
                 ]
             });
@@ -86,23 +103,6 @@ $(document).ready(function(){
             console.log(msg);
         });
     });
-
-    // $('#my-spreadsheet').jexcel({
-    //     // data: data,
-    //     colHeaders: [
-    //         'Station',
-    //         'Kode Asset',
-    //         'Unit',
-    //     ],
-
-    //     colWidths: [150,150,150,100,250,250,75,75],
-    //     columns: [
-    //         { type: 'autocomplete', url: 'http://localhost/MDP/station/ajax/'+$("#pabrik").val() },
-    //         { type: 'text' },
-    //         { type: 'text' },
-    //     ]
-    // });
-
 
     $("#pabrik").change(function () {
         station_refresh();
