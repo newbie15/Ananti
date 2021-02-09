@@ -26,7 +26,7 @@
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
           Station :
-          <?php echo $dropdown_station; ?>
+          <?php echo $dropdown_equipment; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>

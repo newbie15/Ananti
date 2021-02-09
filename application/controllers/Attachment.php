@@ -197,4 +197,44 @@ class Attachment extends CI_Controller {
 		// echo "]}}";
 		echo json_encode($d);
 	}
+
+	public function list_attachment_dropdown(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$job_aid = urldecode($this->uri->segment(4, 0));
+
+		$query = $this->db->query("SELECT
+		CONCAT(
+			master_attachment.id_pabrik,'.',
+			master_attachment.id_station,'.',
+			master_attachment.id_unit,'.',
+			master_attachment.id_sub_unit,'.',
+			master_attachment.nomor
+		) AS nomor,
+		master_attachment.attachment, 
+		master_station.nama as nama_station,
+		master_unit.nama as nama_unit,
+		master_sub_unit.nama as nama_sub_unit
+
+		FROM master_attachment, master_station, master_unit, master_sub_unit
+		WHERE master_attachment.id_pabrik = '$id_pabrik' 
+		AND job_aid LIKE '%$job_aid%'
+		
+		AND master_station.nomor = master_attachment.id_station 
+		AND	master_station.id_pabrik = master_attachment.id_pabrik 
+		
+		AND	master_unit.nomor = master_attachment.id_unit 
+		AND	master_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_unit.id_station = master_attachment.id_station 
+		
+		AND	master_sub_unit.nomor = master_attachment.id_sub_unit 
+		AND	master_sub_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_sub_unit.id_station = master_attachment.id_station 
+		AND	master_sub_unit.id_unit = master_attachment.id_unit
+
+		;");
+		foreach ($query->result() as $row)
+		{
+			echo "<option value=\"$row->nomor\">".$row->nama_station." | ".$row->nama_unit." | ".$row->nama_sub_unit." | ".$row->attachment."</option>";
+		}
+	}
 }
