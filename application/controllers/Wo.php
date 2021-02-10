@@ -301,9 +301,18 @@ class Wo extends CI_Controller {
 		$this->db->from('m_wo, master_sub_unit, master_unit, master_station');
 		$this->db->where("m_wo.id_pabrik",$id_pabrik);
 		$this->db->where("m_wo.status",'open');
+		
 		$this->db->where("m_wo.station = master_station.nomor");
+		$this->db->where("m_wo.id_pabrik = master_station.id_pabrik");
+
 		$this->db->where("m_wo.unit = master_unit.nomor");
+		$this->db->where("m_wo.station = master_unit.id_station");
+		$this->db->where("m_wo.id_pabrik = master_unit.id_pabrik");
+		
 		$this->db->where("m_wo.sub_unit = master_sub_unit.nomor");
+		$this->db->where("m_wo.id_pabrik = master_sub_unit.id_pabrik");
+		$this->db->where("m_wo.station = master_sub_unit.id_station");
+		$this->db->where("m_wo.unit = master_sub_unit.id_unit");
 
 		$query = $this->db->get();
 		echo(json_encode($query->result()));
