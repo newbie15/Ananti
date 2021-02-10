@@ -9,58 +9,42 @@ $(document).ready(function () {
     data_detailnya = "";
 
     function refresh(data) {
-        console.log("refresh data");
-        console.log(data);
-        if (data.length<1) {
-            console.log("yes kurang dari 1");
-            $.ajax({
-                method: "POST",
-                url: SITE_URL + "unit/ajax_default_list",
-                data: {
-                    id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
-                }
-            }).done(function (msg) {
-                console.log("ini refresh");
+        $('#resume').jexcel({
+            data: data,
+            allowInsertColumn: false,
+            colHeaders: [
+                'Equipment ID',
+                'Equipment',
+                'A1 Execution',
+                'A3 Execution',
+            ],
+            colWidths: [150, 450, 100, 100, 90, 50, 100, 60, 100, 100],
+            columns: [
+                { type: 'text' },
+                { type: 'text', wordWrap:true },
+                { type: 'text' },
+                { type: 'text' },
+            ],
+        });
 
-                console.log(msg);
-                data = JSON.parse(msg);
-                console.log(data);
-                x = data;
-                $('#my-spreadsheet').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Unit',
-                        'Available',
-                        'Keterangan',
-                    ],
-                    colWidths: [300, 100, 300, 90, 50, 100, 60, 100, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'checkbox' },
-                        { type: 'text' },
-                    ],
-                });
+        var dx = $('#resume').jexcel('getData');
+        a1 = 0;
+        a3 = 0;
+        console.log(dx);
+        dx.forEach(element => {
+            console.log(element);
+            if(element[2]!="0"){  a1++;  }
+            if(element[3]!="0"){  a3++;  }
+        });
+        
+        pa1 = (a1/dx.length) * 100;
+        pa3 = (a3/dx.length) * 100;
 
-            });
-        }else{
-            $('#my-spreadsheet').jexcel({
-                data: data,
-                allowInsertColumn: false,
-                colHeaders: [
-                    'Unit',
-                    'Available',
-                    'Keterangan',
-                ],
-                colWidths: [300, 100, 300, 90, 50, 100, 60, 100, 100],
-                columns: [
-                    { type: 'text' },
-                    { type: 'checkbox' },
-                    { type: 'text' },
-                ],
-            });
-        }
+        $("#progress").html("<br>"+
+            "<br>A1 : "+Math.round(pa1,1)+" % Equipment sudah ditest"+
+            "<br>A3 : "+Math.round(pa3,1)+" % Equipment sudah ditest"
+        );
+
     }
 
     $("#pabrik").change(function () {
@@ -116,7 +100,7 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: SITE_URL + "acm/load",
+            url: SITE_URL + "job_aid/j4/resume",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),

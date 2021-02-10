@@ -90,6 +90,119 @@ class J4 extends CI_Controller {
 		$this->load->view('footer',$footer);
 	}
 
+	public function resume(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$job_aid = "J4"; //urldecode($this->uri->segment(4, 0));
+		$tahun = $_REQUEST['y'];
+
+		$query_list = $this->db->query("SELECT
+		CONCAT(
+			master_attachment.id_pabrik,'.',
+			master_attachment.id_station,'.',
+			master_attachment.id_unit,'.',
+			master_attachment.id_sub_unit,'.',
+			master_attachment.nomor
+		) AS nomor,
+		master_attachment.attachment, 
+		master_station.nama as nama_station,
+		master_unit.nama as nama_unit,
+		master_sub_unit.nama as nama_sub_unit
+
+		FROM master_attachment, master_station, master_unit, master_sub_unit
+		WHERE master_attachment.id_pabrik = '$id_pabrik' 
+		AND job_aid LIKE '%$job_aid%'
+		
+		AND master_station.nomor = master_attachment.id_station 
+		AND	master_station.id_pabrik = master_attachment.id_pabrik 
+		
+		AND	master_unit.nomor = master_attachment.id_unit 
+		AND	master_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_unit.id_station = master_attachment.id_station 
+		
+		AND	master_sub_unit.nomor = master_attachment.id_sub_unit 
+		AND	master_sub_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_sub_unit.id_station = master_attachment.id_station 
+		AND	master_sub_unit.id_unit = master_attachment.id_unit
+		;");
+
+		$query_executed = $this->db->query("SELECT
+		CONCAT(
+			master_attachment.id_pabrik,'.',
+			master_attachment.id_station,'.',
+			master_attachment.id_unit,'.',
+			master_attachment.id_sub_unit,'.',
+			master_attachment.nomor
+		) AS nomor_equipment,
+
+		count(DISTINCT job_aid_j4_a1.tanggal) as a1_date,
+		count(DISTINCT job_aid_j4_a3.tanggal) as a3_date
+
+		FROM master_attachment, master_station, master_unit, master_sub_unit, job_aid_j4_a1, job_aid_j4_a3
+		WHERE master_attachment.id_pabrik = '$id_pabrik' 
+		AND job_aid LIKE '%$job_aid%'
+		
+		AND master_station.nomor = master_attachment.id_station 
+		AND	master_station.id_pabrik = master_attachment.id_pabrik 
+		
+		AND	master_unit.nomor = master_attachment.id_unit 
+		AND	master_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_unit.id_station = master_attachment.id_station 
+		
+		AND	master_sub_unit.nomor = master_attachment.id_sub_unit 
+		AND	master_sub_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_sub_unit.id_station = master_attachment.id_station 
+		AND	master_sub_unit.id_unit = master_attachment.id_unit
+
+		AND CONCAT(
+			master_attachment.id_pabrik,'.',
+			master_attachment.id_station,'.',
+			master_attachment.id_unit,'.',
+			master_attachment.id_sub_unit,'.',
+			master_attachment.nomor
+		) = job_aid_j4_a1.equipment
+		AND CONCAT(
+			master_attachment.id_pabrik,'.',
+			master_attachment.id_station,'.',
+			master_attachment.id_unit,'.',
+			master_attachment.id_sub_unit,'.',
+			master_attachment.nomor
+		) = job_aid_j4_a3.equipment
+
+		AND YEAR(job_aid_j4_a1.tanggal) = $tahun
+		AND YEAR(job_aid_j4_a3.tanggal) = $tahun
+
+		;");
+
+		$i = 0;
+		$d = [];
+
+		$l = [];
+		foreach ($query_list->result() as $row){
+			$l[$row->nomor][0] = $row->nomor;
+			$l[$row->nomor][1] = $row->nama_station."\n".$row->nama_unit."\n".$row->nama_sub_unit."\n".$row->attachment;
+			$l[$row->nomor][2] = 0;
+			$l[$row->nomor][3] = 0;
+		}
+
+		foreach ($query_executed->result() as $row){
+			// $l[$row->nomor][0] = $row->nama_station."\n".$row->nama_unit."\n".$row->nama_sub_unit."\n".$row->attachment;
+			$l[$row->nomor_equipment][2] = $row->a1_date;
+			$l[$row->nomor_equipment][3] = $row->a3_date;
+		}
+
+		foreach($l as $row)
+		{
+			if(@$row[0]!=null){
+				$d[$i][0] = $row[0];
+				$d[$i][1] = $row[1];
+				$d[$i][2] = $row[2];	
+				$d[$i++][3] = $row[3];	
+			}
+		}
+		
+		echo json_encode($d);
+	}
+
 	public function a1()
 	{
 
