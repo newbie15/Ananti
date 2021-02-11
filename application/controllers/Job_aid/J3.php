@@ -107,12 +107,13 @@ class J3 extends CI_Controller {
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/job_aid/j3-a0.js"),
@@ -149,21 +150,79 @@ class J3 extends CI_Controller {
 		$this->load->view('footer',$footer);		
 	}
 
+	public function a0_save(){
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		// $equipment = $_REQUEST['equipment'];
+
+		$this->db->query("DELETE FROM `job_aid_j3_a0` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		$datax = array();
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'tanggal' => $tanggal,
+				'equipment' => $value[0],
+				'tipe' => $value[1],
+				'lokasi' => $value[2],
+				'a' => $value[3],
+				'b' => $value[4],
+				'c' => $value[5],
+				'd' => $value[6],
+				'status' => $value[7],
+			);
+			if($value[0]!=""){
+				array_push($datax,$data);
+			}
+		}
+		print_r($datax);
+		$this->db->insert_batch('job_aid_j3_a0', $datax);
+	}
+	
+	public function a0_load(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		// $equipment = $_REQUEST['equipment'];
+
+		$query = $this->db->query("SELECT * FROM job_aid_j3_a0
+		WHERE id_pabrik = '$id_pabrik'
+		AND tanggal = '$tanggal'
+		;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->equipment;
+			$d[$i][1] = $row->tipe;
+			$d[$i][2] = $row->lokasi;
+			$d[$i][3] = $row->a;
+			$d[$i][4] = $row->b;
+			$d[$i][5] = $row->c;
+			$d[$i][6] = $row->d;
+			$d[$i++][7] = $row->status;
+		}
+		echo json_encode($d);
+	}	
+
 	public function a15()
 	{
 		$output['content'] = "test";
 		$output['main_title'] = "Data Avaibility Cricital Machine";
 		
-		$header['title'] = "ACM";
+		$header['title'] = "J3 - Portable RCD/GFCI TESTING";
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/job_aid/j3-a15.js"),
@@ -199,6 +258,55 @@ class J3 extends CI_Controller {
 		$this->load->view('header',$header);
 		$this->load->view('job_aid/content-j3-a15',$output);
 		$this->load->view('footer',$footer);		
+	}	
+
+	public function a15_save(){
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		// $equipment = $_REQUEST['equipment'];
+
+		$this->db->query("DELETE FROM `job_aid_j3_a15` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		$datax = array();
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'tanggal' => $tanggal,
+				'equipment' => $value[0],
+				'tipe' => $value[1],
+				'lokasi' => $value[2],
+				'status' => $value[3],
+			);
+			if($value[0]!=""){
+				array_push($datax,$data);
+			}
+		}
+		print_r($datax);
+		$this->db->insert_batch('job_aid_j3_a15', $datax);
+	}
+	
+	public function a15_load(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		// $equipment = $_REQUEST['equipment'];
+
+		$query = $this->db->query("SELECT * FROM job_aid_j3_a15
+		WHERE id_pabrik = '$id_pabrik'
+		AND tanggal = '$tanggal'
+		;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->equipment;
+			$d[$i][1] = $row->tipe;
+			$d[$i][2] = $row->lokasi;
+			$d[$i++][3] = $row->status;
+		}
+		echo json_encode($d);
 	}	
 
 }
