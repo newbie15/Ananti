@@ -8,174 +8,200 @@ $(document).ready(function () {
     keterangan_detail = [];
     data_detailnya = "";
 
-    function refresh(data) {
-        console.log("refresh data");
-        console.log(data);
-        if (data.length<1) {
-            console.log("yes kurang dari 1");
-            $.ajax({
-                method: "POST",
-                url: SITE_URL + "unit/ajax_default_list",
-                data: {
-                    id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
-                }
-            }).done(function (msg) {
-                console.log("ini refresh");
+    function refresh(data,data2,data3) {
 
-                console.log(msg);
-                data = JSON.parse(msg);
-                console.log(data);
-                x = data;
-                $('#my-spreadsheet').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Nametag<br>Breaker',
-                        'Nametag<br>Panel',
-                        'Tegangan<br>Nominal',
-                        'Humidity<br>(RH)',
-                        'Temp<br>(C)',
-                        'R-S',
-                        'S-T',
-                        'T-R',
-                        'R-E',
-                        'S-E',
-                        'T-E',
-                        'STD<br>Aman',
-                        'Status',
-                    ],
-                    colWidths: [300, 100, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
+        $('#my-spreadsheet').jexcel({
+            data: data,
+            allowInsertColumn: false,
+            colHeaders: [
+                'Nametag<br>Breaker',
+                'Lokasi<br>Panel',
+                'Tegangan<br>Nominal',
+                'Humidity<br>(RH)',
+                'Temp<br>(C)',
+                'R-S',
+                'S-T',
+                'T-R',
+                'R-E',
+                'S-E',
+                'T-E',
+                'STD<br>Aman',
+                'Status',
+            ],
+            colWidths: [150, 400, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
+            columns: [
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
 
-                    ],
-                });
+            ],
+        });
 
-                $('#my-spreadsheet2').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Nametag<br>Breaker',
-                        'Nametag<br>Panel',
-                        'Tegangan<br>Nominal',
-                        'Humidity<br>(RH)',
-                        'Temp<br>(C)',
-                        'R-S',
-                        'S-T',
-                        'T-R',
-                        'R-E',
-                        'S-E',
-                        'T-E',
-                        'STD<br>Aman',
-                        'Status',
-                    ],
-                    colWidths: [300, 100, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
+        $('#my-spreadsheet2').jexcel({
+            data: data2,
+            allowInsertColumn: false,
+            colHeaders: [
+                'Nametag<br>Breaker',
+                'Lokasi<br>Panel',
+                'Tegangan<br>Nominal',
+                'Humidity<br>(RH)',
+                'Temp<br>(C)',
+                'R-S',
+                'S-T',
+                'T-R',
+                'R-E',
+                'S-E',
+                'T-E',
+                'STD<br>Aman',
+                'Status',
+            ],
+            colWidths: [150, 400, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
+            columns: [
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
 
-                    ],
-                });
+            ],
+        });
 
-                $('#my-spreadsheet3').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Nametag<br>Breaker',
-                        'Nametag<br>Panel',
-                        'Tegangan<br>Nominal',
-                        'Humidity<br>(RH)',
-                        'Temp<br>(C)',
-                        'R-S',
-                        'S-T',
-                        'T-R',
-                        'R-E',
-                        'S-E',
-                        'T-E',
-                        'STD<br>Aman',
-                        'Status',
-                    ],
-                    colWidths: [300, 100, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
+        $('#my-spreadsheet3').jexcel({
+            data: data3,
+            allowInsertColumn: false,
+            colHeaders: [
+                'Nametag<br>Breaker',
+                'Lokasi<br>Panel',
+                'Tegangan<br>Nominal',
+                'Humidity<br>(RH)',
+                'Temp<br>(C)',
+                'R-S',
+                'S-T',
+                'T-R',
+                'R-E',
+                'S-E',
+                'T-E',
+                'STD<br>Aman',
+                'Status',
+            ],
+            colWidths: [150, 400, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
+            columns: [
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
 
-                    ],
-                });                
+            ],
+        });        
 
-            });
-        }else{
-            $('#my-spreadsheet').jexcel({
-                data: data,
-                allowInsertColumn: false,
-                colHeaders: [
-                    'Tipe Peralatan<br>Tagname',
-                    'ID',
-                    'Tegangan<br>Nominal',
-                    'Humidity<br>(RH)',
-                    'Temp<br>(C)',
-                    'R-S',
-                    'S-T',
-                    'T-R',
-                    'R-E',
-                    'S-E',
-                    'T-E',
-                    'STD<br>Aman',
-                    'Status',
-                ],
-                colWidths: [300, 100, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
-                columns: [
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                ],
-            });
+    }
+
+    $("#tambah").click(function () {
+        refresh_modal();
+    });    
+
+    function add(id, lo, id2, lo2, id3, lo3) {
+        var sama = 0;
+        var index = 0;
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+        if (dx[0][0] == "") { // kosong
+            dx[0][0] = id;
+            dx[0][2] = lo;
+        } else { // isi satu
+            dx.push([id ,"", lo, "", "", "", ""]);
         }
+
+        dx2 = $('#my-spreadsheet2').jexcel('getData');
+        console.log(dx);
+        if (dx2[0][0] == "") { // kosong
+            dx2[0][0] = id2;
+            dx2[0][2] = lo2;
+        } else { // isi satu
+            dx2.push([id2 ,"", lo2, "", "", "", ""]);
+        }
+
+        dx3 = $('#my-spreadsheet3').jexcel('getData');
+        console.log(dx);
+        if (dx3[0][0] == "") { // kosong
+            dx3[0][0] = id3;
+            dx3[0][2] = lo3;
+        } else { // isi satu
+            dx3.push([id3 ,"", lo3, "", "", "", ""]);
+        }
+
+        refresh(dx,dx2,dx3);
+
+        $("#wo").val("");
+        $("#modal-j8").modal("hide");
+
+        updatescroll();
+    }
+
+    function refresh_modal() {
+        $.ajax({
+            method: "POST",
+            url: SITE_URL + "attachment/list_attachment_modal/" + $("#pabrik").val() +"/J8",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+            }
+        }).done(function (msg) {
+            x = [];
+            y = [];
+            data = JSON.parse(msg);
+
+            for (i in data) {
+                console.log(data[i].daftar);
+                x.push(data[i].daftar);
+                y[i] = x;
+                x = [];
+            }
+            // console.log(y);
+            var table = $('#dt-table-j8').DataTable({
+                destroy: true,
+                data: y,
+                columns: [{
+                    title: "Daftar"
+                }, ]
+            });
+
+            $('.dataTable tbody').on('click', 'tr', function () {
+                if (table.row(this).data() != undefined) {
+                    console.log('API row values : ', table.row(this).data());
+                    var sp = table.row(this).data();
+                    sp = sp[0].split(" - ");
+                    add(sp[0],sp[1],sp[0],sp[1],sp[0],sp[1]);
+                    $('#modal-j8').modal('toggle');
+                }
+            });
+        });
     }
 
     $("#pabrik").change(function () {
@@ -196,11 +222,13 @@ $(document).ready(function () {
 
     $("#simpan").click(function () {
         var data_j = $('#my-spreadsheet').jexcel('getData');
+        var data_j2 = $('#my-spreadsheet2').jexcel('getData');
+        var data_j3 = $('#my-spreadsheet3').jexcel('getData');
         console.log(data_j);
 
         $.ajax({
             method: "POST",
-            url: SITE_URL+"acm/simpan",
+            url: SITE_URL+"job_aid/j8/a8_save",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -209,6 +237,8 @@ $(document).ready(function () {
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
                 data_json: JSON.stringify(data_j),
+                data_json2: JSON.stringify(data_j2),
+                data_json3: JSON.stringify(data_j3),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -216,25 +246,25 @@ $(document).ready(function () {
     });
 
     function station_refresh(){
-        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
-            function(responseTxt,statusTxt,xhr){
-                if(statusTxt == "success"){
-                    // alert("success");
+        // $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        //     function(responseTxt,statusTxt,xhr){
+        //         if(statusTxt == "success"){
+        //             // alert("success");
                     ajax_refresh();
-                }else{
-                    // alert("gaagal");
-                }
-            }
-        );
+        //         }else{
+        //             // alert("gaagal");
+        //         }
+        //     }
+        // );
     }
 
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: SITE_URL + "acm/load",
+            url: SITE_URL + "job_aid/j8/a8_load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
+                // id_station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -242,9 +272,9 @@ $(document).ready(function () {
         }).done(function (msg) {
             console.log("ini ajax refresh");
             console.log(msg);
-            data = JSON.parse(msg);
+            x = JSON.parse(msg);
             console.log(data);
-            refresh(data);
+            refresh(x[0],x[1],x[2]);
         });
     }
     $("#tahun").change(function () {
