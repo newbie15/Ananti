@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class J111 extends CI_Controller {
+class J11 extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
