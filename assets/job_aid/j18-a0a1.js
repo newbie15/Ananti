@@ -60,127 +60,162 @@ $(document).ready(function () {
         console.log("refresh data");
         console.log(data);
         if (data.length<1) {
-            console.log("yes kurang dari 1");
-            $.ajax({
-                method: "POST",
-                url: SITE_URL + "unit/ajax_default_list",
-                data: {
-                    id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
-                }
-            }).done(function (msg) {
-                console.log("ini refresh");
 
-                console.log(msg);
-                data = JSON.parse(msg);
-                console.log(data);
-                x = data;
-                $('#my-spreadsheet').html("");
-                $('#my-spreadsheet').jexcel({
-                    data: data_default,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Inspection Test',
-                        'Satuan',
-                        'Status',
-                    ],
-                    colWidths: [800, 100, 100, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                    ],
-                });
-                $('#my-spreadsheet').jexcel('setStyle', 
-                    [
-                        { A1: 'font-weight: bold;background-color: yellow' }, 
-                        { B1: 'font-weight: bold;background-color: yellow' }, 
-                        { C1: 'font-weight: bold;background-color: yellow' }, 
-                        { A2: 'text-align:left;' },
-                        { A3: 'text-align:left;' },
-                        { A4: 'text-align:left;' },
-                        { A5: 'text-align:left;' },
-                        { A6: 'text-align:left;' },
-                        { A7: 'font-weight: bold;background-color: yellow' },
-                        { B7: 'font-weight: bold;background-color: yellow' },
-                        { C7: 'font-weight: bold;background-color: yellow' },
-                        { A8: 'font-weight: bold;background-color: yellow' },
-                        { B8: 'font-weight: bold;background-color: yellow' },
-                        { C8: 'font-weight: bold;background-color: yellow' },
-                        { A9: 'text-align:left;' },
-                        { A10: 'text-align:left;' },
-                        { A11: 'text-align:left;' },
-                        { A12: 'text-align:left;' },
-                        { A13: 'text-align:left;' },
-                        { A14: 'text-align:left;' },
-                        { A15: 'text-align:left;' },
-                        { A16: 'text-align:left;' },
-                        { A17: 'text-align:left;' },
-                        { A18: 'text-align:left;' },
-                        { A19: 'text-align:left;' },
-                        { A20: 'text-align:left;' },
-                        { A21: 'text-align:left;' },
-                        { A22: 'text-align:left;' },
-                        { A23: 'text-align:left;' },
-                        { A24: 'text-align:left;' },
-                        { A25: 'text-align:left;' },
-                        { A26: 'font-weight: bold;background-color: yellow' },
-                        { B26: 'font-weight: bold;background-color: yellow' },
-                        { C26: 'font-weight: bold;background-color: yellow' },
-                        { A27: 'text-align:left;' },
-                        { A28: 'text-align:left;' },
-                        { A29: 'text-align:left;' },
-                        { A30: 'text-align:left;' },
-                        { A31: 'text-align:left;' },
-                        { A32: 'text-align:left;' },
-                        { A33: 'text-align:left;' },
-                        { A34: 'text-align:left;' },
-                        { A35: 'text-align:left;' },
-                        { A36: 'text-align:left;' },
-                        { A37: 'text-align:left;' },
-                        { A38: 'text-align:left;' },
-                        { A39: 'text-align:left;' },
-                        { A40: 'text-align:left;' },
-                        { A41: 'text-align:left;' },
-                        { A42: 'text-align:left;' },
-                        { A43: 'text-align:left;' },
-                        { A44: 'text-align:left;' },
-
-                    ]
-                );
+            $('#my-spreadsheet').html("");
+            $('#my-spreadsheet').jexcel({
+                data: data_default,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Inspection Test',
+                    'Satuan',
+                    'Status',
+                ],
+                colWidths: [800, 100, 100, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80],
+                columns: [
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                ],
             });
+            $('#my-spreadsheet').jexcel('setStyle', 
+                [
+                    { A1: 'font-weight: bold;background-color: yellow' }, 
+                    { B1: 'font-weight: bold;background-color: yellow' }, 
+                    { C1: 'font-weight: bold;background-color: yellow' }, 
+                    { A2: 'text-align:left;' },
+                    { A3: 'text-align:left;' },
+                    { A4: 'text-align:left;' },
+                    { A5: 'text-align:left;' },
+                    { A6: 'text-align:left;' },
+                    { A7: 'font-weight: bold;background-color: yellow' },
+                    { B7: 'font-weight: bold;background-color: yellow' },
+                    { C7: 'font-weight: bold;background-color: yellow' },
+                    { A8: 'font-weight: bold;background-color: yellow' },
+                    { B8: 'font-weight: bold;background-color: yellow' },
+                    { C8: 'font-weight: bold;background-color: yellow' },
+                    { A9: 'text-align:left;' },
+                    { A10: 'text-align:left;' },
+                    { A11: 'text-align:left;' },
+                    { A12: 'text-align:left;' },
+                    { A13: 'text-align:left;' },
+                    { A14: 'text-align:left;' },
+                    { A15: 'text-align:left;' },
+                    { A16: 'text-align:left;' },
+                    { A17: 'text-align:left;' },
+                    { A18: 'text-align:left;' },
+                    { A19: 'text-align:left;' },
+                    { A20: 'text-align:left;' },
+                    { A21: 'text-align:left;' },
+                    { A22: 'text-align:left;' },
+                    { A23: 'text-align:left;' },
+                    { A24: 'text-align:left;' },
+                    { A25: 'text-align:left;' },
+                    { A26: 'font-weight: bold;background-color: yellow' },
+                    { B26: 'font-weight: bold;background-color: yellow' },
+                    { C26: 'font-weight: bold;background-color: yellow' },
+                    { A27: 'text-align:left;' },
+                    { A28: 'text-align:left;' },
+                    { A29: 'text-align:left;' },
+                    { A30: 'text-align:left;' },
+                    { A31: 'text-align:left;' },
+                    { A32: 'text-align:left;' },
+                    { A33: 'text-align:left;' },
+                    { A34: 'text-align:left;' },
+                    { A35: 'text-align:left;' },
+                    { A36: 'text-align:left;' },
+                    { A37: 'text-align:left;' },
+                    { A38: 'text-align:left;' },
+                    { A39: 'text-align:left;' },
+                    { A40: 'text-align:left;' },
+                    { A41: 'text-align:left;' },
+                    { A42: 'text-align:left;' },
+                    { A43: 'text-align:left;' },
+                    { A44: 'text-align:left;' },
+
+                ]
+            );
+
         }else{
             $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
                 colHeaders: [
-                    'Name Tag<br>RCD / GFCI',
-                    'Tipe',
-                    'Lokasi',
-                    'A',
-                    'B',
-                    'C',
-                    'D',
+                    'Inspection Test',
+                    'Satuan',
+                    'Status',
                 ],
-                colWidths: [200, 200, 200, 100, 100, 100, 100, 100, 100],
+                colWidths: [800, 100, 100, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80],
                 columns: [
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
-                    { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                    { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                    { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                    { tye: 'dropdown', source: ['-', 'Fail', 'Pass'] },
                 ],
             });
+            $('#my-spreadsheet').jexcel('setStyle', 
+                [
+                    { A1: 'font-weight: bold;background-color: yellow' }, 
+                    { B1: 'font-weight: bold;background-color: yellow' }, 
+                    { C1: 'font-weight: bold;background-color: yellow' }, 
+                    { A2: 'text-align:left;' },
+                    { A3: 'text-align:left;' },
+                    { A4: 'text-align:left;' },
+                    { A5: 'text-align:left;' },
+                    { A6: 'text-align:left;' },
+                    { A7: 'font-weight: bold;background-color: yellow' },
+                    { B7: 'font-weight: bold;background-color: yellow' },
+                    { C7: 'font-weight: bold;background-color: yellow' },
+                    { A8: 'font-weight: bold;background-color: yellow' },
+                    { B8: 'font-weight: bold;background-color: yellow' },
+                    { C8: 'font-weight: bold;background-color: yellow' },
+                    { A9: 'text-align:left;' },
+                    { A10: 'text-align:left;' },
+                    { A11: 'text-align:left;' },
+                    { A12: 'text-align:left;' },
+                    { A13: 'text-align:left;' },
+                    { A14: 'text-align:left;' },
+                    { A15: 'text-align:left;' },
+                    { A16: 'text-align:left;' },
+                    { A17: 'text-align:left;' },
+                    { A18: 'text-align:left;' },
+                    { A19: 'text-align:left;' },
+                    { A20: 'text-align:left;' },
+                    { A21: 'text-align:left;' },
+                    { A22: 'text-align:left;' },
+                    { A23: 'text-align:left;' },
+                    { A24: 'text-align:left;' },
+                    { A25: 'text-align:left;' },
+                    { A26: 'font-weight: bold;background-color: yellow' },
+                    { B26: 'font-weight: bold;background-color: yellow' },
+                    { C26: 'font-weight: bold;background-color: yellow' },
+                    { A27: 'text-align:left;' },
+                    { A28: 'text-align:left;' },
+                    { A29: 'text-align:left;' },
+                    { A30: 'text-align:left;' },
+                    { A31: 'text-align:left;' },
+                    { A32: 'text-align:left;' },
+                    { A33: 'text-align:left;' },
+                    { A34: 'text-align:left;' },
+                    { A35: 'text-align:left;' },
+                    { A36: 'text-align:left;' },
+                    { A37: 'text-align:left;' },
+                    { A38: 'text-align:left;' },
+                    { A39: 'text-align:left;' },
+                    { A40: 'text-align:left;' },
+                    { A41: 'text-align:left;' },
+                    { A42: 'text-align:left;' },
+                    { A43: 'text-align:left;' },
+                    { A44: 'text-align:left;' },
+
+                ]
+            );
         }
     }
 
     $("#pabrik").change(function () {
-        station_refresh();
+        equipment_refresh();
     });
-    $("#station").change(function () {
+    $("#equipment").change(function () {
         ajax_refresh();
     });
     // $("#tahun").change(function () {
@@ -199,11 +234,11 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: SITE_URL+"acm/simpan",
+            url: SITE_URL+"job_aid/j18/a0a1_save",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
+                equipment: $("#equipment").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -214,8 +249,8 @@ $(document).ready(function () {
         });
     });
 
-    function station_refresh(){
-        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+    function equipment_refresh(){
+        $("#equipment").load(SITE_URL + "attachment/list_attachment_dropdown/" + $("#pabrik").val() + "/J18" ,
             function(responseTxt,statusTxt,xhr){
                 if(statusTxt == "success"){
                     // alert("success");
@@ -230,10 +265,10 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: SITE_URL + "acm/load",
+            url: SITE_URL + "job_aid/j18/a0a1_load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
+                equipment: $("#equipment").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -289,7 +324,7 @@ $(document).ready(function () {
         $("#tanggal").val(d.toString());
     }
 
-    station_refresh();
+    equipment_refresh();
     ajax_refresh();
     // ajax_refresh();
 

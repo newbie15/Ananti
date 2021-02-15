@@ -14,16 +14,33 @@ $(document).ready(function () {
         ["f) Permit kerja untuk inspeksi IR sudah lengkap dan sesuai","-",""],
         ["g) Supervisor area yang sedang bertugas sudah diinformasi terkait inspeksi","-",""],
         ["h) Emissivity kamera IR sudah di atur (rekomendasi 0.98)","-",""],
-        ["i) Calibration Check kamera IR sudah dilakukan","-",""]
-        // ["Sedang","",""],
-        // ["Casing dan fin radiator transformer","",""],
-        // ["a) Level Oli pada Conservator Tank (>= 50% batas atas radiator)","%",""],
+        ["i) Calibration Check kamera IR sudah dilakukan","-",""],
+        ["Sedang","",""],
+        ["Tegangan kerja","Volt",""],
+        ["Tipe Breaker","",""],
+        ["Model Breaker","",""],
+        ["Beban kerja phase R","Amp",""],
+        ["Beban kerja phase S","Amp",""],
+        ["Beban kerja phase T","Amp",""],
+        ["Informasi Lain","",""],
+        ["a) Temperatur absolut  pada kompartemen koneksi input","Kabel Phase R",""],
+        ["b) Temperatur absolut  pada kompartemen koneksi input","Kabel Phase S",""],
+        ["c) Temperatur absolut  pada kompartemen koneksi input","Kabel Phase T",""],
+        ["d) Temperatur absolut  pada kompartemen koneksi output","Kabel Phase R",""],
+        ["e) Temperatur absolut  pada kompartemen koneksi output","Kabel Phase S",""],
+        ["f) Temperatur absolut  pada kompartemen koneksi output","Kabel Phase T",""],
+        ["g) Temperatur absolut  pada kompartemen Bus koneksi input","Bus Phase R",""],
+        ["h) Temperatur absolut  pada kompartemen Bus koneksi input","Bus Phase S",""],
+        ["i) Temperatur absolut  pada kompartemen Bus koneksi input","Bus Phase T",""],
+        ["j) Temperatur absolut  pada kompartemen Bus koneksi output","Bus Phase R",""],
+        ["k) Temperatur absolut  pada kompartemen Bus koneksi output","Bus Phase S",""],
+        ["l) Temperatur absolut  pada kompartemen Bus koneksi output","Bus Phase T",""],
+        ["m) Temperatur absolut  Breaker/Main Fuse/LBS","",""],
+        ["n) Temperatur absolut  Surge Protection (Jika ada)","",""],
+        ["o) Temperature absolut pada kompartemen LV (Tegangan auxiliary)","",""]
         // ["b) Suhu transformer  bagian atas (profil sirip/fin radiator)","C",""],
         // ["c) Suhu transformer  bagian bawah (profil sirip/fin radiator)","C",""],
         // ["Cable/Conductor","",""],
-        // ["a) Suhu Tegangan Tinggi phase R","C",""],
-        // ["b) Suhu Tegangan Tinggi phase S","C",""],
-        // ["c) Suhu Tegangan Tinggi phase T","C",""],
         // ["d) Suhu Tegangan Rendah Phase R","C",""],
         // ["e) Suhu Tegangan Rendah Phase S","C",""],
         // ["f) Suhu Tegangan Rendah Phase T","C",""]        
@@ -38,93 +55,7 @@ $(document).ready(function () {
         console.log(data);
         if (data.length<1) {
             console.log("yes kurang dari 1");
-            $.ajax({
-                method: "POST",
-                url: SITE_URL + "unit/ajax_default_list",
-                data: {
-                    id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
-                }
-            }).done(function (msg) {
-                console.log("ini refresh");
 
-                console.log(msg);
-                data = JSON.parse(msg);
-                console.log(data);
-                x = data;
-                $('#my-spreadsheet').html("");
-                $('#my-spreadsheet').jexcel({
-                    data: data_default,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Inspection Test',
-                        'Satuan',
-                        'Status',
-                    ],
-                    colWidths: [850,100,100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                    ],
-                });
-                $('#my-spreadsheet2').html("");
-                $('#my-spreadsheet2').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        "Name Tag Breaker",
-                        "Name Tag Panel",
-                        "Lokasi",
-                        "Max Temp (oC)",
-                        "Status",
-                    ],
-                    colWidths: [200,200,200,120,100,75,75,75,75,75,75,75,100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                    ],
-                });
-                $('#my-spreadsheet').jexcel('setStyle', 
-                    [
-                        { A1: 'font-weight: bold;background-color: yellow' }, 
-                        { B1: 'font-weight: bold;background-color: yellow' }, 
-                        { C1: 'font-weight: bold;background-color: yellow' }, 
-                        { A2: 'text-align:left;' },
-                        { A3: 'text-align:left;' },
-                        { A4: 'text-align:left;' },
-                        { A5: 'text-align:left;' },
-                        { A6: 'text-align:left;' },
-                        { A7: 'text-align:left;' },
-                        { A8: 'text-align:left;' },
-                        { A9: 'text-align:left;' },
-                        { A10: 'text-align:left;' },
-                        { A11: 'font-weight: bold;background-color: yellow' },
-                        { B11: 'font-weight: bold;background-color: yellow' },
-                        { C11: 'font-weight: bold;background-color: yellow' },
-                        { A12: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { B12: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { C12: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { A13: 'text-align:left;' },
-                        { A14: 'text-align:left;' },
-                        { A15: 'text-align:left;' },
-                        { A16: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { B16: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { C16: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { A17: 'text-align:left;' },
-                        { A18: 'text-align:left;' },
-                        { A19: 'text-align:left;' },
-                        { A20: 'text-align:left;' },
-                        { A21: 'text-align:left;' },
-                        { A22: 'text-align:left;' },
-                    ]
-                );
-
-            });
-        }else{
             $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data_default,
@@ -134,28 +65,161 @@ $(document).ready(function () {
                     'Satuan',
                     'Status',
                 ],
-                colWidths: [600,100,100,75,75,75,75,75,75,75,75,75,100],
+                colWidths: [850,120,100],
                 columns: [
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
                 ],
             });
+            // $('#my-spreadsheet2').html("");
+            // $('#my-spreadsheet2').jexcel({
+            //     data: data,
+            //     allowInsertColumn: false,
+            //     colHeaders: [
+            //         "Name Tag Breaker",
+            //         "Name Tag Panel",
+            //         "Lokasi",
+            //         "Max Temp (oC)",
+            //         "Status",
+            //     ],
+            //     colWidths: [200,200,200,120,100,75,75,75,75,75,75,75,100],
+            //     columns: [
+            //         { type: 'text' },
+            //         { type: 'text' },
+            //         { type: 'text' },
+            //         { type: 'text' },
+            //         { type: 'text' },
+            //     ],
+            // });
             $('#my-spreadsheet').jexcel('setStyle', 
                 [
-                    { A1: 'font-weight: bold' }, 
-                    // { B2: 'background-color: yellow;' }, 
-                    // { C1: 'text-decoration: underline;' }, 
-                    { A: 'text-align:left;' }
+                    { A1: 'font-weight: bold;background-color: yellow' }, 
+                    { B1: 'font-weight: bold;background-color: yellow' }, 
+                    { C1: 'font-weight: bold;background-color: yellow' }, 
+                    { A2: 'text-align:left;' },
+                    { A3: 'text-align:left;' },
+                    { A4: 'text-align:left;' },
+                    { A5: 'text-align:left;' },
+                    { A6: 'text-align:left;' },
+                    { A7: 'text-align:left;' },
+                    { A8: 'text-align:left;' },
+                    { A9: 'text-align:left;' },
+                    { A10: 'text-align:left;' },
+                    { A11: 'font-weight: bold;background-color: yellow' },
+                    { B11: 'font-weight: bold;background-color: yellow' },
+                    { C11: 'font-weight: bold;background-color: yellow' },
+                    { A12: 'text-align:left;' },
+                    { A13: 'text-align:left;' },
+                    { A14: 'text-align:left;' },
+                    { A15: 'text-align:left;' },
+                    { A16: 'text-align:left;' },
+                    { A17: 'text-align:left;' },
+                    { A18: 'text-align:left;' },
+                    { A19: 'text-align:left;' },
+                    { A20: 'text-align:left;' },
+                    { A21: 'text-align:left;' },
+                    { A22: 'text-align:left;' },
+                    { A23: 'text-align:left;' },
+                    { A24: 'text-align:left;' },
+                    { A25: 'text-align:left;' },
+                    { A26: 'text-align:left;' },
+                    { A27: 'text-align:left;' },
+                    { A28: 'text-align:left;' },
+                    { A29: 'text-align:left;' },
+                    { A30: 'text-align:left;' },
+                    { A31: 'text-align:left;' },
+                    { A32: 'text-align:left;' },
+                    { A33: 'text-align:left;' },
+                ]
+            );
+
+
+        }else{
+            $('#my-spreadsheet').html("");
+            $('#my-spreadsheet').jexcel({
+                data: data,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Inspection Test',
+                    'Satuan',
+                    'Status',
+                ],
+                colWidths: [850,120,100],
+                columns: [
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                ],
+            });
+            // $('#my-spreadsheet2').html("");
+            // $('#my-spreadsheet2').jexcel({
+            //     data: data,
+            //     allowInsertColumn: false,
+            //     colHeaders: [
+            //         "Name Tag Breaker",
+            //         "Name Tag Panel",
+            //         "Lokasi",
+            //         "Max Temp (oC)",
+            //         "Status",
+            //     ],
+            //     colWidths: [200,200,200,120,100,75,75,75,75,75,75,75,100],
+            //     columns: [
+            //         { type: 'text' },
+            //         { type: 'text' },
+            //         { type: 'text' },
+            //         { type: 'text' },
+            //         { type: 'text' },
+            //     ],
+            // });
+            $('#my-spreadsheet').jexcel('setStyle', 
+                [
+                    { A1: 'font-weight: bold;background-color: yellow' }, 
+                    { B1: 'font-weight: bold;background-color: yellow' }, 
+                    { C1: 'font-weight: bold;background-color: yellow' }, 
+                    { A2: 'text-align:left;' },
+                    { A3: 'text-align:left;' },
+                    { A4: 'text-align:left;' },
+                    { A5: 'text-align:left;' },
+                    { A6: 'text-align:left;' },
+                    { A7: 'text-align:left;' },
+                    { A8: 'text-align:left;' },
+                    { A9: 'text-align:left;' },
+                    { A10: 'text-align:left;' },
+                    { A11: 'font-weight: bold;background-color: yellow' },
+                    { B11: 'font-weight: bold;background-color: yellow' },
+                    { C11: 'font-weight: bold;background-color: yellow' },
+                    { A12: 'text-align:left;' },
+                    { A13: 'text-align:left;' },
+                    { A14: 'text-align:left;' },
+                    { A15: 'text-align:left;' },
+                    { A16: 'text-align:left;' },
+                    { A17: 'text-align:left;' },
+                    { A18: 'text-align:left;' },
+                    { A19: 'text-align:left;' },
+                    { A20: 'text-align:left;' },
+                    { A21: 'text-align:left;' },
+                    { A22: 'text-align:left;' },
+                    { A23: 'text-align:left;' },
+                    { A24: 'text-align:left;' },
+                    { A25: 'text-align:left;' },
+                    { A26: 'text-align:left;' },
+                    { A27: 'text-align:left;' },
+                    { A28: 'text-align:left;' },
+                    { A29: 'text-align:left;' },
+                    { A30: 'text-align:left;' },
+                    { A31: 'text-align:left;' },
+                    { A32: 'text-align:left;' },
+                    { A33: 'text-align:left;' },
                 ]
             );
         }
     }
 
     $("#pabrik").change(function () {
-        station_refresh();
+        equipment_refresh();
     });
-    $("#station").change(function () {
+    $("#equipment").change(function () {
         ajax_refresh();
     });
     // $("#tahun").change(function () {
@@ -174,11 +238,11 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: SITE_URL+"acm/simpan",
+            url: SITE_URL+"job_aid/j18/a3_save",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
+                equipment: $("#equipment").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -189,8 +253,8 @@ $(document).ready(function () {
         });
     });
 
-    function station_refresh(){
-        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+    function equipment_refresh(){
+        $("#equipment").load(SITE_URL + "attachment/list_attachment_dropdown/" + $("#pabrik").val() + "/J18" ,
             function(responseTxt,statusTxt,xhr){
                 if(statusTxt == "success"){
                     // alert("success");
@@ -205,10 +269,10 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: SITE_URL + "acm/load",
+            url: SITE_URL + "job_aid/j18/a3_load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
+                equipment: $("#equipment").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -264,7 +328,7 @@ $(document).ready(function () {
         $("#tanggal").val(d.toString());
     }
 
-    station_refresh();
+    equipment_refresh();
     ajax_refresh();
     // ajax_refresh();
 

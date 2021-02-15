@@ -139,11 +139,63 @@ class J18 extends CI_Controller {
 		}
 		$output['dropdown_pabrik'] .= "/<select>";		
 
-		$output['dropdown_station'] = "<select id=\"station\"></select>";
+		$output['dropdown_equipment'] = "<select id=\"equipment\"></select>";
 
 		$this->load->view('header',$header);
 		$this->load->view('job_aid/content-j18-a0a1',$output);
 		$this->load->view('footer',$footer);		
+	}
+
+	public function a0a1_save(){
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$equipment = $_REQUEST['equipment'];
+
+		$this->db->query("DELETE FROM `job_aid_j18_a0a1` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' AND equipment = '$equipment'");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		$datax = array();
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'tanggal' => $tanggal,
+				'equipment' => $equipment,
+				'inspection_test' => $value[0],
+				'satuan' => $value[1],
+				'status' => $value[2],
+			);
+			// print_r($data);
+			// $this->db->insert('master_unit', $data);
+			if($value[0]!=""){
+				// $this->db->insert('m_planing', $data);
+				array_push($datax,$data);
+			}
+		}
+		print_r($datax);
+		$this->db->insert_batch('job_aid_j18_a0a1', $datax);
+	}
+
+	public function a0a1_load(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$equipment = $_REQUEST['equipment'];
+
+		$query = $this->db->query("SELECT * FROM job_aid_j18_a0a1
+		WHERE id_pabrik = '$id_pabrik'
+		AND tanggal = '$tanggal'
+		AND equipment = '$equipment'
+		;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->inspection_test;
+			$d[$i][1] = $row->satuan;
+			$d[$i++][2] = $row->status;
+		}
+		echo json_encode($d);
 	}
 
 	public function a3()
@@ -194,11 +246,64 @@ class J18 extends CI_Controller {
 		}
 		$output['dropdown_pabrik'] .= "/<select>";
 
-		$output['dropdown_station'] = "<select id=\"station\"></select>";
+		$output['dropdown_equipment'] = "<select id=\"equipment\"></select>";
 
 		$this->load->view('header',$header);
 		$this->load->view('job_aid/content-j18-a3',$output);
 		$this->load->view('footer',$footer);
 	}
+
+	public function a3_save(){
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$equipment = $_REQUEST['equipment'];
+
+		$this->db->query("DELETE FROM `job_aid_j18_a3` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' AND equipment = '$equipment'");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		$datax = array();
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'tanggal' => $tanggal,
+				'equipment' => $equipment,
+				'inspection_test' => $value[0],
+				'satuan' => $value[1],
+				'status' => $value[2],
+			);
+			// print_r($data);
+			// $this->db->insert('master_unit', $data);
+			if($value[0]!=""){
+				// $this->db->insert('m_planing', $data);
+				array_push($datax,$data);
+			}
+		}
+		print_r($datax);
+		$this->db->insert_batch('job_aid_j18_a3', $datax);
+	}
+
+	public function a3_load(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$equipment = $_REQUEST['equipment'];
+
+		$query = $this->db->query("SELECT * FROM job_aid_j18_a3
+		WHERE id_pabrik = '$id_pabrik'
+		AND tanggal = '$tanggal'
+		AND equipment = '$equipment'
+		;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->inspection_test;
+			$d[$i][1] = $row->satuan;
+			$d[$i++][2] = $row->status;
+		}
+		echo json_encode($d);
+	}
+
 
 }
