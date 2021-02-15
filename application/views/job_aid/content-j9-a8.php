@@ -11,7 +11,9 @@
         </ul>
       </h1>
       <ol class="breadcrumb">
-        <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-danger" id="tambah" href="#modal-j9" role="button" data-toggle="modal">
+          <i class="fa fa-plus"></i> Tambah
+        </a>
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -20,14 +22,24 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-
+      <div class="modal fade in" id="modal-j9" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Daftar Attachment dengan Job Aid J9</h4>
+            </div>
+            <div class="modal-body">
+              <table id="dt-table-j9" class="display" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          Station :
-          <?php echo $dropdown_station; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>
