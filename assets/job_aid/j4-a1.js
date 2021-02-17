@@ -301,7 +301,7 @@ $(document).ready(function () {
                     sp = sp[0].split(" - ");
                     console.log(sp);
                     goto_data(sp[0],sp[1]);
-                    $('#modal-list-j4-a1').modal('toggle');
+                    // $('#modal-list-j4-a1').modal('toggle');
                 }
             });
         });

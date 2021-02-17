@@ -192,7 +192,7 @@ $(document).ready(function(){
         var index = 0;
         dx = $('#my-spreadsheet').jexcel('getData');
         console.log(dx);
-        if (dx[0][0] == "") { // kosong
+        if (dx[0][0] == "" && dx[0][1] == "") { // kosong
             dx[0][0] = "";
             dx[0][1] = nu;
             dx[0][2] = na;
