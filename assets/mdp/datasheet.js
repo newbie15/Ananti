@@ -6,7 +6,7 @@ $(document).ready(function(){
     function ajax_refresh(){
         $.ajax({
             method: "POST",
-            url: SIDE_URL + "datasheet/list_datasheet/" + $("#pabrik").val(),
+            url: SITE_URL + "datasheet/list_datasheet/" + $("#pabrik").val(),
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
@@ -33,7 +33,7 @@ $(document).ready(function(){
                         // width: "50px",
                         render: function (data, type, row, meta) {
                             if (type === 'display') {
-                                var link = SIDE_URL + "datasheet/load/" + encodeURIComponent(data);
+                                var link = SITE_URL + "datasheet/load/" + encodeURIComponent(data);
                                 data = '<a href="' + link + '" onclick="window.open(\'' + link + '\', \'_blank\', \'fullscreen=yes\');return false;">' + data + '</a > ';
                             }
                             return data;
@@ -44,7 +44,7 @@ $(document).ready(function(){
                         width: "50px",
                         render: function (data, type, row, meta) {
                             if (type === 'display') {
-                                var link = SIDE_URL + "datasheet/delete/" + encodeURIComponent(data);
+                                var link = SITE_URL + "datasheet/delete/" + encodeURIComponent(data);
                                 data = '<a href="' + link + '" onclick="return confirm(\'anda yakin menghapus ini ?\')">' + '<i class="fa fa-fw fa-trash-o"></i> delete' + '</a > ';
                             }
                             return data;
