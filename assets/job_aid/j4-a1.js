@@ -251,6 +251,62 @@ $(document).ready(function () {
         }
     }
 
+    $("#list").click(function () {
+        refresh_modal_list();
+    });    
+
+    function goto_data(tgl,eq) {
+        dttg = tgl.split('-');
+
+        $("#tahun").val(dttg[0]);
+        $("#bulan").val(dttg[1]);
+        $("#tanggal").val(dttg[2]);
+        $("#equipment").val(eq);
+        $("#modal-list-j4-a1").modal("hide");
+
+        ajax_refresh();
+    }
+
+    function refresh_modal_list() {
+        $.ajax({
+            method: "POST",
+            url: SITE_URL + "job_aid/j4/a1_list/" + $("#pabrik").val() +"/J4",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+            }
+        }).done(function (msg) {
+            x = [];
+            y = [];
+            data = JSON.parse(msg);
+
+            for (i in data) {
+                console.log(data[i].daftar);
+                x.push(data[i].daftar);
+                y[i] = x;
+                x = [];
+            }
+            // console.log(y);
+            var table = $('#dt-table-list-j4').DataTable({
+                destroy: true,
+                data: y,
+                columns: [{
+                    title: "Daftar"
+                }, ]
+            });
+
+            $('.dataTable tbody').on('click', 'tr', function () {
+                if (table.row(this).data() != undefined) {
+                    console.log('API row values : ', table.row(this).data());
+                    var sp = table.row(this).data();
+                    sp = sp[0].split(" - ");
+                    console.log(sp);
+                    goto_data(sp[0],sp[1]);
+                    $('#modal-list-j4-a1').modal('toggle');
+                }
+            });
+        });
+    }
+
     $("#pabrik").change(function () {
         equipment_refresh();
     });

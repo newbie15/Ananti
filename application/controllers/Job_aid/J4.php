@@ -311,6 +311,40 @@ class J4 extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function a1_list(){
+		$id_pabrik = $this->uri->segment(4, 0);
+		$job_aid = $this->uri->segment(4, 0);
+
+		$query = $this->db->query("SELECT DISTINCT 
+		CONCAT(
+			job_aid_j4_a1.tanggal, ' - ' ,
+			job_aid_j4_a1.equipment, ' - <br>' ,
+			master_station.nama, ' | ' , 
+			master_unit.nama, ' | ' ,
+			master_sub_unit.nama
+			) AS daftar
+		FROM job_aid_j4_a1,master_station,master_unit,master_sub_unit
+		
+		WHERE
+			master_station.id_pabrik = '$id_pabrik'
+		AND	master_station.nomor = SUBSTRING_INDEX(SUBSTRING_INDEX(job_aid_j4_a1.equipment,'.',2),'.',-1)
+		AND master_station.id_pabrik = SUBSTRING_INDEX(job_aid_j4_a1.equipment,'.',1)
+		
+		AND master_unit.nomor = SUBSTRING_INDEX(SUBSTRING_INDEX(job_aid_j4_a1.equipment,'.',3),'.',-1)
+		AND master_unit.id_pabrik = SUBSTRING_INDEX(job_aid_j4_a1.equipment,'.',1)
+		AND master_unit.id_station = SUBSTRING_INDEX(SUBSTRING_INDEX(job_aid_j4_a1.equipment,'.',2),'.',-1)
+		
+		AND master_sub_unit.nomor = SUBSTRING_INDEX(SUBSTRING_INDEX(job_aid_j4_a1.equipment,'.',4),'.',-1)
+		AND master_sub_unit.id_pabrik = SUBSTRING_INDEX(job_aid_j4_a1.equipment,'.',1)
+		AND master_sub_unit.id_station = SUBSTRING_INDEX(SUBSTRING_INDEX(job_aid_j4_a1.equipment,'.',2),'.',-1)
+		AND master_sub_unit.id_unit = SUBSTRING_INDEX(SUBSTRING_INDEX(job_aid_j4_a1.equipment,'.',3),'.',-1)
+		
+		;");
+
+
+		echo(json_encode($query->result()));
+	}
+
 	public function a3()
 	{
 		$output['content'] = "test";
