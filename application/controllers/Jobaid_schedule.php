@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Workexecution extends CI_Controller {
+class Jobaid_schedule extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -25,7 +25,7 @@ class Workexecution extends CI_Controller {
 		$this->load->database();
 		$this->load->helper('url');
 
-		$this->load->library('grocery_CRUD');
+		// $this->load->library('grocery_CRUD');
 	}
 	
 	public function index()
@@ -33,7 +33,7 @@ class Workexecution extends CI_Controller {
 				// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Work Execution";
+		$output['main_title'] = "Data Job Aid Schedule";
 		
 		$header['title'] = "Pabrik";
 		$header['css_files'] = [
@@ -47,70 +47,71 @@ class Workexecution extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-
-			base_url("assets/mdp/workexecution.js"),
+			base_url("assets/mdp/jobaid_schedule.js"),
 		];
 		
 		$output['content'] = '';
 
-		$crud = new grocery_CRUD();
- 
-		// Seriously! This is all the code you need!
-		$crud->set_table('aux_work_execution'); 
-		$output['crud'] = $crud->render();
-		$header['crud'] = $output['crud']->css_files; 
-		$footer['crud'] = $output['crud']->js_files; 		
+		$query = $this->db->query("SELECT * FROM aux_job_aid order by nomor asc;");
 
+		$output['dropdown_jobaid']= "<select id=\"jobaid\">";
+		
+		foreach ($query->result() as $row)
+		{
+			$output['dropdown_jobaid'] = $output['dropdown_jobaid']."<option value=\"$row->nomor\">".$row->nomor." | ".$row->nama."</option>";
+		}
+		$output['dropdown_jobaid'] .= "/<select>";
+		
 		$this->load->view('header',$header);
-		$this->load->view('content-work-execution',$output);
+		$this->load->view('content-job-aid-schedule',$output);
 		$this->load->view('footer',$footer);
 	}
 
 	public function load()
 	{
-		$query = $this->db->query("SELECT nama,kapasitas,area FROM aux_work_execution;");
+		$job_aid = $_REQUEST['jobaid'];
+		$query = $this->db->query("SELECT * FROM aux_job_aid_schedule WHERE job_aid = '$job_aid'");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i][0] = $row->nama; // access attributes
-			$d[$i][1] = $row->kapasitas; // or methods defined on the 'User' class
-			$d[$i++][2] = $row->area; // or methods defined on the 'User' class
+			$d[$i][0] = $row->work_exec; // access attributes
+			$d[$i][1] = $row->frequency; // or methods defined on the 'User' class
+			$d[$i][2] = $row->compliance; // or methods defined on the 'User' class
+			$d[$i++][3] = $row->scope; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
-
-
 	}
 
 	public function simpan()
 	{
-		$this->db->query("TRUNCATE TABLE `master_pabrik`");
+		$job_aid = $_REQUEST['jobaid'];
+		$this->db->query("DELETE FROM`aux_job_aid_schedule` WHERE `job_aid` = '$job_aid';");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
-			// $this->db->insert
 			$data = array(
-				'nama' => $value[0],
-				'kapasitas' => $value[1],
-				'area' => $value[2],
-				// 'date' => 'My date'
+				'job_aid' => $job_aid,
+				'work_exec' => $value[0],
+				'frequency' => $value[1],
+				'compliance' => $value[2],
+				'scope' => $value[3],
 			);
-			// print_r($data);
-			$this->db->insert('aux_work_execution', $data);
+			$this->db->insert('aux_job_aid_schedule', $data);
 		}
 	}
 
 	public function ajax()
 	{
-		$query = $this->db->query("SELECT `nama`,`mode`,`nomor` FROM aux_work_execution order by nomor asc");
+		$query = $this->db->query("SELECT `nama`,`kategori`,`nomor` FROM aux_job_aid;");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 				// $d[$i][0] = $row->nama; // access attributes
-				$a['name'] = $row->nomor." - [".$row->mode."] ".$row->nama;
+				$a['name'] = $row->nomor." - [".$row->kategori."] ".$row->nama;
 				$a['id'] = $row->nomor;
 				$d[$i++] = $a;
 		}
