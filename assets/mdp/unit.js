@@ -64,12 +64,13 @@ $(document).ready(function(){
             console.log(msg);
             data = JSON.parse(msg);
             console.log(data);
+            $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
                 onchange: handler,
-                tableOverflow: true,
-                tableHeight: '400px',
+                // tableOverflow: true,
+                // tableHeight: '400px',
                 colHeaders: [
                     'Unit Type',
                     'Unit Numbering',

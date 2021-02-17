@@ -154,8 +154,16 @@ class Sub_unit extends CI_Controller {
 
         $this->db->select('concat(master_sub_unit.id_station,"_",master_station.nama,"-",id_unit,"_",master_unit.nama,"-",master_sub_unit.nomor,"_",master_sub_unit.nama) as list');
 		$this->db->from('master_sub_unit ,master_unit ,master_station');
+
 		$this->db->where("master_sub_unit.id_pabrik",$id_pabrik);
-		$this->db->where("master_sub_unit.id_station = master_station.nomor");
+
+		// $this->db->where("master_station.id_pabrik = master_station.nomor");
+		
+		$this->db->where("master_unit.id_pabrik = master_station.id_pabrik");
+		$this->db->where("master_unit.id_station = master_station.nomor");
+
+		$this->db->where("master_sub_unit.id_pabrik = master_unit.id_pabrik");
+		$this->db->where("master_sub_unit.id_station = master_unit.id_station");
 		$this->db->where("master_sub_unit.id_unit = master_unit.nomor");
 		// $this->db->where("id_pabrik",$id_pabrik);
         $query = $this->db->get();
