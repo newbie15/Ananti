@@ -154,7 +154,7 @@ class J52 extends CI_Controller {
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 		$equipment = $_REQUEST['equipment'];
 
-		$this->db->query("DELETE FROM `job_aid_j52_a0` where id_pabrik = '$pabrik' AND id_station = '$statid_station' AND tanggal = '$tanggal' AND equipment = '$equipment'");
+		$this->db->query("DELETE FROM `job_aid_j52_a0` where id_pabrik = '$pabrik' AND id_station = '$station' AND tanggal = '$tanggal' AND equipment = '$equipment'");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		$datax = array();
