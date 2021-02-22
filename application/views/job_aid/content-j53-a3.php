@@ -28,8 +28,8 @@
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          Station :
-          <?php echo $dropdown_station; ?>
+          Equipment :
+          <?php echo $dropdown_equipment; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>
@@ -91,13 +91,12 @@
 						width: 100%;
 						overflow: auto;
 					">
-            <p id='my-content'>
-              <?php echo $content; ?>
-            </p>
+            <div id='my-spreadsheet'>
+            </div>
+            <br/>
+            <div id='my-spreadsheet2'>
+            </div>
           </div>
-          <hr/> 
-            <strong>Comment :</strong><br/>
-            <?php echo $comment; ?>
         </div>
       </div>
       <!-- /.row -->

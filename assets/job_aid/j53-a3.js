@@ -3,37 +3,39 @@ $(document).ready(function () {
         $(".n_success").show();
         $(".n_success").fadeOut(3000);
     }
-
+    
     data_default = [
         ["Sebelum","",""],
-        ["a) Isi dan tanda tangan personel terkait pada Pre-Job Hazard Analysis (PJHA)","",""],
-        ["b) Lock-Out/Tag Out (LOTO)","",""],
-        ["c) Anda adalah Teknisi Elektrik","",""],
-        ["d) Kondisi lokasi kerja aman ","",""],
-        ["e) Personel tidak masuk ke Zona Energized (teraliri listrik)","",""],
-        ["f) Kondisi sudah De-energized total (tidak ada arus listrik mengalir)","",""],
-        
+        ["a) Teknisi sudah melalui pelatihan terkait bahaya kelistrikan khusus","-",""],
+        ["b) Personel sudah memakai PPE yang sesuai","-",""],
+        ["c) Anda adalah Teknisi Elektrik","-",""],
+        ["d) Kondisi lokasi kerja dan cuaca aman","-",""],
+        ["e) safety briefing dan job review sebelum inspeksi sudah dilakukan","-",""],
+        ["f) Permit kerja untuk inspeksi IR sudah lengkap dan sesuai","-",""],
+        ["g) Supervisor area yang sedang bertugas sudah diinformasi terkait inspeksi","-",""],
+        ["h) Emissivity kamera IR sudah di atur (rekomendasi 0.98)","-",""],
+        ["i) Calibration Check kamera IR sudah dilakukan","-",""],
+        ["j) Generator sudah beban maksimum (normal kondisi) sesuai proses selama > 2 jam","-",""],
+
         ["Sedang","",""],
+        ["Informasi Generator","",""],
         ["Kode Aset","",""],
         ["Tag Name","",""],
         ["Maker/Brand","",""],
         ["Type/Model","",""],
+        ["Lokasi","",""],
+        ["Deskripsi Peralatan","",""],
+        ["Tegangan Kerja","Volt",""],
 
-        ["a) Tipe Gulungan pada generator","",""],
-        ["b) Suhu lingkungan sekitar","(oC)",""],
-        ["c) Kelembapan lingkungan sekitar","(RH)",""],
-        ["d) Resistansi Exciter yang terukur","M Ohm",""],
-        ["e) Resistansi Stator U-V","M Ohm",""],
-        ["f) Resistansi Stator V-W","M Ohm",""],
-        ["g) Resistansi Stator W-U","M Ohm",""],
-
-        ["Perhitungan rata-rata resistansi stator","",""],
-        ["Variasi Resistansi stator","%",""],
-        ["Status Variasi","",""],
-        
+        ["a) Thermography area Bearing","",""],
+        ["Bearing Alternator DE","C",""],
+        ["Bearing Alternator NDE","C",""],
+        ["b) Thermography area kipas","C",""],
+        ["c) Thermography Permukaan panas pada generator","C",""],
+        ["d) Thermography kabel dari generator","C",""],
+        ["e) Thermography area space heater selama kondisi standby","C",""],
     ];
-    
-    data = [];
+
     data_detail = [];
     keterangan_detail = [];
     data_detailnya = "";
@@ -43,6 +45,7 @@ $(document).ready(function () {
         console.log(data);
         if (data.length<1) {
             console.log("yes kurang dari 1");
+
             $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data_default,
@@ -59,7 +62,6 @@ $(document).ready(function () {
                     { type: 'text' },
                 ],
             });
-
             $('#my-spreadsheet').jexcel('setStyle', 
                 [
                     { A1: 'font-weight: bold;background-color: yellow' }, 
@@ -71,23 +73,35 @@ $(document).ready(function () {
                     { A5: 'text-align:left;' },
                     { A6: 'text-align:left;' },
                     { A7: 'text-align:left;' },
-                    { A8: 'font-weight: bold;background-color: yellow' },
-                    { B8: 'font-weight: bold;background-color: yellow' },
-                    { C8: 'font-weight: bold;background-color: yellow' },
+                    { A8: 'text-align:left;' },
                     { A9: 'text-align:left;' },
                     { A10: 'text-align:left;' },
                     { A11: 'text-align:left;' },
-                    { A12: 'text-align:left;' },
-                    { A13: 'text-align:left;' },
+                    { A12: 'font-weight: bold;background-color: yellow' },
+                    { B12: 'font-weight: bold;background-color: yellow' },
+                    { C12: 'font-weight: bold;background-color: yellow' },
+                    { A13: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { B13: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { C13: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    // { A12: 'text-align:left;' },
+                    // { A13: 'text-align:left;' },
                     { A14: 'text-align:left;' },
                     { A15: 'text-align:left;' },
                     { A16: 'text-align:left;' },
+                    // { A16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    // { B16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    // { C16: 'text-align:left;font-weight: bold;background-color: yellow' },
                     { A17: 'text-align:left;' },
                     { A18: 'text-align:left;' },
                     { A19: 'text-align:left;' },
                     { A20: 'text-align:left;' },
                     { A21: 'text-align:left;' },
                     { A22: 'text-align:left;' },
+                    { A23: 'text-align:left;' },
+                    { A24: 'text-align:left;' },
+                    { A25: 'text-align:left;' },
+                    { A26: 'text-align:left;' },
+                    { A27: 'text-align:left;' },
                 ]
             );
 
@@ -108,7 +122,6 @@ $(document).ready(function () {
                     { type: 'text' },
                 ],
             });
-
             $('#my-spreadsheet').jexcel('setStyle', 
                 [
                     { A1: 'font-weight: bold;background-color: yellow' }, 
@@ -120,23 +133,35 @@ $(document).ready(function () {
                     { A5: 'text-align:left;' },
                     { A6: 'text-align:left;' },
                     { A7: 'text-align:left;' },
-                    { A8: 'font-weight: bold;background-color: yellow' },
-                    { B8: 'font-weight: bold;background-color: yellow' },
-                    { C8: 'font-weight: bold;background-color: yellow' },
+                    { A8: 'text-align:left;' },
                     { A9: 'text-align:left;' },
                     { A10: 'text-align:left;' },
                     { A11: 'text-align:left;' },
-                    { A12: 'text-align:left;' },
-                    { A13: 'text-align:left;' },
+                    { A12: 'font-weight: bold;background-color: yellow' },
+                    { B12: 'font-weight: bold;background-color: yellow' },
+                    { C12: 'font-weight: bold;background-color: yellow' },
+                    { A13: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { B13: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { C13: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    // { A12: 'text-align:left;' },
+                    // { A13: 'text-align:left;' },
                     { A14: 'text-align:left;' },
                     { A15: 'text-align:left;' },
                     { A16: 'text-align:left;' },
+                    // { A16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    // { B16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    // { C16: 'text-align:left;font-weight: bold;background-color: yellow' },
                     { A17: 'text-align:left;' },
                     { A18: 'text-align:left;' },
                     { A19: 'text-align:left;' },
                     { A20: 'text-align:left;' },
                     { A21: 'text-align:left;' },
                     { A22: 'text-align:left;' },
+                    { A23: 'text-align:left;' },
+                    { A24: 'text-align:left;' },
+                    { A25: 'text-align:left;' },
+                    { A26: 'text-align:left;' },
+                    { A27: 'text-align:left;' },
                 ]
             );
         }
@@ -164,7 +189,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: SITE_URL+"job_aid/j53/a12_save",
+            url: SITE_URL+"job_aid/j53/a3_save",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
@@ -190,12 +215,12 @@ $(document).ready(function () {
                 }
             }
         );
-    }
+    }   
 
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: SITE_URL + "job_aid/j53/a12_load",
+            url: SITE_URL + "job_aid/j53/a3_load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 equipment: $("#equipment").val(),

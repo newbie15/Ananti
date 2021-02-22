@@ -3,6 +3,58 @@ $(document).ready(function () {
         $(".n_success").show();
         $(".n_success").fadeOut(3000);
     }
+
+    data_default = [
+        ["Sebelum","",""],
+        ["a) Isi, tanda tangan dan sudah di briefing personel terkait pada Pre-Job Hazard Analysis (PJHA)","",""],
+        ["b) Personel sudah menggunakan PPE yang sesuai","",""],
+        ["c) perimeter peringatan sudah terpasang","",""],
+        ["d) Data Test Insulasi sebelumnya ada (sebagai referensi)","",""],
+        ["e) Permit kerja lengkap dan sesuai","",""],
+        ["f) Supervisor yang bertugas sudah diinformasi aktivitas tes insulasi","",""],
+        ["g) Lock-Out/Tag Out (LOTO)","",""],
+        ["h) Pastikan Kabel Control (AVR, Droop dan komponen elektronik lain) sudah di lepas","",""],
+
+        ["Sedang","",""],
+        ["Informasi Generator","",""],
+        ["Kode Aset","",""],
+        ["Tag Name","",""],
+        ["Maker/Brand","",""],
+        ["Type/Model","",""],
+        
+        ["Pengukuran Alternator Line-Ground","",""],
+        ["Insulation Resistance Menit 0.5","",""],
+        ["Insulation Resistance Menit 1","",""],
+        ["Insulation Resistance Menit 2","",""],
+        ["Insulation Resistance Menit 3","",""],
+        ["Insulation Resistance Menit 4","",""],
+        ["Insulation Resistance Menit 5","",""],
+        ["Insulation Resistance Menit 6","",""],
+        ["Insulation Resistance Menit 7","",""],
+        ["Insulation Resistance Menit 8","",""],
+        ["Insulation Resistance Menit 9","",""],
+        ["Insulation Resistance Menit 10","",""],
+        ["Polarisasi Index (PI 2) *IR10/IR1","",""],
+        ["DAR *IR1/IR0.5","",""],
+        ["Pengukuran Exciter Line-Ground","",""],
+        ["Insulation Resistance Menit 0.5","",""],
+        ["Insulation Resistance Menit 1","",""],
+        ["Insulation Resistance Menit 2","",""],
+        ["Insulation Resistance Menit 3","",""],
+        ["Insulation Resistance Menit 4","",""],
+        ["Insulation Resistance Menit 5","",""],
+        ["Insulation Resistance Menit 6","",""],
+        ["Insulation Resistance Menit 7","",""],
+        ["Insulation Resistance Menit 8","",""],
+        ["Insulation Resistance Menit 9","",""],
+        ["Insulation Resistance Menit 10","",""],
+        ["Polarisasi Index (PI 2) *IR10/IR1","",""],
+        ["DAR *IR1/IR0.5","",""],
+        ["Sesudah","",""],
+        ["a) pembatas atau peringatan bahaya sudah di amankan/kembalikan","",""],
+        ["b) Kabel sudah di terminasi dan di kunci torsi ulang sesuai standar","",""],
+    ];
+    
     data = [];
     data_detail = [];
     keterangan_detail = [];
@@ -13,179 +65,175 @@ $(document).ready(function () {
         console.log(data);
         if (data.length<1) {
             console.log("yes kurang dari 1");
-            $.ajax({
-                method: "POST",
-                url: SITE_URL + "unit/ajax_default_list",
-                data: {
-                    id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
-                }
-            }).done(function (msg) {
-                console.log("ini refresh");
-
-                console.log(msg);
-                data = JSON.parse(msg);
-                console.log(data);
-                x = data;
-                $('#my-spreadsheet').html("");
-                $('#my-spreadsheet').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Nametag<br>Breaker',
-                        'Nametag<br>Panel',
-                        'Tegangan<br>Nominal',
-                        'Humidity<br>(RH)',
-                        'Temp<br>(C)',
-                        'R-S',
-                        'S-T',
-                        'T-R',
-                        'R-E',
-                        'S-E',
-                        'T-E',
-                        'STD<br>Aman',
-                        'Status',
-                    ],
-                    colWidths: [300, 100, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-
-                    ],
-                });
-
-                $('#my-spreadsheet2').html("");
-                $('#my-spreadsheet2').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Nametag<br>Breaker',
-                        'Nametag<br>Panel',
-                        'Tegangan<br>Nominal',
-                        'Humidity<br>(RH)',
-                        'Temp<br>(C)',
-                        'R-S',
-                        'S-T',
-                        'T-R',
-                        'R-E',
-                        'S-E',
-                        'T-E',
-                        'STD<br>Aman',
-                        'Status',
-                    ],
-                    colWidths: [300, 100, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-
-                    ],
-                });
-
-                $('#my-spreadsheet3').html("");
-                $('#my-spreadsheet3').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Nametag<br>Breaker',
-                        'Nametag<br>Panel',
-                        'Tegangan<br>Nominal',
-                        'Humidity<br>(RH)',
-                        'Temp<br>(C)',
-                        'R-S',
-                        'S-T',
-                        'T-R',
-                        'R-E',
-                        'S-E',
-                        'T-E',
-                        'STD<br>Aman',
-                        'Status',
-                    ],
-                    colWidths: [300, 100, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-
-                    ],
-                });                
-
+            $('#my-spreadsheet').html("");
+            $('#my-spreadsheet').jexcel({
+                data: data_default,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Inspection Test',
+                    'Satuan',
+                    'Status',
+                ],
+                colWidths: [650,100,300],
+                columns: [
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                ],
             });
+
+            $('#my-spreadsheet').jexcel('setStyle', 
+                [
+                    { A1: 'font-weight: bold;background-color: yellow' }, 
+                    { B1: 'font-weight: bold;background-color: yellow' }, 
+                    { C1: 'font-weight: bold;background-color: yellow' }, 
+                    { A2: 'text-align:left;' },
+                    { A3: 'text-align:left;' },
+                    { A4: 'text-align:left;' },
+                    { A5: 'text-align:left;' },
+                    { A6: 'text-align:left;' },
+                    { A7: 'text-align:left;' },
+                    { A8: 'text-align:left;' },
+                    { A9: 'text-align:left;' },
+                    { A10: 'font-weight: bold;background-color: yellow' },
+                    { B10: 'font-weight: bold;background-color: yellow' },
+                    { C10: 'font-weight: bold;background-color: yellow' },
+                    { A11: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { B11: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { C11: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { A12: 'text-align:left;' },
+                    { A13: 'text-align:left;' },
+                    { A14: 'text-align:left;' },
+                    { A15: 'text-align:left;' },
+                    { A16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { B16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { C16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { A17: 'text-align:left;' },
+                    { A18: 'text-align:left;' },
+                    { A19: 'text-align:left;' },
+                    { A20: 'text-align:left;' },
+                    { A21: 'text-align:left;' },
+                    { A22: 'text-align:left;' },
+                    { A23: 'text-align:left;' },
+                    { A24: 'text-align:left;' },
+                    { A25: 'text-align:left;' },
+                    { A26: 'text-align:left;' },
+                    { A27: 'text-align:left;' },
+                    { A28: 'text-align:left;' },
+                    { A29: 'text-align:left;' },
+                    { A30: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { B30: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { C30: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { A31: 'text-align:left;' },
+                    { A32: 'text-align:left;' },
+                    { A33: 'text-align:left;' },
+                    { A34: 'text-align:left;' },
+                    { A35: 'text-align:left;' },
+                    { A36: 'text-align:left;' },
+                    { A37: 'text-align:left;' },
+                    { A38: 'text-align:left;' },
+                    { A39: 'text-align:left;' },
+                    { A40: 'text-align:left;' },
+                    { A41: 'text-align:left;' },
+                    { A42: 'text-align:left;' },
+                    { A43: 'text-align:left;' },
+                    { A44: 'font-weight: bold;background-color: yellow' },
+                    { B44: 'font-weight: bold;background-color: yellow' },
+                    { C44: 'font-weight: bold;background-color: yellow' },
+                    { A45: 'text-align:left;' },
+                    { A46: 'text-align:left;' },
+
+                ]
+            );
+
         }else{
             $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
                 colHeaders: [
-                    'Tipe Peralatan<br>Tagname',
-                    'ID',
-                    'Tegangan<br>Nominal',
-                    'Humidity<br>(RH)',
-                    'Temp<br>(C)',
-                    'R-S',
-                    'S-T',
-                    'T-R',
-                    'R-E',
-                    'S-E',
-                    'T-E',
-                    'STD<br>Aman',
+                    'Inspection Test',
+                    'Satuan',
                     'Status',
                 ],
-                colWidths: [300, 100, 100, 75, 75, 60, 60, 60, 60, 60, 60, 60, 100],
+                colWidths: [650,100,300],
                 columns: [
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'dropdown', source: ["<=250","251-1K","1K-2.5K","2.5K-5K","5K-8K","8K-15K","15K-25K","25K-34.5K",">34.5K"] },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
                 ],
             });
+
+            $('#my-spreadsheet').jexcel('setStyle', 
+                [
+                    { A1: 'font-weight: bold;background-color: yellow' }, 
+                    { B1: 'font-weight: bold;background-color: yellow' }, 
+                    { C1: 'font-weight: bold;background-color: yellow' }, 
+                    { A2: 'text-align:left;' },
+                    { A3: 'text-align:left;' },
+                    { A4: 'text-align:left;' },
+                    { A5: 'text-align:left;' },
+                    { A6: 'text-align:left;' },
+                    { A7: 'text-align:left;' },
+                    { A8: 'text-align:left;' },
+                    { A9: 'text-align:left;' },
+                    { A10: 'font-weight: bold;background-color: yellow' },
+                    { B10: 'font-weight: bold;background-color: yellow' },
+                    { C10: 'font-weight: bold;background-color: yellow' },
+                    { A11: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { B11: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { C11: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { A12: 'text-align:left;' },
+                    { A13: 'text-align:left;' },
+                    { A14: 'text-align:left;' },
+                    { A15: 'text-align:left;' },
+                    { A16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { B16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { C16: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { A17: 'text-align:left;' },
+                    { A18: 'text-align:left;' },
+                    { A19: 'text-align:left;' },
+                    { A20: 'text-align:left;' },
+                    { A21: 'text-align:left;' },
+                    { A22: 'text-align:left;' },
+                    { A23: 'text-align:left;' },
+                    { A24: 'text-align:left;' },
+                    { A25: 'text-align:left;' },
+                    { A26: 'text-align:left;' },
+                    { A27: 'text-align:left;' },
+                    { A28: 'text-align:left;' },
+                    { A29: 'text-align:left;' },
+                    { A30: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { B30: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { C30: 'text-align:left;font-weight: bold;background-color: yellow' },
+                    { A31: 'text-align:left;' },
+                    { A32: 'text-align:left;' },
+                    { A33: 'text-align:left;' },
+                    { A34: 'text-align:left;' },
+                    { A35: 'text-align:left;' },
+                    { A36: 'text-align:left;' },
+                    { A37: 'text-align:left;' },
+                    { A38: 'text-align:left;' },
+                    { A39: 'text-align:left;' },
+                    { A40: 'text-align:left;' },
+                    { A41: 'text-align:left;' },
+                    { A42: 'text-align:left;' },
+                    { A43: 'text-align:left;' },
+                    { A44: 'font-weight: bold;background-color: yellow' },
+                    { B44: 'font-weight: bold;background-color: yellow' },
+                    { C44: 'font-weight: bold;background-color: yellow' },
+                    { A45: 'text-align:left;' },
+                    { A46: 'text-align:left;' },
+
+                ]
+            );          
         }
     }
 
     $("#pabrik").change(function () {
-        station_refresh();
+        equipment_refresh();
     });
-    $("#station").change(function () {
+    $("#equipment").change(function () {
         ajax_refresh();
     });
     // $("#tahun").change(function () {
@@ -204,11 +252,11 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: SITE_URL+"acm/simpan",
+            url: SITE_URL+"job_aid/j53/a8_save",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
+                equipment: $("#equipment").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -219,8 +267,8 @@ $(document).ready(function () {
         });
     });
 
-    function station_refresh(){
-        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+    function equipment_refresh(){
+        $("#equipment").load(SITE_URL + "attachment/list_attachment_dropdown/" + $("#pabrik").val() + "/J53/",
             function(responseTxt,statusTxt,xhr){
                 if(statusTxt == "success"){
                     // alert("success");
@@ -235,10 +283,10 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: SITE_URL + "acm/load",
+            url: SITE_URL + "job_aid/j53/a8_load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
+                equipment: $("#equipment").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -294,7 +342,7 @@ $(document).ready(function () {
         $("#tanggal").val(d.toString());
     }
 
-    station_refresh();
+    equipment_refresh();
     ajax_refresh();
     // ajax_refresh();
 
