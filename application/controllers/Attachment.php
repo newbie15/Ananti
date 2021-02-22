@@ -238,6 +238,48 @@ class Attachment extends CI_Controller {
 		}
 	}
 
+	public function list_attachment_dropdown_no_station(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$job_aid = urldecode($this->uri->segment(4, 0));
+		$id_station = $this->uri->segment(5, 0);
+
+		$query = $this->db->query("SELECT
+		CONCAT(
+			master_attachment.id_pabrik,'.',
+			master_attachment.id_station,'.',
+			master_attachment.id_unit,'.',
+			master_attachment.id_sub_unit,'.',
+			master_attachment.nomor
+		) AS nomor,
+		master_attachment.attachment, 
+		master_station.nama as nama_station,
+		master_unit.nama as nama_unit,
+		master_sub_unit.nama as nama_sub_unit
+
+		FROM master_attachment, master_station, master_unit, master_sub_unit
+		WHERE master_attachment.id_pabrik = '$id_pabrik' 
+		AND job_aid LIKE '%$job_aid%'
+		AND master_station.nomor = '$id_station'
+
+		AND master_station.nomor = master_attachment.id_station 
+		AND	master_station.id_pabrik = master_attachment.id_pabrik 
+		
+		AND	master_unit.nomor = master_attachment.id_unit 
+		AND	master_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_unit.id_station = master_attachment.id_station 
+		
+		AND	master_sub_unit.nomor = master_attachment.id_sub_unit 
+		AND	master_sub_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_sub_unit.id_station = master_attachment.id_station 
+		AND	master_sub_unit.id_unit = master_attachment.id_unit
+		;");
+
+		foreach ($query->result() as $row)
+		{
+			echo "<option value=\"$row->nomor\">".$row->nama_unit." | ".$row->nama_sub_unit." | ".$row->attachment."</option>";
+		}
+	}
+
 	public function list_attachment_modal(){
 		$id_pabrik = $this->uri->segment(3, 0);
 		$job_aid = $this->uri->segment(4, 0);
@@ -257,6 +299,45 @@ class Attachment extends CI_Controller {
 		) as daftar
 		FROM master_attachment, master_station, master_unit, master_sub_unit
 		WHERE master_attachment.id_pabrik = '$id_pabrik' 
+		AND job_aid LIKE '%$job_aid%'
+		
+		AND master_station.nomor = master_attachment.id_station 
+		AND	master_station.id_pabrik = master_attachment.id_pabrik 
+		
+		AND	master_unit.nomor = master_attachment.id_unit 
+		AND	master_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_unit.id_station = master_attachment.id_station 
+		
+		AND	master_sub_unit.nomor = master_attachment.id_sub_unit 
+		AND	master_sub_unit.id_pabrik = master_attachment.id_pabrik 
+		AND	master_sub_unit.id_station = master_attachment.id_station 
+		AND	master_sub_unit.id_unit = master_attachment.id_unit
+		;");
+
+		echo(json_encode($query->result()));
+	}
+
+	public function list_attachment_modal_no_station(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$id_station = $this->uri->segment(4, 0);
+		$job_aid = $this->uri->segment(5, 0);
+
+		$query = $this->db->query("SELECT
+		CONCAT(
+				master_attachment.id_pabrik,'.',
+				master_attachment.id_station,'.',
+				master_attachment.id_unit,'.',
+				master_attachment.id_sub_unit,'.',
+				master_attachment.nomor
+			,' - ',
+			master_station.nama,' | ',
+			master_unit.nama,' | ',
+			master_sub_unit.nama,' | ',
+			master_attachment.attachment
+		) as daftar
+		FROM master_attachment, master_station, master_unit, master_sub_unit
+		WHERE master_attachment.id_pabrik = '$id_pabrik' 
+		AND master_attachment.id_station = '$id_station' 
 		AND job_aid LIKE '%$job_aid%'
 		
 		AND master_station.nomor = master_attachment.id_station 
