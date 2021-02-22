@@ -315,7 +315,7 @@ class J61 extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Avaibility Cricital Machine";
 		
-		$header['title'] = "J61 | Contact Resistance Test";
+		$header['title'] = "J61 | A9 Contact Resistance Test";
 		$header['css_files'] = [
 			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
