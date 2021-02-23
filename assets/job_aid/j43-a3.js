@@ -3,133 +3,100 @@ $(document).ready(function () {
         $(".n_success").show();
         $(".n_success").fadeOut(3000);
     }
-    
-    data_default = [
-        ["Sebelum","",""],
-        ["a) Teknisi sudah melalui pelatihan terkait bahaya kelistrikan khusus","-",""],
-        ["b) Personel sudah memakai PPE untuk perlindungan listrik kejut dan arc flash","-",""],
-        ["c) Anda adalah Teknisi Elektrik","-",""],
-        ["d) Kondisi lokasi kerja dan cuaca aman","-",""],
-        ["e) safety briefing dan job review sebelum inspeksi sudah dilakukan","-",""],
-        ["f) Permit kerja untuk inspeksi IR sudah lengkap dan sesuai","-",""],
-        ["g) Supervisor area yang sedang bertugas sudah diinformasi terkait inspeksi","-",""],
-        ["h) Emissivity kamera IR sudah di atur (rekomendasi 0.98)","-",""],
-        ["i) Calibration Check kamera IR sudah dilakukan","-",""],
-        ["Sedang","",""],
-        ["Casing dan fin radiator transformer","",""],
-        ["a) Level Oli pada Conservator Tank (>= 50% batas atas radiator)","%",""],
-        ["b) Suhu transformer  bagian atas (profil sirip/fin radiator)","C",""],
-        ["c) Suhu transformer  bagian bawah (profil sirip/fin radiator)","C",""],
-        ["Cable/Conductor","",""],
-        ["a) Suhu Tegangan Tinggi phase R","C",""],
-        ["b) Suhu Tegangan Tinggi phase S","C",""],
-        ["c) Suhu Tegangan Tinggi phase T","C",""],
-        ["d) Suhu Tegangan Rendah Phase R","C",""],
-        ["e) Suhu Tegangan Rendah Phase S","C",""],
-        ["f) Suhu Tegangan Rendah Phase T","C",""]        
-    ];
-
+    data = [];
     data_detail = [];
     keterangan_detail = [];
     data_detailnya = "";
 
     function refresh(data) {
-        console.log("refresh data");
-        console.log(data);
-        if (data.length<1) {
-            console.log("yes kurang dari 1");
-            $.ajax({
-                method: "POST",
-                url: SITE_URL + "unit/ajax_default_list",
-                data: {
-                    id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
-                }
-            }).done(function (msg) {
-                console.log("ini refresh");
 
-                console.log(msg);
-                data = JSON.parse(msg);
-                console.log(data);
-                x = data;
-                $('#my-spreadsheet').html("");
-                $('#my-spreadsheet').jexcel({
-                    data: data_default,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Inspection Test',
-                        'Satuan',
-                        'Status',
-                    ],
-                    colWidths: [850,100,100,75,75,75,75,75,75,75,75,75,100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                    ],
-                });
-                $('#my-spreadsheet').jexcel('setStyle', 
-                    [
-                        { A1: 'font-weight: bold;background-color: yellow' }, 
-                        { B1: 'font-weight: bold;background-color: yellow' }, 
-                        { C1: 'font-weight: bold;background-color: yellow' }, 
-                        { A2: 'text-align:left;' },
-                        { A3: 'text-align:left;' },
-                        { A4: 'text-align:left;' },
-                        { A5: 'text-align:left;' },
-                        { A6: 'text-align:left;' },
-                        { A7: 'text-align:left;' },
-                        { A8: 'text-align:left;' },
-                        { A9: 'text-align:left;' },
-                        { A10: 'text-align:left;' },
-                        { A11: 'font-weight: bold;background-color: yellow' },
-                        { B11: 'font-weight: bold;background-color: yellow' },
-                        { C11: 'font-weight: bold;background-color: yellow' },
-                        { A12: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { B12: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { C12: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { A13: 'text-align:left;' },
-                        { A14: 'text-align:left;' },
-                        { A15: 'text-align:left;' },
-                        { A16: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { B16: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { C16: 'text-align:left;font-weight: bold;background-color: yellow' },
-                        { A17: 'text-align:left;' },
-                        { A18: 'text-align:left;' },
-                        { A19: 'text-align:left;' },
-                        { A20: 'text-align:left;' },
-                        { A21: 'text-align:left;' },
-                        { A22: 'text-align:left;' },
-                    ]
-                );
+        $('#my-spreadsheet').html("");
+        $('#my-spreadsheet').jexcel({
+            data: data,
+            allowInsertColumn: false,
+            colHeaders: [
+                'Name Tag<br>Circuit Breaker',
+                'Lokasi / Panel',
+                'Tipe',
+                'Tegangan',
+                'Temperature',
+                'Status',
+            ],
+            colWidths: [200, 600, 200, 100, 100, 100, 100, 100, 100, 100],
+            columns: [
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+            ],
+        });
 
-            });
-        }else{
-            $('#my-spreadsheet').html("");
-            $('#my-spreadsheet').jexcel({
-                data: data_default,
-                allowInsertColumn: false,
-                colHeaders: [
-                    'Inspection Test',
-                    'Satuan',
-                    'Status',
-                ],
-                colWidths: [600,100,100,75,75,75,75,75,75,75,75,75,100],
-                columns: [
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                ],
-            });
-            $('#my-spreadsheet').jexcel('setStyle', 
-                [
-                    { A1: 'font-weight: bold' }, 
-                    // { B2: 'background-color: yellow;' }, 
-                    // { C1: 'text-decoration: underline;' }, 
-                    { A: 'text-align:left;' }
-                ]
-            );
+ 
+    }
+
+    $("#tambah").click(function () {
+        refresh_modal();
+    });    
+
+    function add(id, lo) {
+        var sama = 0;
+        var index = 0;
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+        if (dx[0][0] == "") { // kosong
+            dx[0][0] = id;
+            dx[0][1] = lo;
+        } else { // isi satu
+            dx.push([id, lo, "", "", "", ""]);
         }
+
+        refresh(dx);
+
+        $("#wo").val("");
+        $("#modal-j43").modal("hide");
+
+        updatescroll();
+    }
+
+    function refresh_modal() {
+        $.ajax({
+            method: "POST",
+            url: SITE_URL + "attachment/list_attachment_modal/" + $("#pabrik").val() +"/J43",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+            }
+        }).done(function (msg) {
+            x = [];
+            y = [];
+            data = JSON.parse(msg);
+
+            for (i in data) {
+                console.log(data[i].daftar);
+                x.push(data[i].daftar);
+                y[i] = x;
+                x = [];
+            }
+            // console.log(y);
+            var table = $('#dt-table-j43').DataTable({
+                destroy: true,
+                data: y,
+                columns: [{
+                    title: "Daftar"
+                }, ]
+            });
+
+            $('.dataTable tbody').on('click', 'tr', function () {
+                if (table.row(this).data() != undefined) {
+                    console.log('API row values : ', table.row(this).data());
+                    var sp = table.row(this).data();
+                    sp = sp[0].split(" - ");
+                    add(sp[0],sp[1]);
+                    $('#modal-j43').modal('toggle');
+                }
+            });
+        });
     }
 
     $("#pabrik").change(function () {
@@ -154,11 +121,11 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: SITE_URL+"acm/simpan",
+            url: SITE_URL+"job_aid/j43/a3_save",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
+                // station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -170,25 +137,25 @@ $(document).ready(function () {
     });
 
     function station_refresh(){
-        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
-            function(responseTxt,statusTxt,xhr){
-                if(statusTxt == "success"){
-                    // alert("success");
+        // $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        //     function(responseTxt,statusTxt,xhr){
+        //         if(statusTxt == "success"){
+        //             // alert("success");
                     ajax_refresh();
-                }else{
-                    // alert("gaagal");
-                }
-            }
-        );
+        //         }else{
+        //             // alert("gaagal");
+        //         }
+        //     }
+        // );
     }
 
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: SITE_URL + "acm/load",
+            url: SITE_URL + "job_aid/j43/a3_load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
+                // id_station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
