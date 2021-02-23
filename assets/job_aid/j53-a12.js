@@ -22,12 +22,12 @@ $(document).ready(function () {
         ["a) Tipe Gulungan pada generator","",""],
         ["b) Suhu lingkungan sekitar","(oC)",""],
         ["c) Kelembapan lingkungan sekitar","(RH)",""],
-        ["d) Resistansi Exciter yang terukur","M Ohm",""],
-        ["e) Resistansi Stator U-V","M Ohm",""],
-        ["f) Resistansi Stator V-W","M Ohm",""],
-        ["g) Resistansi Stator W-U","M Ohm",""],
+        ["d) Resistansi Exciter yang terukur","Ohm",""],
+        ["e) Resistansi Stator U-V","Ohm",""],
+        ["f) Resistansi Stator V-W","Ohm",""],
+        ["g) Resistansi Stator W-U","Ohm",""],
 
-        ["Perhitungan rata-rata resistansi stator","",""],
+        ["Perhitungan rata-rata resistansi stator","Ohm",""],
         ["Variasi Resistansi stator","%",""],
         ["Status Variasi","",""],
         
