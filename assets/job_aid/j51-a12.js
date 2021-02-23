@@ -3,6 +3,36 @@ $(document).ready(function () {
         $(".n_success").show();
         $(".n_success").fadeOut(3000);
     }
+
+    data_default = [
+        ["Sebelum","",""],
+        ["a) Isi dan tanda tangan personel terkait pada Pre-Job Hazard Analysis (PJHA)","",""],
+        ["b) Lock-Out/Tag Out (LOTO)","",""],
+        ["c) Anda adalah Teknisi Elektrik","",""],
+        ["d) Kondisi lokasi kerja aman ","",""],
+        ["e) Personel tidak masuk ke Zona Energized (teraliri listrik)","",""],
+        ["f) Kondisi sudah De-energized total (tidak ada arus listrik mengalir)","",""],
+        
+        ["Sedang","",""],
+        ["Kode Aset","",""],
+        ["Tag Name","",""],
+        ["Maker/Brand","",""],
+        ["Type/Model","",""],
+
+        ["a) Tipe Gulungan pada generator","",""],
+        ["b) Suhu lingkungan sekitar","(oC)",""],
+        ["c) Kelembapan lingkungan sekitar","(RH)",""],
+        ["d) Resistansi Exciter yang terukur","Ohm",""],
+        ["e) Resistansi Stator U-V","Ohm",""],
+        ["f) Resistansi Stator V-W","Ohm",""],
+        ["g) Resistansi Stator W-U","Ohm",""],
+
+        ["Perhitungan rata-rata resistansi stator","Ohm",""],
+        ["Variasi Resistansi stator","%",""],
+        ["Status Variasi","",""],
+        
+    ];
+    
     data = [];
     data_detail = [];
     keterangan_detail = [];
@@ -13,72 +43,109 @@ $(document).ready(function () {
         console.log(data);
         if (data.length<1) {
             console.log("yes kurang dari 1");
-            $.ajax({
-                method: "POST",
-                url: SITE_URL + "unit/ajax_default_list",
-                data: {
-                    id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
-                }
-            }).done(function (msg) {
-                console.log("ini refresh");
-
-                console.log(msg);
-                data = JSON.parse(msg);
-                console.log(data);
-                x = data;
-                $('#my-spreadsheet').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Tipe Peralatan<br>Tagname',
-                        'ID',
-                        'Point - Point',
-                        'Lokasi Earthing<br>Rod (MET)',
-                        'R (Ω)',
-                        'Status',
-                    ],
-                    colWidths: [300, 100, 300, 300, 75, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                    ],
-                });
-
-            });
-        }else{
+            $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
-                data: data,
+                data: data_default,
                 allowInsertColumn: false,
                 colHeaders: [
-                    'Tipe Peralatan<br>Tagname',
-                    'ID',
-                    'Point - Point',
-                    'Lokasi Earthing<br>Rod (MET)',
-                    'R (Ω)',
+                    'Inspection Test',
+                    'Satuan',
                     'Status',
                 ],
-                colWidths: [300, 100, 300, 300, 75, 100],
+                colWidths: [650,100,300],
                 columns: [
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
+                ],
+            });
+
+            $('#my-spreadsheet').jexcel('setStyle', 
+                [
+                    { A1: 'font-weight: bold;background-color: yellow' }, 
+                    { B1: 'font-weight: bold;background-color: yellow' }, 
+                    { C1: 'font-weight: bold;background-color: yellow' }, 
+                    { A2: 'text-align:left;' },
+                    { A3: 'text-align:left;' },
+                    { A4: 'text-align:left;' },
+                    { A5: 'text-align:left;' },
+                    { A6: 'text-align:left;' },
+                    { A7: 'text-align:left;' },
+                    { A8: 'font-weight: bold;background-color: yellow' },
+                    { B8: 'font-weight: bold;background-color: yellow' },
+                    { C8: 'font-weight: bold;background-color: yellow' },
+                    { A9: 'text-align:left;' },
+                    { A10: 'text-align:left;' },
+                    { A11: 'text-align:left;' },
+                    { A12: 'text-align:left;' },
+                    { A13: 'text-align:left;' },
+                    { A14: 'text-align:left;' },
+                    { A15: 'text-align:left;' },
+                    { A16: 'text-align:left;' },
+                    { A17: 'text-align:left;' },
+                    { A18: 'text-align:left;' },
+                    { A19: 'text-align:left;' },
+                    { A20: 'text-align:left;' },
+                    { A21: 'text-align:left;' },
+                    { A22: 'text-align:left;' },
+                ]
+            );
+
+        }else{
+            $('#my-spreadsheet').html("");
+            $('#my-spreadsheet').jexcel({
+                data: data,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Inspection Test',
+                    'Satuan',
+                    'Status',
+                ],
+                colWidths: [650,100,300],
+                columns: [
                     { type: 'text' },
                     { type: 'text' },
                     { type: 'text' },
                 ],
             });
+
+            $('#my-spreadsheet').jexcel('setStyle', 
+                [
+                    { A1: 'font-weight: bold;background-color: yellow' }, 
+                    { B1: 'font-weight: bold;background-color: yellow' }, 
+                    { C1: 'font-weight: bold;background-color: yellow' }, 
+                    { A2: 'text-align:left;' },
+                    { A3: 'text-align:left;' },
+                    { A4: 'text-align:left;' },
+                    { A5: 'text-align:left;' },
+                    { A6: 'text-align:left;' },
+                    { A7: 'text-align:left;' },
+                    { A8: 'font-weight: bold;background-color: yellow' },
+                    { B8: 'font-weight: bold;background-color: yellow' },
+                    { C8: 'font-weight: bold;background-color: yellow' },
+                    { A9: 'text-align:left;' },
+                    { A10: 'text-align:left;' },
+                    { A11: 'text-align:left;' },
+                    { A12: 'text-align:left;' },
+                    { A13: 'text-align:left;' },
+                    { A14: 'text-align:left;' },
+                    { A15: 'text-align:left;' },
+                    { A16: 'text-align:left;' },
+                    { A17: 'text-align:left;' },
+                    { A18: 'text-align:left;' },
+                    { A19: 'text-align:left;' },
+                    { A20: 'text-align:left;' },
+                    { A21: 'text-align:left;' },
+                    { A22: 'text-align:left;' },
+                ]
+            );
         }
     }
 
     $("#pabrik").change(function () {
-        station_refresh();
+        equipment_refresh();
     });
-    $("#station").change(function () {
+    $("#equipment").change(function () {
         ajax_refresh();
     });
     // $("#tahun").change(function () {
@@ -97,11 +164,11 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: SITE_URL+"acm/simpan",
+            url: SITE_URL+"job_aid/j51/a12_save",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
+                equipment: $("#equipment").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -112,8 +179,8 @@ $(document).ready(function () {
         });
     });
 
-    function station_refresh(){
-        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+    function equipment_refresh(){
+        $("#equipment").load(SITE_URL + "attachment/list_attachment_dropdown/" + $("#pabrik").val() + "/J51/",
             function(responseTxt,statusTxt,xhr){
                 if(statusTxt == "success"){
                     // alert("success");
@@ -128,10 +195,10 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: SITE_URL + "acm/load",
+            url: SITE_URL + "job_aid/j51/a12_load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
+                equipment: $("#equipment").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -187,7 +254,7 @@ $(document).ready(function () {
         $("#tanggal").val(d.toString());
     }
 
-    station_refresh();
+    equipment_refresh();
     ajax_refresh();
     // ajax_refresh();
 

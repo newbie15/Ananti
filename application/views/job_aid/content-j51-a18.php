@@ -5,15 +5,17 @@
       <h1>
         <ul class="nav nav-tabs">
           <li class=""><a href="<?php echo site_url("job_aid/j51") ?>" aria-expanded="true">J51</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j51/a0") ?>" aria-expanded="false">A0 - Visual Inspection</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j51/a3") ?>" aria-expanded="false">A3 - Infrared Inspection</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j51/a8") ?>" aria-expanded="false">A8 - Insulation Resistance Testing</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j51/a12") ?>" aria-expanded="false">A12 - Winding Resistance Testing</a></li>
-          <li class="active"><a href="<?php echo site_url("job_aid/j51/a18") ?>" aria-expanded="false">A18 - Grounding Continuity Testing</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j51/a0") ?>" aria-expanded="false">A0 - Visual</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j51/a3") ?>" aria-expanded="false">A3 - Infrared</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j51/a8") ?>" aria-expanded="false">A8 - Insulation Resistance</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j51/a12") ?>" aria-expanded="false">A12 - Winding Resistance</a></li>
+          <li class="active"><a href="<?php echo site_url("job_aid/j51/a18") ?>" aria-expanded="false">A18 - Grounding Continuity</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
-        <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-danger" id="tambah" href="#modal-j51" role="button" data-toggle="modal">
+          <i class="fa fa-plus"></i> Tambah
+        </a>
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -23,13 +25,24 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-
+      <div class="modal fade in" id="modal-j51" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Daftar Attachment dengan Job Aid J51</h4>
+            </div>
+            <div class="modal-body">
+              <table id="dt-table-j51" class="display" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          Station :
-          <?php echo $dropdown_station; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>
@@ -91,13 +104,12 @@
 						width: 100%;
 						overflow: auto;
 					">
-            <p id='my-content'>
-              <?php echo $content; ?>
-            </p>
+            <div id='my-spreadsheet'>
+            </div>
+            <br/>
+            <div id='my-spreadsheet2'>
+            </div>
           </div>
-          <hr/> 
-            <strong>Comment :</strong><br/>
-            <?php echo $comment; ?>
         </div>
       </div>
       <!-- /.row -->

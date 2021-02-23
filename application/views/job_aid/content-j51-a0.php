@@ -5,11 +5,11 @@
       <h1>
         <ul class="nav nav-tabs">
           <li class=""><a href="<?php echo site_url("job_aid/j51") ?>" aria-expanded="true">J51</a></li>
-          <li class="active"><a href="<?php echo site_url("job_aid/j51/a0") ?>" aria-expanded="false">A0 - Visual Inspection</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j51/a3") ?>" aria-expanded="false">A3 - Infrared Inspection</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j51/a8") ?>" aria-expanded="false">A8 - Insulation Resistance Testing</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j51/a12") ?>" aria-expanded="false">A12 - Winding Resistance Testing</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j51/a18") ?>" aria-expanded="false">A18 - Grounding Continuity Testing</a></li>
+          <li class="active"><a href="<?php echo site_url("job_aid/j51/a0") ?>" aria-expanded="false">A0 - Visual</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j51/a3") ?>" aria-expanded="false">A3 - Infrared</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j51/a8") ?>" aria-expanded="false">A8 - Insulation Resistance</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j51/a12") ?>" aria-expanded="false">A12 - Winding Resistance</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j51/a18") ?>" aria-expanded="false">A18 - Grounding Continuity</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
@@ -28,8 +28,8 @@
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          Station :
-          <?php echo $dropdown_station; ?>
+          Equipment :
+          <?php echo $dropdown_equipment; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>
@@ -91,13 +91,12 @@
 						width: 100%;
 						overflow: auto;
 					">
-            <p id='my-content'>
-              <?php echo $content; ?>
-            </p>
+            <div id='my-spreadsheet'>
+            </div>
+            <br/>
+            <div id='my-spreadsheet2'>
+            </div>
           </div>
-          <hr/> 
-            <strong>Comment :</strong><br/>
-            <?php echo $comment; ?>
         </div>
       </div>
       <!-- /.row -->
