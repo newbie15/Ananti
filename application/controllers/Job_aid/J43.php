@@ -96,7 +96,7 @@ class J43 extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Avaibility Cricital Machine";
 		
-		$header['title'] = "ACM";
+		$header['title'] = "J43 | A3 Visual Inspection";
 		$header['css_files'] = [
 			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
@@ -214,7 +214,7 @@ class J43 extends CI_Controller {
 		$output['content'] = "test";
 		$output['main_title'] = "Data Avaibility Cricital Machine";
 		
-		$header['title'] = "ACM";
+		$header['title'] = "J43 | A3 Infrared Inspection";
 		$header['css_files'] = [
 			base_url("assets/jexcel/v2.1.0/css/jquery.jexcel.css"),
 			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
