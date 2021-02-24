@@ -120,7 +120,7 @@ class Attachment extends CI_Controller {
 				'nomor' => $value[0],
 				'attachment' => ucwords($value[1]),
 				'cm' => ucwords($value[2]),
-				'job_aid' => $value[3],
+				'job_aid' => $value[3].";",
 				'work_exec' => $value[4],
 			);
 			// print_r($data);
