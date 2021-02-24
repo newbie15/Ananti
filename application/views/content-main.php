@@ -5,6 +5,12 @@
       <h1>
         Dashboard
         Pabrik : <?php echo $dropdown_pabrik ?>
+        <?php if (isset($dropdown_tahun)) { ?>
+          Tahun : <?php echo $dropdown_tahun ?>
+        <?php } ?>
+        <?php if (isset($dropdown_bulan)) { ?>
+          Bulan : <?php echo $dropdown_bulan ?>
+        <?php } ?>
 
       </h1>
       <ol class="breadcrumb">
@@ -16,7 +22,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <div class="row" id="all-site">
+      <div class="row" id="all-site" style="display:none">
         <div class="col-lg-6 col-xs-6">
           <b>Breakdown Total</b>
           <div id="bdt-all-site">table breakdown ada disini</div>
@@ -31,9 +37,14 @@
           <b>Work Order</b>
           <div id="wo-all-site">table wo ada disini</div>
         </div>
+        <div class="col-lg-12 col-xs-12">
+          <br />
+          <b>Pembuatan WO Planing Di ANANTI</b>
+          <div id="wo_planing"></div>
+        </div>
       </div>
 
-      <div id="per-site">
+      <div id="per-site" style="display:none">
         <div class="row">
           <div class="col-lg-2 col-xs-6">
             <!-- small box -->
