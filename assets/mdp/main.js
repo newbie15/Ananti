@@ -307,6 +307,32 @@ $(function () {
         });
     }
 
+    function emp_results(){
+        var demp = [
+            ["J4 Oil type Transformer, Oil-Filled >500 KVA (incl. OLTC)","A1",'10','5'],
+            ["","A2",'10','5'],
+            ["","A3",'47','39'],
+            ["","A4",'100','56'],
+        ];
+        $('#emp_result').jexcel({
+            data: demp,
+            allowInsertColumn: false,
+            colHeaders: [
+                'Job Aid','Work Execution','Plan','Real'
+            ],
+            colWidths: [400, 150, 100, 100, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, ],
+            columns: [
+                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                { type: 'text' },{ type: 'text' }
+            ]
+        });        
+    }
+
     function ho_stat_refresh(){
         $("#per-site").hide();
         $("#all-site").show();
@@ -314,6 +340,7 @@ $(function () {
         bdt_all_site_refresh();
         bdl_all_site_refresh();
         wo_planing_refresh();
+        emp_results();
         // bdu_all_site_refresh();
     }
 
@@ -332,6 +359,10 @@ $(function () {
         pabrik_refresh();
     }else{
         ho_stat_refresh();
+        console.log("ho_stat_refresh");
+        setTimeout(() => {
+            ho_stat_refresh();            
+        }, 1000);
     }
 
     var tgl = new Date();
@@ -346,5 +377,6 @@ $(function () {
     $("#tahun").html(shtml);
 
     $("#tahun").val(y.toString());
+
 
 });

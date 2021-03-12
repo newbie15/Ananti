@@ -42,6 +42,11 @@
           <b>Pembuatan WO Planing Di ANANTI</b>
           <div id="wo_planing"></div>
         </div>
+        <div class="col-lg-12 col-xs-12">
+          <br />
+          <b>Electrical Maintenance Program</b>
+          <div id="emp_result"></div>
+        </div>
       </div>
 
       <div id="per-site" style="display:none">
