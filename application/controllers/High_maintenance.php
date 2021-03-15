@@ -50,6 +50,7 @@ class High_maintenance extends CI_Controller {
 			base_url("assets/mdp/global.js"),
 			base_url("assets/adminlte/bower_components/Flot/jquery.flot.js"),
 			base_url("assets/adminlte/bower_components/Flot/jquery.flot.pie.js"),
+			base_url("assets/adminlte/bower_components/Flot/jquery.flot.categories.js"),
 			base_url("assets/jexcel/js/jexcel.js"),
 			base_url("assets/jexcel/js/jsuites.js"),
 			base_url("assets/mdp/high_maintenance.js"),
@@ -170,11 +171,9 @@ class High_maintenance extends CI_Controller {
 		// $query = $this->db->query("SELECT station, COUNT(station) as jumlah FROM `m_wo` WHERE `status`  = 'open' and id_pabrik = '$id_pabrik' GROUP by station");
 
 		if($bulan=="00"){
-			$query = $this->db->query("SELECT station, COUNT(station) as jumlah FROM `m_wo` WHERE `tanggal`  LIKE '%$tahun-%' and id_pabrik = '$id_pabrik' GROUP by station");
+			$query = $this->db->query("SELECT master_station.nama as station, COUNT(station) as jumlah FROM `master_station`,`m_wo` WHERE YEAR(`m_wo`.`tanggal`)  = '$tahun' AND `m_wo`.id_pabrik = '$id_pabrik' AND master_station.nomor = m_wo.station GROUP by `m_wo`.station ORDER BY jumlah DESC");
 		}else{
-			$query = $this->db->query("SELECT station, COUNT(station) as jumlah FROM `m_wo` WHERE `tanggal`  LIKE '%$tahun-".$bulan."-%' and id_pabrik = '$id_pabrik' GROUP by station");
-			// echo ("SELECT station, COUNT(station) as jumlah FROM `m_wo` WHERE `tanggal`  LIKE '%$tahun-".$bulan."-%' and id_pabrik = '$id_pabrik' GROUP by station");
-
+			$query = $this->db->query("SELECT master_station.nama as station, COUNT(station) as jumlah FROM `master_station`,`m_wo` WHERE YEAR(`m_wo`.`tanggal`)  = '$tahun' AND MONTH(`m_wo`.`tanggal`) = '$bulan' AND `m_wo`.id_pabrik = '$id_pabrik' AND master_station.nomor = m_wo.station  GROUP by `m_wo`.station ORDER BY jumlah DESC");
 		}
 		foreach ($query->result() as $row)
 		{

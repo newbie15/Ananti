@@ -91,39 +91,91 @@ $(document).ready(function(){
 
     function refresh_pie(dx){
         var dt = [];
+        var dtp = [];
+        var databar = [];
 
         console.log(dx);
         var i = 0;
 
+        var total = 0;
+        var persentase = 0;
+
         dx.forEach(element => {
-            dt[i] = {
-                label: element[0],
-                data: parseInt(element[1])
-            }
+            databar[i] = [element[0],parseInt(element[1])];
+            i++;
+
+            total += parseInt(element[1]);
+        });
+
+
+
+        dx.forEach(element => {
+            persentase = parseInt(element[1]) * 100 / total;
+
+            // dtp[i] = {
+            //     label: element[0],//+" - "+round(persentase,2)+"%",
+            //     data: persentase
+            // }
+            
+            dtp[i] = [element[0],persentase];
             i++;
         });
 
+        console.log(dtp);
+        console.log(databar);
+
+
         try {
-            $.plot('#donut-chart', dt, {
+            // $.plot('#donut-chart', dt, {
+            //     series: {
+            //         pie: {
+            //             show: true,
+            //             radius: 1,
+            //             label: {
+            //                 show: true,
+            //                 radius: 3 / 4,
+            //                 // formatter: labelFormatter,
+            //                 background: {
+            //                     opacity: 0.5,
+            //                     color: '#000'
+            //                 }
+            //             }
+            //         }
+            //     },
+            //     legend: {
+            //         show: false
+            //     }
+            // });
+
+            $.plot("#donut-chart", [ dtp ], {
                 series: {
-                    pie: {
+                    bars: {
                         show: true,
-                        radius: 1,
-                        label: {
-                            show: true,
-                            radius: 3 / 4,
-                            // formatter: labelFormatter,
-                            background: {
-                                opacity: 0.5,
-                                color: '#000'
-                            }
-                        }
+                        barWidth: 0.6,
+                        align: "center"
                     }
                 },
-                legend: {
-                    show: false
+                xaxis: {
+                    mode: "categories",
+                    tickLength: 0
                 }
             });
+
+
+            $.plot("#bar-chart", [ databar ], {
+                series: {
+                    bars: {
+                        show: true,
+                        barWidth: 0.6,
+                        align: "center"
+                    }
+                },
+                xaxis: {
+                    mode: "categories",
+                    tickLength: 0
+                }
+            });
+    
         } catch (error) {
             console.log(error.toString());
         }
