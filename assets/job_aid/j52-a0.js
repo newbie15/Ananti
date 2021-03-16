@@ -4,6 +4,8 @@ $(document).ready(function () {
         $(".n_success").fadeOut(3000);
     }
 
+    // var BASE_UPLOAD = $("form.dropzone").attr("action");
+
     data_default = [
         ["Sebelum","",""],
         ["a) Isi dan tanda tangan personel terkait pada Pre-Job Hazard Analysis (PJHA)","",""],
@@ -216,6 +218,68 @@ $(document).ready(function () {
         }
     }
 
+    function update_session(){
+        if($("#equipment").val()==null){
+            setTimeout(() => {
+                alert("tidak ada equipment terpilih");
+                $("#modal-upload").modal('hide');
+            },500);
+        }else{
+            $.ajax({
+                method: "POST",
+                url: SITE_URL+"job_aid/j52/a0_session",
+                data: {
+                    pabrik: $("#pabrik").val(),
+                    equipment: $("#equipment").val(),
+                    d: $("#tanggal").val(),
+                    m: $("#bulan").val(),
+                    y: $("#tahun").val(),
+                }
+            }).done(function (msg) {
+                console.log(msg);
+            });    
+        }
+    }
+
+    function update_picture(){        
+        var equipments = $("#pabrik").val()+"/"+$("#equipment").val()+"/"+$("#tahun").val()+"/"+$("#bulan").val()+"/"+$("#tanggal").val();
+        $("#images-area").load(SITE_URL + "job_aid/j52/a0_images/"+equipments);
+    }
+
+    $("#modal-upload").on('hide.bs.modal', function () {
+        update_picture();
+    });
+
+    $( "#images-area" ).on( "click", "button", function( event ) {
+        event.preventDefault();
+        console.log( $( this ).text() );
+        console.log( $(this).attr('value') );
+        var dtx = $(this).attr('value').split("/");
+        console.log(dtx);
+        if(confirm("Anda yakin menghapus ini ?")){
+            $.ajax({
+                method: "POST",
+                url: SITE_URL+"job_aid/j52/a0_delete_image",
+                success: update_picture,
+                data: {
+                    pabrik: $("#pabrik").val(),
+                    equipment: $("#equipment").val(),
+                    d: $("#tanggal").val(),
+                    m: $("#bulan").val(),
+                    y: $("#tahun").val(),
+                    f: dtx[14],
+                    // data_json: JSON.stringify(data_j),
+                }
+            }).done(function (msg) {
+                console.log(msg);
+            });
+        }
+    });
+
+    $("#imageupload").click(function () {
+        update_session();
+    });
+
     $("#pabrik").change(function () {
         station_refresh();
     });
@@ -299,6 +363,9 @@ $(document).ready(function () {
             console.log(data);
             refresh(data);
         });
+        setTimeout(() => {
+            update_picture();
+        },1000);
     }
     $("#tahun").change(function () {
         var syear = parseInt($("#tahun").val());

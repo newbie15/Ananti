@@ -103,6 +103,7 @@ class J52 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
 			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
 			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+			base_url("assets/dropzonejs/dropzone.min.css"),
 		];
 
 		$footer['js_files'] = [
@@ -111,6 +112,7 @@ class J52 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
 			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/dropzonejs/dropzone.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/job_aid/j52-a0.js"),
@@ -204,6 +206,92 @@ class J52 extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function a0_session(){
+		$this->session->up_pabrik = $_REQUEST['pabrik'];
+		$this->session->up_equipment = $_REQUEST['equipment'];
+		$this->session->up_tahun = $_REQUEST['y'];
+		$this->session->up_bulan = $_REQUEST['m'];
+		$this->session->up_tanggal = $_REQUEST['d'];
+	}
+
+	public function a0_upload(){
+		if (!empty($_FILES['file']['name'])) {
+			
+			$lokasi = $this->session->up_pabrik."/".$this->session->up_equipment."/".$this->session->up_tahun."/".$this->session->up_bulan."/".$this->session->up_tanggal;
+			$path = 'assets/uploads/job_aid/j52/a0'."/".$lokasi;
+			$path = str_replace(".","-",$path);
+
+			// Set preference
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'jpeg|jpg|bmp|png';
+			// $config['max_size'] = '1024'; // max_size in kb
+			$config['file_name'] = $_FILES['file']['name'];
+
+			//Load upload library
+			$this->load->library('upload', $config);
+
+			if (!file_exists($path)) {
+				mkdir($path, 0777, true);
+			}
+
+			// File upload
+			if ($this->upload->do_upload('file')) {
+				// Get data about the file
+				$uploadData = $this->upload->data();
+			}
+		}
+
+	}
+
+	public function a0_delete_image(){
+		// $lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8)."/".$this->uri->segment(9);
+		$lokasi = $_REQUEST['pabrik']."/".$_REQUEST['equipment']."/".$_REQUEST['y']."/".$_REQUEST['m']."/".$_REQUEST['d'];
+
+		$path = 'assets/uploads/job_aid/j52/a0'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+		
+		unlink($path."/".$_REQUEST['f']);
+	}
+
+	public function a0_images(){
+		
+		$lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8);
+		$path = 'assets/uploads/job_aid/j52/a0'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+
+		$fileList = glob($path.'/*');
+		foreach($fileList as $filename){
+			if(is_file($filename)){
+				// echo $filename, '<br>'; 
+				$ext = explode(".",$filename);
+				$ext = end($ext);
+
+				$namafile = explode("/",$filename);
+				$namafile = end($namafile);
+ 
+				if($ext == "jpg" || $ext == "jpeg" || $ext == "bmp" || $ext == "png"){
+					$img = base_url($filename);
+					echo "
+					<div class=\"col-md-4\">
+						<div class=\"thumbnail\">
+							<a href=\"$img\">
+								<img src=\"$img\" alt=\"$filename\" style=\"width:100%\">
+							</a>
+							<div class=\"caption\">
+							<p>
+							$namafile
+							<button class=\"btn btn-danger\" value=\"".base_url($filename)."\" style=\"float: right;\">Delete</button>
+							</p>
+							</div>
+						
+						</div>
+					</div>
+					";
+				}
+			}
+		}
+	}
+
 	public function a8()
 	{
 
@@ -217,6 +305,7 @@ class J52 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
 			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
 			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+			base_url("assets/dropzonejs/dropzone.min.css"),
 		];
 
 		$footer['js_files'] = [
@@ -225,6 +314,7 @@ class J52 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
 			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/dropzonejs/dropzone.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/job_aid/j52-a8.js"),
@@ -317,6 +407,92 @@ class J52 extends CI_Controller {
 		}
 		echo json_encode($d);
 	}
+
+	public function a8_session(){
+		$this->session->up_pabrik = $_REQUEST['pabrik'];
+		$this->session->up_equipment = $_REQUEST['equipment'];
+		$this->session->up_tahun = $_REQUEST['y'];
+		$this->session->up_bulan = $_REQUEST['m'];
+		$this->session->up_tanggal = $_REQUEST['d'];
+	}
+
+	public function a8_upload(){
+		if (!empty($_FILES['file']['name'])) {
+			
+			$lokasi = $this->session->up_pabrik."/".$this->session->up_equipment."/".$this->session->up_tahun."/".$this->session->up_bulan."/".$this->session->up_tanggal;
+			$path = 'assets/uploads/job_aid/j52/a8'."/".$lokasi;
+			$path = str_replace(".","-",$path);
+
+			// Set preference
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'jpeg|jpg|bmp|png';
+			// $config['max_size'] = '1024'; // max_size in kb
+			$config['file_name'] = $_FILES['file']['name'];
+
+			//Load upload library
+			$this->load->library('upload', $config);
+
+			if (!file_exists($path)) {
+				mkdir($path, 0777, true);
+			}
+
+			// File upload
+			if ($this->upload->do_upload('file')) {
+				// Get data about the file
+				$uploadData = $this->upload->data();
+			}
+		}
+
+	}
+
+	public function a8_delete_image(){
+		// $lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8)."/".$this->uri->segment(9);
+		$lokasi = $_REQUEST['pabrik']."/".$_REQUEST['equipment']."/".$_REQUEST['y']."/".$_REQUEST['m']."/".$_REQUEST['d'];
+
+		$path = 'assets/uploads/job_aid/j52/a8'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+		
+		unlink($path."/".$_REQUEST['f']);
+	}
+
+	public function a8_images(){
+		
+		$lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8);
+		$path = 'assets/uploads/job_aid/j52/a8'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+
+		$fileList = glob($path.'/*');
+		foreach($fileList as $filename){
+			if(is_file($filename)){
+				// echo $filename, '<br>'; 
+				$ext = explode(".",$filename);
+				$ext = end($ext);
+
+				$namafile = explode("/",$filename);
+				$namafile = end($namafile);
+ 
+				if($ext == "jpg" || $ext == "jpeg" || $ext == "bmp" || $ext == "png"){
+					$img = base_url($filename);
+					echo "
+					<div class=\"col-md-4\">
+						<div class=\"thumbnail\">
+							<a href=\"$img\">
+								<img src=\"$img\" alt=\"$filename\" style=\"width:100%\">
+							</a>
+							<div class=\"caption\">
+							<p>
+							$namafile
+							<button class=\"btn btn-danger\" value=\"".base_url($filename)."\" style=\"float: right;\">Delete</button>
+							</p>
+							</div>
+						
+						</div>
+					</div>
+					";
+				}
+			}
+		}
+	}	
 	
 	public function a12()
 	{
@@ -331,6 +507,7 @@ class J52 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
 			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
 			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+			base_url("assets/dropzonejs/dropzone.min.css"),
 		];
 
 		$footer['js_files'] = [
@@ -339,6 +516,7 @@ class J52 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
 			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/dropzonejs/dropzone.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/job_aid/j52-a12.js"),
@@ -446,6 +624,92 @@ class J52 extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function a12_session(){
+		$this->session->up_pabrik = $_REQUEST['pabrik'];
+		$this->session->up_equipment = $_REQUEST['equipment'];
+		$this->session->up_tahun = $_REQUEST['y'];
+		$this->session->up_bulan = $_REQUEST['m'];
+		$this->session->up_tanggal = $_REQUEST['d'];
+	}
+
+	public function a12_upload(){
+		if (!empty($_FILES['file']['name'])) {
+			
+			$lokasi = $this->session->up_pabrik."/".$this->session->up_equipment."/".$this->session->up_tahun."/".$this->session->up_bulan."/".$this->session->up_tanggal;
+			$path = 'assets/uploads/job_aid/j52/a12'."/".$lokasi;
+			$path = str_replace(".","-",$path);
+
+			// Set preference
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'jpeg|jpg|bmp|png';
+			// $config['max_size'] = '1024'; // max_size in kb
+			$config['file_name'] = $_FILES['file']['name'];
+
+			//Load upload library
+			$this->load->library('upload', $config);
+
+			if (!file_exists($path)) {
+				mkdir($path, 0777, true);
+			}
+
+			// File upload
+			if ($this->upload->do_upload('file')) {
+				// Get data about the file
+				$uploadData = $this->upload->data();
+			}
+		}
+
+	}
+
+	public function a12_delete_image(){
+		// $lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8)."/".$this->uri->segment(9);
+		$lokasi = $_REQUEST['pabrik']."/".$_REQUEST['equipment']."/".$_REQUEST['y']."/".$_REQUEST['m']."/".$_REQUEST['d'];
+
+		$path = 'assets/uploads/job_aid/j52/a12'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+		
+		unlink($path."/".$_REQUEST['f']);
+	}
+
+	public function a12_images(){
+		
+		$lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8);
+		$path = 'assets/uploads/job_aid/j52/a12'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+
+		$fileList = glob($path.'/*');
+		foreach($fileList as $filename){
+			if(is_file($filename)){
+				// echo $filename, '<br>'; 
+				$ext = explode(".",$filename);
+				$ext = end($ext);
+
+				$namafile = explode("/",$filename);
+				$namafile = end($namafile);
+ 
+				if($ext == "jpg" || $ext == "jpeg" || $ext == "bmp" || $ext == "png"){
+					$img = base_url($filename);
+					echo "
+					<div class=\"col-md-4\">
+						<div class=\"thumbnail\">
+							<a href=\"$img\">
+								<img src=\"$img\" alt=\"$filename\" style=\"width:100%\">
+							</a>
+							<div class=\"caption\">
+							<p>
+							$namafile
+							<button class=\"btn btn-danger\" value=\"".base_url($filename)."\" style=\"float: right;\">Delete</button>
+							</p>
+							</div>
+						
+						</div>
+					</div>
+					";
+				}
+			}
+		}
+	}	
+
 	public function a18()
 	{
 
@@ -459,6 +723,7 @@ class J52 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
 			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
 			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+			base_url("assets/dropzonejs/dropzone.min.css"),
 		];
 
 		$footer['js_files'] = [
@@ -467,6 +732,7 @@ class J52 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
 			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/dropzonejs/dropzone.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/job_aid/j52-a18.js"),
@@ -561,4 +827,91 @@ class J52 extends CI_Controller {
 		}
 		echo json_encode($d);
 	}
+
+	public function a18_session(){
+		$this->session->up_pabrik = $_REQUEST['pabrik'];
+		$this->session->up_equipment = $_REQUEST['equipment'];
+		$this->session->up_tahun = $_REQUEST['y'];
+		$this->session->up_bulan = $_REQUEST['m'];
+		$this->session->up_tanggal = $_REQUEST['d'];
+	}
+
+	public function a18_upload(){
+		if (!empty($_FILES['file']['name'])) {
+			
+			$lokasi = $this->session->up_pabrik."/".$this->session->up_equipment."/".$this->session->up_tahun."/".$this->session->up_bulan."/".$this->session->up_tanggal;
+			$path = 'assets/uploads/job_aid/j52/a18'."/".$lokasi;
+			$path = str_replace(".","-",$path);
+
+			// Set preference
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'jpeg|jpg|bmp|png';
+			// $config['max_size'] = '1024'; // max_size in kb
+			$config['file_name'] = $_FILES['file']['name'];
+
+			//Load upload library
+			$this->load->library('upload', $config);
+
+			if (!file_exists($path)) {
+				mkdir($path, 0777, true);
+			}
+
+			// File upload
+			if ($this->upload->do_upload('file')) {
+				// Get data about the file
+				$uploadData = $this->upload->data();
+			}
+		}
+
+	}
+
+	public function a18_delete_image(){
+		// $lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8)."/".$this->uri->segment(9);
+		$lokasi = $_REQUEST['pabrik']."/".$_REQUEST['equipment']."/".$_REQUEST['y']."/".$_REQUEST['m']."/".$_REQUEST['d'];
+
+		$path = 'assets/uploads/job_aid/j52/a18'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+		
+		unlink($path."/".$_REQUEST['f']);
+	}
+
+	public function a18_images(){
+		
+		$lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8);
+		$path = 'assets/uploads/job_aid/j52/a18'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+
+		$fileList = glob($path.'/*');
+		foreach($fileList as $filename){
+			if(is_file($filename)){
+				// echo $filename, '<br>'; 
+				$ext = explode(".",$filename);
+				$ext = end($ext);
+
+				$namafile = explode("/",$filename);
+				$namafile = end($namafile);
+ 
+				if($ext == "jpg" || $ext == "jpeg" || $ext == "bmp" || $ext == "png"){
+					$img = base_url($filename);
+					echo "
+					<div class=\"col-md-4\">
+						<div class=\"thumbnail\">
+							<a href=\"$img\">
+								<img src=\"$img\" alt=\"$filename\" style=\"width:100%\">
+							</a>
+							<div class=\"caption\">
+							<p>
+							$namafile
+							<button class=\"btn btn-danger\" value=\"".base_url($filename)."\" style=\"float: right;\">Delete</button>
+							</p>
+							</div>
+						
+						</div>
+					</div>
+					";
+				}
+			}
+		}
+	}	
+
 }

@@ -109,6 +109,67 @@ $(document).ready(function () {
         // updatescroll();
     }
 
+    function update_session(){
+        if($("#station").val()==null){
+            setTimeout(() => {
+                alert("tidak ada station terpilih");
+                $("#modal-upload").modal('hide');
+            },500);
+        }else{
+            $.ajax({
+                method: "POST",
+                url: SITE_URL+"job_aid/j52/a12_session",
+                data: {
+                    pabrik: $("#pabrik").val(),
+                    equipment: $("#station").val(),
+                    d: $("#tanggal").val(),
+                    m: $("#bulan").val(),
+                    y: $("#tahun").val(),
+                }
+            }).done(function (msg) {
+                console.log(msg);
+            });    
+        }
+    }
+
+    function update_picture(){        
+        var equipments = $("#pabrik").val()+"/"+$("#station").val()+"/"+$("#tahun").val()+"/"+$("#bulan").val()+"/"+$("#tanggal").val();
+        $("#images-area").load(SITE_URL + "job_aid/j52/a12_images/"+equipments);
+    }
+
+    $("#modal-upload").on('hide.bs.modal', function () {
+        update_picture();
+    });
+
+    $( "#images-area" ).on( "click", "button", function( event ) {
+        event.preventDefault();
+        console.log( $( this ).text() );
+        console.log( $(this).attr('value') );
+        var dtx = $(this).attr('value').split("/");
+        console.log(dtx);
+        if(confirm("Anda yakin menghapus ini ?")){
+            $.ajax({
+                method: "POST",
+                url: SITE_URL+"job_aid/j52/a12_delete_image",
+                success: update_picture,
+                data: {
+                    pabrik: $("#pabrik").val(),
+                    equipment: $("#station").val(),
+                    d: $("#tanggal").val(),
+                    m: $("#bulan").val(),
+                    y: $("#tahun").val(),
+                    f: dtx[14],
+                    // data_json: JSON.stringify(data_j),
+                }
+            }).done(function (msg) {
+                console.log(msg);
+            });
+        }
+    });
+
+    $("#imageupload").click(function () {
+        update_session();
+    });
 
     $("#pabrik").change(function () {
         station_refresh();
@@ -178,6 +239,9 @@ $(document).ready(function () {
             console.log(data);
             refresh(data);
         });
+        setTimeout(() => {
+            update_picture();
+        },1000);
     }
     $("#tahun").change(function () {
         var syear = parseInt($("#tahun").val());
