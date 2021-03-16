@@ -483,6 +483,16 @@ class J4 extends CI_Controller {
 
 	}
 
+	public function a3_delete_image(){
+		// $lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8)."/".$this->uri->segment(9);
+		$lokasi = $_REQUEST['pabrik']."/".$_REQUEST['equipment']."/".$_REQUEST['y']."/".$_REQUEST['m']."/".$_REQUEST['d'];
+
+		$path = 'assets/uploads/job_aid/j4/a3'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+		
+		unlink($path."/".$_REQUEST['f']);
+	}
+
 	public function a3_images(){
 		
 		$lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8);
@@ -504,15 +514,16 @@ class J4 extends CI_Controller {
 					echo "
 					<div class=\"col-md-4\">
 						<div class=\"thumbnail\">
-						<a href=\"$img\">
-							<img src=\"$img\" alt=\"$filename\" style=\"width:100%\">
+							<a href=\"$img\">
+								<img src=\"$img\" alt=\"$filename\" style=\"width:100%\">
+							</a>
 							<div class=\"caption\">
 							<p>
 							$namafile
-							<a class=\"btn btn-danger float-right\" href=\"#\" onclick=\"alert(\"Anda yakin menghapus gambar ini\");\">Delete</a>
+							<button class=\"btn btn-danger\" value=\"".base_url($filename)."\" style=\"float: right;\">Delete</button>
 							</p>
 							</div>
-						</a>
+						
 						</div>
 					</div>
 					";

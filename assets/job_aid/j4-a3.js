@@ -185,6 +185,32 @@ $(document).ready(function () {
         update_picture();
     });
 
+    $( "#images-area" ).on( "click", "button", function( event ) {
+        event.preventDefault();
+        console.log( $( this ).text() );
+        console.log( $(this).attr('value') );
+        var dtx = $(this).attr('value').split("/");
+        console.log(dtx);
+        if(confirm("Anda yakin menghapus ini ?")){
+            $.ajax({
+                method: "POST",
+                url: SITE_URL+"job_aid/j4/a3_delete_image",
+                success: update_picture,
+                data: {
+                    pabrik: $("#pabrik").val(),
+                    equipment: $("#equipment").val(),
+                    d: $("#tanggal").val(),
+                    m: $("#bulan").val(),
+                    y: $("#tahun").val(),
+                    f: dtx[14],
+                    // data_json: JSON.stringify(data_j),
+                }
+            }).done(function (msg) {
+                console.log(msg);
+            });
+        }
+    });
+
     $("#pabrik").change(function () {
         equipment_refresh();
     });
