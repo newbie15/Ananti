@@ -11,6 +11,9 @@
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-primary" id="imageupload" href="#modal-upload" role="button" data-toggle="modal">
+          <i class="fa fa-camera"></i> Image
+        </a>
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -20,7 +23,25 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-
+      <div class="modal fade in" id="modal-upload" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">Upload Thermal Image</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="<?= site_url("job_aid/j4/a3_upload") ?>" class="dropzone needsclick dz-clickable" id="dropzones">
+                            <div class="dz-message needsclick">
+                                <button type="button" class="dz-button">Drop files here or click to upload.</button><br>
+                                (Please Refresh page. After upload complete to see your file on the list.)
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
       <div class="row">
         <div class="col-xs-12">
           Pabrik : 
@@ -90,6 +111,10 @@
 					">
             <div id='my-spreadsheet'>
             </div>
+          </div>
+          <br>
+          <div id="images-area">  
+            <!-- image show here -->
           </div>
         </div>
       </div>

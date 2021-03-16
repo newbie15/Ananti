@@ -356,6 +356,7 @@ class J4 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/css/jquery.jcalendar.css"),
 			base_url("assets/jexcel/v2.1.0/css/jquery.jdropdown.css"),
 			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+			base_url("assets/dropzonejs/dropzone.min.css"),
 		];
 
 		$footer['js_files'] = [
@@ -364,6 +365,7 @@ class J4 extends CI_Controller {
 			base_url("assets/jexcel/v2.1.0/js/jquery.jcalendar.js"),
 			base_url("assets/jexcel/v2.1.0/js/jquery.jdropdown.js"),
 			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/dropzonejs/dropzone.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/job_aid/j4-a3.js"),
@@ -450,6 +452,81 @@ class J4 extends CI_Controller {
 			$d[$i++][2] = $row->status;
 		}
 		echo json_encode($d);
+	}
+
+	public function a3_upload(){
+		if (!empty($_FILES['file']['name'])) {
+			
+			$lokasi = $this->session->up_pabrik."/".$this->session->up_equipment."/".$this->session->up_tahun."/".$this->session->up_bulan."/".$this->session->up_tanggal;
+			$path = 'assets/uploads/job_aid/j4/a3'."/".$lokasi;
+			$path = str_replace(".","-",$path);
+
+			// Set preference
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'jpeg|jpg|bmp|png';
+			// $config['max_size'] = '1024'; // max_size in kb
+			$config['file_name'] = $_FILES['file']['name'];
+
+			//Load upload library
+			$this->load->library('upload', $config);
+
+			if (!file_exists($path)) {
+				mkdir($path, 0777, true);
+			}
+
+			// File upload
+			if ($this->upload->do_upload('file')) {
+				// Get data about the file
+				$uploadData = $this->upload->data();
+			}
+		}
+
+	}
+
+	public function a3_images(){
+		
+		$lokasi = $this->uri->segment(4)."/".$this->uri->segment(5)."/".$this->uri->segment(6)."/".$this->uri->segment(7)."/".$this->uri->segment(8);
+		$path = 'assets/uploads/job_aid/j4/a3'."/".$lokasi;
+		$path = str_replace(".","-",$path);
+
+		$fileList = glob($path.'/*');
+		foreach($fileList as $filename){
+			if(is_file($filename)){
+				// echo $filename, '<br>'; 
+				$ext = explode(".",$filename);
+				$ext = end($ext);
+
+				$namafile = explode("/",$filename);
+				$namafile = end($namafile);
+ 
+				if($ext == "jpg" || $ext == "jpeg" || $ext == "bmp" || $ext == "png"){
+					$img = base_url($filename);
+					echo "
+					<div class=\"col-md-4\">
+						<div class=\"thumbnail\">
+						<a href=\"$img\">
+							<img src=\"$img\" alt=\"$filename\" style=\"width:100%\">
+							<div class=\"caption\">
+							<p>
+							$namafile
+							<a class=\"btn btn-danger float-right\" href=\"#\" onclick=\"alert(\"Anda yakin menghapus gambar ini\");\">Delete</a>
+							</p>
+							</div>
+						</a>
+						</div>
+					</div>
+					";
+				}
+			}
+		}
+	}
+
+	public function a3_session(){
+		$this->session->up_pabrik = $_REQUEST['pabrik'];
+		$this->session->up_equipment = $_REQUEST['equipment'];
+		$this->session->up_tahun = $_REQUEST['y'];
+		$this->session->up_bulan = $_REQUEST['m'];
+		$this->session->up_tanggal = $_REQUEST['d'];
 	}
 
 }

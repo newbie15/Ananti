@@ -3,6 +3,8 @@ $(document).ready(function () {
         $(".n_success").show();
         $(".n_success").fadeOut(3000);
     }
+
+    var BASE_UPLOAD = $("form.dropzone").attr("action");
     
     data_default = [
         ["Sebelum","",""],
@@ -158,6 +160,31 @@ $(document).ready(function () {
         }
     }
 
+    function update_session(){
+        $.ajax({
+            method: "POST",
+            url: SITE_URL+"job_aid/j4/a3_session",
+            data: {
+                pabrik: $("#pabrik").val(),
+                equipment: $("#equipment").val(),
+                d: $("#tanggal").val(),
+                m: $("#bulan").val(),
+                y: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+        });
+    }
+
+    function update_picture(){        
+        var equipments = $("#pabrik").val()+"/"+$("#equipment").val()+"/"+$("#tahun").val()+"/"+$("#bulan").val()+"/"+$("#tanggal").val();
+        $("#images-area").load(SITE_URL + "job_aid/j4/a3_images/"+equipments);
+    }
+
+    $("#modal-upload").on('hide.bs.modal', function () {
+        update_picture();
+    });
+
     $("#pabrik").change(function () {
         equipment_refresh();
     });
@@ -172,6 +199,10 @@ $(document).ready(function () {
     });
     $("#tanggal").change(function () {
         ajax_refresh();
+    });
+
+    $("#imageupload").click(function () {
+        update_session();
     });
 
     $("#simpan").click(function () {
@@ -209,6 +240,8 @@ $(document).ready(function () {
     }
 
     function ajax_refresh() {
+        // update_session();
+
         $.ajax({
             method: "POST",
             url: SITE_URL + "job_aid/j4/a3_load",
@@ -226,6 +259,10 @@ $(document).ready(function () {
             console.log(data);
             refresh(data);
         });
+
+        setTimeout(() => {
+            update_picture();
+        },1000);
     }
     $("#tahun").change(function () {
         var syear = parseInt($("#tahun").val());
