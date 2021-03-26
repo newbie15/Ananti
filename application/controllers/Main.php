@@ -522,4 +522,80 @@ class Main extends CI_Controller {
 		}
 		echo json_encode($d);
 	}
+
+	public function emp_statistik(){
+		$d = [];
+		$c = [];
+		$count_job_aid_tested = [];
+
+		$tahun = $_REQUEST['tahun'];
+		$bulan = $_REQUEST['bulan'];
+
+		$out = [];
+
+		$job_aid = $_REQUEST['job_aid_list'];
+
+		$job_aid_schedule_query = "SELECT * FROM aux_job_aid_schedule WHERE job_aid = '$job_aid'";
+
+		$i = 0;
+		$query = $this->db->query($job_aid_schedule_query);
+		foreach ($query->result() as $row) {
+			$d[$i][0] = $row->work_exec;
+			$d[$i][1] = $row->frequency;
+
+			$table = "job_aid_". strtolower($job_aid) . "_" . strtolower($row->work_exec);
+			$tested_count_each_mill_query = "SELECT id_pabrik, COUNT(DISTINCT equipment) AS jumlah_equipment FROM $table WHERE YEAR(tanggal) = '$tahun' GROUP BY tanggal";
+			$query = $this->db->query($tested_count_each_mill_query);
+			foreach ($query->result() as $row) {
+				$count_job_aid_tested[$row->id_pabrik][0] = $row->jumlah_equipment;
+			}
+
+			$i++;
+		}
+
+		$attachment_count_each_mill_query = "SELECT id_pabrik,COUNT(nomor) as jumlah FROM master_attachment WHERE job_aid LIKE '%$job_aid%'";
+		$query = $this->db->query($attachment_count_each_mill_query);
+		foreach ($query->result() as $row) {
+			$c[$row->id_pabrik][0] = $row->jumlah;
+		}
+
+		// $tested_count_each_mill_query = "SELECT id_pabrik, COUNT(DISTINCT equipment) AS jumlah_equipment FROM job_aid_j52_a0 GROUP BY tanggal";
+		// $query = $this->db->query($attachment_count_each_mill_query);
+		// foreach ($query->result() as $row) {
+		// 	$c[$row->id_pabrik][0] = $row->jumlah_equipment;
+		// }
+
+
+		$mill_list_query = "SELECT * FROM master_pabrik";
+		$i = 0;
+		$query = $this->db->query($mill_list_query);
+		foreach ($query->result() as $row) {
+			$out[$i][0] = $row->nama;
+			$j = 0;
+			foreach ($d as $r){
+				$i++;
+				$out[$i][0] = "";
+				$out[$i][1] = $d[$j][0];
+				$out[$i][2] = $d[$j][1];
+				if(isset($c[$row->nama])){
+					$out[$i][3] = $c[$row->nama][0];
+				}else{
+					$out[$i][3] = "";
+				}
+
+				if(isset($count_job_aid_tested[$row->nama])){
+					$out[$i][4] = $count_job_aid_tested[$row->nama][0];
+				}else{
+					$out[$i][4] = "";
+				}
+
+				$j++;
+			}
+
+			$i++;
+		}
+
+
+		echo json_encode($out);
+	}
 }

@@ -308,29 +308,49 @@ $(function () {
     }
 
     function emp_results(){
-        var demp = [
-            ["J4 Oil type Transformer, Oil-Filled >500 KVA (incl. OLTC)","A1",'10','5'],
-            ["","A2",'10','5'],
-            ["","A3",'47','39'],
-            ["","A4",'100','56'],
-        ];
+        var demp = [];
         $('#emp_result').jexcel({
             data: demp,
             allowInsertColumn: false,
             colHeaders: [
-                'Job Aid','Work Execution','Plan','Real'
+                'Site / Pabrik','Work Execution','Interval','Item to Tested','Item Tested'
             ],
-            colWidths: [400, 150, 100, 100, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, ],
+            colWidths: [100, 250, 100, 100, 100 ],
             columns: [
                 { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
-                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
-                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
-                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
-                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
-                { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
-                { type: 'text' },{ type: 'text' }
             ]
         });        
+    }
+
+    function emp_refresh(){
+        $.ajax({
+            method: "POST",
+            url: SITE_URL + "main/emp_statistik",
+            data: {
+                job_aid_list: $("#job_aid_list").val(),
+                tahun: $("#tahun").val(),
+                bulan: $("#bulan").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            var d_emp_job_aid = JSON.parse(msg);
+
+            $('#emp_result').jexcel({
+                data: d_emp_job_aid,
+                allowInsertColumn: false,
+                colHeaders: [
+                    'Site / Pabrik','Work Execution','Interval','Item to Tested','Item Tested'
+                ],
+                colWidths: [100, 250, 100, 100, 100 ],
+                columns: [
+                    { type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },{ type: 'text' },
+                ]
+            });
+        });
+    }
+
+    function load_job_aid_list(){
+        $("#job_aid_list").load(SITE_URL + "jobaid_schedule/ajax_dropdown/");
     }
 
     function ho_stat_refresh(){
@@ -343,6 +363,10 @@ $(function () {
         emp_results();
         // bdu_all_site_refresh();
     }
+
+    $("#job_aid_list").change(function(){
+        emp_refresh();
+    });
 
     $("#pabrik").change(function(){
         document.querySelector("#tgl_job").valueAsDate = new Date();
@@ -359,6 +383,7 @@ $(function () {
         pabrik_refresh();
     }else{
         ho_stat_refresh();
+        load_job_aid_list();
         console.log("ho_stat_refresh");
         setTimeout(() => {
             ho_stat_refresh();            
