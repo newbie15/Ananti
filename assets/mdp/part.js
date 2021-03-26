@@ -139,6 +139,7 @@ $(document).ready(function(){
             $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data,
+                onchange: jexcel_diubah(),
                 colHeaders: [
                     'Part Numbering',
                     'Part Number<br>From Catalog',
@@ -232,6 +233,7 @@ $(document).ready(function(){
             }
         }).done(function (msg) {
             console.log(msg);
+            jexcel_disimpan();
         });
     });
 

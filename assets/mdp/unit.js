@@ -50,6 +50,7 @@ $(document).ready(function(){
             console.log("set value "+"C"+dd[1] + 1+" "+e_number);
             $("#my-spreadsheet").jexcel('setValue', "C" + (parseInt(dd[1]) + 1), e_number);
         }
+        jexcel_diubah();
     };    
 
     function refresh() {
@@ -105,6 +106,7 @@ $(document).ready(function(){
             }
         }).done(function (msg) {
             console.log(msg);
+            jexcel_disimpan();
         });
     });
 

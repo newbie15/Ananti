@@ -16,6 +16,7 @@ $(document).ready(function(){
             console.log(data);
             $('#my-spreadsheet').jexcel({
                 data: data,
+                onchange: jexcel_diubah(),
                 colHeaders: [
                     'Station Numbering',
                     'Station',
@@ -62,6 +63,7 @@ $(document).ready(function(){
             }
         }).done(function (msg) {
             console.log(msg);
+            jexcel_disimpan();
         });
     });
 

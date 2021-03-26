@@ -16,6 +16,8 @@ console.log(x);
 var GOTO = SITE_URL;
 // console.log(BASE_URL);
 
+var modify = false;
+
 $.ajax({
     method: "GET",
     url: GOTO + "login/cek_session",
@@ -25,3 +27,17 @@ $.ajax({
         window.location.replace(GOTO + "login");
     }
 });
+
+$(window).bind('beforeunload', function(){
+    if(modify){
+        return 'Are you sure you want to leave?\nYou have unsaved document';
+    }
+});
+
+function jexcel_diubah(){
+    modify = true;
+}
+
+function jexcel_disimpan(){
+    modify = false;
+}
