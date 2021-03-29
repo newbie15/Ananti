@@ -61,6 +61,7 @@ $(document).ready(function(){
             $('#my-spreadsheet').html("");
             $('#my-spreadsheet').jexcel({
                 data: data,
+                onchange: jexcel_diubah(),
                 colHeaders: [
                     'Attachment Numbering',
                     'Attachment',
@@ -127,6 +128,7 @@ $(document).ready(function(){
             }
         }).done(function (msg) {
             console.log(msg);
+            jexcel_disimpan();
         });
     });
 

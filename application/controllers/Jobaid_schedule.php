@@ -116,5 +116,18 @@ class Jobaid_schedule extends CI_Controller {
 				$d[$i++] = $a;
 		}
 		echo json_encode($d);
-	}		
+	}
+
+	public function ajax_dropdown(){
+		$query = $this->db->query("SELECT * FROM aux_job_aid order by nomor asc;");
+
+		$output['dropdown_jobaid']= "<option value=\"\">== PILIH SALAH SATU ==</option>";
+		
+		foreach ($query->result() as $row)
+		{
+			$output['dropdown_jobaid'] = $output['dropdown_jobaid']."<option value=\"$row->nomor\">".$row->nomor." | ".$row->nama."</option>";
+		}
+		// $output['dropdown_jobaid'] .= "/<select>";
+		echo $output['dropdown_jobaid'];
+	}
 }

@@ -44,7 +44,7 @@
         </div>
         <div class="col-lg-12 col-xs-12">
           <br />
-          <b>Electrical Maintenance Program</b>
+          <b>Electrical Maintenance Program</b>&nbsp;&nbsp;<select id="job_aid_list"></select>
           <div id="emp_result"></div>
         </div>
       </div>
