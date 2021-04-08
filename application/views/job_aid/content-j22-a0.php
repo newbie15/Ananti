@@ -4,12 +4,14 @@
     <section class="content-header">
       <h1>
         <ul class="nav nav-tabs">
-          <li class="active"><a href="<?php echo site_url("job_aid/j22") ?>" aria-expanded="true">J22</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j22/a0") ?>" aria-expanded="false">A0 - Visual Inspection</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j22") ?>" aria-expanded="true">J22</a></li>
+          <li class="active"><a href="<?php echo site_url("job_aid/j22/a0") ?>" aria-expanded="false">A0 - Visual Inspection</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
-        <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-danger" id="tambah" href="#modal-j22" role="button" data-toggle="modal">
+          <i class="fa fa-plus"></i> Tambah
+        </a>
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -18,14 +20,24 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-
+      <div class="modal fade in" id="modal-j22" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Daftar Attachment dengan Job Aid J22</h4>
+            </div>
+            <div class="modal-body">
+              <table id="dt-table-j22" class="display" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          Station :
-          <?php echo $dropdown_station; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>
@@ -82,19 +94,23 @@
             <option>31</option>
           </select>
           <br><br>
-          <div style="
-						height: 500px;
-						width: 100%;
-						overflow: auto;
-					">
-            <p id='my-content'>
-              <?php echo $content; ?>
-            </p>
+          <h4>Point Inspeksi</h4>
+          <strong>A</strong> Verifikasi proteksi sengatan listrik terpasang <br>
+          <strong>B</strong> Cek kontak/terminal atau kabel apakah ada yang telanjang/tak ada selubung (bahaya) <br>
+          <strong>C</strong> Cek apakah tidak ada tanda-tanda overheating <br>
+          <strong>D</strong> Rumah/wadah dari socket kondisi masih baik <br>
+          <strong>E</strong> Socket terpasang cocok dengan kondisi lingkungan (IP atau NEMA rating) <br>
+          <strong>F</strong> Kondisi socket pada posisi yang baik dan fix/kencang <br>
+          <strong>G</strong> Kondisi kabel gland kencang tidak kendor <br>
+          <strong>H</strong> Semua lubang yang tak terpakai kondisi di-seal  (*jika bisa dilakukan) <br>
+          <strong>I</strong> Penutup socket ada dan bekerja sesuai  level IP (*jika bisa dilakukan) <br>
+          <strong>J</strong> Semua lubang yang tak terpakai kondisi di-seal <br>
+          <strong>K</strong> Tes menggunakan Socket Tester <br>
+          <br/>
+          <div style="height: 500px;width: 100%;overflow: auto;">
+            <div id='my-spreadsheet'>
+            </div>
           </div>
-          <hr/> 
-            <strong>Comment :</strong><br/>
-            <?php echo $comment; ?>
-        </div>
       </div>
       <!-- /.row -->
     </section>
