@@ -11,7 +11,9 @@
         </ul>
       </h1>
       <ol class="breadcrumb">
-        <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-danger" id="tambah" href="#modal-j20" role="button" data-toggle="modal">
+          <i class="fa fa-plus"></i> Tambah
+        </a>
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -21,7 +23,20 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-
+      <div class="modal fade in" id="modal-j20" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Daftar Attachment dengan Job Aid J20</h4>
+            </div>
+            <div class="modal-body">
+              <table id="dt-table-j20" class="display" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-xs-12">
           Pabrik : 
@@ -84,16 +99,57 @@
             <option>31</option>
           </select>
           <br><br>
-          <div style="
-						height: 500px;
-						width: 100%;
-						overflow: auto;
-					">
-            <div id='my-spreadsheet'>
+          <div class="col-xs-6">
+            <h2>Item Pemeliharaan</h2>
+            <strong>PEMBERSIHAN</strong><br>
+            A) Pembersihan Unit sesuai rekomendasi manufaktur<br>
+            B) Pembersihan lubang-lubang ventilasi menggunakan vacuum cleaner<br>
+            C) Pembersihan permukaan kontak/terminal termasuk jika ada grease sisa<br>
+            D) Pembersihan permukaan insulasi<br>
+            E) Pembersihan permukaan Arc chute (Arc chamber jika dalam Schneider ACB atau Arc Extinguishers jika MCCB)), gunakan denatured alcohol<br>
+            F) Pembersihan spring dan bagian mekanikal (gunakan denatured alcohol)<br>
+            <strong>ARC Chute</strong><br>
+            G) inspeksi adanya keretakan atau tanda-tanda overheating pada arc chute, Jika ada maka perlu diganti<br>
+            H) Pembersihan rumah/wadah arc chute (arc chamber) dan permukaannya<br>
+            <strong>LUBRIKASI</strong><br>
+            I) Lakukan lubrikasi yang di rekomendasikan oleh manufaktur<br>
+            <strong>Contact Wipe (pressure) or Contact Erosion, and Contact Gap</strong><br>
+            J) Contact Wipe-Defleksi pada stasioner kontak (breaker kondisi close)<br>
+            K) Contact Erosion (*Lakukan hanya pada Vaccum Breaker)<br>
+            L) Contact Gap-Ukur Jarak antara stationer kontak dengan moving kontak (Breaker kondisi Open)<br>
+          </div>
+          <div class="col-xs-6">
+            <h2>Item Pengetesan</h2>
+            <strong>Injeksi Arus</strong><br>
+            Inspeksi trip unit breaker dan masukkan setting sebagai AS-FOUND<br>
+            A) Tes fungsi "Long Time Trip"<br>
+            B) Tes fungsi "Short Time Trip"<br>
+            C) Tes fungsi "Instanteneous Trip"<br>
+            D) Tes fungsi "Ground Fault"<br>
+            <strong>Pick Up Voltage</strong><br>
+            E) Sudah menggunakan Variac untuk variable voltage<br>
+            F) Tes fungsi "Pick-up voltage"<br>
+            <strong>Operational Test</strong><br>
+            G) Fuse power kontrol terpasang dan ukurannya sesuai<br>
+            H) Charge motorized (MCH) berfungsi dengan baik<br>
+            I) Test Fungsi Open dan Close berfungsi dengan baik<br>
+            J) Cek motorized breaker OFF setelah charging<br>
+            K) Operasional breaker dari remote devices berfungsi dengan baik<br>
+            L) Manual charging (menggunakan tuas) berfungsi dengan baik<br>
+          </div>
+
+          <br>
+          <div style="height: 500px;width: 100%;overflow: auto;">
+            <div class="col-xs-6">
+              <div id='my-spreadsheet'>
+              </div>
             </div>
+            <div class="col-xs-6">
+              <div id='my-spreadsheet2'>
+              </div>
+            </div>
+
             <br/>
-            <div id='my-spreadsheet2'>
-            </div>
           </div>
         </div>
       </div>

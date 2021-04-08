@@ -9,78 +9,103 @@ $(document).ready(function () {
     data_detailnya = "";
 
     function refresh(data) {
-        console.log("refresh data");
-        console.log(data);
-        if (data.length<1) {
-            console.log("yes kurang dari 1");
-            $.ajax({
-                method: "POST",
-                url: SITE_URL + "unit/ajax_default_list",
-                data: {
-                    id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
-                }
-            }).done(function (msg) {
-                console.log("ini refresh");
+        $('#my-spreadsheet').html("");
+        $('#my-spreadsheet').jexcel({
+            data: data,
+            allowInsertColumn: false,
+            colHeaders: [
+                'Name Tag<br>Equipment',
+                'Lokasi',
+                'KW',
+                'Tag Panel',
+                'Starter',
+                'A',
+                'B',
+                'C',
+                'D',
+                'E',
+                'F',
+                'Status',
+            ],
+            colWidths: [200, 400, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+            columns: [
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'dropdown', source: ['0.25', '0.37', '0.56', '0.75', '1.1', '1.5', '1.85', '2.2', '3', '3.7', '4', '5.5', '7.5', '9.3', '10', '11', '15', '18', '22', '30', '37', '45', '55', '75', '90', '110', '132', '160', '200', '220', '250', '315'] },
+                { type: 'text' },
+                { type: 'dropdown', source: ['-', 'DOL', 'SD', 'AT', 'SS', 'INV'] },
+                { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
+                { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
+                { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
+                { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
+                { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
+                { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
+                { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
+            ],
+        });
+    }
 
-                console.log(msg);
-                data = JSON.parse(msg);
-                console.log(data);
-                x = data;
-                $('#my-spreadsheet').html("");
-                $('#my-spreadsheet').jexcel({
-                    data: data,
-                    allowInsertColumn: false,
-                    colHeaders: [
-                        'Name Tag<br>Circuit Breaker',
-                        'Tipe',
-                        'Lokasi',
-                        'A',
-                        'B',
-                        'C',
-                        'D',
-                        'E',
-                    ],
-                    colWidths: [200, 200, 200, 100, 100, 100, 100, 100, 100],
-                    columns: [
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'text' },
-                        { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                        { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                        { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                        { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                        { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                    ],
-                });
+    $("#tambah").click(function () {
+        refresh_modal();
+    });    
 
-            });
-        }else{
-            $('#my-spreadsheet').html("");
-            $('#my-spreadsheet').jexcel({
-                data: data,
-                allowInsertColumn: false,
-                colHeaders: [
-                    'Name Tag<br>RCD / GFCI',
-                    'Tipe',
-                    'Lokasi',
-                    'A',
-                    'B',
-                    'C',
-                    'D',
-                ],
-                colWidths: [200, 200, 200, 100, 100, 100, 100, 100, 100],
-                columns: [
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'text' },
-                    { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                    { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                    { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                    { type: 'dropdown', source: ['-', 'Fail', 'Pass'] },
-                ],
-            });
+    function add(id, lo) {
+        var sama = 0;
+        var index = 0;
+        dx = $('#my-spreadsheet').jexcel('getData');
+        console.log(dx);
+        if (dx[0][0] == "") { // kosong
+            dx[0][0] = id;
+            dx[0][1] = lo;
+        } else { // isi satu
+            dx.push([id, lo, "", "", "", ""]);
         }
+
+        refresh(dx);
+
+        $("#wo").val("");
+        $("#modal-j20").modal("hide");
+
+        updatescroll();
+    }
+
+    function refresh_modal() {
+        $.ajax({
+            method: "POST",
+            url: SITE_URL + "attachment/list_attachment_modal/" + $("#pabrik").val() +"/J20",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+            }
+        }).done(function (msg) {
+            x = [];
+            y = [];
+            data = JSON.parse(msg);
+
+            for (i in data) {
+                console.log(data[i].daftar);
+                x.push(data[i].daftar);
+                y[i] = x;
+                x = [];
+            }
+            // console.log(y);
+            var table = $('#dt-table-j20').DataTable({
+                destroy: true,
+                data: y,
+                columns: [{
+                    title: "Daftar"
+                }, ]
+            });
+
+            $('.dataTable tbody').on('click', 'tr', function () {
+                if (table.row(this).data() != undefined) {
+                    console.log('API row values : ', table.row(this).data());
+                    var sp = table.row(this).data();
+                    sp = sp[0].split(" - ");
+                    add(sp[0],sp[1]);
+                    $('#modal-j20').modal('toggle');
+                }
+            });
+        });
     }
 
     $("#pabrik").change(function () {
@@ -105,11 +130,11 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: SITE_URL+"acm/simpan",
+            url: SITE_URL+"job_aid/j20/a0_save",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
+                // station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -121,22 +146,22 @@ $(document).ready(function () {
     });
 
     function station_refresh(){
-        $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
-            function(responseTxt,statusTxt,xhr){
-                if(statusTxt == "success"){
-                    // alert("success");
+        // $("#station").load(SITE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+        //     function(responseTxt,statusTxt,xhr){
+        //         if(statusTxt == "success"){
+        //             // alert("success");
                     ajax_refresh();
-                }else{
-                    // alert("gaagal");
-                }
-            }
-        );
+        //         }else{
+        //             // alert("gaagal");
+        //         }
+        //     }
+        // );
     }
 
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: SITE_URL + "acm/load",
+            url: SITE_URL + "job_aid/j20/a0_load",
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),

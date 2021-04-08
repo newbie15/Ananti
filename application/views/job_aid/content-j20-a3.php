@@ -26,8 +26,8 @@
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          Station :
-          <?php echo $dropdown_station; ?>
+          Equipment :
+          <?php echo $dropdown_equipment; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>
