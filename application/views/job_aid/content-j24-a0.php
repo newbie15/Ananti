@@ -7,7 +7,7 @@
           <li class=""><a href="<?php echo site_url("job_aid/j24") ?>" aria-expanded="true">J24</a></li>
           <li class="active"><a href="<?php echo site_url("job_aid/j24/a0") ?>" aria-expanded="false">A0 - Visual Inspection</a></li>
           <li class=""><a href="<?php echo site_url("job_aid/j24/a3") ?>" aria-expanded="false">A3 - Infrared Inspection</a></li>
-          <li class=""><a href="<?php echo site_url("job_aid/j24/a15") ?>" aria-expanded="false">A18 - Grounding Continuity Test</a></li>
+          <li class=""><a href="<?php echo site_url("job_aid/j24/a18") ?>" aria-expanded="false">A18 - Grounding Continuity Test</a></li>
         </ul>
       </h1>
       <ol class="breadcrumb">
@@ -26,8 +26,8 @@
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          Station :
-          <?php echo $dropdown_station; ?>
+          Equipment :
+          <?php echo $dropdown_equipment; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>
@@ -89,13 +89,20 @@
 						width: 100%;
 						overflow: auto;
 					">
-            <p id='my-content'>
-              <?php echo $content; ?>
-            </p>
+            <div id='my-spreadsheet'>
+            </div>
           </div>
-          <hr/> 
-            <strong>Comment :</strong><br/>
-            <?php echo $comment; ?>
+          <br>
+        </div>          
+        <div class="col-xs-6">
+        <strong>Daftar Fault Logger</strong><br>
+          <div id='my-fault'>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <strong>Parameter Proteksi Motor Pada VFD</strong><br>
+          <div id='my-setting'>
+          </div>
         </div>
       </div>
       <!-- /.row -->
