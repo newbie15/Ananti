@@ -9,7 +9,9 @@
         </ul>
       </h1>
       <ol class="breadcrumb">
-        <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-danger" id="tambah" href="#modal-j23" role="button" data-toggle="modal">
+          <i class="fa fa-plus"></i> Tambah
+        </a>
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -18,14 +20,24 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-
+      <div class="modal fade in" id="modal-j23" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Daftar Attachment dengan Job Aid J23</h4>
+            </div>
+            <div class="modal-body">
+              <table id="dt-table-j23" class="display" width="100%"></table>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          Station :
-          <?php echo $dropdown_station; ?>
           Tahun : 
           <select id="tahun">
             <option>2017</option>
@@ -82,18 +94,30 @@
             <option>31</option>
           </select>
           <br><br>
-          <div style="
-						height: 500px;
-						width: 100%;
-						overflow: auto;
-					">
-            <p id='my-content'>
-              <?php echo $content; ?>
-            </p>
+          <h4>Point Inspeksi</h4>
+          <div class="col-xs-6">
+          <strong>A</strong> HouseKeeping<br>
+          <strong>B</strong> Tanda-tanda tikus, Penetrasi tertutup<br>
+          <strong>C</strong> Tidak ada tanda-tanda basah, lembab dan berdebu. (seal sudah)<br>
+          <strong>D</strong> Terdapat label Arcflash/Safety/statutary<br>
+          <strong>E</strong> Sudah menggunakan PPE yang sesuai dan kondisi baik<br>
+          <strong>F</strong> Remote switching bisa memungkinkan<br>
+          <strong>G</strong> Firestop pada MCC penetration (fire proofing)<br>
           </div>
-          <hr/> 
-            <strong>Comment :</strong><br/>
-            <?php echo $comment; ?>
+          <div class="col-xs-6">
+          <strong>H</strong> Pintu bisa terkunci dan tertutup<br>
+          <strong>I</strong> Tidak ada jendela kaca<br>
+          <strong>J</strong> Akses tidak terhalang<br>
+          <strong>K</strong> Terdapat AC dan kondisi  suhu ruangan normal<br>
+          <strong>L</strong> Terdapat Fire & Smoke detector/Fire Extinguisher<br>
+          <strong>M</strong> Lampu Ruang/Lampu Emergency dan Exit dalam kondisi baik<br>
+          <strong>N</strong> Single Line drawing sesuai dan dapat terbaca<br>
+          </div>          
+          <div style="height: 500px;width: 100%;overflow: auto;">
+            <br>
+            <div id='my-spreadsheet'>
+            </div>
+          </div>
         </div>
       </div>
       <!-- /.row -->
